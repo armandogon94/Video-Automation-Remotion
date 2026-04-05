@@ -1,0 +1,38 @@
+{
+  "id": "talking-head",
+  "name": "Talking Head with Captions",
+  "description": "Speaker video/image with animated word-by-word captions overlay",
+  "composition": "TalkingHead",
+  "defaults": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "durationBehavior": "matchAudio",
+    "speaker": {
+      "image": null,
+      "position": "center",
+      "scale": 1.0
+    },
+    "captions": {
+      "enabled": true,
+      "style": "wordByWord",
+      "fontSize": 40,
+      "position": "bottom-third",
+      "backgroundColor": "rgba(0,0,0,0.7)",
+      "textColor": "#ffffff",
+      "activeWordColor": "#ffd700"
+    },
+    "branding": {
+      "logo": null,
+      "nameTag": null,
+      "introSlide": false,
+      "outroSlide": true
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1920, "height": 1080 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 },
+    "square": { "width": 1080, "height": 1080 }
+  }
+}

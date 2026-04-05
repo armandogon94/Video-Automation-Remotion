@@ -1,0 +1,14 @@
+[project]
+name = "10-video-automation-remotion"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.14"
+dependencies = [
+    "edge-tts>=7.2.8",
+    "faster-whisper>=1.2.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]

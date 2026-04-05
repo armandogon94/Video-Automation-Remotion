@@ -1,0 +1,46 @@
+{
+  "name": "ai-video-factory",
+  "version": "1.0.0",
+  "description": "Automated video production pipeline — text script to multi-platform video",
+  "type": "module",
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "render": "tsx src/pipeline/render.ts",
+    "generate": "tsx src/pipeline/generate.ts",
+    "voices": "tsx src/pipeline/voices.ts",
+    "templates": "tsx src/pipeline/templates.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/ --ext .ts,.tsx"
+  },
+  "keywords": [
+    "video",
+    "automation",
+    "remotion",
+    "tts",
+    "ffmpeg"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@remotion/bundler": "4.0.443",
+    "@remotion/cli": "4.0.443",
+    "@remotion/renderer": "4.0.443",
+    "@remotion/zod-types": "4.0.443",
+    "commander": "14.0.3",
+    "execa": "9.6.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "remotion": "4.0.443",
+    "tsx": "4.21.0",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config": "4.0.443",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "typescript": "6.0.2",
+    "vitest": "4.1.2"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "explainer",
+  "name": "Text-on-Screen Explainer",
+  "description": "Clean text explainer with background image/gradient and animated captions",
+  "composition": "ExplainerVideo",
+  "defaults": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "durationBehavior": "matchAudio",
+    "background": {
+      "type": "gradient",
+      "from": "#1a1a2e",
+      "to": "#16213e"
+    },
+    "text": {
+      "fontFamily": "Inter",
+      "fontSize": 48,
+      "color": "#ffffff",
+      "position": "center"
+    },
+    "captions": {
+      "enabled": true,
+      "style": "highlighted",
+      "fontSize": 32,
+      "position": "bottom",
+      "highlightColor": "#ffd700"
+    },
+    "branding": {
+      "logo": null,
+      "watermark": null,
+      "introSlide": true,
+      "outroSlide": true
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1920, "height": 1080 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 },
+    "square": { "width": 1080, "height": 1080 }
+  }
+}

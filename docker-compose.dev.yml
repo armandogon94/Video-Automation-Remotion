@@ -1,0 +1,24 @@
+# LOCAL DEVELOPMENT ONLY — Not for production/VPS deployment
+# This project runs exclusively on macOS Apple Silicon
+
+services:
+  # Redis for optional BullMQ job queue (future enhancement)
+  redis:
+    image: redis:7-alpine
+    container_name: video-factory-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+volumes:
+  redis-data:

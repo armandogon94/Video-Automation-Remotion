@@ -1,0 +1,44 @@
+{
+  "id": "listicle",
+  "name": "Listicle with Transitions",
+  "description": "Numbered list items with animated transitions between each point",
+  "composition": "Listicle",
+  "defaults": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "durationBehavior": "fixed",
+    "durationPerItem": 5,
+    "transitionDuration": 0.5,
+    "transitionType": "slide",
+    "items": {
+      "numberStyle": "circle",
+      "numberColor": "#ffd700",
+      "textColor": "#ffffff",
+      "fontSize": 44,
+      "animation": "slideUp"
+    },
+    "background": {
+      "type": "gradient",
+      "from": "#0f0c29",
+      "to": "#302b63"
+    },
+    "captions": {
+      "enabled": true,
+      "style": "highlighted",
+      "fontSize": 28,
+      "position": "bottom"
+    },
+    "branding": {
+      "logo": null,
+      "introSlide": true,
+      "outroSlide": true
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1920, "height": 1080 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 },
+    "square": { "width": 1080, "height": 1080 }
+  }
+}

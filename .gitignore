@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# Output
+output/*
+!output/.gitkeep
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+build/
+*.tsbuildinfo
+
+# Remotion
+remotion-bundle/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Whisper models (downloaded at runtime)
+models/
+
+# Temporary files
+tmp/
+*.tmp
+
+# Claude Code - user specific
+.claude/projects/
