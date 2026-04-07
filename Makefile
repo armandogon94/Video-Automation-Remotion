@@ -1,14 +1,18 @@
 # AI Video Factory — Makefile
 # Local development commands for macOS Apple Silicon
 
-.PHONY: install dev build render generate test lint clean help
+.PHONY: docker docker-build docker-down docker-logs install dev build render generate test lint clean help
 
 # Default target
 help:
 	@echo "AI Video Factory — Available Commands"
 	@echo ""
-	@echo "  make install     Install all dependencies (Node.js + Python)"
-	@echo "  make dev         Start Remotion Studio for preview"
+	@echo "  make docker      Start full stack in Docker"
+	@echo "  make docker-build Rebuild and start Docker containers"
+	@echo "  make docker-down Stop Docker containers"
+	@echo "  make docker-logs Tail Docker logs"
+	@echo "  make install     Install all dependencies locally (Node.js + Python)"
+	@echo "  make dev         Start Remotion Studio locally for preview"
 	@echo "  make build       Bundle Remotion for rendering"
 	@echo "  make render      Render a composition (use COMP= PROPS= OUT=)"
 	@echo "  make generate    Run full pipeline (use SCRIPT= VOICE= TEMPLATE=)"
@@ -20,6 +24,20 @@ help:
 	@echo "  make check       Verify all dependencies are installed"
 	@echo ""
 
+# ── Docker ─────────────────────────────────────────────────────
+docker:
+	docker compose -f docker-compose.dev.yml up -d
+
+docker-build:
+	docker compose -f docker-compose.dev.yml up -d --build
+
+docker-down:
+	docker compose -f docker-compose.dev.yml down
+
+docker-logs:
+	docker compose -f docker-compose.dev.yml logs -f
+
+# ── Local (without Docker) ────────────────────────────────────
 # Install all dependencies
 install:
 	npm install

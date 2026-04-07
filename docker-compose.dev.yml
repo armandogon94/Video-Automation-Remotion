@@ -20,5 +20,30 @@ services:
         limits:
           memory: 256M
 
+  # Video factory — Remotion + FFmpeg + Edge-TTS + faster-whisper
+  video-factory:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: video-factory
+    ports:
+      - "3100:3100"
+    environment:
+      REMOTION_CONCURRENCY: ${REMOTION_CONCURRENCY:-2}
+      REMOTION_QUALITY: ${REMOTION_QUALITY:-80}
+      FFMPEG_THREADS: ${FFMPEG_THREADS:-4}
+      DEFAULT_VOICE: ${DEFAULT_VOICE:-es-MX-JorgeNeural}
+      DEFAULT_LANGUAGE: ${DEFAULT_LANGUAGE:-es}
+      OUTPUT_DIR: /app/output
+    volumes:
+      - ./src:/app/src
+      - ./templates:/app/templates
+      - ./output:/app/output
+      - ./.env:/app/.env:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   redis-data:
