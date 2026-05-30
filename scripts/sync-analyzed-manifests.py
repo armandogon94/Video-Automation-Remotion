@@ -159,6 +159,7 @@ def extract_picks(picks_obj) -> list[dict]:
     """Pick-file shapes vary:
       - {"wave": ..., "picks": [...]}
       - {"voter": ..., "picks": [...]}
+      - {"longForm": [...], "shorts": [...]}   (mreflow / long-form split)
       - bare list [{...}, ...]
     Return a flat list of pick dicts (possibly empty).
     """
@@ -167,9 +168,23 @@ def extract_picks(picks_obj) -> list[dict]:
     if isinstance(picks_obj, list):
         return [p for p in picks_obj if isinstance(p, dict)]
     if isinstance(picks_obj, dict):
-        picks = picks_obj.get("picks")
-        if isinstance(picks, list):
-            return [p for p in picks if isinstance(p, dict)]
+        out: list[dict] = []
+        # Known pick-array keys, in priority order. mreflow's picks file splits
+        # into "longForm"/"shorts" instead of a single "picks" array, which used
+        # to make its manifest titles fall back to "unknown".
+        for key in ("picks", "longForm", "longform", "shorts", "videos"):
+            val = picks_obj.get(key)
+            if isinstance(val, list):
+                out.extend(p for p in val if isinstance(p, dict))
+        # Fallback: if none of the known keys matched, gather any list-of-dicts
+        # value whose items look like picks (carry an "id").
+        if not out:
+            for val in picks_obj.values():
+                if isinstance(val, list) and any(
+                    isinstance(p, dict) and "id" in p for p in val
+                ):
+                    out.extend(p for p in val if isinstance(p, dict))
+        return out
     return []
 
 
