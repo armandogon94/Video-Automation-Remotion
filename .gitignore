@@ -44,3 +44,42 @@ tmp/
 
 # Claude Code - user specific
 .claude/projects/
+
+# Hyperframes (parallel engine, installed as side-by-side experiment)
+hyperframes/node_modules/
+hyperframes/output/
+hyperframes/.cache/
+hyperframes/.hyperframes/
+hyperframes/dist/
+
+# ── Reference-creator research corpus: binary scratch ──
+# Frame extracts, downloaded source reels, and curated reference clips are kept
+# on disk locally (the validation HTML and analysis reference them) but are NOT
+# tracked in git: ~1.1 GB of regenerable inputs would bloat history permanently.
+# We DO track the written research artifacts: ANALYSIS.md, analyzed-videos.json,
+# picks-*.json, animation-ranges-*.json, CREATORS.md, and per-video metadata.json.
+references/**/*.jpg
+references/**/*.jpeg
+references/**/*.png
+references/**/*.webp
+references/**/*.gif
+references/**/*.mp4
+references/**/*.mov
+references/**/*.webm
+references/**/*.m4a
+# Raw yt-dlp dumps + partial downloads (machine output, not hand-authored)
+references/**/*.info.json
+references/**/*.mp4.json
+references/**/*.part
+# docs/ research assets (frames + curated motion clips) — kept on disk, not in git
+docs/research/**/*.mp4
+docs/research/**/*.mov
+docs/research/**/*.webm
+docs/**/*.jpg
+docs/**/*.jpeg
+docs/**/*.png
+docs/**/*.gif
+docs/**/*.webp
+
+# Generated TTS voiceover samples (regenerable from scripts)
+public/voiceover-*.mp3
