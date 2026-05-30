@@ -56,6 +56,7 @@ import { z } from "zod";
 import { BrandBreadcrumb16x9 } from "../components/BrandBreadcrumb16x9";
 import { BrandWatermark16x9 } from "../components/BrandWatermark16x9";
 import { YellowGlowLowerThird } from "../components/YellowGlowLowerThird";
+import { NameTagStackedLowerThird } from "../components/NameTagStackedLowerThird";
 import { EditorialCaption } from "../components/captions/EditorialCaption";
 import { ChunkedPhraseCaption } from "../components/captions/ChunkedPhraseCaption";
 import {
@@ -309,71 +310,6 @@ const SpeakerPanel: React.FC<{
   );
 };
 
-// ─── Name tag block under a panel ──────────────────────────────────────────
-const NameTag: React.FC<{
-  speaker: SplitScreenInterviewSpeaker;
-  centerX: number;
-  defaultAccent: string;
-  mutedColor: string;
-  inkColor: string;
-}> = ({ speaker, centerX, defaultAccent, mutedColor, inkColor }) => {
-  const nameColor = speaker.accentColor || defaultAccent;
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: NAME_TAG_Y,
-        left: centerX - PANEL_W / 2,
-        width: PANEL_W,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 8,
-        pointerEvents: "none",
-      }}
-    >
-      <div
-        style={{
-          fontFamily: FONT_STACKS.sans,
-          fontWeight: 800,
-          fontSize: 42,
-          color: nameColor,
-          lineHeight: 1.0,
-          letterSpacing: "-0.01em",
-          textShadow: `0 1px 0 ${inkColor}`,
-          textAlign: "center",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          maxWidth: PANEL_W,
-          textOverflow: "ellipsis",
-        }}
-      >
-        {speaker.nameTag}
-      </div>
-      {speaker.title ? (
-        <div
-          style={{
-            fontFamily: FONT_STACKS.mono,
-            fontWeight: 600,
-            fontSize: 24,
-            color: mutedColor,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            textAlign: "center",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            maxWidth: PANEL_W,
-            textOverflow: "ellipsis",
-          }}
-        >
-          {speaker.title}
-        </div>
-      ) : null}
-    </div>
-  );
-};
-
 // ─── Lower-third banner (full-width, semi-transparent dark base) ───────────
 const LowerThirdBanner: React.FC<{
   banner: SplitScreenInterviewLowerThird;
@@ -600,19 +536,25 @@ export const SplitScreenInterviewLayout16x9: React.FC<
       />
 
       {/* ── z=12: Name tags under each panel ── */}
-      <NameTag
-        speaker={left}
-        centerX={LEFT_PANEL_X + PANEL_W / 2}
-        defaultAccent={resolvedAccent}
+      <NameTagStackedLowerThird
+        name={left.nameTag}
+        title={left.title || undefined}
+        accentColor={left.accentColor || resolvedAccent}
         mutedColor={resolvedMuted}
         inkColor={resolvedInk}
+        top={NAME_TAG_Y}
+        left={LEFT_PANEL_X}
+        width={PANEL_W}
       />
-      <NameTag
-        speaker={right}
-        centerX={RIGHT_PANEL_X + PANEL_W / 2}
-        defaultAccent={resolvedAccent}
+      <NameTagStackedLowerThird
+        name={right.nameTag}
+        title={right.title || undefined}
+        accentColor={right.accentColor || resolvedAccent}
         mutedColor={resolvedMuted}
         inkColor={resolvedInk}
+        top={NAME_TAG_Y}
+        left={RIGHT_PANEL_X}
+        width={PANEL_W}
       />
 
       {/* ── z=20: Palette grain overlay (above panels, below overlays) ── */}
