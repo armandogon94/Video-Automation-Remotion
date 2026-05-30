@@ -1,0 +1,31 @@
+{
+  "name": "Armando Inteligencia",
+  "handle": "@armandointeligencia",
+  "colors": {
+    "primary": "#1B3A6E",
+    "accent": "#D4AF37",
+    "background": "#FFFFFF",
+    "backgroundDark": "#0F1B2D",
+    "text": "#1A1A1A",
+    "textLight": "#FFFFFF",
+    "muted": "#6B7280"
+  },
+  "fonts": {
+    "heading": "Inter",
+    "body": "Inter",
+    "accent": "Georgia"
+  },
+  "logo": {
+    "primary": "/brand/logos/logo-lentes.png",
+    "icon": "/brand/logos/logo-lentes.png"
+  },
+  "logos": {
+    "glasses": "brand/logos/logo-lentes.png",
+    "letters": "brand/logos/logo-letras.png",
+    "complete": "brand/logos/logo-completo.png",
+    "avatar": "brand/logos/avatar-pixar.png",
+    "avatarLetters": "brand/logos/avatar-pixar-letras.png"
+  },
+  "logoSize": 80,
+  "logoPosition": "bottom-right"
+}

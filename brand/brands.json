@@ -1,0 +1,136 @@
+{
+  "$comment": "Brand-set: 4 identities under the same creator. Add per-brand color palettes once the channel ships its first cross-brand video; until then sub-brands inherit Armando Inteligencia's editorial palette as a placeholder.",
+  "defaultBrandId": "armando-inteligencia",
+  "brands": {
+    "armando-inteligencia": {
+      "id": "armando-inteligencia",
+      "name": "Armando Inteligencia",
+      "handle": "@armandointeligencia",
+      "tagline": "AI tools for Latam founders",
+      "colors": {
+        "primary": "#1B3A6E",
+        "accent": "#D4AF37",
+        "background": "#FFFFFF",
+        "backgroundDark": "#0F1B2D",
+        "text": "#1A1A1A",
+        "textLight": "#FFFFFF",
+        "muted": "#6B7280",
+        "paper": "#FAF7F2",
+        "ink": "#1A1A1A",
+        "editorialAccent": "#B33A2A"
+      },
+      "fonts": {
+        "heading": "Inter",
+        "body": "Inter",
+        "accent": "Georgia"
+      },
+      "logoFolder": "brand/logos",
+      "logoFiles": {
+        "glasses": "logo-lentes.png",
+        "letters": "logo-letras.png",
+        "complete": "logo-completo.png",
+        "avatar": "avatar-pixar.png",
+        "avatarLetters": "avatar-pixar-letras.png"
+      },
+      "watermarkDefault": { "logo": "avatar", "size": 96, "position": "bottom-right", "opacity": 0.9 }
+    },
+    "305-ai": {
+      "id": "305-ai",
+      "name": "305 AI",
+      "handle": "@305ai",
+      "tagline": "Agency · AI consulting for B2B",
+      "_palette_status": "TODO — confirm with user; using Armando palette as placeholder",
+      "colors": {
+        "primary": "#1B3A6E",
+        "accent": "#D4AF37",
+        "background": "#FFFFFF",
+        "backgroundDark": "#0F1B2D",
+        "text": "#1A1A1A",
+        "textLight": "#FFFFFF",
+        "muted": "#6B7280",
+        "paper": "#FAF7F2",
+        "ink": "#1A1A1A",
+        "editorialAccent": "#B33A2A"
+      },
+      "fonts": {
+        "heading": "Inter",
+        "body": "Inter",
+        "accent": "Georgia"
+      },
+      "logoFolder": "brand/logos-secondary/305-ai",
+      "logoFiles": {
+        "icon": "305-ai-icon.png",
+        "sideBySide": "305-ai-side-by-side.png",
+        "text": "305-ai-text.png",
+        "topBottom": "305-ai-top-bottom.png"
+      },
+      "watermarkDefault": { "logo": "icon", "size": 96, "position": "bottom-right", "opacity": 0.9 }
+    },
+    "ai-leadership-lab": {
+      "id": "ai-leadership-lab",
+      "name": "AI Leadership Lab",
+      "handle": "@aileadershiplab",
+      "tagline": "Executive AI education",
+      "_palette_status": "TODO — confirm with user; using Armando palette as placeholder",
+      "colors": {
+        "primary": "#1B3A6E",
+        "accent": "#D4AF37",
+        "background": "#FFFFFF",
+        "backgroundDark": "#0F1B2D",
+        "text": "#1A1A1A",
+        "textLight": "#FFFFFF",
+        "muted": "#6B7280",
+        "paper": "#FAF7F2",
+        "ink": "#1A1A1A",
+        "editorialAccent": "#B33A2A"
+      },
+      "fonts": {
+        "heading": "Inter",
+        "body": "Inter",
+        "accent": "Georgia"
+      },
+      "logoFolder": "brand/logos-secondary/ai-leadership-lab",
+      "logoFiles": {
+        "letters": "ai-leadership-lab-letters.png",
+        "logo": "ai-leadership-lab-logo.png",
+        "logoWithLetters": "ai-leadership-lab-logo-with-letters.png",
+        "logoWithLetters2": "ai-leadership-lab-logo-with-letters-2.png"
+      },
+      "watermarkDefault": { "logo": "logo", "size": 96, "position": "bottom-right", "opacity": 0.9 }
+    },
+    "ia-ejecutiva-90": {
+      "id": "ia-ejecutiva-90",
+      "name": "IA Ejecutiva 90",
+      "handle": "@iaejecutiva90",
+      "tagline": "90-day AI implementation cohort",
+      "_palette_status": "TODO — confirm with user; using Armando palette as placeholder",
+      "colors": {
+        "primary": "#1B3A6E",
+        "accent": "#D4AF37",
+        "background": "#FFFFFF",
+        "backgroundDark": "#0F1B2D",
+        "text": "#1A1A1A",
+        "textLight": "#FFFFFF",
+        "muted": "#6B7280",
+        "paper": "#FAF7F2",
+        "ink": "#1A1A1A",
+        "editorialAccent": "#B33A2A"
+      },
+      "fonts": {
+        "heading": "Inter",
+        "body": "Inter",
+        "accent": "Georgia"
+      },
+      "logoFolder": "brand/logos-secondary/ia-ejecutiva-90",
+      "logoFiles": {
+        "complete": "ia-ejecutiva-90-complete.png",
+        "complete2": "ia-ejecutiva-90-complete-2.png",
+        "icon": "ia-ejecutiva-90-icon.png",
+        "icon2": "ia-ejecutiva-90-icon-2.png",
+        "text": "ia-ejecutiva-90-text.png",
+        "text2": "ia-ejecutiva-90-text-2.png"
+      },
+      "watermarkDefault": { "logo": "icon", "size": 96, "position": "bottom-right", "opacity": 0.9 }
+    }
+  }
+}
