@@ -50,6 +50,7 @@ import {
 } from "remotion";
 import { BrandBreadcrumb16x9 } from "../components/BrandBreadcrumb16x9";
 import { BrandWatermark16x9 } from "../components/BrandWatermark16x9";
+import { DarkSlateChassis16x9 } from "../components/chassis/DarkSlateChassis16x9";
 import { EmphasisPill } from "../components/TextEmphasis";
 import { EditorialCaption } from "../components/captions/EditorialCaption";
 import { blurInFocus } from "../animation/blurInFocus";
@@ -440,7 +441,7 @@ export const BeforeAfterText16x9: React.FC<BeforeAfterText16x9Props> = ({
   const bodyTextColor = isDarkPalette(palette) ? "#FFFFFF" : resolvedInk;
 
   return (
-    <AbsoluteFill style={{ background: resolvedPaper }}>
+    <DarkSlateChassis16x9 slateColor={resolvedPaper}>
       {/* Voiceover */}
       {resolvedAudio && <Audio src={resolvedAudio} />}
 
@@ -545,7 +546,7 @@ export const BeforeAfterText16x9: React.FC<BeforeAfterText16x9Props> = ({
           }}
         />
       ) : null}
-    </AbsoluteFill>
+    </DarkSlateChassis16x9>
   );
 };
 
