@@ -1,0 +1,27 @@
+{
+  "id": "quote-card-9x16",
+  "name": "Quote Card 9x16",
+  "description": "Vertical editorial pull-quote card — Bloomberg / New Yorker treatment with massive decorative glyphs and serif italic body. Pass --palette dark to flip to dark editorial.",
+  "composition": "QuoteCard9x16",
+  "compositionDark": "QuoteCard9x16Dark",
+  "defaults": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "durationBehavior": "matchAudio",
+    "props": {
+      "quote": "La mejor manera de predecir el futuro es crearlo.",
+      "author": "Peter Drucker",
+      "authorRole": null,
+      "breadcrumb": { "text": "Anthropic", "date": "On Creativity" },
+      "palette": "cream",
+      "captionFontSize": 40,
+      "showCaptions": true
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1080, "height": 1920 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 }
+  }
+}

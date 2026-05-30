@@ -1,7 +1,7 @@
 {
   "id": "talking-head",
   "name": "Talking Head with Captions",
-  "description": "Speaker video/image with animated word-by-word captions overlay",
+  "description": "Speaker video/image with animated word-by-word captions overlay (Armando Inteligencia branded)",
   "composition": "TalkingHead",
   "defaults": {
     "fps": 30,
@@ -18,15 +18,16 @@
       "style": "wordByWord",
       "fontSize": 40,
       "position": "bottom-third",
-      "backgroundColor": "rgba(0,0,0,0.7)",
-      "textColor": "#ffffff",
-      "activeWordColor": "#ffd700"
+      "backgroundColor": "rgba(15,27,45,0.75)",
+      "textColor": "#FFFFFF",
+      "activeWordColor": "#D4AF37"
     },
     "branding": {
-      "logo": null,
-      "nameTag": null,
+      "logo": "avatar",
+      "nameTag": "Armando Inteligencia",
+      "watermark": true,
       "introSlide": false,
-      "outroSlide": true
+      "outroSlide": false
     }
   },
   "platforms": {

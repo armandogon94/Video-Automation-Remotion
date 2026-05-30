@@ -1,0 +1,32 @@
+{
+  "id": "diagram-explainer",
+  "name": "Diagram Explainer 9x16",
+  "description": "Vertical cream/dark flow-diagram explainer — 2–4 rounded node cards connected by warm-red arrows. Pass --palette dark to flip to cosmic editorial.",
+  "composition": "DiagramExplainer9x16",
+  "compositionDark": "DiagramExplainer9x16Dark",
+  "defaults": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "durationBehavior": "matchAudio",
+    "props": {
+      "sectionLabel": "EL FLUJO",
+      "breadcrumb": { "text": "Claude Code", "date": "Subagents" },
+      "palette": "cream",
+      "nodes": [
+        { "title": "Escribes una función", "sublabel": "$ you" },
+        { "title": "Claude invoca al subagente", "sublabel": "auto · proactive" },
+        { "title": "Reviewer lee y analiza", "sublabel": "Read · Grep · Glob", "ghosted": true }
+      ],
+      "sequenceStepSeconds": 1.4,
+      "firstNodeDelaySeconds": 0.4,
+      "captionFontSize": 44,
+      "showWatermark": false
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1080, "height": 1920 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 }
+  }
+}

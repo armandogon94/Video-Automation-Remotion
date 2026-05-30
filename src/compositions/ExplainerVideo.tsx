@@ -13,6 +13,7 @@ import type { ExplainerProps } from "./schemas";
 import { GradientBackground } from "../components/Background";
 import { AnimatedText } from "../components/AnimatedText";
 import { Caption } from "../components/Caption";
+import { BrandWatermark } from "../components/BrandWatermark";
 
 export const ExplainerVideo: React.FC<ExplainerProps> = ({
   title,
@@ -25,6 +26,7 @@ export const ExplainerVideo: React.FC<ExplainerProps> = ({
   textColor,
   fontFamily,
   captions,
+  watermark,
 }) => {
   const frame = useCurrentFrame();
   const { fps, width, height, durationInFrames } = useVideoConfig();
@@ -116,6 +118,9 @@ export const ExplainerVideo: React.FC<ExplainerProps> = ({
         style={captions}
         containerWidth={width}
       />
+
+      {/* Brand watermark */}
+      <BrandWatermark style={watermark} />
     </AbsoluteFill>
   );
 };

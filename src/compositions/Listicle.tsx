@@ -13,6 +13,7 @@ import type { ListicleProps } from "./schemas";
 import { GradientBackground } from "../components/Background";
 import { AnimatedText } from "../components/AnimatedText";
 import { Caption } from "../components/Caption";
+import { BrandWatermark } from "../components/BrandWatermark";
 
 const ListItem: React.FC<{
   number: number;
@@ -100,6 +101,7 @@ export const Listicle: React.FC<ListicleProps> = ({
   textColor,
   secondsPerItem,
   captions,
+  watermark,
 }) => {
   const { fps, width } = useVideoConfig();
   const framesPerItem = secondsPerItem * fps;
@@ -159,6 +161,9 @@ export const Listicle: React.FC<ListicleProps> = ({
         style={captions}
         containerWidth={width}
       />
+
+      {/* Brand watermark */}
+      <BrandWatermark style={watermark} />
     </AbsoluteFill>
   );
 };

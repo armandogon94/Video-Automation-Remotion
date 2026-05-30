@@ -10,6 +10,7 @@ import {
 } from "remotion";
 import type { QuoteCardProps } from "./schemas";
 import { Caption } from "../components/Caption";
+import { BrandWatermark } from "../components/BrandWatermark";
 
 export const QuoteCard: React.FC<QuoteCardProps> = ({
   quote,
@@ -21,6 +22,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   authorColor,
   fontFamily,
   captions,
+  watermark,
 }) => {
   const frame = useCurrentFrame();
   const { fps, width, durationInFrames } = useVideoConfig();
@@ -131,6 +133,9 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
         style={captions}
         containerWidth={width}
       />
+
+      {/* Brand watermark */}
+      <BrandWatermark style={watermark} />
     </AbsoluteFill>
   );
 };

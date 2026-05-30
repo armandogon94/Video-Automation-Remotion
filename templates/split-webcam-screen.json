@@ -1,0 +1,41 @@
+{
+  "id": "split-webcam-screen",
+  "name": "Split Webcam + Screen 9x16",
+  "description": "Vertical 50/50 split — top half webcam, bottom half screen recording, with keyword-anchored seam callouts. Single palette. CLI flags: --webcam-image, --screen-image.",
+  "composition": "SplitWebcamScreen9x16",
+  "defaults": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "durationBehavior": "matchAudio",
+    "props": {
+      "webcamImageUrl": "",
+      "screenImageUrl": "",
+      "callouts": [
+        {
+          "text": "BOOM",
+          "keyword": "Gemini",
+          "fallbackStartSeconds": 1.0,
+          "endSeconds": 2.5,
+          "position": "seam-left"
+        },
+        {
+          "text": "15× MÁS BARATO",
+          "keyword": "barato",
+          "fallbackStartSeconds": 3.5,
+          "endSeconds": 6.0,
+          "position": "seam-center"
+        }
+      ],
+      "breadcrumb": { "text": "Midu.dev", "date": "Reaction" },
+      "palette": "cream",
+      "captionFontSize": 40,
+      "showCaptions": true
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1080, "height": 1920 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 }
+  }
+}

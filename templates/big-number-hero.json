@@ -1,0 +1,29 @@
+{
+  "id": "big-number-hero",
+  "name": "Big Number Hero 9x16",
+  "description": "Vertical stat-hero — ONE massive figure dominates ~50% of the frame, with optional kicker eyebrow and subtitle. Pass --palette dark to flip to dark editorial. CLI flags: --number, --kicker, --subtitle, --caption.",
+  "composition": "BigNumberHero9x16",
+  "compositionDark": "BigNumberHero9x16Dark",
+  "defaults": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "durationBehavior": "matchAudio",
+    "props": {
+      "number": "15×",
+      "kicker": "GEMINI 3.2 FLASH",
+      "subtitle": "más barato que GPT-5.5",
+      "caption": null,
+      "countUp": false,
+      "breadcrumb": { "text": "Google", "date": "Filtración" },
+      "palette": "cream",
+      "captionFontSize": 40,
+      "showCaptions": true
+    }
+  },
+  "platforms": {
+    "youtube": { "width": 1080, "height": 1920 },
+    "tiktok": { "width": 1080, "height": 1920 },
+    "reels": { "width": 1080, "height": 1920 }
+  }
+}

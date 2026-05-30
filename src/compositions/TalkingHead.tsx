@@ -12,6 +12,7 @@ import {
 } from "remotion";
 import type { TalkingHeadProps } from "./schemas";
 import { Caption } from "../components/Caption";
+import { BrandWatermark } from "../components/BrandWatermark";
 
 export const TalkingHead: React.FC<TalkingHeadProps> = ({
   title,
@@ -22,6 +23,7 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({
   nameTag,
   nameTagColor,
   captions,
+  watermark,
 }) => {
   const frame = useCurrentFrame();
   const { fps, width, durationInFrames } = useVideoConfig();
@@ -161,6 +163,9 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({
         style={captions}
         containerWidth={width}
       />
+
+      {/* Brand watermark */}
+      <BrandWatermark style={watermark} />
     </AbsoluteFill>
   );
 };

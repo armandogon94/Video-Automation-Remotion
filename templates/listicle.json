@@ -1,7 +1,7 @@
 {
   "id": "listicle",
   "name": "Listicle with Transitions",
-  "description": "Numbered list items with animated transitions between each point",
+  "description": "Numbered list items with animated transitions (Armando Inteligencia branded)",
   "composition": "Listicle",
   "defaults": {
     "fps": 30,
@@ -13,26 +13,28 @@
     "transitionType": "slide",
     "items": {
       "numberStyle": "circle",
-      "numberColor": "#ffd700",
-      "textColor": "#ffffff",
+      "numberColor": "#D4AF37",
+      "textColor": "#FFFFFF",
       "fontSize": 44,
       "animation": "slideUp"
     },
     "background": {
       "type": "gradient",
-      "from": "#0f0c29",
-      "to": "#302b63"
+      "from": "#1B3A6E",
+      "to": "#0F1B2D"
     },
     "captions": {
       "enabled": true,
       "style": "highlighted",
       "fontSize": 28,
-      "position": "bottom"
+      "position": "bottom",
+      "highlightColor": "#D4AF37"
     },
     "branding": {
-      "logo": null,
-      "introSlide": true,
-      "outroSlide": true
+      "logo": "avatar",
+      "watermark": true,
+      "introSlide": false,
+      "outroSlide": false
     }
   },
   "platforms": {
