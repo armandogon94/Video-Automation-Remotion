@@ -75,6 +75,9 @@ import { StudioCompositor16x9, studioCompositorSchema } from "./compositions/Stu
 import { MemeLoopDiagram16x9, memeLoopDiagramSchema } from "./compositions/MemeLoopDiagram16x9";
 import { KeynoteSlidePIP16x9, keynoteSlidePIPSchema } from "./compositions/KeynoteSlidePIP16x9";
 import { LiveEventAudienceMicSplitScreen16x9, liveEventAudienceMicSplitScreenSchema } from "./compositions/LiveEventAudienceMicSplitScreen16x9";
+import { StudioDeskTalkingHead16x9, studioDeskTalkingHeadSchema } from "./compositions/StudioDeskTalkingHead16x9";
+import { FlipChartLiveDrawing16x9, flipChartLiveDrawingSchema } from "./compositions/FlipChartLiveDrawing16x9";
+import { KaraokeWithBlueChipPullout9x16, karaokeWithBlueChipPulloutSchema } from "./compositions/KaraokeWithBlueChipPullout9x16";
 import {
   explainerSchema,
   talkingHeadSchema,
@@ -3410,6 +3413,114 @@ export const RemotionRoot: React.FC = () => {
             durationFrames: 150,
             transitionVerb:
               "Crossfade in both panes simultaneously over 8 frames at chassis entry; if a seam is configured, it draws in 4 frames after the panes settle; name tag overlays fade in last.",
+          }}
+        />
+
+        {/*
+          StudioDeskTalkingHead16x9 — B15, Wave-7. The convergent owned-media
+          desk talking-head (Hormozi/Adam Rosler/Matt Wolfe/Igor). Distinct from
+          StudioCompositor16x9 (presenter-LEFT + UI-mockup-RIGHT): a centered
+          seated presenter on the dark-slate chassis with a persistent
+          lower-third name tag + optional topic chip, no UI-mockup pane.
+        */}
+        <Composition
+          id="StudioDeskTalkingHead16x9"
+          component={StudioDeskTalkingHead16x9}
+          schema={studioDeskTalkingHeadSchema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: Math.max(30, Math.round(props.durationFrames)),
+          })}
+          defaultProps={{
+            presenterName: "Armando Inteligencia",
+            presenterRole: "@armandointeligencia",
+            topicChip: "GEMINI 3.2 FLASH",
+            presenterImage: "brand/logos/avatar-pixar.png",
+            handle: "@armandointeligencia",
+            durationFrames: 150,
+            transitionVerb:
+              "Fade the seated presenter tile up from below, drop in the topic chip from above, then slide the lower-third name tag in from the left with its gold accent rule wiping under the name; hold the host register without fading out.",
+          }}
+        />
+
+        {/*
+          FlipChartLiveDrawing16x9 — B17, Wave-7. Hormozi NEW-H8 flip-chart +
+          Matt Wolfe easel convergence: a cream flip-chart pad over the slate
+          chassis with marker-ink title and bullet labels revealed live via
+          stroke-dashoffset hand-drawn marks. Self-schedules from durationFrames.
+        */}
+        <Composition
+          id="FlipChartLiveDrawing16x9"
+          component={FlipChartLiveDrawing16x9}
+          schema={flipChartLiveDrawingSchema}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: Math.max(30, Math.round(props.durationFrames)),
+          })}
+          defaultProps={{
+            title: "WHO? METRICS? MARKET?",
+            items: [
+              { text: "LEADS", emphasis: true },
+              { text: "SALES" },
+              { text: "OPS" },
+              { text: "FULFILLMENT" },
+            ],
+            markerColor: "#D4AF37",
+            handle: "@armandointeligencia",
+            durationFrames: 180,
+            transitionVerb:
+              "Settle a cream flip-chart pad onto the slate, write the title as marker ink with a hand-drawn underline, then reveal each bullet one-by-one with a text wipe and a stroke-dashoffset sharpie mark; jitter feels hand-drawn; never move the camera.",
+          }}
+        />
+
+        {/*
+          KaraokeWithBlueChipPullout9x16 — B24b, Wave-7. Nate B Jones C7 Shorts
+          pattern: green-current-word karaoke baseline + a SCHEDULE of blue
+          rounded-pill keyword chips sliding in from the right edge per beat.
+          9:16 lives on the caption layer (no slate cards — ADR-001 Add. A.2).
+        */}
+        <Composition
+          id="KaraokeWithBlueChipPullout9x16"
+          component={KaraokeWithBlueChipPullout9x16}
+          schema={karaokeWithBlueChipPulloutSchema}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1920}
+          calculateMetadata={calcDurationFromAudio}
+          defaultProps={{
+            audioUrl: "audio.mp3",
+            wordTimings: [
+              { text: "Claude", startFrame: 0, endFrame: 14, startSeconds: 0.0, endSeconds: 0.47 },
+              { text: "is", startFrame: 15, endFrame: 22, startSeconds: 0.5, endSeconds: 0.73 },
+              { text: "the", startFrame: 23, endFrame: 30, startSeconds: 0.77, endSeconds: 1.0 },
+              { text: "best", startFrame: 31, endFrame: 52, startSeconds: 1.03, endSeconds: 1.73 },
+              { text: "AI", startFrame: 53, endFrame: 74, startSeconds: 1.77, endSeconds: 2.47 },
+              { text: "for", startFrame: 75, endFrame: 82, startSeconds: 2.5, endSeconds: 2.73 },
+              { text: "writing", startFrame: 83, endFrame: 110, startSeconds: 2.77, endSeconds: 3.67 },
+              { text: "production", startFrame: 111, endFrame: 140, startSeconds: 3.7, endSeconds: 4.67 },
+              { text: "code", startFrame: 141, endFrame: 165, startSeconds: 4.7, endSeconds: 5.5 },
+            ],
+            keywordChipSchedule: [
+              { word: "Claude", startMs: 0, endMs: 1700 },
+              { word: "best AI", startMs: 1770, endMs: 3670 },
+              { word: "production code", startMs: 3700, endMs: 5800 },
+            ],
+            chipColor: "#3FB8FF",
+            chipTextColor: "#001018",
+            activeWordColor: "#2ECC71",
+            pastWordColor: "#FFFFFF",
+            backgroundColor: "#000000",
+            handle: "@armandointeligencia",
+            durationFrames: 180,
+            transitionVerb:
+              "Hold the green-current-word karaoke baseline running underneath; for each beat, slide a blue rounded-pill keyword chip in from the right edge of the lower-third, hold while the keyword is spoken, then slide it back out before the next chip pulls in.",
           }}
         />
       </Folder>
