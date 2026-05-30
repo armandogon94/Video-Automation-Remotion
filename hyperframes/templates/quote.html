@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Quote Card · Armando Inteligencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --navy: #1B3A6E;
+        --navy-deep: #0F1B2D;
+        --gold: #D4AF37;
+        --paper: #FFFFFF;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: var(--navy-deep);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--paper);
+      }
+      #stage {
+        position: absolute;
+        inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 0 160px;
+      }
+      #quote-mark {
+        position: relative;
+        align-self: flex-start;
+        margin-left: 60px; margin-bottom: -50px;
+        font-family: Georgia, serif;
+        font-size: 240px;
+        color: rgba(212, 175, 55, 0.3);
+        line-height: 1;
+      }
+      #quote-text {
+        font-family: Georgia, serif;
+        font-style: italic;
+        font-size: 58px;
+        line-height: 1.4;
+        text-align: center;
+        max-width: 1400px;
+        color: var(--paper);
+      }
+      #decor-line {
+        width: 0; height: 3px;
+        background: var(--gold);
+        margin: 40px 0;
+      }
+      #author {
+        font-size: 36px;
+        font-weight: 600;
+        color: var(--gold);
+        letter-spacing: 0.04em;
+      }
+      #watermark {
+        position: absolute;
+        bottom: 48px; right: 48px;
+        width: 96px; height: 96px;
+        opacity: 0.9;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{DURATION_SECONDS}}"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="stage" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="1">
+        <div id="quote-mark">&ldquo;</div>
+        <div id="quote-text">{{QUOTE_TEXT}}</div>
+        <div id="decor-line"></div>
+        <div id="author">{{AUTHOR}}</div>
+      </div>
+      <img id="watermark" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="9" src="brand/logos/avatar-pixar.png" alt="Armando Inteligencia" />
+      <audio id="narration" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="0" src="{{AUDIO_FILENAME}}"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from('#quote-mark', { scale: 0.4, opacity: 0, duration: 0.7, ease: 'back.out(1.6)' }, 0);
+      tl.from('#quote-text', { opacity: 0, duration: 0.8 }, 0.5);
+      tl.to('#decor-line', { width: 160, duration: 1.0, ease: 'power2.out' }, 1.3);
+      tl.from('#author', { opacity: 0, y: 20, duration: 0.6 }, 1.5);
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Vertical Explainer · Armando Inteligencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --navy: #1B3A6E;
+        --navy-deep: #0F1B2D;
+        --gold: #D4AF37;
+        --paper: #FFFFFF;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px;
+        overflow: hidden;
+        background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--paper);
+      }
+      #title {
+        position: absolute;
+        top: 380px; left: 0; right: 0;
+        font-size: 80px; font-weight: 800;
+        letter-spacing: -0.02em;
+        text-align: center; padding: 0 80px;
+        line-height: 1.05;
+      }
+      #accent-bar-wrap {
+        position: absolute;
+        top: 640px; left: 0; right: 0;
+        display: flex; justify-content: center;
+      }
+      #accent-bar {
+        width: 0; height: 4px;
+        background: var(--gold);
+      }
+      #captions-wrap {
+        position: absolute;
+        top: 850px; left: 0; right: 0;
+        display: flex; justify-content: center;
+      }
+      #captions {
+        max-width: 940px;
+        padding: 22px 30px;
+        background: rgba(15, 27, 45, 0.78);
+        border-left: 4px solid var(--gold);
+        text-align: center;
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 14px;
+      }
+      .word {
+        font-size: 50px; font-weight: 800;
+        color: rgba(255,255,255,0.4);
+        display: inline-block;
+      }
+      #watermark {
+        position: absolute;
+        bottom: 80px; right: 60px;
+        width: 88px; height: 88px;
+        opacity: 0.9;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{DURATION_SECONDS}}"
+      data-width="1080"
+      data-height="1920"
+    >
+      <h1 id="title" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="1">{{TITLE}}</h1>
+      <div id="accent-bar-wrap" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="2">
+        <div id="accent-bar"></div>
+      </div>
+      <div id="captions-wrap" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="3">
+        <div id="captions"></div>
+      </div>
+      <img id="watermark" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="9" src="brand/logos/avatar-pixar.png" alt="Armando Inteligencia" />
+      <audio id="narration" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="0" src="{{AUDIO_FILENAME}}"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__wordTimings = {{WORD_TIMINGS_JSON}};
+
+      const captionsEl = document.getElementById('captions');
+      window.__wordTimings.forEach((w, i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.id = 'word-' + i;
+        span.textContent = w.text;
+        captionsEl.appendChild(span);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from('#title', { opacity: 0, y: -40, duration: 0.8, ease: 'power3.out' }, 0);
+      tl.to('#accent-bar', { width: 240, duration: 1.0, ease: 'power2.out' }, 0.4);
+
+      window.__wordTimings.forEach((w, i) => {
+        tl.to('#word-' + i, { color: 'var(--gold)', scale: 1.08, duration: 0.05 }, w.startSeconds);
+        tl.to('#word-' + i, { color: '#ffffff', scale: 1.0, duration: 0.05 }, w.endSeconds);
+      });
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Tech News Flash · Armando Inteligencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --paper: #FAF7F2;
+        --ink: #1A1A1A;
+        --accent: #B33A2A;
+        --muted: #6B6760;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px;
+        overflow: hidden;
+        background: var(--paper);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--ink);
+      }
+      body::before {
+        /* subtle paper highlight at top — matches Remotion variant */
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at top, rgba(255,255,255,0.6) 0%, rgba(0,0,0,0.02) 100%);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+
+      /* Each .overlay-stage is the full-frame container holding ONE overlay element. */
+      .overlay-stage {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 80px;
+        padding-top: 160px;
+        opacity: 0;
+      }
+
+      .overlay-stage.cta {
+        padding-top: 0;
+      }
+
+      .overlay-content.huge {
+        font-size: 132px;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        line-height: 1.02;
+        text-align: center;
+        color: var(--ink);
+        max-width: 920px;
+      }
+      .overlay-content.huge .subtext {
+        margin-top: 26px;
+        font-size: 38px;
+        font-weight: 500;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+
+      .overlay-content.subtitle {
+        font-size: 78px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        text-align: center;
+        color: var(--ink);
+        max-width: 940px;
+        border-bottom: 4px dotted var(--accent);
+        padding-bottom: 18px;
+      }
+
+      .overlay-content.cta {
+        font-size: 156px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #FFFFFF;
+        background: var(--accent);
+        padding: 28px 64px;
+        box-shadow: 0 12px 40px rgba(179, 58, 42, 0.35);
+      }
+
+      #chip {
+        position: absolute;
+        top: 60px;
+        left: 60px;
+        padding: 10px 24px;
+        background: var(--accent);
+        color: #FFFFFF;
+        font-weight: 800;
+        font-size: 34px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        box-shadow: 0 6px 22px rgba(179, 58, 42, 0.32);
+        opacity: 0;
+        transform-origin: left center;
+      }
+
+      #captions-wrap {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 240px;
+        display: flex;
+        justify-content: center;
+      }
+      #captions {
+        position: relative;
+        width: 960px;
+        min-height: 110px;
+      }
+      .caption-group {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        background: var(--paper);
+        border: 1px solid rgba(107, 103, 96, 0.2);
+        border-left: 4px solid var(--accent);
+        padding: 20px 28px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 12px;
+        box-shadow: 0 4px 16px rgba(26, 26, 26, 0.06);
+        /* All groups overlap at the same anchor. HyperFrames hides inactive
+           ones — only the one in its time window paints. */
+      }
+      .word {
+        font-family: 'Inter', sans-serif;
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.005em;
+        color: rgba(26, 26, 26, 0.4);
+        display: inline-block;
+        line-height: 1.15;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{DURATION_SECONDS}}"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- Chip — its time window is set by the script from the chip overlay -->
+      <div
+        id="chip"
+        class="clip"
+        data-start="0"
+        data-duration="3"
+        data-track-index="1"
+      >FILTRACIÓN</div>
+
+      <!-- Overlay container — populated by script with one .overlay-stage per overlay -->
+      <div id="overlays-root"></div>
+
+      <!-- Captions container — caption groups injected dynamically as separate clips -->
+      <div id="captions-wrap">
+        <div id="captions"></div>
+      </div>
+
+      <!-- Audio narration -->
+      <audio
+        id="narration"
+        class="clip"
+        data-start="0"
+        data-duration="{{DURATION_SECONDS}}"
+        data-track-index="0"
+        src="{{AUDIO_FILENAME}}"
+      ></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__overlays = {{OVERLAYS_JSON}};
+      window.__wordTimings = {{WORD_TIMINGS_JSON}};
+
+      // --- Inject overlays into the DOM (skip the chip, it's static) ---
+      const overlaysRoot = document.getElementById('overlays-root');
+      const nonChipOverlays = window.__overlays.filter((o) => o.kind !== 'chip');
+      let chipOverlay = window.__overlays.find((o) => o.kind === 'chip');
+
+      // Position the chip's clip window from the chip overlay if present
+      if (chipOverlay) {
+        const chipEl = document.getElementById('chip');
+        chipEl.setAttribute('data-start', String(chipOverlay.startSeconds));
+        chipEl.setAttribute(
+          'data-duration',
+          String(chipOverlay.endSeconds - chipOverlay.startSeconds),
+        );
+        chipEl.textContent = chipOverlay.text;
+      }
+
+      nonChipOverlays.forEach((o, i) => {
+        const stage = document.createElement('div');
+        stage.className = 'overlay-stage clip ' + o.kind;
+        stage.id = 'overlay-' + i;
+        stage.setAttribute('data-start', String(o.startSeconds));
+        stage.setAttribute(
+          'data-duration',
+          String(o.endSeconds - o.startSeconds),
+        );
+        stage.setAttribute('data-track-index', String(10 + i));
+
+        const content = document.createElement('div');
+        content.className = 'overlay-content ' + o.kind;
+        content.textContent = o.text;
+        if (o.subtext) {
+          const sub = document.createElement('div');
+          sub.className = 'subtext';
+          sub.textContent = o.subtext;
+          content.appendChild(sub);
+        }
+        stage.appendChild(content);
+        overlaysRoot.appendChild(stage);
+      });
+
+      // --- Chunk words into 6-word groups, render each as its own clip ---
+      // Each group is a separate `.clip` element with its own time window,
+      // so HyperFrames only renders one group at a time (mirrors the
+      // Remotion Caption windowing behavior).
+      const captionsEl = document.getElementById('captions');
+      const GROUP_SIZE = 6;
+      const groups = [];
+      for (let i = 0; i < window.__wordTimings.length; i += GROUP_SIZE) {
+        groups.push(window.__wordTimings.slice(i, i + GROUP_SIZE));
+      }
+
+      groups.forEach((group, gi) => {
+        if (group.length === 0) return;
+        const groupStart = group[0].startSeconds;
+        const groupEnd = group[group.length - 1].endSeconds + 0.4;
+        const groupDur = Math.max(0.2, groupEnd - groupStart);
+
+        const div = document.createElement('div');
+        div.className = 'caption-group clip';
+        div.id = 'caption-group-' + gi;
+        div.setAttribute('data-start', String(groupStart));
+        div.setAttribute('data-duration', String(groupDur));
+        div.setAttribute('data-track-index', String(50 + gi));
+
+        group.forEach((w, wi) => {
+          const span = document.createElement('span');
+          span.className = 'word';
+          span.id = 'word-' + (gi * GROUP_SIZE + wi);
+          span.textContent = w.text;
+          div.appendChild(span);
+        });
+        captionsEl.appendChild(div);
+      });
+
+      // --- Build paused GSAP timeline ---
+      const tl = gsap.timeline({ paused: true });
+
+      // Chip: fade in + tiny scale pulse on entry
+      if (chipOverlay) {
+        tl.fromTo(
+          '#chip',
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1.0, duration: 0.4, ease: 'power3.out', overwrite: 'auto' },
+          chipOverlay.startSeconds,
+        );
+        tl.to(
+          '#chip',
+          { opacity: 0, duration: 0.25, ease: 'power2.in', overwrite: 'auto' },
+          chipOverlay.endSeconds - 0.25,
+        );
+      }
+
+      // Big overlays: fade + scale-in, fade-out at end
+      nonChipOverlays.forEach((o, i) => {
+        const id = '#overlay-' + i;
+        tl.fromTo(
+          id,
+          { opacity: 0, scale: 0.86 },
+          { opacity: 1, scale: 1.0, duration: 0.45, ease: 'power3.out' },
+          o.startSeconds,
+        );
+        tl.to(
+          id,
+          { opacity: 0, duration: 0.25, ease: 'power2.in' },
+          o.endSeconds - 0.25,
+        );
+      });
+
+      // Word-by-word caption highlighting
+      window.__wordTimings.forEach((w, i) => {
+        const id = '#word-' + i;
+        tl.to(id, {
+          color: 'var(--accent)',
+          scale: 1.06,
+          duration: 0.05,
+        }, w.startSeconds);
+        tl.to(id, {
+          color: 'rgba(26, 26, 26, 1)',
+          scale: 1.0,
+          duration: 0.05,
+        }, w.endSeconds);
+      });
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

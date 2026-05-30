@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Listicle · Armando Inteligencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --navy: #1B3A6E;
+        --navy-deep: #0F1B2D;
+        --gold: #D4AF37;
+        --paper: #FFFFFF;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--paper);
+      }
+      #title-slide {
+        position: absolute;
+        inset: 0;
+        display: flex; align-items: center; justify-content: center;
+      }
+      #title-slide h1 {
+        font-size: 92px; font-weight: 800;
+        letter-spacing: -0.02em;
+        text-align: center; max-width: 1400px;
+      }
+      .list-item {
+        position: absolute;
+        inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 120px;
+        opacity: 0;
+      }
+      .list-item .row {
+        display: flex; gap: 40px; align-items: flex-start; max-width: 80%;
+      }
+      .list-item .num {
+        width: 96px; height: 96px; min-width: 96px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: #000; font-size: 44px; font-weight: 800;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .list-item .item-title {
+        font-size: 56px; font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .list-item .item-desc {
+        font-size: 32px; color: rgba(255,255,255,0.7);
+        line-height: 1.4;
+      }
+      #watermark {
+        position: absolute;
+        bottom: 48px; right: 48px;
+        width: 96px; height: 96px;
+        opacity: 0.9;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{DURATION_SECONDS}}"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="title-slide" class="clip" data-start="0" data-duration="2" data-track-index="1">
+        <h1>{{TITLE}}</h1>
+      </div>
+
+      <!-- list items injected by script -->
+      <div id="items-container"></div>
+
+      <img id="watermark" class="clip"
+           data-start="0"
+           data-duration="{{DURATION_SECONDS}}"
+           data-track-index="9"
+           src="brand/logos/avatar-pixar.png"
+           alt="Armando Inteligencia" />
+
+      <audio id="narration" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="0" src="{{AUDIO_FILENAME}}"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__items = {{ITEMS_JSON}};
+      window.__secondsPerItem = {{SECONDS_PER_ITEM}};
+
+      const container = document.getElementById('items-container');
+      const titleSeconds = 2;
+
+      window.__items.forEach((item, i) => {
+        const startTime = titleSeconds + i * window.__secondsPerItem;
+        const div = document.createElement('div');
+        div.className = 'list-item clip';
+        div.id = 'item-' + i;
+        div.setAttribute('data-start', String(startTime));
+        div.setAttribute('data-duration', String(window.__secondsPerItem));
+        div.setAttribute('data-track-index', String(2 + i));
+        div.innerHTML = `
+          <div class="row">
+            <div class="num">${item.number}</div>
+            <div>
+              <div class="item-title">${item.title}</div>
+              <div class="item-desc">${item.description || ''}</div>
+            </div>
+          </div>`;
+        container.appendChild(div);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from('#title-slide h1', { opacity: 0, scale: 0.85, duration: 0.8, ease: 'back.out(1.4)' }, 0);
+
+      window.__items.forEach((_, i) => {
+        const startTime = titleSeconds + i * window.__secondsPerItem;
+        tl.to('#item-' + i, { opacity: 1, duration: 0.4 }, startTime);
+        tl.from('#item-' + i + ' .row', { x: 80, opacity: 0, duration: 0.6, ease: 'power3.out' }, startTime);
+      });
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

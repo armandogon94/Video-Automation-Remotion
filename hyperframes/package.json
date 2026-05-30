@@ -1,0 +1,20 @@
+{
+  "name": "video-factory-hyperframes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Armando Inteligencia · Hyperframes side of the parallel video factory",
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "preview": "hyperframes preview",
+    "render": "hyperframes render",
+    "lint": "hyperframes lint",
+    "check": "hyperframes lint && hyperframes inspect"
+  },
+  "dependencies": {
+    "commander": "14.0.3",
+    "execa": "9.6.1",
+    "hyperframes": "0.6.7",
+    "tsx": "4.21.0"
+  }
+}

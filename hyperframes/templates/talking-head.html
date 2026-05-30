@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Talking Head · Armando Inteligencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --navy: #1B3A6E;
+        --navy-deep: #0F1B2D;
+        --gold: #D4AF37;
+        --paper: #FFFFFF;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: var(--navy-deep);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--paper);
+      }
+      #speaker-placeholder {
+        position: absolute;
+        top: calc(50% - 140px); left: calc(50% - 140px);
+        width: 280px; height: 280px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(212,175,55,0.55));
+        border: 5px solid var(--gold);
+      }
+      #gradient-bottom {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 45%;
+        background: linear-gradient(to top, rgba(15,27,45,0.95), transparent);
+      }
+      #name-tag {
+        position: absolute;
+        bottom: 220px; left: 80px;
+        display: flex; align-items: center; gap: 14px;
+      }
+      #name-tag .bar {
+        width: 5px; height: 48px;
+        background: var(--gold);
+      }
+      #name-tag .name {
+        font-size: 34px; font-weight: 700; color: var(--paper);
+      }
+      #title {
+        position: absolute;
+        top: 70px; left: 0; right: 0;
+        text-align: center;
+        font-size: 50px; font-weight: 700;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      }
+      #captions-wrap {
+        position: absolute;
+        bottom: 110px; left: 0; right: 0;
+        display: flex; justify-content: center;
+      }
+      #captions {
+        max-width: 1600px;
+        padding: 18px 36px;
+        background: rgba(15, 27, 45, 0.78);
+        border-left: 4px solid var(--gold);
+        text-align: center;
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px;
+      }
+      .word {
+        font-size: 42px; font-weight: 700;
+        color: rgba(255,255,255,0.4);
+        display: inline-block;
+      }
+      #watermark {
+        position: absolute;
+        bottom: 48px; right: 48px;
+        width: 96px; height: 96px;
+        opacity: 0.9;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{DURATION_SECONDS}}"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="speaker-placeholder" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="1"></div>
+      <div id="gradient-bottom" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="2"></div>
+      <h1 id="title" class="clip" data-start="0" data-duration="3" data-track-index="3">{{TITLE}}</h1>
+      <div id="name-tag" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="4">
+        <div class="bar"></div>
+        <div class="name">{{NAME_TAG}}</div>
+      </div>
+      <div id="captions-wrap" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="5">
+        <div id="captions"></div>
+      </div>
+      <img id="watermark" class="clip"
+           data-start="0"
+           data-duration="{{DURATION_SECONDS}}"
+           data-track-index="9"
+           src="brand/logos/avatar-pixar.png"
+           alt="Armando Inteligencia" />
+      <audio id="narration" class="clip" data-start="0" data-duration="{{DURATION_SECONDS}}" data-track-index="0" src="{{AUDIO_FILENAME}}"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__wordTimings = {{WORD_TIMINGS_JSON}};
+
+      const captionsEl = document.getElementById('captions');
+      window.__wordTimings.forEach((w, i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.id = 'word-' + i;
+        span.textContent = w.text;
+        captionsEl.appendChild(span);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from('#speaker-placeholder', { scale: 0.6, opacity: 0, duration: 0.8, ease: 'back.out(1.6)' }, 0);
+      tl.from('#title', { opacity: 0, y: -20, duration: 0.6 }, 0.4);
+      tl.from('#name-tag', { opacity: 0, x: -40, duration: 0.7, ease: 'power2.out' }, 1.0);
+
+      window.__wordTimings.forEach((w, i) => {
+        tl.to('#word-' + i, { color: 'var(--gold)', scale: 1.08, duration: 0.05 }, w.startSeconds);
+        tl.to('#word-' + i, { color: '#ffffff', scale: 1.0, duration: 0.05 }, w.endSeconds);
+      });
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>
