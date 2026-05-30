@@ -1,7 +1,7 @@
 {
   "creator_handle": "aiexplained",
-  "analyzed_count": 4,
-  "last_updated": "2026-05-28",
+  "analyzed_count": 12,
+  "last_updated": "2026-05-29",
   "videos": [
     {
       "id": "2_DPnzoiHaY",
@@ -11,6 +11,39 @@
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
       "frame_count": 21,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "9hv4nr_46Ao",
+      "title": "Nano Banana Pro: But Did You Catch These 10 Details?",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=9hv4nr_46Ao",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "FMMpUO1uAYk",
+      "title": "What the Freakiness of 2025 in AI Tells Us About 2026",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=FMMpUO1uAYk",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "Iar4yweKGoI",
+      "title": "Claude AI Co-founder Publishes 4 Big Claims about Near Future: Breakdown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=Iar4yweKGoI",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
       "clip_count": 2,
       "has_metadata_json": false
     },
@@ -37,6 +70,17 @@
       "has_metadata_json": false
     },
     {
+      "id": "Xn_5aIhrJOE",
+      "title": "Claude 4: Full 120 Page Breakdown ... Is it the Best New Model?",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=Xn_5aIhrJOE",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
       "id": "chr2I7CZTfk",
       "title": "Gemini 3 Pro: Breakdown",
       "platform": "youtube",
@@ -44,6 +88,50 @@
       "date_first_analyzed": "2026-05-27",
       "wave": "wave-7",
       "frame_count": 30,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "eczw9k3r6Ic",
+      "title": "When Will AI Models Blackmail You, and Why?",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=eczw9k3r6Ic",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "g9ZJ8GMBlw4",
+      "title": "How Not to Read a Headline on AI (ft. new Olympiad Gold, GPT-5 ...)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=g9ZJ8GMBlw4",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "jz0rNhfAKo8",
+      "title": "GPT 5.5 Arrives, DeepSeek V4 Drops, and the Compute War Intensifies",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=jz0rNhfAKo8",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "tVHZy-iml5Q",
+      "title": "Genie 3: The World Becomes Playable (DeepMind)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=tVHZy-iml5Q",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
       "clip_count": 2,
       "has_metadata_json": false
     }

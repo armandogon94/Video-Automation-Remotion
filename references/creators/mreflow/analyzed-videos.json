@@ -1,8 +1,63 @@
 {
   "creator_handle": "mreflow",
-  "analyzed_count": 4,
-  "last_updated": "2026-05-28",
+  "analyzed_count": 12,
+  "last_updated": "2026-05-29",
   "videos": [
+    {
+      "id": "2jkpEGk6hDE",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=2jkpEGk6hDE",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "2u_T68P9H_U",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=2u_T68P9H_U",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "8Jw5Wa_8K0Y",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=8Jw5Wa_8K0Y",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "8RLUaov5eLk",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=8RLUaov5eLk",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "FXgOgAJrhis",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=FXgOgAJrhis",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
     {
       "id": "JyWdgDcsmbk",
       "title": "The REAL Story from NVIDIA GTC This Week!",
@@ -11,9 +66,8 @@
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
       "frame_count": 15,
-      "clip_count": 0,
-      "has_metadata_json": false,
-      "notes": "frame-only, no clips"
+      "clip_count": 1,
+      "has_metadata_json": false
     },
     {
       "id": "PKKN5be_my0",
@@ -23,9 +77,19 @@
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
       "frame_count": 32,
-      "clip_count": 0,
-      "has_metadata_json": false,
-      "notes": "frame-only, no clips"
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "SlRzTFx8Qtg",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=SlRzTFx8Qtg",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
     },
     {
       "id": "b6Ek6-E5V88",
@@ -35,9 +99,8 @@
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
       "frame_count": 12,
-      "clip_count": 0,
-      "has_metadata_json": false,
-      "notes": "frame-only, no clips"
+      "clip_count": 1,
+      "has_metadata_json": false
     },
     {
       "id": "bQN-D8qeAgg",
@@ -47,9 +110,30 @@
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
       "frame_count": 15,
-      "clip_count": 0,
-      "has_metadata_json": false,
-      "notes": "frame-only, no clips"
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "p7SRuKWZMvQ",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=p7SRuKWZMvQ",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "slX_lDDobEs",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=slX_lDDobEs",
+      "date_first_analyzed": "2026-05-29",
+      "wave": "wave-7",
+      "frame_count": 4,
+      "clip_count": 2,
+      "has_metadata_json": false
     }
   ]
 }
