@@ -4,130 +4,135 @@
 
 ---
 
-## Current State: FULLY WORKING (2026-04-02)
+## Current State: BAKE-OFF READY (2026-05-15)
 
-The pipeline is **operational end-to-end**. You can generate videos right now:
+The pipeline now runs through **two parallel engines** (Remotion + Hyperframes), both branded with Armando Inteligencia, both consuming the same Edge-TTS audio + faster-whisper word timings.
+
+See `BAKEOFF.md` at the project root for the side-by-side run commands.
 
 ```bash
-cd "/Users/armandogonzalez/Documents/Claude/Deep Research Claude Code/10-Video-Automation-Remotion"
+# Remotion side
+npm run generate -- --script "Tu texto" --voice "es-MX-JorgeNeural" --template explainer --platforms youtube
+
+# Hyperframes side (requires Node 24 — see hyperframes/.nvmrc)
+nvm use 24
+cd hyperframes
 npm run generate -- --script "Tu texto" --voice "es-MX-JorgeNeural" --template explainer --platforms youtube
 ```
 
-**Last successful test:** 14.6s to produce an 11.5s video at 1920x1080.
+---
+
+## What landed in 2026-05-15 session
+
+### Phase A — Remotion polish + rebrand
+- **A.1 Parallel multi-platform export** — `src/ffmpeg/commands.ts:exportMultiPlatform` now uses `Promise.all` across platforms + thumbnail
+- **A.2 Brand applied to all 5 compositions** — `src/brand/config.ts` is the typed source of truth (reads `brand/config.json`); colors/gradients/fonts updated in `schemas.ts`, `Root.tsx`, `pipeline.ts buildProps()`, all 3 template JSONs
+- **A.3 BrandWatermark component** — `src/components/BrandWatermark.tsx` overlays a logo (default: avatar-pixar) in the chosen corner; wired into ExplainerVideo, TalkingHead, Listicle, QuoteCard, and the Vertical variant
+- **A.4 faster-whisper wired into pipeline** — `pipeline.ts` runs whisper after TTS, replaces approximate word timings with accurate ones, falls back to TTS on failure. CLI flags: `--whisper` (default on), `--no-whisper`, `--whisper-model small`, `--language es`. Writes `output/word_timings_final.json` with `{source: "whisper" | "tts-approximate"}` for inspection.
+- **A.5 Verified** — `npx tsc --noEmit` passes, `npx remotion compositions src/index.ts` lists all 5 compositions
+
+### Phase B — Hyperframes parallel engine
+- **Installed at `hyperframes/`** as a separate package with its own `package.json` / `node_modules` / `output/` (gitignored)
+- **5 HTML templates** in `hyperframes/templates/`: explainer, talking-head, listicle, quote, vertical
+- **All pass `hyperframes lint` with 0 errors, 0 warnings**
+- **CLI wrapper** at `hyperframes/scripts/generate.ts` mirrors Remotion's flags exactly. Reuses `../src/ffmpeg/commands.ts` for normalize + multi-platform export so both engines share post-processing.
+- **Shared brand assets** — `hyperframes/brand/` is a copy of root `brand/`. Logo files mirror at `hyperframes/brand/logos/avatar-pixar.png` etc.
+- **Node 24 required** — `hyperframes/.nvmrc` pins it; Hyperframes' package needs >=22
+
+### Phase 0 — Foundation
+- **Brand config copied from project 17** into `brand/config.json` + `brand/logos/*.png` + `public/brand/logos/*.png`
+- **Logos renamed** to kebab-case (the originals had spaces): `avatar-pixar.png`, `avatar-pixar-letras.png`, `logo-completo.png`, `logo-lentes.png`, `logo-letras.png`
+- **`src/brand/` module** — typed wrapper around `brand/config.json`, also loads Inter via `@remotion/google-fonts`
+- **`.gitignore` updated** to skip `hyperframes/node_modules/`, `hyperframes/output/`, etc.
 
 ---
 
-## What's Done (Phase 1-2 Complete)
+## What's done across the project
 
-- [x] npm + uv initialized with all dependencies
-- [x] 5 Remotion compositions working (verified via `npx remotion compositions src/index.ts`)
-- [x] Edge-TTS Python wrapper with sentence→word timing approximation
-- [x] faster-whisper Python wrapper with word timestamps (NOT yet integrated into pipeline)
-- [x] FFmpeg command builders (resize, normalize, thumbnail, multi-platform export)
-- [x] Pipeline orchestrator (TTS → Render → FFmpeg → Export)
-- [x] CLI with Commander.js (`npm run generate`, `npm run voices`, `npm run templates`)
-- [x] End-to-end test passed
+- [x] All Phase 1-2 work from the original implementation
+- [x] Armando Inteligencia branding on Remotion compositions
+- [x] faster-whisper integration (the captions-quality fix)
+- [x] Parallel multi-platform export
+- [x] Hyperframes installed side-by-side with 5 templates and a wrapper CLI
+- [x] BAKEOFF.md documents the side-by-side workflow
+- [x] All Hyperframes templates pass `hyperframes lint` clean
 
----
+## What's still on the backlog
 
-## What's NOT Done Yet (Phase 3-5)
+### High priority — wait for the first real render
+- [ ] **Bake-off with a real script** — user is writing their first Armando Inteligencia script in project 17 (Instagram Slides) and will hand it off when ready
+- [ ] Render the same script through both engines and judge visually
 
-### High Priority
-- [ ] **Integrate faster-whisper into pipeline** — currently TTS generates approximate word timings by evenly distributing words within sentences. Adding a transcription step after TTS would give accurate word-level timestamps from the audio itself. This would make captions much more precise.
-- [ ] **Multi-platform export in one run** — currently only generates one platform at a time. The `--platforms youtube,tiktok,reels` flag is parsed but should generate ALL formats in parallel.
-- [ ] **Git init + first commit** — the repo has no git history yet
-- [ ] **`npm run dev` (Remotion Studio)** — works but should be tested with real audio
+### Medium priority
+- [ ] Vertical variants for TalkingHead / Listicle / QuoteCard on the Remotion side (currently only `ExplainerVideoVertical` exists)
+- [ ] Template-specific defaults (auto-detect listicle items, title extraction)
+- [ ] Batch generation from a CSV/JSON of scripts
+- [ ] Intro/outro concatenation with FFmpeg `xfade`
+- [ ] Background music mixing
+- [ ] Hyperframes templates: the 5 HTMLs duplicate caption styling; extract a shared partial
 
-### Medium Priority  
-- [ ] **Better caption timing** — evaluate `@remotion/captions` with `createTikTokStyleCaptions()` for native Remotion captions (no FFmpeg subtitle burning needed)
-- [ ] **Vertical video compositions** — ExplainerVideoVertical exists but TalkingHead/Listicle/QuoteCard don't have vertical variants
-- [ ] **Template-specific defaults** — title extraction from script, auto-detect list items for Listicle
-- [ ] **Batch generation** — process multiple scripts from a CSV/JSON file
-- [ ] **Intro/outro concatenation** — FFmpeg xfade transitions between segments
-- [ ] **Watermark overlay** — add logo/branding to videos
-
-### Low Priority
-- [ ] **Tests** — vitest snapshot tests for compositions, pytest for Python wrappers
-- [ ] **`edge-tts-universal`** — evaluate Node.js TTS to potentially eliminate Python dependency
-- [ ] **Background music mixing** — FFmpeg audio mixing
-- [ ] **N8N webhook trigger** — external trigger for pipeline
-- [ ] **ElevenLabs integration** — premium voice option
-- [ ] **ASS subtitle burning** — for videos that need burned-in styled captions
+### Low priority
+- [ ] vitest snapshot tests for Remotion compositions
+- [ ] pytest for TTS + transcription wrappers
+- [ ] Evaluate `edge-tts-universal` (pure Node — could drop Python TTS dep)
+- [ ] ElevenLabs premium voice option
+- [ ] Pre-existing: `tsconfig.json` uses deprecated `baseUrl` (TS 7 will remove — non-blocking)
 
 ---
 
-## Key Files to Know
+## Known gotchas for next session
 
-### Entry Points
-- `src/pipeline/generate.ts` — CLI entry point (Commander.js)
-- `src/pipeline/pipeline.ts` — Pipeline orchestrator (the "brain")
-- `src/index.ts` → `src/Root.tsx` — Remotion entry point
-
-### Compositions
-- `src/compositions/schemas.ts` — All Zod schemas for props
-- `src/compositions/ExplainerVideo.tsx` — Main template (gradient + text + captions)
-- `src/compositions/TalkingHead.tsx` — Speaker with captions
-- `src/compositions/Listicle.tsx` — Numbered list items
-- `src/compositions/QuoteCard.tsx` — Animated quote
-
-### Components
-- `src/components/Caption.tsx` — Word-by-word highlight caption component (6-word window)
-- `src/components/AnimatedText.tsx` — Spring-animated text
-- `src/components/Background.tsx` — Gradient background
-
-### Python
-- `src/tts/generate.py` — Edge-TTS wrapper (generates audio.mp3 + word_timings.json)
-- `src/transcribe/transcribe.py` — faster-whisper wrapper (NOT yet wired into pipeline)
-
-### FFmpeg
-- `src/ffmpeg/commands.ts` — resize, normalize, thumbnail, multi-platform export
-
-### Config
-- `package.json` — npm scripts, dependencies
-- `pyproject.toml` — Python dependencies
-- `tsconfig.json` — TypeScript config (ES2022, bundler, strict)
-- `remotion.config.ts` — Remotion config (JPEG format, overwrite output)
-- `templates/*.json` — Video template configurations
+1. **Node 24 for Hyperframes** — `hyperframes/.nvmrc` pins it. Run `nvm use 24` before any `cd hyperframes && npm run ...` command. The Remotion side works on Node ≥20.
+2. **Whisper first run downloads ~500MB** — the `small` model caches at `~/.cache/huggingface/hub/`. Subsequent runs are instant.
+3. **Whisper output replaces TTS timings — fall back is automatic** — if whisper fails (model not yet downloaded, language mismatch), pipeline keeps approximate TTS timings and logs the fallback.
+4. **Hyperframes `index.html` is per-run, gitignored** — the wrapper overwrites it each time the user generates a video. A committed placeholder version explains this to future-you.
+5. **Hyperframes audio reference** — wrapper copies `output/audio.mp3` to `hyperframes/audio.mp3` (project root inside hyperframes/) so the `<audio src="audio.mp3">` in templates resolves.
+6. **Two `output/` directories** — Remotion writes to root `output/`, Hyperframes to `hyperframes/output/`. Don't confuse them.
+7. **Brand assets duplicated** — `brand/`, `public/brand/`, and `hyperframes/brand/`. If you update the brand config or swap a logo, update all three.
 
 ---
 
-## Known Issues / Gotchas for Next Session
+## Key files added/modified this session
 
-1. **Word timing is approximate** — Edge-TTS v7.2.8 only gives sentence boundaries. Words are evenly distributed within each sentence. Fix: integrate faster-whisper transcription step.
+### New
+- `brand/config.json`, `brand/logos/*.png` (copied from project 17, renamed)
+- `public/brand/logos/*.png` (for Remotion staticFile)
+- `src/brand/config.ts`, `src/brand/index.ts`, `src/brand/fonts.ts`
+- `src/components/BrandWatermark.tsx`
+- `hyperframes/` — full sibling engine (package.json, hyperframes.json, meta.json, templates/, scripts/, brand/, .nvmrc, .gitignore)
+- `BAKEOFF.md` — the side-by-side workflow doc
+- `PROJECT_CONTEXT.html` — 15-slide presentation deck (kept for reference)
+- `plans/superpowers/2026-05-15-paths-a-and-b-parallel.md`
 
-2. **Audio copied to public/** — The pipeline copies audio.mp3 to `public/` for Remotion's `staticFile()`. This file persists between runs and should be cleaned up or made unique per run.
-
-3. **`main.py`** — uv created a `main.py` stub at project root during `uv init`. It's unused and can be deleted.
-
-4. **No git repo** — The project has no `.git` directory yet. Should `git init` and make a first commit.
-
-5. **Zod v4** — The project uses Zod v4.3.6 (not v3). `@remotion/zod-types@4.0.443` is compatible with Zod v4 since Remotion v4.0.426+.
-
-6. **React 19** — Using React 19.2.4 which works with Remotion v4.0.443 but watch for compatibility if upgrading.
+### Modified
+- `src/Root.tsx` — defaults use BRAND constants + watermark prop
+- `src/compositions/schemas.ts` — defaults use BRAND, added `watermarkSchema`
+- `src/compositions/{ExplainerVideo,TalkingHead,Listicle,QuoteCard}.tsx` — watermark prop wired
+- `src/components/Caption.tsx` — gold left-border accent, rectangular pill
+- `src/pipeline/pipeline.ts` — added Stage 1.5 Whisper + brand defaults in buildProps
+- `src/pipeline/generate.ts` — added `--whisper` / `--no-whisper` / `--whisper-model` / `--language` flags
+- `src/ffmpeg/commands.ts` — `exportMultiPlatform` now `Promise.all`
+- `templates/{explainer,talking-head,listicle}.json` — brand colors
+- `package.json` — added `@remotion/google-fonts@4.0.443` (exact)
+- `.gitignore` — hyperframes/* artifacts
 
 ---
 
-## Commands Reference
+## Commands cheat sheet
 
 ```bash
-# Generate a video
-npm run generate -- --script "Text" --voice "es-MX-JorgeNeural" --template explainer --platforms youtube
+# Remotion side
+npm run generate -- --script "Texto" --voice "es-MX-JorgeNeural" --template explainer --platforms youtube
+npm run generate -- --script "Texto" --no-whisper  # skip whisper (uses TTS approximate)
+npm run dev                                         # Remotion Studio
+npx remotion compositions src/index.ts              # list compositions
+npm run voices                                      # list 45 Spanish voices
+npm run templates                                   # list templates
 
-# List 45 Spanish voices
-npm run voices
-
-# List templates
-npm run templates
-
-# Preview in Remotion Studio (visual editor)
-npm run dev
-
-# Verify compositions load
-npx remotion compositions src/index.ts
-
-# Run Python TTS directly
-uv run python src/tts/generate.py generate --text "Hola" --voice "es-MX-JorgeNeural" --output-dir ./output
-
-# Run Python transcription directly
-uv run python src/transcribe/transcribe.py --input ./output/audio.mp3 --model small --language es
+# Hyperframes side
+nvm use 24
+cd hyperframes
+npm run generate -- --script "Texto" --template explainer --platforms youtube
+npm run preview                                     # Hyperframes Studio
+npm run lint                                        # lint current index.html
 ```
