@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wave 4 Synthesis — Multi-Angle Voting Across 4 Creators</title>
+<style>
+  :root {
+    --bg: #0a0608;
+    --bg-card: #14101a;
+    --ink: #f1ece1;
+    --muted: #8b847a;
+    --accent: #d4af37;
+    --warm-red: #b33a2a;
+    --cyan: #5bc0e8;
+    --mint: #7ce49a;
+    --indigo: #9a8fff;
+    --coral: #e89b7a;
+    --border: #2a2027;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+  body {
+    background: radial-gradient(ellipse at center, #1b0f10 0%, #0a0608 70%);
+    min-height: 100vh;
+  }
+  .deck { max-width: 1200px; margin: 0 auto; padding: 40px 28px; }
+  .slide {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 48px 56px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 36px rgba(179, 58, 42, 0.08);
+  }
+  .slide.hero {
+    background: linear-gradient(135deg, #1b0f10 0%, #0a0608 100%);
+    text-align: center;
+    padding: 80px 56px;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  h1 { font-size: 56px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 16px; }
+  h2 { font-size: 38px; font-weight: 800; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 24px; }
+  h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; color: var(--accent); }
+  p { font-size: 18px; line-height: 1.55; color: var(--ink); opacity: 0.92; margin-bottom: 14px; }
+  .lede { font-size: 22px; line-height: 1.5; opacity: 0.85; margin-bottom: 24px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 28px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 24px; }
+  .creator-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .creator-card .handle { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan); letter-spacing: 0.05em; }
+  .creator-card .name { font-size: 20px; font-weight: 700; margin: 6px 0; }
+  .creator-card .stat { font-size: 14px; color: var(--muted); margin-top: 8px; }
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .badge.high { background: rgba(124, 228, 154, 0.15); color: var(--mint); border: 1px solid rgba(124, 228, 154, 0.35); }
+  .badge.med { background: rgba(232, 155, 122, 0.15); color: var(--coral); border: 1px solid rgba(232, 155, 122, 0.35); }
+  .badge.miss { background: rgba(179, 58, 42, 0.18); color: var(--warm-red); border: 1px solid rgba(179, 58, 42, 0.4); }
+  .badge.unlock { background: rgba(154, 143, 255, 0.15); color: var(--indigo); border: 1px solid rgba(154, 143, 255, 0.35); }
+  table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 15px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  td.num { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 700; }
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding: 16px 22px;
+    margin: 24px 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .quote .attr { display: block; font-family: 'Inter', sans-serif; font-style: normal; font-size: 13px; color: var(--muted); margin-top: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+  ul { padding-left: 22px; margin-bottom: 14px; }
+  ul li { font-size: 17px; line-height: 1.55; margin-bottom: 8px; opacity: 0.92; }
+  .chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin: 3px 4px 3px 0;
+  }
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(10,6,8,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav span { color: var(--accent); }
+  .footer { text-align: center; padding: 40px 0 20px; color: var(--muted); font-size: 13px; letter-spacing: 0.1em; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--cyan); background: rgba(91, 192, 232, 0.08); padding: 2px 6px; border-radius: 4px; }
+  .verdict { background: rgba(212, 175, 55, 0.08); border-left: 4px solid var(--accent); padding: 18px 22px; margin-top: 22px; border-radius: 6px; }
+  .verdict h4 { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .strike { text-decoration: line-through; opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<div class="nav">Wave 4 / Synthesis · <span>20 voters · 4 creators · 80 voting passes</span> · 2026-05-25</div>
+
+<div class="deck">
+
+<!-- ─────────── SLIDE 1: HERO ─────────── -->
+<section class="slide hero">
+  <div class="eyebrow">Multi-Angle Voting · Wave 4</div>
+  <h1>The 25-75% Gap</h1>
+  <p class="lede">
+    Single-agent ANALYSIS.md files captured <strong>25–30%</strong> of what's actually on screen across four reference creators. Twenty independent Opus voters across five roles (Templates · Components · Red-team · Motion · Type+Color) found the missing 70%.
+  </p>
+  <div style="margin-top: 32px; opacity: 0.7; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.12em;">
+    @carloscuamatzin · @diysmartcode · @bilawal.ai · @simonhoiberg
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 2: WHY VOTING ─────────── -->
+<section class="slide">
+  <div class="eyebrow">Why we voted instead of analyzing</div>
+  <h2>Single agents miss what they don't expect to find</h2>
+  <p class="lede">
+    Wave 3 voting on @builtbystephan's <code>DYkyJfxx5Lx</code> caught a circular logo carousel that single-agent S1 missed entirely — the user explicitly flagged the gap. Wave 4 applies the same N=5 voting methodology to the four other previously-scraped creators, each with a different role:
+  </p>
+  <div class="grid-3">
+    <div class="creator-card"><div class="handle">V1</div><div class="name">Templates</div><div class="stat">Identify every distinct template per reel, map to existing typology, sprint priority.</div></div>
+    <div class="creator-card"><div class="handle">V2</div><div class="name">Components</div><div class="stat">Catalog visual primitives. Reusability score 1–5. Decoupled from templates.</div></div>
+    <div class="creator-card"><div class="handle">V3</div><div class="name">Red-team</div><div class="stat">Brutal honesty against prior ANALYSIS.md. Find what was missed or wrong.</div></div>
+    <div class="creator-card"><div class="handle">V4</div><div class="name">Motion grammar</div><div class="stat">Entry/easing/transitions/dwell/A-V sync. Ignore color and content.</div></div>
+    <div class="creator-card"><div class="handle">V5</div><div class="name">Type + Color</div><div class="stat">Typefaces, weights, tracking, palette discipline, contrast wins/fails.</div></div>
+    <div class="creator-card" style="border-color: var(--accent);"><div class="handle" style="color: var(--accent);">Synthesis</div><div class="name">Jaccard consensus</div><div class="stat">HIGH = ≥3 voters · MED = 2 · LOW = 1. Action only on HIGH+MED.</div></div>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 3: CROSS-CREATOR CONSENSUS ─────────── -->
+<section class="slide">
+  <div class="eyebrow">The strongest signal in Wave 4</div>
+  <h2>Cross-creator consensus — 7 patterns all four use</h2>
+  <p class="lede">
+    Patterns that emerge in ≥3 of 4 creators across the 20 voting passes. These are the non-negotiable house grammar of polished short-form AI/tech content.
+  </p>
+  <table>
+    <thead><tr><th>Pattern</th><th>Carlos</th><th>DIYSmart</th><th>Bilawal</th><th>Simon</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hard cuts dominate · no whips/wipes/transitions</strong></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><span class="badge high">4/4</span></td></tr>
+      <tr><td><strong>Slow cadence (5–25s/shot) AS polish signal</strong></td><td>0.11/s</td><td>7–35s</td><td>6–25s</td><td>5–25s</td><td><span class="badge high">4/4</span></td></tr>
+      <tr><td><strong>A/V welded to sentence/word, NOT beat grid</strong></td><td>✓ counters on syllable</td><td>✓ stagger to syllable</td><td>✓ voice-led</td><td>✓ explicit</td><td><span class="badge high">4/4</span></td></tr>
+      <tr><td><strong>Continuous backdrop motion as glue</strong></td><td>vignette + dust</td><td>drifting pattern</td><td>damped tracking</td><td>bokeh lights</td><td><span class="badge high">4/4</span></td></tr>
+      <tr><td><strong>Numbers ALWAYS animate, never instant</strong></td><td>countUp 800ms</td><td>HugeNumeral ramp</td><td>RollingDigitTicker</td><td>—</td><td><span class="badge high">3/4</span></td></tr>
+      <tr><td><strong>Mono small-caps eyebrow label (+200 tracking)</strong></td><td>+200 explicit</td><td>+200 explicit</td><td>+200 datestamp</td><td>Layer-N pill</td><td><span class="badge high">4/4</span></td></tr>
+      <tr><td><strong>Persistent HUD chrome (chapter/breadcrumb)</strong></td><td>chapter chip</td><td>top scrub + stepper</td><td>tweet sticky</td><td>brick wall</td><td><span class="badge high">4/4</span></td></tr>
+    </tbody>
+  </table>
+  <div class="verdict">
+    <h4>Why this matters</h4>
+    <p style="margin: 0;">If our pipeline ships these 7 disciplines as defaults, the rendered output reads as "real software demo" / "intelligence briefing" instead of "creator reel." If we miss them, no number of templates compensates.</p>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 4: THE BIG UNLOCK ─────────── -->
+<section class="slide">
+  <div class="eyebrow">The single highest-leverage finding in Wave 4</div>
+  <h2>UI Mockup DSL — all 4 creators build fake software, not screen-record real software</h2>
+  <p class="lede">
+    Voting caught a class of components that <strong>looks like</strong> screen recordings but isn't. They're React-templated chrome with code-as-data props. Every reference creator uses this pattern — and our stack has zero of them.
+  </p>
+  <div class="grid-2">
+    <div class="creator-card">
+      <div class="handle">@carloscuamatzin — V3 N1–N5</div>
+      <div class="name">The flagship insight</div>
+      <ul style="margin-top: 10px;">
+        <li><code>&lt;MacTerminalMock&gt;</code> in 6 of 12 reels</li>
+        <li><code>&lt;BrowserMockKanban&gt;</code> · Apple-window chrome + Kanban grid</li>
+        <li><code>&lt;PhoneMessagingMock&gt;</code> · iPhone bezel + WhatsApp bubbles</li>
+        <li><code>&lt;MarkdownDocMock&gt;</code> · ● EDITANDO red status pill</li>
+        <li><code>&lt;AnnotatedCodeBlock&gt;</code> · JSON + ALLOW/DENY side pills</li>
+      </ul>
+    </div>
+    <div class="creator-card">
+      <div class="handle">Cross-creator confirmation</div>
+      <div class="name">Same family elsewhere</div>
+      <ul style="margin-top: 10px;">
+        <li><strong>DIYSmart V3 N5+N6:</strong> <code>&lt;TerminalBlock&gt;</code> + <code>&lt;EditorBlock&gt;</code> as separate primitives (not one)</li>
+        <li><strong>Bilawal V3 N4:</strong> Anduril Lattice <code>&lt;FauxProductUI&gt;</code> is a <strong>6-layer</strong> faux app (not 2 as prior claimed)</li>
+        <li><strong>Simon V3 N4:</strong> <code>&lt;GenerativeBrollWithDiegeticUI&gt;</code> — Veo/Sora B-roll + composited GitHub UI as holographic projection</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote">
+    "S1's 'Annotated screen recording' is wrong. None of the frames are actual screen recordings. They are synthetic, templated mac-window mockups with hand-placed code, syntax highlighting, mock prompts, and animated callouts. Treating them as 'annotated capture' leads to the wrong implementation (recording + overlay layer) when the right one is 'JSX/HTML window component with code-as-data props.'"
+    <span class="attr">@carloscuamatzin · V3 red-team</span>
+  </div>
+  <div class="verdict">
+    <h4>Sprint 5 priority #1</h4>
+    <p style="margin: 0;">Build <code>&lt;MacWindow variant="terminal|browser|editor|phone|doc"&gt;</code> as a shared molecule. Single highest-leverage component in the entire Wave-4 catalog.</p>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 5: PER-CREATOR DELTAS ─────────── -->
+<section class="slide">
+  <div class="eyebrow">What each prior ANALYSIS.md got wrong</div>
+  <h2>The 25-75% gap, quantified</h2>
+  <table>
+    <thead><tr><th>Creator</th><th>Prior claimed</th><th>Voting found</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr><td><strong>@carloscuamatzin</strong></td><td>6 templates · "one accent per scene"</td><td>28 templates · per-semantic-role accents · UI mockup DSL · 3-family typography</td><td><span class="badge miss">~25%</span></td></tr>
+      <tr><td><strong>@diysmartcode</strong></td><td>3 templates · "no burned captions" · "one accent per video" · "static patterns"</td><td>15 templates · 20+ components · 5 visual kits · per-step accent rotation · drifting patterns · GeminiFrame · CamcorderListicle missed entirely</td><td><span class="badge miss">~25%</span></td></tr>
+      <tr><td><strong>@bilawal.ai</strong></td><td>1 tentpole template · "tweet card is static for the entire reel"</td><td>3 templates · 12 motion patterns missed: avatar swap, demote transition, chroma-key face floater, 6-layer faux UI, RollingDigitTicker (HUD telemetry illusion), NewsClipCitation, ArtifactMontage</td><td><span class="badge miss">~30%</span></td></tr>
+      <tr><td><strong>@simonhoiberg</strong></td><td>8/12 reels = same TalkingHeadStudio · "don't replicate"</td><td>3 distinct studios · KeyedFounderOverBroll (highest-engagement) missed · GenerativeBrollWithDiegeticUI missed · LayerCard pill-radius wrong · icons are redacted brand logos · dwell-beat as climax</td><td><span class="badge miss">~40%</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─────────── SLIDE 6: CARLOS DEEP DIVE ─────────── -->
+<section class="slide">
+  <div class="eyebrow">@carloscuamatzin</div>
+  <h2>The most disciplined creator in the corpus</h2>
+  <p class="lede">
+    Spanish-language AI engineering. 12 reels analyzed. <strong>Median cadence 0.11 cuts/s</strong> — one cut every 9 seconds (vs TikTok 0.3–0.6). The illusion of pace comes entirely from within-scene sub-animations.
+  </p>
+  <h3>Top 10 HIGH-confidence findings</h3>
+  <ul>
+    <li><span class="badge unlock">UNLOCK</span> UI Mockup DSL family — <code>&lt;MacWindow&gt;</code> covers 6 reels</li>
+    <li><span class="badge high">3+ voters</span> 3-family typography: Inter + Fira Code + Playfair Italic</li>
+    <li><span class="badge high">3+ voters</span> ONE accent per <em>semantic role</em>, not per scene (refinement of prior rule)</li>
+    <li><span class="badge high">3+ voters</span> Numbers always count up — never set instantly (<code>countUp(from, to, 800ms)</code>)</li>
+    <li><span class="badge high">3+ voters</span> Warm near-black <code>#0A0608</code> + breathing radial vignette (NOT pure #000)</li>
+    <li><span class="badge high">3+ voters</span> Warm off-white text <code>#F1ECE1</code> (NOT pure #FFF)</li>
+    <li><span class="badge high">3+ voters</span> <code>staggeredCascade</code> with <strong>accelerate=true</strong> so late items don't bore the eye</li>
+    <li><span class="badge high">3+ voters</span> <code>&lt;SceneChapterChip&gt;</code> tracked-uppercase eyebrow as persistent thread</li>
+    <li><span class="badge high">3+ voters</span> Always-on <code>&lt;AmbientBackdrop&gt;</code> (drift + vignette + optional matrix/wave/shatter)</li>
+    <li><span class="badge high">3+ voters</span> No naked hard cuts between graphics — always covered (blackout / particle shatter / cross-blur ghost)</li>
+  </ul>
+  <div class="quote">
+    "Nothing on screen is ever instantly true. Numbers count up, bars fill, lines draw, words blur into focus, and scenes hand off through a covering layer so the brain never registers a hard 'slide change.' The easing palette is deliberately restrained — soft ease-outs and tiny springs, no rubber-band bounces — so the whole thing reads as 'engineered software demo' rather than 'After Effects template.'"
+    <span class="attr">V4 Motion grammar</span>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 7: DIYSMART DEEP DIVE ─────────── -->
+<section class="slide">
+  <div class="eyebrow">@diysmartcode</div>
+  <h2>Kit × Template factorization — 5 skins, one skeleton</h2>
+  <p class="lede">
+    YouTube Shorts on Anthropic/Google/AI tooling. Voting unlocked the single most important insight for our build: <strong>same template ships in 5 visual kits.</strong>
+  </p>
+  <div class="grid-3">
+    <div class="creator-card" style="border-left: 3px solid var(--coral);"><strong>Anthropic kit</strong><div class="stat">Navy + orange + green + ANTHROP\C wordmark</div></div>
+    <div class="creator-card" style="border-left: 3px solid var(--cyan);"><strong>Google I/O kit</strong><div class="stat">Navy + Google quartet + glass-frame canvas + 5-dot chapter stepper</div></div>
+    <div class="creator-card" style="border-left: 3px solid var(--warm-red);"><strong>Cream / Opinion</strong><div class="stat">Paper + terracotta + Georgia serif italic</div></div>
+    <div class="creator-card" style="border-left: 3px solid #FB7547;"><strong>AST-Grep</strong><div class="stat">Black + neon orange + lightning bolts</div></div>
+    <div class="creator-card" style="border-left: 3px solid var(--indigo);"><strong>Storm dark</strong><div class="stat">Anthropic compliance + REC camcorder chrome</div></div>
+  </div>
+  <h3 style="margin-top: 28px;">HIGH-confidence findings</h3>
+  <ul>
+    <li><span class="badge unlock">SCHEMA</span> Refactor to <strong>kit × template</strong> orthogonal axes. One JSON for kit, one for template.</li>
+    <li><span class="badge high">CORRECTION</span> Per-step <strong>rotating accent</strong>, not one-per-video (V3 N24 invalidates prior claim)</li>
+    <li><span class="badge high">CORRECTION</span> Burned captions DO exist (on Gemini family). Prior claim "no burned captions" was factually wrong.</li>
+    <li><span class="badge high">PRIMITIVE</span> <code>&lt;SpecRow&gt;</code> carries 70% of educational payload — must build first</li>
+    <li><span class="badge high">PRIMITIVE</span> Mono small-caps with +0.2em tracking as universal section opener</li>
+    <li><span class="badge high">CHROME</span> Persistent HUD: TopScrubBar + ChapterProgressNav + handle + 1px card border</li>
+    <li><span class="badge high">MODE</span> <code>accumulate</code> vs <code>replace</code> as explicit choreography modes per reel</li>
+    <li><span class="badge high">DRIFT</span> Background patterns drift continuously (prior called them static; V3 N30 proves otherwise)</li>
+  </ul>
+</section>
+
+<!-- ─────────── SLIDE 8: BILAWAL DEEP DIVE ─────────── -->
+<section class="slide">
+  <div class="eyebrow">@bilawal.ai</div>
+  <h2>"HUD telemetry illusion" — the invisibility of technique</h2>
+  <p class="lede">
+    Ex-Google PM. Spatial AI / OSINT commentator. Prior wrote off as "one tentpole template, static tweet card." Voting found <strong>12 missed motion patterns</strong>, every one of them load-bearing.
+  </p>
+  <h3>The single most polished trick in the corpus</h3>
+  <div class="quote">
+    "Every static-looking info element is actually breathing. <code>ALT: 35,000 FT → 36,000 FT</code>, <code>SPEED: MACH 4.2 → 3.2</code>, <code>RNG: 15 → 14 → 13 → 12 NM</code>, <code>GIFTS DELIVERED: 4,500,000 → 3,148,093</code>. It is the difference between a screenshot and a heartbeat."
+    <span class="attr">V4 Motion grammar</span>
+  </div>
+  <h3 style="margin-top: 28px;">5 motion principles to steal verbatim</h3>
+  <ul>
+    <li><strong>1. HUD telemetry illusion</strong> — every counter/range/date ticks frame-over-frame</li>
+    <li><strong>2. Anchored frame, mobile content</strong> — tweet card welded, B-roll cuts hard underneath</li>
+    <li><strong>3. Reticle tracks subject (damped Kalman follow)</strong> — subject drifts 85–95% of velocity, lag IS the signature</li>
+    <li><strong>4. Hard cuts on the beat, no transitions</strong> — journalism, not VFX</li>
+    <li><strong>5. Step-function pop captions</strong> — no fade. "An eased caption says 'I am a video maker.' A stepped caption says 'I am the source.'"</li>
+  </ul>
+  <div class="verdict">
+    <h4>Prior ANALYSIS was wrong about (5 ways)</h4>
+    <p style="margin: 0;"><span class="strike">Tweet card is static for the entire reel</span> · <span class="strike">Face-cam is rectangle PiP</span> · <span class="strike">Single tentpole template</span> · <span class="strike">Faux UI is 2 layers</span> · <span class="strike">Artifact slot is one continuous clip</span></p>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 9: SIMON DEEP DIVE ─────────── -->
+<section class="slide">
+  <div class="eyebrow">@simonhoiberg</div>
+  <h2>The discipline to UNDER-edit is the polish</h2>
+  <p class="lede">
+    Founder content. 12 reels analyzed. <strong>~70% of frames carry no on-screen text at all.</strong> Cuts at 5–25 seconds per shot, never sub-2s. Restraint IS the brand.
+  </p>
+  <h3>The dwell beat — held stillness as climax</h3>
+  <div class="quote">
+    "After a string of expressive frames, Simon physically arrests his body — hands either stop entirely or lock into a clasp — and faces the lens deadpan for a beat (≥0.8s). This is held stillness AS climax. The pipeline needs to support a 1.0–1.5s scene of zero parallax that lands on the punchline word from Whisper transcript."
+    <span class="attr">V4 Motion grammar</span>
+  </div>
+  <h3 style="margin-top: 28px;">HIGH-confidence findings</h3>
+  <ul>
+    <li><span class="badge unlock">CAPABILITY</span> <code>dwellBeat(durationMs=1200)</code> aligned to punchline word</li>
+    <li><span class="badge high">3+ voters</span> Static YouTube end-card on hard cut, holds (where most creators escalate, Simon decelerates to a freeze)</li>
+    <li><span class="badge high">3+ voters</span> Accent purple as <strong>container only</strong>, NEVER as text fill</li>
+    <li><span class="badge high">3+ voters</span> One-line headlines only · max 14 chars · single-weight, no italics</li>
+    <li><span class="badge high">3+ voters</span> Off-white paper <code>#F1ECE8</code> not pure #FFF (cross-creator with Carlos)</li>
+    <li><span class="badge high">3+ voters</span> No burned captions on talking-head (restraint as identity)</li>
+  </ul>
+  <div class="verdict">
+    <h4>The two templates prior ANALYSIS missed entirely</h4>
+    <p style="margin: 0;"><strong>1. <code>KeyedFounderOverBroll9x16</code></strong> — chroma-key Simon over timed Amazon/data-center B-roll. <strong>The highest-liked reel in the scrape</strong> (186 likes vs 18–92 elsewhere). Prior wrote off as "don't replicate."<br>
+    <strong>2. <code>GenerativeBrollWithDiegeticUI9x16</code></strong> — AI-generated robot boardroom with floating GitHub UI as holographic projection. Highest production value beat in entire scrape.</p>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 10: F-MEGA STATUS ─────────── -->
+<section class="slide">
+  <div class="eyebrow">F-Mega audit fixes · completed in parallel with synthesis</div>
+  <h2>5 codebase fixes landed</h2>
+  <table>
+    <thead><tr><th>Fix</th><th>What changed</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1. Delete tnf-blue chip</td><td>Drop legacy <code>{kind:"chip",text:"FILTRACIÓN"}</code> from <code>scripts/render-w21-tnf-blue.ts</code></td><td><span class="badge high">✓</span></td></tr>
+      <tr><td>2. Spring unification</td><td>Export <code>PUNCHY_SPRING</code> {15,110,0.7} + <code>EDITORIAL_SPRING</code> {22,130,0.7} + <code>SpringProfile</code> type</td><td><span class="badge high">✓</span></td></tr>
+      <tr><td>3. accentOnLight #1A73E8</td><td>Add field to <code>ToolPalette</code> + sweep <code>getToolAccentForSurface(slug, palette)</code> across 18 compositions (incl. NeuralNetwork9x16 fix)</td><td><span class="badge high">✓</span></td></tr>
+      <tr><td>4. Named easing module</td><td>New <code>src/timing/easing.ts</code> exports <code>outCubic / inOutCubic / outBack / outQuint / outExpo / linear</code></td><td><span class="badge high">✓</span></td></tr>
+      <tr><td>5. Easing sweep</td><td>Replace inline <code>1 - Math.pow(1-t,3)</code> in 4 sites with named <code>outCubic(t)</code></td><td><span class="badge high">✓</span></td></tr>
+    </tbody>
+  </table>
+  <div class="verdict">
+    <h4>R6 insight cited verbatim in easing.ts JSDoc</h4>
+    <p style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic;">"Easing is the biggest 'looks AI' tell. Named curves over inline math." — R6 synthesis</p>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 11: W21 EXPANSION ─────────── -->
+<section class="slide">
+  <div class="eyebrow">B2 render expansion · completed in parallel</div>
+  <h2>W21 voiceover rendered on 5 new templates</h2>
+  <p class="lede">
+    Same 43.9s Gemini-3.2-Flash leak voiceover, 5 new template variants. <strong>28-variant comparison grid v4</strong> at <code>output/2026-05-18-gemini-3-2-flash-leak/comparison-grid-v4.jpg</code> (1386×3138, 5 cols × 6 rows).
+  </p>
+  <table>
+    <thead><tr><th>Template</th><th>master.mp4 size</th><th>Duration</th></tr></thead>
+    <tbody>
+      <tr><td><code>CircularLogoCarousel9x16</code> (8 LLM brand cards, reveal on "Gemini")</td><td>1.38 MB</td><td>43.9s</td></tr>
+      <tr><td><code>AnimatedTable9x16</code> (Gemini 3.2 Flash vs GPT-5.5, row-0 winner)</td><td>1.57 MB</td><td>43.9s</td></tr>
+      <tr><td><code>Sparkline9x16</code> (Gemini cost trajectory [3.00→0.25])</td><td>1.82 MB</td><td>43.9s</td></tr>
+      <tr><td><code>ForceGraph9x16</code> (Claude ecosystem nodes/edges)</td><td>2.05 MB</td><td>43.9s</td></tr>
+      <tr><td><code>TalkingHeadDynamic9x16</code> revised (5-segment FACE/BROLL/SPLIT cycling)</td><td>1.83 MB</td><td>43.9s</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─────────── SLIDE 12: SPRINT 5 QUEUE ─────────── -->
+<section class="slide">
+  <div class="eyebrow">Sprint 5 priority queue · derived from Wave 4 consensus</div>
+  <h2>What to build next</h2>
+  <h3>🔴 Ship first (cross-creator HIGH)</h3>
+  <div class="grid-2">
+    <div>
+      <ul>
+        <li><strong>UI Mockup DSL family</strong> — <code>&lt;MacWindow variant="terminal|browser|editor|phone|doc"&gt;</code></li>
+        <li><strong>RollingDigitTicker</strong> — every number animates frame-over-frame</li>
+        <li><strong>countUp / staggeredCascade / blurInFocus</strong> — shared animation primitives in <code>src/animation/</code></li>
+        <li><strong>dwellBeat(1200)</strong> capability — zero-animation scene on punchline word</li>
+        <li><strong>SceneChapterChip</strong> — persistent tracked-uppercase eyebrow overlay</li>
+        <li><strong>SpecRow / KeyValueRowsCard</strong> — carries 70% of educational payload</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><strong>HUDChrome</strong> wrapper — TopScrubBar + ChapterStepper + handle + 1px border</li>
+        <li><strong>ChunkedPhraseCaption</strong> mode — 3-word step-function in EditorialCaption</li>
+        <li><strong>kit × template schema split</strong> — orthogonal axes</li>
+        <li><strong>palette: AccentColor[]</strong> per-step rotation in schema</li>
+        <li><strong>Brand tokens</strong>: Fira Code · Playfair Italic · <code>#F1ECE1</code> warm-ink · <code>#F1EDE8</code> paper · <code>#000000</code> true black · <code>#0A0608</code> warm-near-black</li>
+        <li><strong>maxHeadlineLength: 14</strong> validation</li>
+      </ul>
+    </div>
+  </div>
+  <h3 style="margin-top: 32px;">🟠 Build later (per-creator MED)</h3>
+  <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.8; color: var(--muted);">
+    <span class="chip">CodeDiffBeforeAfter9x16</span> <span class="chip">KineticEssay9x16</span> <span class="chip">BigNumberDuel9x16</span> <span class="chip">LineChartAnnotated9x16</span> <span class="chip">PipelineFlow9x16</span> <span class="chip">OutroFollowCTA9x16</span> <span class="chip">GeminiFrameWrapper</span> <span class="chip">CamcorderFrame</span> <span class="chip">BarChartList</span> <span class="chip">LogoWall</span> <span class="chip">PenmarkUnderline</span> <span class="chip">KeyedFounderOverBroll9x16</span> <span class="chip">GenerativeBrollWithDiegeticUI9x16</span> <span class="chip">WhiteboardScene</span> <span class="chip">KeyedFaceFloater</span> <span class="chip">FauxProductUI</span> <span class="chip">NewsClipCitation</span> <span class="chip">TitledDossierCard</span> <span class="chip">DatestampTicker</span> <span class="chip">DODDeltaChip</span> <span class="chip">TerminalBlock / EditorBlock split</span> <span class="chip">TestimonialCard</span> <span class="chip">Strikethrough</span>
+  </p>
+  <h3 style="margin-top: 24px;">🟢 Skip / defer</h3>
+  <p style="opacity: 0.7;">PixelMascot (Carlos brand-specific) · IllustratedConcept (per-script image cost) · Mock-OS chrome (Bilawal novelty) · PricingTierCard mask · LockedFeatureRow · PollCTA · YouTube cyan callout arrows · 3-studio split documentation</p>
+</section>
+
+<!-- ─────────── SLIDE 13: CLOSE ─────────── -->
+<section class="slide hero">
+  <div class="eyebrow">Wave 4 / Synthesis complete</div>
+  <h1>Voting catches what single agents miss</h1>
+  <p class="lede" style="max-width: 760px; margin: 0 auto 24px;">
+    20 independent voters · 4 creators · 80 voting passes. Single-agent ANALYSIS captured ~25–30% per creator. Cross-creator consensus surfaces 7 non-negotiable disciplines, 1 critical schema unlock (kit × template), and 1 missing component family (UI Mockup DSL) that every reference creator uses.
+  </p>
+  <div style="margin-top: 32px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.12em; opacity: 0.6;">
+    docs/critiques/wave-4/{carloscuamatzin,diysmartcode,bilawal,simonhoiberg}-consensus.md
+  </div>
+</section>
+
+<div class="footer">
+  AI Video Factory · Armando Inteligencia · Wave 4 Synthesis · 2026-05-25
+</div>
+
+</div>
+
+</body>
+</html>

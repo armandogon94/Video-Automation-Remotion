@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Armando Inteligencia · Wave 2 Status</title>
+<style>
+  :root{
+    --paper:#FAF7F2; --ink:#1A1A1A; --accent:#4285F4;
+    --muted:#6B6760; --gemini:#4285F4; --warm-red:#B33A2A;
+    --dark-paper:#0A0F1A; --dark-ink:#F2E9D8; --dark-accent:#D4A04A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+  .deck{position:relative;height:100vh;width:100vw}
+  .slide{position:absolute;inset:0;display:none;overflow-y:auto;padding:60px 80px;background:var(--paper)}
+  .slide.active{display:flex;flex-direction:column}
+  .slide.dark{background:var(--dark-paper);color:var(--dark-ink)}
+  .breadcrumb{font-family:Inter,sans-serif;font-weight:700;font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:4px;align-self:flex-start}
+  h1{font-family:Inter,sans-serif;font-weight:900;font-size:84px;line-height:1.0;letter-spacing:-.025em;margin-bottom:24px;color:var(--ink)}
+  .dark h1,.dark h2,.dark h3,.dark p,.dark li,.dark td,.dark th{color:var(--dark-ink)}
+  h2{font-family:Inter,sans-serif;font-weight:800;font-size:54px;line-height:1.05;letter-spacing:-.015em;margin-bottom:18px}
+  h3{font-family:Inter,sans-serif;font-weight:700;font-size:32px;line-height:1.15;margin:24px 0 12px}
+  p,li{font-size:22px;line-height:1.45;max-width:1100px;color:#2a2a2a}
+  ul,ol{padding-left:28px;margin:8px 0 20px}
+  li{margin-bottom:6px}
+  strong{color:var(--accent);font-weight:700}
+  .dark strong{color:var(--dark-accent)}
+  .grid{display:grid;gap:18px;margin-top:14px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:1fr 1fr}
+  .cell{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e8e3da;box-shadow:0 8px 24px rgba(0,0,0,.04)}
+  .dark .cell{background:#161D2B;border-color:#2A2F40}
+  .cell img{display:block;width:100%;height:auto}
+  .cell .lbl{padding:10px 14px;font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--muted);text-align:center;border-top:1px solid #e8e3da}
+  .dark .cell .lbl{color:#A8A39A;border-top-color:#2A2F40}
+  .nav{position:fixed;bottom:24px;left:0;right:0;display:flex;justify-content:center;gap:16px;z-index:10;font-family:Inter,sans-serif;font-size:14px;color:rgba(255,255,255,.4)}
+  .nav span{padding:6px 14px;background:rgba(0,0,0,.6);border-radius:999px;color:#fff}
+  .pill{display:inline-block;background:var(--accent);color:#fff;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-right:8px}
+  .dark .pill{background:var(--dark-accent);color:var(--dark-paper)}
+  table{border-collapse:collapse;margin:16px 0;font-size:18px;width:100%;max-width:1100px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid #e8e3da}
+  .dark th,.dark td{border-bottom-color:#2A2F40}
+  th{font-weight:700;color:var(--accent);font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+  .dark th{color:var(--dark-accent)}
+  .key-finding{background:#FFF4E6;border-left:6px solid #FF9500;padding:20px 28px;margin:18px 0;border-radius:6px;font-size:22px;line-height:1.4}
+  .dark .key-finding{background:rgba(212,160,74,.12);border-color:var(--dark-accent);color:var(--dark-ink)}
+  .stat{display:inline-block;font-size:120px;font-weight:900;color:var(--accent);letter-spacing:-.04em;line-height:1}
+  .dark .stat{color:var(--dark-accent)}
+  .stat-row{display:flex;gap:80px;margin:30px 0;flex-wrap:wrap}
+  .stat-row > div{display:flex;flex-direction:column}
+  .stat-row .lbl{font-size:16px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+  .footer{margin-top:auto;padding-top:20px;font-size:14px;color:var(--muted);border-top:1px solid #e8e3da}
+  .dark .footer{color:#A8A39A;border-top-color:#2A2F40}
+  .check{color:#0a8f3c;font-weight:700}.x{color:#c0392b;font-weight:700}
+  .small{font-size:18px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide dark active">
+  <div class="breadcrumb">@armandointeligencia · Wave 2 Status</div>
+  <h1>11 Opus agents.<br>6 new templates.<br>1 strategic pivot.</h1>
+  <p style="font-size:28px;margin-top:30px;color:var(--dark-ink)">Wave 2 closed. The pipeline now has <strong>17 vertical-9×16 compositions</strong> covering AI/tech motion-graphics across the editorial spectrum.</p>
+  <div class="stat-row">
+    <div><span class="stat">17</span><span class="lbl">templates</span></div>
+    <div><span class="stat">8</span><span class="lbl">reference creators</span></div>
+    <div><span class="stat">12</span><span class="lbl">W21 variants</span></div>
+    <div><span class="stat">~3.5k</span><span class="lbl">lines of research</span></div>
+  </div>
+  <p class="footer">Use ← → to navigate. Press F for fullscreen.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Wave 2 · Deliverables</div>
+  <h2>What landed this round</h2>
+  <div class="grid g2">
+    <div>
+      <h3>🆕 6 new templates (production-ready)</h3>
+      <ul>
+        <li><strong>AnimatedCounter9x16</strong> · 0→N ramp with cubic ease-out, tabular-nums, audio-anchored</li>
+        <li><strong>AnimatedText9x16</strong> · 5 revealStyles (typewriter, blur-in, scale-punch, scramble-decrypt, highlight-sweep)</li>
+        <li><strong>AgentThinking9x16</strong> · CSS/SVG breathing orb + thinking dots</li>
+        <li><strong>TokenStream9x16</strong> · LLM streaming tokens visualization with active-glow</li>
+        <li><strong>AttentionHeatmap9x16</strong> · N×M attention matrix, scan-order fill</li>
+        <li><strong>TalkingHeadDynamic9x16</strong> · dynamic crop (full / top-half / bottom-half / top-third)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>🛠 Audit-driven fixes (mega-batch)</h3>
+      <ul>
+        <li><strong>BenchmarkBars semantic accent inversion</strong> fixed (loser=muted gray, winner=accent)</li>
+        <li><strong>JetBrains Mono</strong> loaded officially via <code>@remotion/google-fonts</code>; 3 divergent mono stacks consolidated to <code>FONT_STACKS.mono</code></li>
+        <li><strong>Dark-palette text contrast</strong> — new <code>getBodyTextColor(palette, ink, fontSize)</code> helper returns white when palette=dark + fontSize&gt;30</li>
+        <li><strong>tnf-blue chip-vs-breadcrumb collision</strong> fixed (chip top:60 → top:160)</li>
+        <li><strong>showCaptions: false</strong> default for QuoteCard9x16 + TweetCardHero9x16 (hero IS the text layer)</li>
+        <li><strong>W21 breadcrumb standardized</strong> across 7 render scripts</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-finding">⚠️ <strong>Wave 1 had a critical bug:</strong> BenchmarkBars rendered the LOSER (GPT-5.5) in dominant Gemini-blue and the WINNER (Gemini 3.2 Flash) as a thin sliver — semantic accent inversion. Fixed + re-rendered in Wave 2.</div>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Wave 2 · 6 new templates</div>
+  <h2>Visual gallery</h2>
+  <div class="grid g3">
+    <div class="cell"><img src="../output/_template-previews/wave2-counter-cream-t1.8s.jpg" alt="AnimatedCounter"><div class="lbl">AnimatedCounter9x16</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave2-text-blurin-t0.8s.jpg" alt="AnimatedText BlurIn"><div class="lbl">AnimatedText · blur-in</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave2-text-scramble-t0.8s.jpg" alt="AnimatedText Scramble"><div class="lbl">AnimatedText · scramble-decrypt</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave2-agent-thinking-dark-t1.5s.jpg" alt="AgentThinking"><div class="lbl">AgentThinking9x16 (dark)</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave2-attn-heatmap-dark-t1.8s.jpg" alt="AttentionHeatmap"><div class="lbl">AttentionHeatmap9x16 (dark)</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave2-talkinghead-dynamic-t1.5s.jpg" alt="TalkingHeadDynamic"><div class="lbl">TalkingHeadDynamic9x16</div></div>
+  </div>
+  <p class="small" style="margin-top:14px">TokenStream9x16 rendering as you read this — view it in <code>output/_template-previews/wave2-tokenstream-dark-t5s.jpg</code> once Finder shows it.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Wave 1 · Templates recap</div>
+  <h2>Already shipped (refresher)</h2>
+  <div class="grid g3">
+    <div class="cell"><img src="../output/_template-previews/layercards-cream-t2s.jpg" alt="LayerCardStack cream"><div class="lbl">LayerCardStack9x16 (cream)</div></div>
+    <div class="cell"><img src="../output/_template-previews/layercards-dark-t2s.jpg" alt="LayerCardStack dark"><div class="lbl">LayerCardStack9x16 (dark)</div></div>
+    <div class="cell"><img src="../output/_template-previews/terminal-t4s.jpg" alt="Terminal"><div class="lbl">TerminalCommand9x16</div></div>
+    <div class="cell"><img src="../output/_template-previews/nn-cream-t2.5s.jpg" alt="NeuralNet cream"><div class="lbl">NeuralNetwork9x16 (cream)</div></div>
+    <div class="cell"><img src="../output/_template-previews/nn-dark-t2.5s.jpg" alt="NeuralNet dark"><div class="lbl">NeuralNetwork9x16 (dark)</div></div>
+    <div class="cell"><img src="../output/_template-previews/tweetcard-t1.5s.jpg" alt="TweetCardHero"><div class="lbl">TweetCardHero9x16</div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">W21 bake-off · current state</div>
+  <h2>12 different ways to tell the same story</h2>
+  <p>The Gemini 3.2 Flash leak script (43.3 s, Spanish) rendered through 12 different template lenses. Open <code>output/2026-05-18-gemini-3-2-flash-leak/comparison-grid-v2.jpg</code> for the full 4×3 montage.</p>
+  <div class="cell" style="max-width:1200px;margin:20px auto"><img src="../output/2026-05-18-gemini-3-2-flash-leak/comparison-grid-v2.jpg" alt="W21 bake-off grid 4×3"><div class="lbl">4×3 montage · row 1 TNF family + TweetCard · row 2 structural · row 3 stat-focused</div></div>
+  <p class="small">All 12 master.mp4 files live in <code>output/2026-05-18-gemini-3-2-flash-leak/&lt;variant&gt;/master.mp4</code>.</p>
+</section>
+
+<section class="slide dark">
+  <div class="breadcrumb">Strategic finding · @builtbystephan</div>
+  <h2>It's NOT a HeyGen avatar.</h2>
+  <div class="key-finding">Stefan Andrei is on a <strong>fixed home-studio cam</strong>, not an AI avatar. Confirmed by consistent lavalier-mic, painting, plant, and shelf across 24 keyframes from <code>DYkyJfxx5Lx</code> + 7 other reels in the same room.</div>
+  <p style="margin-top:24px">The "dynamic crop" pattern you liked is a <strong>continuous face-cam take</strong> being cropped + cut into by B-roll lanes. Three crop modes:</p>
+  <table>
+    <tr><th>Crop mode</th><th>~% runtime</th><th>What viewer sees</th></tr>
+    <tr><td><code>FACE_FULL</code></td><td>~30%</td><td>Stefan fills 1080×1920</td></tr>
+    <tr><td><code>BROLL_FULL</code></td><td>~25%</td><td>B-roll asset fills frame; face-cam hidden (audio continues)</td></tr>
+    <tr><td><code>SPLIT_50_TOP_BROLL</code></td><td><strong>~45% (dominant)</strong></td><td>B-roll top half; face-cam cropped to bottom half via <code>clipPath: inset(50% 0 0 0)</code></td></tr>
+  </table>
+  <ul>
+    <li><strong>HARD CUTS only</strong> — no dissolves, no slides</li>
+    <li>~22 cuts in 28 s — cadence <strong>~1 cut/sec</strong></li>
+    <li>Every cut lands on a <strong>captioned-word onset</strong></li>
+    <li>B-roll lane mixes <strong>5 asset categories per reel</strong>: brand vignettes, product cards, movie stills, film-frame chrome, Claude screen-recs</li>
+  </ul>
+  <p class="small" style="margin-top:20px">Full analysis: <code>references/creators/builtbystephan/ANALYSIS.md</code>. Our existing T6 TalkingHeadDynamic9x16 needs Wave 3 revision: use <code>&lt;OffthreadVideo&gt;</code> for face-cam + <code>brollClips</code> array + HARD_CUT default.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Wave 1 audits · 5 multi-angle critiques</div>
+  <h2>Where we stood at start of Wave 2</h2>
+  <table>
+    <tr><th>Dimension</th><th>Grade</th><th>Top finding (now fixed)</th></tr>
+    <tr><td>Timing (A1)</td><td>B−</td><td>Two house springs coexist — documented family split; 1 punchy spring (chips/heroes) + 1 editorial (cream/dark cards) intentional</td></tr>
+    <tr><td>Color (A2)</td><td>D+ ⚠️</td><td><strong>BenchmarkBars semantic accent inversion</strong> — loser was dominant accent → fixed (Wave 2 F1)</td></tr>
+    <tr><td>Typography (A3)</td><td>A−</td><td>2 divergent mono stacks → consolidated as <code>FONT_STACKS.mono</code> (JetBrains Mono official load)</td></tr>
+    <tr><td>Info density (A4)</td><td>D / A</td><td>BenchmarkBars = A (3 distinct info layers). BigNumber/Quote/TweetCard = D (punchline spoiler / desync / 7s thesis spoiler). showCaptions defaults flipped</td></tr>
+    <tr><td>Brand (A5)</td><td>B+</td><td>10/12 variants land canonical. Standardized W21 breadcrumb across 7 render scripts</td></tr>
+  </table>
+  <p class="small" style="margin-top:14px">Full critiques in <code>docs/critiques/wave-1/</code>.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Wave 2 audit fixes · F1 batch</div>
+  <h2>7 fixes applied in one coherent pass</h2>
+  <table>
+    <tr><th>#</th><th>Fix</th><th>Verified?</th></tr>
+    <tr><td>1</td><td>BenchmarkBars loser → muted gray (semantic fix)</td><td><span class="check">✓ re-rendered</span></td></tr>
+    <tr><td>2</td><td>Spring family annotations (no unification needed — A1 confirmed intentional)</td><td><span class="small">code-only</span></td></tr>
+    <tr><td>3</td><td><code>showCaptions: false</code> default for QuoteCard9x16 + TweetCardHero9x16</td><td><span class="small">code-only</span></td></tr>
+    <tr><td>4</td><td>ChipScene <code>top:60</code> → <code>top:160</code> (tnf-blue collision fix)</td><td><span class="check">✓ re-rendered</span></td></tr>
+    <tr><td>5</td><td>Standardize W21 breadcrumb <code>{text:"Google", date:"I/O 2026 · Filtración"}</code> across 7 render scripts</td><td><span class="small">2/7 re-rendered</span></td></tr>
+    <tr><td>6</td><td>Dark-palette body text white (>30px) via <code>getBodyTextColor()</code> helper</td><td><span class="check">✓ re-rendered</span></td></tr>
+    <tr><td>7</td><td>JetBrains Mono loaded via <code>@remotion/google-fonts</code> + <code>FONT_STACKS.mono</code> exported</td><td><span class="check">✓ baked into all renders</span></td></tr>
+  </table>
+</section>
+
+<section class="slide dark">
+  <div class="breadcrumb">Reference creators · current state</div>
+  <h2>8 scraped, 1 ↘ deprioritized, 2 high-value finds</h2>
+  <table>
+    <tr><th>Handle</th><th>Reels</th><th>Templates</th><th>Verdict</th></tr>
+    <tr><td>@carloscuamatzin</td><td>12</td><td>6</td><td>Sprint 1 anchor (cream flowchart inspired DiagramExplainer)</td></tr>
+    <tr><td>@diysmartcode</td><td>12</td><td>3</td><td>BigNumberHero + dark-palette mode</td></tr>
+    <tr><td>@bilawal.ai</td><td>7</td><td>5</td><td>TweetCardHero9x16 (highest authority÷effort)</td></tr>
+    <tr><td>@simonhoiberg</td><td>12</td><td>6</td><td>LayerCardStack9x16 (Wave 1 shipped)</td></tr>
+    <tr><td><strong>@builtbystephan</strong></td><td><strong>30</strong></td><td><strong>3</strong></td><td><strong>🔴 Wave 3 P0: revise TalkingHeadDynamic9x16 to match real pattern</strong></td></tr>
+    <tr><td>@motiondarwin</td><td>12</td><td>4</td><td>↘ Cinema 4D demoreel artist — low fit, useful for 3D bg plates</td></tr>
+    <tr><td>@black.one.studio</td><td>8</td><td>3</td><td>↘ streetwear brand (mis-categorized) — 2 transferable copywriting tactics</td></tr>
+    <tr><td>@midu.dev / @dotcsv / @estebandiba</td><td>27</td><td>9</td><td>Mixed value — see prior analyses</td></tr>
+  </table>
+  <div class="key-finding" style="margin-top:24px">📍 <strong>White space confirmed</strong> at the intersection of <strong>(tech-AI motion design teaching)</strong> ∩ <strong>(Spanish-language AI-explainer reels with strong motion)</strong>. None of 8 scraped creators occupies this combined niche. <strong>@armandointeligencia is positioned to own it.</strong></div>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Research deliverables · Wave 1</div>
+  <h2>3,460 lines of curated research</h2>
+  <ul>
+    <li><strong>R1</strong> · Terminal/CLI patterns (418 lines) — JetBrains Mono + Tokyo Night ANSI + ❯ Starship prompt + slice-based typewriter</li>
+    <li><strong>R2</strong> · Data viz primitives (929 lines) — 10 primitives with Remotion-native recipes, top-3 next: AnimatedCounter ✓ + AnimatedTable + Sparkline</li>
+    <li><strong>R3</strong> · Graph/NN/CS viz (925 lines) — SKIP react-force-graph/cytoscape/vis-network (SSR-incompatible), USE d3-force pre-computed. Next trilogy: TokenStream ✓ + AttentionHeatmap ✓ + ForceGraph</li>
+    <li><strong>R4</strong> · Robot/character (371 lines) — AgentThinking9x16 ✓ as the zero-asset-risk start. 5 Lottie files identified for <code>public/lottie/</code></li>
+    <li><strong>R5</strong> · Kinetic typography (597 lines) — AnimatedText9x16 ✓ with 5 revealStyles. Critical: per-char opacity is anti-pattern; Array.from() for Spanish grapheme safety; mulberry32 seeded PRNG for scramble determinism</li>
+    <li><strong>R6</strong> · Top creators teaching (219 lines) — 10 YouTube tutorials, 5 Spanish-language motion teachers, 10 new IG candidates</li>
+  </ul>
+  <p class="small" style="margin-top:14px">All docs in <code>docs/research/wave-1/</code>.</p>
+</section>
+
+<section class="slide dark">
+  <div class="breadcrumb">Wave 3 plan</div>
+  <h2>Where we go next</h2>
+  <h3>🔴 P0 — Stephan-pattern revision</h3>
+  <ul>
+    <li>Revise <code>TalkingHeadDynamic9x16</code>: <code>&lt;OffthreadVideo&gt;</code> face-cam + <code>brollClips: BrollClip[]</code> array + HARD_CUT transition default + new <code>SPLIT_50_TOP_FACE</code> crop mode</li>
+    <li>Prepare <code>public/broll/</code> asset library covering Stephan's 5 categories (brand vignettes, product cards, movie stills, film-frame chrome, screen-recs)</li>
+  </ul>
+  <h3>🟠 P1 — More templates from Wave 2 research</h3>
+  <ul>
+    <li><code>AnimatedTable9x16</code> + <code>Sparkline9x16</code> (R2 priorities)</li>
+    <li><code>ForceGraph9x16</code> (R3 trilogy completer)</li>
+    <li><code>BuilderDropCard9x16</code> variant inside TechNewsFlash9x16 (Stephan Template B)</li>
+  </ul>
+  <h3>🟢 P2 — Render expansion + audit re-run</h3>
+  <ul>
+    <li>Re-render 5 remaining W21 variants with breadcrumb + text-color + JetBrainsMono updates (bignum, diagram, quote, tnf-transitions, tweetcard)</li>
+    <li>Render W21 voiceover on all 6 new Wave-2 templates → expand bake-off to 18+ variants</li>
+    <li>Re-run timing/color/typography audits on the fixed variants → measure improvement vs Wave-1 baseline</li>
+  </ul>
+  <h3>🔵 P3 — Reference expansion</h3>
+  <ul>
+    <li>Scrape 3 Spanish motion-design teachers we haven't tried (Carlos Albarrán/Zenzuke, Esteban Diacono via correct handle, Motion Graphics Web)</li>
+    <li><code>yt-dlp --write-auto-subs</code> on the 10 R6 tutorial URLs → distill teaching insights</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Files you can open right now</div>
+  <h2>Where things live</h2>
+  <table>
+    <tr><th>What</th><th>Path</th></tr>
+    <tr><td>All template preview frames</td><td><code>output/_template-previews/</code></td></tr>
+    <tr><td>12 W21 master.mp4 variants</td><td><code>output/2026-05-18-gemini-3-2-flash-leak/</code></td></tr>
+    <tr><td>4×3 comparison grid</td><td><code>output/2026-05-18-gemini-3-2-flash-leak/comparison-grid-v2.jpg</code></td></tr>
+    <tr><td>Wave 1 audits (5 critiques)</td><td><code>docs/critiques/wave-1/</code></td></tr>
+    <tr><td>Wave 1 research (6 docs, ~3.5k lines)</td><td><code>docs/research/wave-1/</code></td></tr>
+    <tr><td>Reference creator analyses (8 creators)</td><td><code>references/creators/</code></td></tr>
+    <tr><td>17 vertical-9×16 compositions</td><td><code>src/compositions/</code></td></tr>
+    <tr><td>9 render scripts (W21 variants)</td><td><code>scripts/render-w21-*.ts</code></td></tr>
+    <tr><td>This slideshow source</td><td><code>docs/SLIDESHOW.html</code></td></tr>
+  </table>
+  <p style="margin-top:30px;font-size:28px;text-align:center"><strong>Ready for Wave 3 direction.</strong></p>
+</section>
+
+</div>
+
+<div class="nav"><span id="ctr">1 / 11</span><span>← →</span><span>F: fullscreen</span></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(i){
+  slides.forEach(s => s.classList.remove('active'));
+  slides[i].classList.add('active');
+  document.getElementById('ctr').textContent = (i+1)+' / '+slides.length;
+  cur = i;
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' '){ show(Math.min(cur+1, slides.length-1)); }
+  else if(e.key === 'ArrowLeft'){ show(Math.max(cur-1, 0)); }
+  else if(e.key === 'f' || e.key === 'F'){
+    if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); }
+    else { document.exitFullscreen(); }
+  }
+  else if(e.key === 'Home'){ show(0); }
+  else if(e.key === 'End'){ show(slides.length-1); }
+});
+document.addEventListener('click', e => {
+  // ignore clicks on links
+  if(e.target.tagName === 'A') return;
+  const x = e.clientX / window.innerWidth;
+  if(x < 0.3) show(Math.max(cur-1, 0));
+  else if(x > 0.7) show(Math.min(cur+1, slides.length-1));
+});
+</script>
+</body>
+</html>

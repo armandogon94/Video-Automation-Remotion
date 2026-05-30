@@ -1,0 +1,288 @@
+[00:00:00] Some people are predicting that the future of video editing is going to be
+[00:00:03] agintic. What that means is that we, people, won't be editing our video, but AI
+[00:00:07] tools like cloud will do everything from cutting out silences to adding
+[00:00:11] transitions to adding cool zooms, B-roll, etc. The thing is, that future is
+[00:00:15] already here. Just last week I went viral on Twitter by sharing a clipping
+[00:00:19] tool that turns long-form content into short-form content. I made that in an
+[00:00:23] hour using cloud. My video on remotion where you can use cloud to
+[00:00:27] generate motion graphics and you no longer need motion graphic skills to add
+[00:00:31] to your videos is now at 20,000 views. And some of my favorite creators like Renee
+[00:00:35] are already editing their YouTube videos using cloud. Renee is actually the one
+[00:00:39] who put me on to using cloud for video editing. I've since personalized my
+[00:00:43] workflow a little bit, but credits do where it's due. In this video I'm
+[00:00:47] sharing my end-to-end workflow using cloud to edit my videos. I'll go over
+[00:00:50] how it does things like cutting silences, ums and as. It'll find places to
+[00:00:55] add b-roll as well as generate said b-roll either using tools like c-dance or
+[00:01:01] in our case, remotion. We're going to create motion graphics. I'll show you how you
+[00:01:04] can easily add photos, sounds, etc. without going into your editor and
+[00:01:09] actually finding the spots to add them. And I'll hint at how you can turn
+[00:01:12] longer-form content into social short-form content. You'll also learn
+[00:01:16] how in this age of agentic editing you can avoid all of your videos
+[00:01:20] looking the same as other people's videos by making sure that you use
+[00:01:24] sounds that only you know or memes that are really niche or
+[00:01:28] or really specific references. Let's get into the workflow.
+[00:01:30] Okay, step one of my video editing process is making a rough cut, a big cut,
+[00:01:36] to remove any silences, repetitions, mistakes, filler words, etc. I created a
+[00:01:41] skill for this that you can give to cloud or codex, whatever you're using.
+[00:01:45] It removes all silences, etc. and makes a cut while preserving
+[00:01:49] laughter for comedic effect. So I'm going to show you how
+[00:01:52] to use this skill in cloud. We're just going to open cloud and then we're going
+[00:01:56] to go cut video. So just to install this, if you haven't
+[00:02:00] done so already, just grab the link to the skill and give it to cloud and say
+[00:02:05] install this skill and then you're going to probably have to restart your
+[00:02:08] terminal. So here we have cut video and then what we need is obviously a
+[00:02:12] source file or raw recording. This is a recording with my dad.
+[00:02:16] It's seven and a half minutes long and as you can see it hasn't been
+[00:02:20] cut at all. So I'm going to give it that and then
+[00:02:24] we're going to wait for the output. If you don't like this aggressive
+[00:02:29] cut, I tend to cut all of the silences out and leave very little space just
+[00:02:33] because I want my videos to be engaging to watch, then you can just prompt it
+[00:02:37] and do this differently to match your editing style.
+[00:02:40] Or what I did to create this skill is I actually gave it a reference video of
+[00:02:44] mine initially so it knows how I manually edit my videos. So that might
+[00:02:48] be an idea for you to customize it to your editing style. Just so you know what's
+[00:02:52] going on in the background, it's easier to edit and then it uses tools like
+[00:02:56] whisper to analyze the transcript as well as ffmpeg to look at the frames
+[00:03:00] in the video and then it's going to decide what to cut
+[00:03:04] out. Just as a time estimate, there's lucky days and unlucky days with Claude
+[00:03:08] but it takes a few minutes to make these cuts especially if you're asking
+[00:03:12] for a lot of cuts. So this is a seven minute video
+[00:03:15] and it is already running for three minutes but again this means you won't
+[00:03:19] have to manually touch a video editor ever again
+[00:03:23] which I think is great especially if you build agents around this you can just
+[00:03:27] give your raw cuts and give it instructions on how to cut this
+[00:03:30] and it'll do it in the background while you do other work. All right it has
+[00:03:34] outed a video and it reduced it by a minute and a half.
+[00:03:38] Let's watch some of this to see how well it did. Number one we're gonna guess
+[00:03:41] if a photo is AI or real. Yes, show me the picture. It's a fake, it's AI.
+[00:03:46] This is a picture. It's real? Okay. Remember what you talked about yesterday?
+[00:03:50] Cool so I think it did a good job of cutting things out. I can see that in
+[00:03:55] the beginning I mean I was speaking as I was getting the camera set up
+[00:03:59] so you could also tell it to get rid of that
+[00:04:01] point. It's going to tell it to cut out the... So again it looks at transcript
+[00:04:06] so it assumes that when you're speaking you might want to add that
+[00:04:09] in there to be honest depending on the style of the video I would want to keep
+[00:04:12] it in there. So you see here it's saying check out the lights that's good
+[00:04:15] so it's going to drop that part where I say checking the lights and I think
+[00:04:19] it picks up on that well. Let's check if it cut it out.
+[00:04:22] Okay so we're going to speak in this little mic. Yeah great so it cut it
+[00:04:26] out just based on a prompt which is kind of crazy.
+[00:04:28] Now that's step one of our editing process so you can see this is an
+[00:04:32] interview with my dad and you may have noticed that we're
+[00:04:36] showing something on screen so I want to overlay whatever I'm showing him on
+[00:04:40] screen. He's doing an AI guessing game basically so
+[00:04:43] I'll show you what this looks like in the video that I already edited here
+[00:04:48] so I'm just going to play that and you can see that he's looking at these
+[00:04:51] photos and guessing whether or not they're AI.
+[00:04:54] I kind of want to give Claude the slide deck where I have all of these
+[00:04:57] photos just because I'm a little bit lazy. So here is my quiz that I made
+[00:05:01] for my dad. I'm just going to share this and make it accessible
+[00:05:04] for everyone and so I'm going to tell Claude extract
+[00:05:09] all of the images in this slide. So I'm saying that it should put it in my
+[00:05:14] assets folder. I have an assets folder where I save things like
+[00:05:18] screenshots or yeah funny photos that I want to use in
+[00:05:23] videos as well as videos or sounds that I
+[00:05:27] can give Claude while I'm editing. Funnily enough I just created a slack
+[00:05:31] bot where I just drop any screenshot into and then it
+[00:05:35] saves it to that assets folder. So this way whenever I'm working on a project
+[00:05:40] and I see a fun screenshot or a stat or anything that I need for a video
+[00:05:44] project I save it to my finder and then Claude can
+[00:05:48] easily access that. I forgot to give it my google slide
+[00:05:51] link so I'm going to do that now. Right so here we can see that it
+[00:05:54] created a folder called projects. I'm going to move that to projects
+[00:05:58] soon but we'll see when we open this we have some PDFs and it's probably going
+[00:06:03] to extract the photos from that PDF and cut them.
+[00:06:07] And then we'll see that we can magically overlay all of these photos at the
+[00:06:11] exact right timestamps. Now this process is a bit longer than it
+[00:06:14] would have been in the beginning because as I was editing this video manually
+[00:06:18] I was saving all of these photos to my computer. I just wanted to show you
+[00:06:21] that you can literally give it any format a PDF or anything
+[00:06:25] else and it can extract photos for you to use as well. So you can do this with
+[00:06:29] logos with anything you want. So here we have the raw
+[00:06:33] and it's outputted that. I wanted to get rid of the
+[00:06:37] white padding so I'm going to just ask it to do that.
+[00:06:40] So we can see it also recognizes what's on the slide so it obviously took
+[00:06:44] all of the slides out of the PDF but it sees that not every slide
+[00:06:47] contains a photo so hopefully it's just going to grab the photo
+[00:06:51] ones. All right live we're seeing that it's cropping all of these images
+[00:06:56] so that saved me a lot of time finding these images again. Great and now we're
+[00:06:59] going to tell it to overlay the image for maybe a second or
+[00:07:03] three, two or three right before my dad needs to guess what
+[00:07:07] the image is but I just want to show you that step two of
+[00:07:10] overlaying images is very much possible
+[00:07:12] with cloud editing without doing any manual work. We can see here that it's
+[00:07:16] mapping the 20 photo moments slides one to 20
+[00:07:20] to when my dad is doing the guessing. So let's take a look at these overlays
+[00:07:26] where the game starts. Number one we're going to guess if a photo
+[00:07:29] is AI or real right? Yes show me the picture it's a fake it's AI
+[00:07:36] this is a picture yeah it's real okay it's AI
+[00:07:40] okay remember what we talked about yesterday. Okay so here it looked at
+[00:07:44] the transcript and mistakenly added an overlay but that's an easy fix we
+[00:07:47] just need to tell it to move that one. This is
+[00:07:52] I think AI too but it could be real because it existed.
+[00:07:56] You can see here that it actually overlaid that one at the right moment so
+[00:07:59] it did well for the majority of these I looked at the video and for anyone's
+[00:08:03] that are not aligned well or like come at the wrong
+[00:08:06] moment you could just say it should move that but that should show you
+[00:08:09] that you can add any image to a specific timestamp so even if you
+[00:08:13] are going through your video like this no longer in an editor you say hey
+[00:08:17] at minute 156 I want to add this image and then you just refer to your assets
+[00:08:23] library and it's going to add that image. So my third step in this case would be
+[00:08:27] to add sound effects so I'm just going to show you how I'm going to use the
+[00:08:31] Duolingo correct sound to add to my video whenever my dad gets
+[00:08:35] something correct and then I'll do the wrong sound if he gets it
+[00:08:38] incorrect and I'm going to show you exactly how I
+[00:08:40] save a sound effect from YouTube I give it to my slack bot and then it
+[00:08:45] saves it to my sounds folder so I'll only have to save this once in my life
+[00:08:49] my slack bot recognizes what it is so it's going to say it's the Duolingo sound
+[00:08:54] and then I'm always going to be able to refer to it all right so I'm going to
+[00:08:57] go to my slack bot and I'm going to copy paste the Duolingo sound effect
+[00:09:01] link and then it's going to pick up on what this is in this case it's a
+[00:09:05] sound effect it's going to automatically save it as we can see here
+[00:09:09] it's going to save it directly to my sound effects asset
+[00:09:13] folder so here we have it it's going to open
+[00:09:16] here but that's fine now we're going to tell Claude to add the Duolingo sound
+[00:09:20] effect to whenever my dad is correct in the video
+[00:09:25] and then find it in my assets folder under sounds let's see if it applied the
+[00:09:32] Duolingo sound effects whenever you get something right so let's play this
+[00:09:36] first one it's a fake it's a AI
+[00:09:41] nice so it applies the whenever he's right just always make sure to do a
+[00:09:47] double triple check especially if he's doing a lot of them like he is
+[00:09:51] or he Claude is basing himself off the transcript and sometimes it's kind of
+[00:09:55] hard to tell where to add it but he did a good job of adding those
+[00:09:59] sound effects so that was step three I showed you how to add
+[00:10:03] sound effects I want to show you in a similar technique using my slack bot
+[00:10:07] how I can save a meme and then use that in my videos
+[00:10:11] so I'm just going to go to slack and I'm going to drop this link in there
+[00:10:15] and it's going to download it as a video and then that way I have the
+[00:10:19] confused math ladies meme in my assets folder forever
+[00:10:23] let's head over to my assets folder again you're seeing this is turning
+[00:10:26] into the holy grail and here we can see it described as
+[00:10:30] confused confused math lady we can actually play that
+[00:10:36] I kind of want to use this meme after my dad's confused about something
+[00:10:43] and to make my life a little bit easier I'm going to have some manual
+[00:10:46] intervention where I want to add it to a specific moment
+[00:10:51] in the video so let me just rewatch this and find the specific timestamp that I
+[00:10:55] want to add okay I think it'd be funny to add it
+[00:10:58] at around the 150 mark 150 mark so let's see how it does
+[00:11:04] and it's going to play that meme of course you can also cut the meme
+[00:11:06] you can shorten it just tell it to shorten it or only include
+[00:11:10] a small excerpt of a video so here it's going to search for that meme in my assets
+[00:11:14] folder and it's going to add it the best way in my opinion to edit
+[00:11:17] with claude is to do a lot of the prep work where you source all of the
+[00:11:21] screenshots or the memes that you want to use
+[00:11:24] and then it can just go into one folder in your
+[00:11:27] finder and add those where it thinks it's right let me just
+[00:11:31] head over to the 150 mark here we go
+[00:11:35] was it oh yeah so great job adding the meme at actually corrected
+[00:11:45] 146 instead of 150 because it noticed that my dad was the most confused there so
+[00:11:51] you can see claude's already doing good thinking here
+[00:11:54] all right next part of editing might be to add fun transitions between clips
+[00:11:59] or I kind of want to add zooms on my face or my dad's face whenever
+[00:12:04] he said something really funny to one of the two speakers
+[00:12:09] whenever something funny happens or awkwardness
+[00:12:14] so let's see how it does there you could also give it cinematic terms like
+[00:12:18] use a ken burns effect which just zooms into something slowly
+[00:12:22] could also say you want to add a harsh zoom and just kind of play around
+[00:12:27] with how you like to edit your videos again if you have a lot of
+[00:12:31] reference videos maybe you found on youtube from other people editing or
+[00:12:35] your own then you can ask claude to describe
+[00:12:39] what those cuts are or what those effects are that are being used
+[00:12:43] okay let's have a look at these zooms that it did or not
+[00:12:47] it did a few let's see towards the end here
+[00:12:50] I will replace me in zoom I hope not no we're gonna do a little bit of
+[00:12:55] current I'm gonna see if you can guess what these words mean
+[00:12:59] is it so anything we don't know anything so your brain very good
+[00:13:06] I think this did an okay job but I think I need to be a bit more specific with
+[00:13:11] the the times I wanted to zoom in he'd actually gave us a list here of when
+[00:13:15] it zooms in you know it's not the last one let's look at
+[00:13:18] 315 and let's see if I agree with that
+[00:13:21] yeah so at this moment that was actually a really good idea to zoom to my dad's face
+[00:13:32] because he was arguing with me so you can definitely look at your video and say
+[00:13:35] I would have added zooms whenever my dad completes a sentence of mine so I can
+[00:13:40] say add a zoom to dad when
+[00:13:46] so that's my manual intervention there you can actually see that it found the
+[00:13:51] exact timestamp where it should add that zoom so let's wait for the zoom
+[00:13:56] okay so he added that at 537 let's watch that together just because it's so
+[00:14:02] addicting without learning anything so your brain
+[00:14:07] very good the important part here is to explain in as much detail as possible
+[00:14:12] how you like your edits to be done and which transitions etc you'd like to use
+[00:14:17] now before we move on to my demo of how I would edit scream recordings specifically
+[00:14:22] ones recorded in tele I'm just going to show you how we can use another skill that I've built
+[00:14:27] to turn this long form video into a short form clip and actually add captions as well
+[00:14:33] so yes you can even add captions to this so this completely gets rid of the need for a tool
+[00:14:37] like opus clip which generates captions and turns something into a video here it's pulling
+[00:14:45] what he thinks are the funniest moments in terms of clips I want the clip where he describes what I
+[00:14:51] do and we can select a few more if we want but let's just do next and then the format I wanted to be
+[00:14:57] reals format and then and then we're going to submit those answers so as I said you can get
+[00:15:02] this specific clipify clip that actually got 300 stars on my github so you can get that repo there
+[00:15:10] and you can just set that up in cloud and use it for any long form to short form flow
+[00:15:14] so let's wait for it to generate this and I'll show you what the final result is it's asking us
+[00:15:19] if it wants the hard cut version and let's do big you know what I kind of want kind of one big bold
+[00:15:27] captions so it asks us about the format of the captions and if you wanted our vertical video to
+[00:15:32] have our faces in a split screen or if it should zoom in on me when I'm speaking zoom in on my
+[00:15:37] dad when he's speaking and I prefer that version let's take a quick look at the vertical portion
+[00:15:43] of this video now I'd like you to describe as best you can what you think I do as a job
+[00:16:00] it clipped it here and also you could tell it to do this on the raw recording instead of the
+[00:16:06] already zoomed in version of this video so yeah that was it for the non-screen recording
+[00:16:12] editing your videos with clod there's so much you can do connecting it to tools like 11 labs as well
+[00:16:18] to do narration for example or even connected to an ai generation video tool like cdans to generate ai
+[00:16:25] b-roll all right for this last portion very quickly I want to show you how you can edit
+[00:16:30] your screen recordings that you record in tele using our mcp so you can actually perform
+[00:16:35] actions in clod that are directly reflected in your tele editor so you're just going to go to
+[00:16:40] our docs page and find the mcp doc and then if you haven't done so already you're just going to
+[00:16:45] copy this and then through your terminal now I've already installed our mcp so I'm just going to
+[00:16:51] open clod and I'm going to show you where it is or the tools that exist so you can obviously
+[00:16:56] list your videos etc but we can also upload clips so you can upload your own clips next to
+[00:17:03] your screen recordings you can sorry you can cut clips you can even get frames from your
+[00:17:07] video that would be good for a thumbnail for instance so I just did that earlier today
+[00:17:12] you can remove filler words etc but I'm going to show you how I'm going to cut my video in tele
+[00:17:17] because it's super easy to do that there with auto cut and then I'm going to add a b-roll layout
+[00:17:22] which is super new which is essentially layout where we add b-roll and the b-roll I'm going to
+[00:17:28] add is going to be generated in another tool called remotion and all of that's going to happen
+[00:17:33] in clod first thing we're going to do is we're going to grab a video you can see here that it
+[00:17:37] has no cuts applied to it so I'm going to remove all of these silences remove the filler words etc
+[00:17:44] I would maybe do a more clean cut here but here we can see that there are no cuts applied beside the
+[00:17:50] base layout so we're going to ask clod to go through and apply layouts where it thinks it's
+[00:17:55] would be right we're just going to grab the video link here and we're going to head over to
+[00:17:59] clod again layouts and graphic generated in remotion as b-roll I mean I'm being purposely lazy
+[00:18:10] and vague because I know what I talked about in this intro and I always want to add b-roll in my
+[00:18:16] intros to make them more exciting so I'm going to see if it can add b-roll there to describe
+[00:18:23] a process this video was about how god is now editing video and I just want to show that
+[00:18:28] with motion graphics so let's see how well it does in our first go I should add if you haven't
+[00:18:33] done so already watch my video on how to generate motion graphics with remotion because I go over
+[00:18:39] the steps of installing remotion into clod which is super easy but you do need to set that up before
+[00:18:45] you can actually generate motion graphics in this way so clod will just remember remotion
+[00:18:50] as a skill and then it can actually use it to do such things and generate b-roll so be
+[00:18:56] sure to watch that first cool we can see the steps here so it's looking at the uncut transcript and
+[00:19:00] it's checking for b-roll moments it's going to generate the motion graphic it's going to upload
+[00:19:05] that motion graphic as mb4 in totella and then it's going to add um b-roll layouts with set mb4 so
+[00:19:13] it's asking me yeah it's giving me three suggestions and I like the idea of messy files flying in
+[00:19:19] and then going into organized folders and then I'm going to go with fast and submit those answers
+[00:19:25] reading the motion graphic and then it's going to upload it as an mb4 to the b-roll segment which is
+[00:19:31] new and you should try all right supposedly it has generated these layouts so let's have a look
+[00:19:37] together we're just going to have to always refresh our page whenever we add changes so here we can
+[00:19:43] already see it applied our new b-roll layout so let's play this together first impressions
+[00:19:54] so fun okay so generated that in remotion and then it added that as I was describing this so
+[00:20:00] this was about my slack bot and how basically I created this assets folder but I think this is a
+[00:20:04] really cool way of just being able to edit your screen recordings that you make this was just
+[00:20:09] a small example of things you can do in our mcp it's still work in progress but I'm going to
+[00:20:14] be playing around with it over the coming weeks and I'd love some of you to play around with
+[00:20:18] it as well I'm going to show you a second thing that the mcp can do so we're just going to say
+[00:20:24] find frames in this video of my full face that I could use as a youtube thumbnail let's see it
+[00:20:34] can actually get frames as well from tell that directly so I'm just going to see if it can find
+[00:20:40] that from the camera source file and then it's going to save that to our it's selecting
+[00:20:46] for wherever my eyes are pointing forward because I know I don't always do that when I'm filming
+[00:20:51] and I expected to return some frames that I can use as it found the winner killer shot
+[00:20:57] which I'm animated my mouth is open so let's see what it comes up with okay in all fairness I
+[00:21:02] didn't interrupt Claude because it was taking too long but look at these thumbnails that it found
+[00:21:06] using tell us mcp now lets you edit your videos using Claude and what this opens up
+[00:21:11] is that you can integrate many more tools into your editing process not just that not just cap cut
+[00:21:17] not just one tool by having it all be in AI model I hope you like this introduction to how I edit
+[00:21:22] my videos with Claude there's a long way to go as you saw sometimes we run into some slowness issues
+[00:21:28] some understanding issues as you start to edit your videos with Claude you're going to become
+[00:21:32] much better at defining technically how it is you like to edit so it removes all manual work
+[00:21:38] which we all hate and it just becomes more of a conversation which I've really liked I'm gonna
+[00:21:42] link all of the skills that I used below so you can add them to your own Claude and play around with
+[00:21:48] and then if you like this video please be sure to subscribe a lot of time goes into these videos
+[00:21:53] and I'd really love to have you around I'll see you for the next video

@@ -1,0 +1,128 @@
+[00:00:00] I'm no video editor so these kinds of motion graphics in my video seemed completely impossible
+[00:00:05] for me but I'm going to show you today how you can recreate these in just seconds using AI and
+[00:00:10] personalize them to your content using a tool called Remotion. So let's dive in. Of course even
+[00:00:16] as a non-motion graphic designer you could use templates and insert them into your videos but
+[00:00:20] I always found that those didn't quite match the vibe of my video, didn't quite match my
+[00:00:24] branding and weren't easy to personalize with my content. Here's just a few examples of
+[00:00:29] graphic designs that I made using Remotion. Here's a Venn diagram that you can insert your own content
+[00:00:35] into. Here's one where I drew inspiration from a static graph and turned it into an animation
+[00:00:41] and this one I actually took inspiration from Ali Abdel's video and recreated it. All right let's
+[00:00:46] go ahead and install Remotion on your machine. I will assume that you've already installed
+[00:00:51] cloud code which you'll need to be using Remotion and kind of prompting your
+[00:00:56] motion graphics with. Step one is to go to remotion.dev slash docs and you'll end up on this page.
+[00:01:03] We're going to copy this and we're going to open our terminal and we're going to copy paste this in
+[00:01:09] so now it's going to ask us how we'd like to start our first project and we're just going to go
+[00:01:13] with blank. You can switch between these using your up and down arrow keys. Let's go ahead with
+[00:01:18] blank and then we're just going to enter every time we accept something. Yes we want to add
+[00:01:24] tailwind css. Let's get what they use to do the motion graphics with and then yes and add agent
+[00:01:30] skills to cloud right. So we want Remotion as a skill. So every time I'm just pressing enter
+[00:01:36] as a key here. All right it's asking us which agents to install and we're just going to go with
+[00:01:40] the recommended. So enter installation scope project sim link just accept whatever they're
+[00:01:46] saying here. Proceed with installation done. Install the find skills so this is how you
+[00:01:51] can actually call the remotion skill in cloud code. We're going to go with yes. Perfect. So here you
+[00:01:59] have some commands to call the skill with to start creating your motion graphics. So here we have
+[00:02:07] the name of the project which is going to be in your home directory. As you can see here it's
+[00:02:13] called my video. To look into this file you can actually go cd as a command in my video so
+[00:02:19] just open that folder and then you can run the remotion. So let's open a new tab here and we're
+[00:02:25] just going to go cloud. Yes I trust this folder. So before we start just navigate to my video which
+[00:02:36] is the correct folder. Yes and now npm run dev and that's basically going to open up
+[00:02:46] remotion in chrome so we can actually view whatever motion graphic we're making or creating.
+[00:02:59] Over here we can see that that command opened up remotion for us and this is actually where
+[00:03:03] we're going to see every motion graphic that we prompt just be created as a new composition
+[00:03:09] as they're called. So on the left here we have our compositions. This one doesn't have a name
+[00:03:13] yet. We can rename it but whenever we start making them they'll just automatically be added
+[00:03:18] there in remotion and you can actually view what's being done here as well as render them
+[00:03:23] in the end but we'll go over that. Now that we've set up remotion on our machine we can actually
+[00:03:28] start grabbing inspiration for motion graphics that we'd like to recreate in remotion. So you
+[00:03:34] can think of any graph, any title page, any diagram that you'd like to recreate. I will
+[00:03:41] preface this by saying that some things work better in remotion than others so try to keep
+[00:03:46] it simple initially and not too complicated. Things like arrows are kind of hard to recreate
+[00:03:52] but I'm going to show you how I created the four videos that I showed you at the start of this
+[00:03:57] video and we're just going to recreate them together. I'll show you exactly where I find
+[00:04:01] inspiration for motion graphics so you can actually start building your own inspiration
+[00:04:06] folder as well. The first place I go to for inspiration for motion graphics or diagrams
+[00:04:11] that I'd like to animate using remotion is Pinterest. Now you might think that most things
+[00:04:17] on there are static and that is true but that's okay. We can actually animate a static image
+[00:04:22] and that's kind of the power of using Claude in remotion to create animations like this. So
+[00:04:30] this one actually happens to be a GIF but we can actually feed that to Claude and it can
+[00:04:35] use it as inspiration to recreate this as a motion design. I don't want the Polish currency
+[00:04:41] in my graph but I want to make a graph about my newsletter subscription growth so we're just
+[00:04:47] going to go ahead and save this image as something so let's say graph and I actually have in my home
+[00:04:55] directory a folder called animation examples which we're going to save this to. So we've
+[00:05:02] saved that to graph. Now we're going to head back to our terminal and we're going to
+[00:05:06] ask Claude to recreate this using remotion. I'm just going to copy this command C and then
+[00:05:14] command V and then I'm going to tell it to use this as information inspiration to create a new
+[00:05:19] composition. It's going to ask us if we want to proceed and we're going to say yes. Now in the
+[00:05:36] background we can actually see when we go back to Chrome to our dev environment it created this
+[00:05:41] animation so let's play it and see how good of a job it did. Nice so that's super close to the
+[00:05:49] image that we fed it right. Of course as I mentioned I want this to be about my subscription or my
+[00:05:54] newsletter subscription rate going up so we can actually just prompt that using super literal
+[00:05:59] terms to make amendments here. I'm going to say make this an upward graph showing newsletter
+[00:06:09] subscription subscriber growth 12,500 subscribers. It's so cool to see how it actually comes up with
+[00:06:20] the code for these graphs and the actual motion design so you have some context there. Let's
+[00:06:27] see what it came up with here. Nice so much for our first recreation of the videos I showed
+[00:06:37] you initially. Let's do another one now let's head back to Pinterest and do another one
+[00:06:42] from my inspo folder. Personally I really like this one and I've already saved it to my inspo folder
+[00:06:49] so I'm just going to drop that into cloud and ask it to turn it into a motion graphic. So here is
+[00:06:55] my example and here you can see by just drag and dropping it the images here. I'm just telling
+[00:07:06] it to change the labels of the bar because they're just an example. I'm going to say change
+[00:07:11] the labels of the bars to Q1 to Q4 and change the graph title to I don't know marketing performance
+[00:07:24] 2025 just to switch it up. Cool so Claude has been cooking and we're going to see how well of a
+[00:07:31] job it did with this one. Here we go let's play this one. That's so cool. I'll be very honest
+[00:07:43] I've tried this one a few times and every time the result is different so that's really cool to see.
+[00:07:50] Something that's good to know is that you can also feed this your own data so let's say you have an
+[00:07:55] Excel spreadsheet with some with some data that you could turn into graphs you can just upload
+[00:08:01] that to Claude and make the motion graphic super realistic just increasing and following your
+[00:08:06] own data. Before I show you how I draw inspiration from YouTube let's do one more
+[00:08:11] drawing inspiration from Pinterest and we're going to be looking at this Venn diagram. I think
+[00:08:17] Venn diagrams are so cool but whenever you use a template I can't get them to be
+[00:08:22] personal to my content. So I've already saved this to my inspiration folder as always we're
+[00:08:28] going to go ahead and open Claude again grab this from my folder and again drag and drop so
+[00:08:35] this is called image 2 because it's the second image in our chat and we're going to say animate
+[00:08:40] this Venn diagram. I find that the best thing to do is just to give it an image and see what Claude
+[00:08:49] comes up with first because the more information you give it initially the further away or the more
+[00:08:56] room for interpretation there is for Claude. So let's see how good of a job it does for now
+[00:09:02] and then we can always change the text the font or even the layout of the video and make it
+[00:09:07] horizontal. Let's go open this in Remotion and see how well it did. Okay so there's room for
+[00:09:18] improvement here but we can see that it did a pretty good job so here you just have to prompt the
+[00:09:24] font to be smaller and maybe we could even make this horizontal so we can say make the Venn
+[00:09:32] diagram horizontal and make sure center intersection. These thinking verbs in Claude
+[00:09:50] actually send me every time and I can't wait to turn them off. Flavor to get jibbing. Flavor jibbing.
+[00:10:03] Nauseating. Oh so my bestie said that we're done so let's go ahead and see what it came up with
+[00:10:09] here. Awesome this is exactly what I wanted and it did it in two tries so we can see that the fonts
+[00:10:20] on the sides are a bit off but you can basically go in to a little bit of this CSS here and just
+[00:10:29] check like what the height should be move it lower or you can just describe that in literal
+[00:10:34] terms. Now I'd like to show you the second way I find inspiration for motion animations
+[00:10:41] and that is while watching videos. So the way this workflow works is with one additional step
+[00:10:47] which is just that we can't upload video directly to Claude so we just need to analyze
+[00:10:52] it frame per frame. So the options you have here are let's say you saw this Ali Abdal video
+[00:10:58] and you like the motion graphic that's coming up. You can use Tella to record your screen
+[00:11:04] and just save that video for reference or you can use a tool like QuickTime or CleanShot to do
+[00:11:10] that as well. I'm using Tella so I'm just going to show you in QuickShot CleanShot sorry and I'm
+[00:11:22] just going to save that to my inspiration folder as always. Just going to rename that. Okay so I've
+[00:11:35] already mentioned that we can't just drop videos into Claude code directly so we're just
+[00:11:39] going to use a tool called ffmpeg to analyze each frame of the video that we've provided
+[00:11:46] and ask Claude to create a similar animation. So here I'm going to tell it where to find my
+[00:11:51] inspiration file. Use ffmpeg to words. Okay so terminal is asking me if it can access
+[00:12:18] folders yes it needs to access it. It's asking me to get some video data that's fine. So now it
+[00:12:24] got the description of the video you can see her cream background the decorative wavy shapes
+[00:12:29] icon at the top rounded square and then the words that were in the original animation so that
+[00:12:36] did a good job and now it's creating a similar composition. Cool let's see how well of a job
+[00:12:42] it did by going over here and we're just gonna play this. I think that did really well if we
+[00:12:54] go back to our original inspo pic inspo video we can see that it somehow interpreted red for the
+[00:13:06] ages but if anything it looks even better it kept the same colors and the same style and then the
+[00:13:11] only thing that it didn't do very well is to have a wavy background but you can always prompt that
+[00:13:18] and add that there. Okay so we're at the end of our demo and I just want to show you how
+[00:13:22] you can use any of these animations in tele using the upload clip feature you can do this for any other
+[00:13:31] video tool as well. Now once we're done and we're ready to use this we're gonna go ahead and render
+[00:13:37] this and we select the quality here. Alright let's go ahead with the highest quality pro res
+[00:13:43] and let's call this .move cool let's open this and here we can see that we have our title page
+[00:13:55] ready to use in our videos. Okay so now this video is actually ready to be used in tele we're
+[00:14:02] gonna head over to tele we're gonna go add clip use web app and we're gonna go upload and we're
+[00:14:09] gonna drag and drop this file in there. For now in tele this works best for title pages so let's say
+[00:14:16] you wanted to switch between sections or chapters in your video you can actually use a motion
+[00:14:23] animated title page so this is what this would look like as a title page and then it would
+[00:14:31] just go into the rest of your video. I know I'll be using this to jazz up my videos if you
+[00:14:35] want more tips on how to make your videos stand out whether it's in tele or not be sure to
+[00:14:41] subscribe to our youtube channel because we'll be sharing more videos very soon
+[00:14:44] and I can't wait to be using this to level up my presentations and level up my videos.

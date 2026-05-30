@@ -1,0 +1,19 @@
+{
+  "channel": "adamrosler",
+  "primary_platform": "youtube",
+  "primary_url": "https://www.youtube.com/@adamrosler",
+  "youtube_url": "https://www.youtube.com/@adamrosler",
+  "youtube_shorts_url": "https://www.youtube.com/@adamrosler/shorts",
+  "tiktok_url": "https://www.tiktok.com/@adam_rosler",
+  "instagram_url": "https://www.instagram.com/adam_rosler/",
+  "notes": "Adam Rosler — English-language AI/ML/systems-engineering explainer creator. All YouTube content is Shorts (9:16, ~45-60s). Mirrors same content to TikTok (handle @adam_rosler, underscore variant) and Instagram. YouTube chosen as primary platform: higher source quality, exposed view counts, and richer keyframe extraction (HD).",
+  "platform_match": {
+    "youtube_no_underscore": "@adamrosler (PRIMARY)",
+    "youtube_underscore": "@adam_rosler — 404, does not exist",
+    "tiktok_with_underscore": "@adam_rosler — same content republished, lower-res",
+    "tiktok_no_underscore": "@adamrosler — empty / no videos posted",
+    "instagram": "Both @adam_rosler and @adamrosler return content but gallery-dl can extract"
+  },
+  "scraped_at": "2026-05-28",
+  "wave": "wave-7"
+}

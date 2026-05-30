@@ -1,0 +1,224 @@
+ 
+You know these Tik Tok videos where each
+word lights up as it's spoken? They look
+professional, engaging, and they're a
+pain to make manually. But I'm going to
+teach you a process where you can
+automate this entire process. If you can
+copy and paste, you can do this. I'm
+going to walk you through adding
+professional animated captions to your
+videos step by step.
+Learn how to do these fun captions with
+me in this video. Now, we're going to
+use two things. One is VS Code and the
+other is Cloud Code. Now, VS Code is
+just a editor. You can go to VS Code's
+website to download. Now, the second
+thing is Cloud Code. If you have never
+used Cloud Code before, you're welcome
+to check out this video here. Make sure
+you install Cloud Code properly. And
+also you need a paid plan in order to
+use cloud code. At the very minimum you
+will need to have a pro plan which is
+more than enough for the vast majority
+of of us and I think it's a great
+investment. And the last thing I wanted
+to introduce here is Remotion. Now
+Remotion is a React package that allows
+AI tools to be able to create codebased
+videos. Now today our focus is animated
+captions. So we're going to go to find a
+template and select Tik Tok. Now there
+is a demo here. Someone is speaking and
+then see this is the animated captions
+here. And in this package it allows you
+actually to have highlighted words
+meaning that as the word is spoken is
+being highlighted in a different color.
+Now don't get intimidated when I say
+different packages coding because we
+have AI today. We just need to make sure
+that we share with the AI the right
+documents so the AI can instantly learn
+how to do this for us. Here just copy
+this MPX create command. Then let's open
+VS Code. And before this make sure you
+have a designated folder in your
+computer for this project. Then I'm
+gonna open that project folder from VS
+Code. Okay, I have a folder called Tik
+Tok caption demo. And this is my project
+folder. I also have terminal window
+opened. If you don't have this one
+opened by default, you can just go to
+view and select terminal to open it.
+Another way to quickly install cloud
+code is to go to extensions here on the
+left hand side. Click on it. Find cloud
+code for VS Code. I have already
+installed it. It's really
+straightforward. You just click install
+and it will install it for you. Now, I
+have tested the sequence several times.
+It's actually better if we download the
+right templates from remote first and
+then ask cloud code to learn from it.
+So, let's just copy and paste MPX create
+video at latest and the Tik Tok
+template. Hit return. Now, here it's
+asking us to create a subfolder called
+my video. I'm just going to click return
+to accept. Note that there's a my video
+folder created here. And at Tailwind
+CSS, we're just going to say yes. Click
+return. And here, open in VS Code, you
+can select Y. Yes, it just creates a new
+VS Code window for you. You can also
+select in and when you expand the my
+video folder, you can see the templates
+have been downloaded. All right. Now,
+here we're ready to call cloud code.
+Let's just type cloud. And the first
+step is let's help cloud code understand
+our codebase which is the template. And
+this is how we do it. slashinit.
+This way cloud code will understand
+whole codebase and summarize everything
+in a cloud MD file for us. Do you want
+to make this edit to cloud MD? I'm going
+to select the second one to allow all
+edits during this session. All right,
+it's done its homework. Let's double
+check by clicking on the readme.md file.
+Perfect. So currently cloud code is on
+accept edits on mode. It reminds us we
+can use shift plus tab to change the
+mode. We can change it once to plan mode
+and that just means cloud code won't do
+anything until it gets approval from us.
+I usually start with the plan mode. So
+if we look at the folder right and there
+is a public folder. If we expand it
+there is a sample video here. It will
+save us so much time and cloud code so
+much time if we just simply delete this
+simple video. We have to drag our on
+video to be transcribed into this public
+folder. So now I've dragged a lawn test
+video which is a long form 16x9
+video format. So, even though the
+template is called the Tik Tok caption
+template, we can actually use it to make
+animated captions for long form videos.
+Let's see how it goes. Right. So, I'm
+just going to type please make Tik Tok
+style animated captions for this video.
+Use at to find this video. And this is
+the simplest single sentence prompt.
+Now, clock code has made a plan for us.
+is presenting to us. The caption will
+feature white text with black stroke
+outline. Grain highlight color for
+active words. Springbased entrance
+animations, word by word highlighting
+synchronized to speech timing. Caption
+grouping every 1,200 milliseconds. Looks
+pretty nice to me. Let's say instead of
+green highlight color, I want blue
+highlight color. Now I'm just going to
+go to no keep planning. This is good.
+just changed the highlight color from
+green to blue. Now this time I'm just
+going to do yes and manually approve
+edits. Now I shifted mode to accept
+edits. I'm going to select yes and don't
+ask again for these similar types of
+requests. Now here cloud code realized
+it needs to install some missing
+dependencies which is quite normal and
+all we have to do is like number two to
+agree with and this is where cloud code
+really shines when it encounters
+problems errors it really knows how to
+fix it by itself in comparison Gemini
+CLI needs a lot of human guidance to be
+able to make things work now if it's
+your first time running this command do
+note that deep down remote package
+utilizes whisper locally. So if it's
+your first time running the command then
+it will take some time to download the
+1.5 GBTE whisper model into your local
+computer. So it's normal if it takes a
+while. All right. Now it says perfect.
+I've successfully completed all tasks
+and changed highlight color from green
+to blue. Generate captions for longtest
+using whisper. Now we can see lawn
+test.json. This is the caption file and
+it's word level. Great. It tells us to
+preview the video with Tik Tok style
+animated captions. Just do mpm rondev.
+Let's just do mpm rondev. Receed.
+Looks like some error. And don't worry,
+let's just do a screenshot of the whole
+thing.
+Then let's at this screenshot here and
+just say check out this error proof for
+it to see the screenshot. See now it
+recognizes that it's trying to load
+sample video MP4 which is the sample
+video we deleted. The composition's
+default props are still pointing to the
+old sample video. It just means that in
+this if you expand src folder the
+root.tsx tsx file. We need to update the
+source file to the right file name, but
+we don't need to worry too much about
+it. Cloud code can do it for us. It
+tells us it fix it. Let's just go to
+local code 3000 again. All right,
+let's check it out.
+&gt;&gt; Learn how to do these fun captions with
+me in this video.
+&gt;&gt; Okay, it looks nice. only that we want
+this to be a long form video, but it's
+giving us a short form instead.
+And don't worry, let's go back to clock
+code and just tell it this is a long
+form video in 16 by9, but it's right now
+in short form. Please correct. And
+within a few seconds, it tells us it's
+done. Oh, nice.
+me in this video. So, now we have the 16
+by9 long form video, but the captions
+are in the middle. Now, you can keep it
+like that, but I think it's better to
+move it downwards. Let's go back to
+Cloud Code and VS Code. It's better, but
+the captions should be at the bottom of
+the video. Now, it's centered. Okay,
+let's check. Cool. This time seems
+great. Let's play it.
+&gt;&gt; Pretty good. Let's just say, can you
+change the highlighted color to pink?
+Another two seconds done. Wow.
+&gt;&gt; Very nice. Wow. I can't believe it how
+simple it is. And if you're happy with
+how the animated captions turn out for
+you, you can just click render here to
+download the video with the captions.
+Alternatively, you can also come back to
+VS Code and ask cloud code, please
+render this video for me. It would take
+me hours to animate a video's captions
+in this style manually. This is pretty
+amazing. Now, I hope you learned how to
+do this. If you've run into any
+problems, if you have any questions,
+please comment down below. And please
+like and subscribe if you learned
+anything interesting and fun in this
+video. See you next time.

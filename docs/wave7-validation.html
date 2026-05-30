@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wave 7 — Reference ↔ Recreation Validation</title>
+<style>
+  :root {
+    --bg: #0a0608;
+    --bg-card: #14101a;
+    --bg-card-2: #1a1520;
+    --ink: #f1ece1;
+    --muted: #8b847a;
+    --accent: #d4af37;
+    --lime: #c4f84a;
+    --warm-red: #b33a2a;
+    --cyan: #5bc0e8;
+    --mint: #7ce49a;
+    --coral: #e89b7a;
+    --pending: #e8a37a;
+    --border: #2a2027;
+    --border-soft: rgba(241, 236, 225, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { background: radial-gradient(ellipse at center, #1b0f10 0%, #0a0608 70%); min-height: 100vh; }
+  .deck { max-width: 1480px; margin: 0 auto; padding: 40px 28px 100px; }
+
+  .slide {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 40px 48px;
+    margin-bottom: 32px;
+  }
+  .slide.hero {
+    background: linear-gradient(135deg, #1b0f10 0%, #0a0608 100%);
+    text-align: center;
+    padding: 64px 56px;
+  }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.32em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-size: 52px; font-weight: 900; line-height: 1.02; letter-spacing: -0.025em; margin-bottom: 16px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+  h2 { font-size: 32px; font-weight: 800; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 12px; }
+  h2 .accent { color: var(--accent); }
+  h3 { font-size: 18px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+
+  .lede { font-size: 19px; color: var(--muted); line-height: 1.5; max-width: 920px; margin: 0 auto; }
+  .blurb { font-size: 16px; color: var(--muted); line-height: 1.55; margin-top: 12px; }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 22px;
+  }
+  .pair + .pair { margin-top: 18px; }
+  .pair .col {
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .pair .col .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pair .col.reference .label { color: var(--mint); }
+  .pair .col.ours .label { color: var(--lime); }
+  .pair .col.pending .label { color: var(--pending); }
+  .pair .col .label .pip { width: 10px; height: 10px; border-radius: 999px; background: currentColor; box-shadow: 0 0 12px currentColor; }
+  .pair video {
+    width: 100%;
+    display: block;
+    border-radius: 6px;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+  }
+  .pair .caption {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    line-height: 1.55;
+    word-break: break-all;
+  }
+  .pair .caption .creator { color: var(--coral); }
+  .pair .caption .path { color: var(--accent); }
+  .pair .caption .dur { color: var(--cyan); }
+
+  .pending-card {
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(232, 163, 122, 0.05) 0,
+        rgba(232, 163, 122, 0.05) 12px,
+        rgba(232, 163, 122, 0.10) 12px,
+        rgba(232, 163, 122, 0.10) 24px
+      ),
+      #14101a;
+    border: 2px dashed rgba(232, 163, 122, 0.45);
+    border-radius: 6px;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    color: var(--pending);
+  }
+  .pending-card .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--pending);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding: 6px 14px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+  }
+  .pending-card .msg {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.3;
+    max-width: 320px;
+  }
+  .pending-card .queue {
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .verdict-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .verdict-row .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .verdict-row .chip.creator { color: var(--coral); }
+  .verdict-row .chip.pending { color: var(--pending); }
+  .verdict-row .chip.molecule { color: var(--mint); }
+  .verdict-row .chip.path { color: var(--accent); }
+
+  .toc {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(20, 16, 26, 0.95);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    backdrop-filter: blur(8px);
+    max-width: 260px;
+    display: none;
+    z-index: 100;
+  }
+  @media (min-width: 1600px) { .toc { display: block; } }
+  .toc a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 3px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc .header { color: var(--accent); font-weight: 700; margin-bottom: 6px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  .footer-meta {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    line-height: 1.7;
+  }
+  .footer-meta strong { color: var(--ink); }
+
+  .controls {
+    background: rgba(91,192,232,0.08);
+    border: 1px solid rgba(91,192,232,0.20);
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--cyan);
+    line-height: 1.5;
+  }
+  .controls strong { color: var(--mint); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .stats .stat {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .stats .stat .big {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stats .stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .how-to {
+    background: rgba(124, 228, 154, 0.06);
+    border: 1px solid rgba(124, 228, 154, 0.18);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-top: 28px;
+  }
+  .how-to h3 { color: var(--mint); margin-bottom: 14px; }
+  .how-to ol { padding-left: 22px; color: var(--ink); line-height: 1.7; font-size: 14px; }
+  .how-to ol li { margin-bottom: 6px; }
+  .how-to code { color: var(--accent); background: rgba(212,175,55,0.10); padding: 1px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <div class="header">Wave 7 validation</div>
+  <a href="#hero">▸ Overview</a>
+  <a href="#webcampip">▸ WebcamPipOverlay</a>
+  <a href="#dotgauge">▸ DotRowGradientGauge</a>
+  <a href="#blackpill">▸ BlackPillCaption</a>
+  <a href="#bulletseq">▸ BulletSequenceCounter</a>
+  <a href="#chaptertimeline">▸ ChapterProgressTimeline</a>
+  <a href="#iconpair">▸ IconObjectPair</a>
+</nav>
+
+<div class="deck">
+
+  <section class="slide hero" id="hero">
+    <div class="eyebrow">WAVE 7 · CROSS-CREATOR MOLECULE VALIDATION</div>
+    <h1>Wave 7 — Reference ↔ <span class="accent">Recreation</span></h1>
+    <p class="lede">For each Wave-7 molecule we built, this page shows the source clip(s) from the creator(s) the pattern was distilled from on the LEFT and our recreation on the RIGHT. Recreations that are still queued for build show a placeholder card in their slot.</p>
+    <p class="blurb">All clips loop muted/autoplay — click any to pause. Six molecules covered. Page is fully self-contained: open the HTML file directly from disk, no server required.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="big">6</div><div class="label">molecules covered</div></div>
+      <div class="stat"><div class="big">4</div><div class="label">creators sampled</div></div>
+      <div class="stat"><div class="big">18</div><div class="label">reference clips</div></div>
+      <div class="stat"><div class="big">0</div><div class="label">recreations rendered</div></div>
+    </div>
+
+    <div class="controls">
+      ▸ Each reference autoplays muted/looped — <strong>click to pause</strong> · scroll to walk the molecule list · keyboard: <strong>space</strong> = play/pause focused video
+    </div>
+  </section>
+
+  <!-- 1. WebcamPipOverlay -->
+  <section class="slide" id="webcampip">
+    <div class="eyebrow">MOLECULE 1 OF 6 · WEBCAM TILE CHROME · MATTHEW BERMAN CONVENTION</div>
+    <h2><span class="accent">WebcamPipOverlay</span> — rectangle webcam tile pinned to a corner, persistent for the segment</h2>
+    <p class="blurb">Two-line description: a fixed-position 16:9 webcam tile parked top-right over the underlying composition with a soft white border and drop shadow. Static after a brief fade-in; persists for the full segment as a "host is here" presence anchor.</p>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @MatthewBerman long-form</span>
+      <span class="chip molecule">molecule: WebcamPipOverlay</span>
+      <span class="chip path">src: src/components/WebcamPipOverlay.tsx</span>
+      <span class="chip pending">recreation pending</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `tNV9_I-zLO0-anim-06.mp4` (Matthew Berman)</div>
+        <video src="research/wave-6/references/matthewberman/tNV9_I-zLO0-anim-06.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/matthewberman/tNV9_I-zLO0-anim-06.mp4</span> · <span class="creator">@MatthewBerman</span> · <span class="dur">~6s loop</span>
+        </div>
+      </div>
+      <div class="col pending">
+        <div class="label"><span class="pip"></span>RECREATION · QUEUED IN B7</div>
+        <div class="pending-card">
+          <div class="badge">Pending</div>
+          <div class="msg">Recreation pending — see B7 queue</div>
+          <div class="queue">queued · src/components/WebcamPipOverlay.tsx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `GBISeUYMzoU-anim-01.mp4` (Matthew Berman)</div>
+        <video src="research/wave-6/references/matthewberman/GBISeUYMzoU-anim-01.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/matthewberman/GBISeUYMzoU-anim-01.mp4</span> · <span class="creator">@MatthewBerman</span> · <span class="dur">~5s loop</span>
+        </div>
+      </div>
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `mR2Rh9RtyR4-anim-02.mp4` (Matthew Berman)</div>
+        <video src="research/wave-6/references/matthewberman/mR2Rh9RtyR4-anim-02.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/matthewberman/mR2Rh9RtyR4-anim-02.mp4</span> · <span class="creator">@MatthewBerman</span> · <span class="dur">~6s loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. DotRowGradientGauge -->
+  <section class="slide" id="dotgauge">
+    <div class="eyebrow">MOLECULE 2 OF 6 · ADAM ROSLER SIGNATURE · DRIFT GAUGE (5/18 FREQUENCY)</div>
+    <h2><span class="accent">DotRowGradientGauge</span> — horizontal row of ~20 dots filling L→R with a green→yellow→red gradient</h2>
+    <p class="blurb">Two-line description: Adam Rosler's signature "drift gauge". A row of ~20 dots fills left-to-right one at a time; each lit dot interpolates green → yellow → red by position, reading like a thermometer of how far a process has drifted into the danger zone.</p>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @AdamRosler</span>
+      <span class="chip molecule">molecule: DotRowGradientGauge</span>
+      <span class="chip path">src: src/components/DotRowGradientGauge.tsx</span>
+      <span class="chip pending">recreation pending</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `L2xSh1nlmgo-mimalloc-replace-card.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/L2xSh1nlmgo-mimalloc-replace-card.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/L2xSh1nlmgo-mimalloc-replace-card.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col pending">
+        <div class="label"><span class="pip"></span>RECREATION · QUEUED IN B7</div>
+        <div class="pending-card">
+          <div class="badge">Pending</div>
+          <div class="msg">Recreation pending — see B7 queue</div>
+          <div class="queue">queued · src/components/DotRowGradientGauge.tsx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `7RhJawm2nw4-gradient-descent-valley-ball.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/7RhJawm2nw4-gradient-descent-valley-ball.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/7RhJawm2nw4-gradient-descent-valley-ball.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `pthNSkWU8VM-train-on-anti-blackmail-tickets.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/pthNSkWU8VM-train-on-anti-blackmail-tickets.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/pthNSkWU8VM-train-on-anti-blackmail-tickets.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BlackPillCaption (mreflow half is empty — using alexhormozi only) -->
+  <section class="slide" id="blackpill">
+    <div class="eyebrow">MOLECULE 3 OF 6 · MATT WOLFE + HORMOZI SEAM PILL · ALEXHORMOZI HALF</div>
+    <h2><span class="accent">BlackPillCaption</span> — black rounded pill with karaoke word-highlight, sits on the seam between split screens</h2>
+    <p class="blurb">Two-line description: 1-4 word black-pill caption with the active word rendered in Hormozi yellow (#F1C232) while siblings stay white — the karaoke effect that anchors the cut between A-roll and B-roll. Matt Wolfe ref half is currently empty; Hormozi references shown below.</p>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @AlexHormozi long-form</span>
+      <span class="chip molecule">molecule: BlackPillCaption</span>
+      <span class="chip path">src: src/components/BlackPillCaption.tsx</span>
+      <span class="chip pending">recreation pending</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `XGm2ERU9qtA-anim-02.mp4` (Hormozi)</div>
+        <video src="research/wave-6/references/alexhormozi/XGm2ERU9qtA-anim-02.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/alexhormozi/XGm2ERU9qtA-anim-02.mp4</span> · <span class="creator">@AlexHormozi</span> · <span class="dur">~7s loop</span>
+        </div>
+      </div>
+      <div class="col pending">
+        <div class="label"><span class="pip"></span>RECREATION · QUEUED IN B7</div>
+        <div class="pending-card">
+          <div class="badge">Pending</div>
+          <div class="msg">Recreation pending — see B7 queue</div>
+          <div class="queue">queued · src/components/BlackPillCaption.tsx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `XGm2ERU9qtA-anim-03.mp4` (Hormozi)</div>
+        <video src="research/wave-6/references/alexhormozi/XGm2ERU9qtA-anim-03.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/alexhormozi/XGm2ERU9qtA-anim-03.mp4</span> · <span class="creator">@AlexHormozi</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `3SVksBB3_YY-anim-01-v2.mp4` (Hormozi)</div>
+        <video src="research/wave-6/references/alexhormozi/3SVksBB3_YY-anim-01-v2.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/alexhormozi/3SVksBB3_YY-anim-01-v2.mp4</span> · <span class="creator">@AlexHormozi</span> · <span class="dur">~7s loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. BulletSequenceCounter -->
+  <section class="slide" id="bulletseq">
+    <div class="eyebrow">MOLECULE 4 OF 6 · ADAM ROSLER · STEP N OF K WALKTHROUGHS</div>
+    <h2><span class="accent">BulletSequenceCounter</span> — vertical sequenced bullet reveal with per-row "i / N" counter</h2>
+    <p class="blurb">Two-line description: Adam's signature visual for stepwise walkthroughs. A vertical column of N bullets reveals one at a time, each paired with a small "i / N" counter so the viewer always knows where they are in the sequence.</p>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @AdamRosler</span>
+      <span class="chip molecule">molecule: BulletSequenceCounter</span>
+      <span class="chip path">src: src/components/BulletSequenceCounter.tsx</span>
+      <span class="chip pending">recreation pending</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `OnRw0D0nnDI-mac-window-antigravity.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/OnRw0D0nnDI-mac-window-antigravity.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/OnRw0D0nnDI-mac-window-antigravity.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col pending">
+        <div class="label"><span class="pip"></span>RECREATION · QUEUED IN B7</div>
+        <div class="pending-card">
+          <div class="badge">Pending</div>
+          <div class="msg">Recreation pending — see B7 queue</div>
+          <div class="queue">queued · src/components/BulletSequenceCounter.tsx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `O8RfsSzybEU-advertised-vs-working-bars.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/O8RfsSzybEU-advertised-vs-working-bars.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/O8RfsSzybEU-advertised-vs-working-bars.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `L2xSh1nlmgo-mimalloc-replace-card.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/L2xSh1nlmgo-mimalloc-replace-card.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/L2xSh1nlmgo-mimalloc-replace-card.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ChapterProgressTimeline -->
+  <section class="slide" id="chaptertimeline">
+    <div class="eyebrow">MOLECULE 5 OF 6 · SAHIL BLOOM · MID-ROLL CHROME / "WHERE AM I IN THE TALK"</div>
+    <h2><span class="accent">ChapterProgressTimeline</span> — horizontal progress bar of N segments, one per chapter</h2>
+    <p class="blurb">Two-line description: Sahil's signature mid-roll chrome. Horizontal progress timeline of N segments, active segment lit in accent, past segments dimmed to ~50%, future segments stubbed at ~15%. Optional labels below each segment in mono tracked uppercase.</p>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @SahilBloom</span>
+      <span class="chip molecule">molecule: ChapterProgressTimeline</span>
+      <span class="chip path">src: src/components/ChapterProgressTimeline.tsx</span>
+      <span class="chip pending">recreation pending</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `Fj8HsHqyMA0-anim-01.mp4` (Sahil Bloom)</div>
+        <video src="research/wave-6/references/sahilbloom/Fj8HsHqyMA0-anim-01.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/sahilbloom/Fj8HsHqyMA0-anim-01.mp4</span> · <span class="creator">@SahilBloom</span> · <span class="dur">~7s loop</span>
+        </div>
+      </div>
+      <div class="col pending">
+        <div class="label"><span class="pip"></span>RECREATION · QUEUED IN B7</div>
+        <div class="pending-card">
+          <div class="badge">Pending</div>
+          <div class="msg">Recreation pending — see B7 queue</div>
+          <div class="queue">queued · src/components/ChapterProgressTimeline.tsx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `28r88tLhNhw-anim-01.mp4` (Sahil Bloom)</div>
+        <video src="research/wave-6/references/sahilbloom/28r88tLhNhw-anim-01.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/sahilbloom/28r88tLhNhw-anim-01.mp4</span> · <span class="creator">@SahilBloom</span> · <span class="dur">~7s loop</span>
+        </div>
+      </div>
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `EvMEBzrDQVA-anim-01.mp4` (Sahil Bloom)</div>
+        <video src="research/wave-6/references/sahilbloom/EvMEBzrDQVA-anim-01.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/sahilbloom/EvMEBzrDQVA-anim-01.mp4</span> · <span class="creator">@SahilBloom</span> · <span class="dur">~7s loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. IconObjectPair -->
+  <section class="slide" id="iconpair">
+    <div class="eyebrow">MOLECULE 6 OF 6 · ADAM ROSLER · TWO-THING + BRACKETED CALLOUT</div>
+    <h2><span class="accent">IconObjectPair</span> — left icon · [bracketed callout] · right icon — depicts a measured relationship</h2>
+    <p class="blurb">Two-line description: Adam's "two-thing + bracketed callout" molecule — DB and an LLM with [2.5×] between them, GPU and a token stream with [12ms], user and a model with [97% acc]. Three elements fade in sequentially: left → right → callout.</p>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @AdamRosler</span>
+      <span class="chip molecule">molecule: IconObjectPair</span>
+      <span class="chip path">src: src/components/IconObjectPair.tsx</span>
+      <span class="chip pending">recreation pending</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `7RhJawm2nw4-gradient-descent-valley-ball.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/7RhJawm2nw4-gradient-descent-valley-ball.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/7RhJawm2nw4-gradient-descent-valley-ball.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col pending">
+        <div class="label"><span class="pip"></span>RECREATION · QUEUED IN B7</div>
+        <div class="pending-card">
+          <div class="badge">Pending</div>
+          <div class="msg">Recreation pending — see B7 queue</div>
+          <div class="queue">queued · src/components/IconObjectPair.tsx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `pthNSkWU8VM-train-on-anti-blackmail-tickets.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/pthNSkWU8VM-train-on-anti-blackmail-tickets.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/pthNSkWU8VM-train-on-anti-blackmail-tickets.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `OnRw0D0nnDI-mac-window-antigravity.mp4` (Adam Rosler)</div>
+        <video src="research/wave-6/references/adamrosler/OnRw0D0nnDI-mac-window-antigravity.mp4" autoplay loop muted playsinline></video>
+        <div class="caption">
+          <span class="path">docs/research/wave-6/references/adamrosler/OnRw0D0nnDI-mac-window-antigravity.mp4</span> · <span class="creator">@AdamRosler</span> · <span class="dur">~8s loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-to">
+    <h3>How to use this page</h3>
+    <ol>
+      <li>Open this HTML file directly in any modern browser (Safari, Chrome, Firefox) — no server required. Relative <code>research/wave-6/references/&hellip;</code> paths resolve from <code>docs/</code>.</li>
+      <li>Scrub each clip side-by-side. Click any video to pause; click again to resume. Press <code>space</code> with a video focused.</li>
+      <li>For pending recreations: open <code>src/components/&lt;Molecule&gt;.tsx</code> and the source <code>references/creators/&lt;handle&gt;/ANALYSIS.md</code>, then build a smoke composition to slot into the right column.</li>
+      <li>File issues / commits against the B7 queue for any pending recreations. When a recreation lands, replace the placeholder <code>&lt;div class="pending-card"&gt;</code> with a <code>&lt;video&gt;</code> tag pointed at the rendered MP4.</li>
+    </ol>
+  </section>
+
+  <div class="footer-meta">
+    Wave 7 · 6 molecules · 18 reference clips · 0 recreations rendered (queued in B7)<br>
+    Skipped molecules (no ref clip available): <strong>NeonRingFaceCamPip</strong> (mreflow dir empty) · <strong>MagnifiedPullQuoteCard</strong> (mreflow dir empty). Caption <code>register</code> prop is a parameter, not a molecule.<br>
+    Source components: <code>src/components/WebcamPipOverlay.tsx</code>, <code>DotRowGradientGauge.tsx</code>, <code>BlackPillCaption.tsx</code>, <code>BulletSequenceCounter.tsx</code>, <code>ChapterProgressTimeline.tsx</code>, <code>IconObjectPair.tsx</code>
+  </div>
+
+</div>
+
+</body>
+</html>

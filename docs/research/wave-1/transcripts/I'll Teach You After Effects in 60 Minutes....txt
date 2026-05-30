@@ -1,0 +1,1705 @@
+ 
+welcome to After Effects we're going to
+learn the very Basics by creating that
+animation from start to finish we have
+three short shots each covering the most
+common and fundamental techniques which
+will be most useful to you in After
+Effects there are about 100 ways to get
+the same result so I'll show you the
+ways that I think are best to those who
+are new to the software in order to get
+comfortable in it and if you are new it
+is okay to be overwhelmed you don't have
+to be confident with everything right
+away all of the amazing motion designers
+that I've worked with started as someone
+who is curious and intimidated by after
+effects so if that's you you're already
+on the right path this video is the
+first lesson from my motion Foundation
+course I'm releasing this one on YouTube
+as a preview and to teach you as much as
+humanly possible within one hour the
+additional nine weeks are available at
+pinmerit.com you can download this
+project file for free to follow along or
+to adjust to your own needs now this is
+the default view you'll see when you
+open after effects now like many other
+Adobe apps you can customize it which is
+very common and but I like to stick
+pretty closely to the default because it
+really is a useful layout now there are
+lots of panels but don't worry we don't
+need all of them we'll be viewing our
+work here in the composition window
+editing it here in the timeline like you
+would in any editing software but with a
+few more options managing our files and
+assets over here in the project window
+and searching for effects and editing
+our text over here in these collapsible
+panels and also accessing some tools up
+here in the toolbar now I think the best
+way to learn is by doing so let's start
+making our project the first part is
+this shot that says welcome first we
+need some footage to work with so let's
+import it I have a bunch of files here
+in an assets folder that we're going to
+use today and we have this video file
+here called ocean drone so the simplest
+way to import that into After Effects is
+just to Simply drag and drop it into our
+project panel or we can import it by
+going to file import file again and
+finding it in here
+so now this file is in our project
+window and if we scroll across we can
+see some more information about it it's
+frame rate its size just details about
+the file we don't really need to worry
+about that and if we double click it we
+can watch it over here now I've got this
+wonderful dream shot from a buddy of
+mine James Daly which he let me steal
+from one of his videos so do check them
+out but to edit this to make our
+animation we need to First create a
+composition to work in now a composition
+is where most of the magic happens in
+After Effects it is the equivalent of a
+sequence in Premiere and to create a new
+one we can just select this button down
+here create new composition now we have
+our composition settings first is our
+composition name and let's name ours
+sh01 welcome for shot one welcome we
+have a lot of presets here for common
+formats you might need for us we'll have
+a width of 1920 a height of 1080 which
+is full HD a frame rate of 24 frames per
+second is great down here we have common
+frame rates as well but 24 is a nice
+safe one down here the duration will
+edit from 10 seconds to be five seconds
+and these numbers here mean hour minutes
+seconds and frames at all of these
+settings we can edit later as well so
+let's hit OK and now we have a new
+composition and first let's zoom in in
+our composition window we can do that by
+using this menu down here we can go to
+100 and we can also use the scroll wheel
+on her Mouse to zoom in and out too okay
+now let's grab our footage from up here
+in the project panel you'll see our
+composition is now added to that panel
+as well and let's drag that into our
+composition window release it and it is
+added down here in the timeline now we
+can click and scrub through the footage
+and you'll see that we have markers for
+one second in one and a half seconds two
+seconds
+Etc all the way up to five which is the
+end of our composition and anywhere you
+scrub to you can also see where your
+playhead is at over here on the left and
+do play it back we hit spacebar and
+it'll run through everything we have
+here in the timeline now right now it is
+playing back in real time but once we
+start adding some effects and Graphics
+it might take some time to buffer
+depending on how intense the effects are
+and how fast your computer is you can
+change the resolution from here from
+Full to Auto or to half to make sure you
+can view it faster at real time but for
+these animations we can keep it at full
+resolution and after effects lets you
+know what is ready to play back in real
+time indicated by this bright green bar
+here at the top of the timeline and that
+is called the ram preview so anytime we
+make changes to what's in our timeline
+this green bar will turn gray for a
+second and then fill back up with green
+Azure RAM and after effects creates a
+preview for us but when this is green
+it's ready to play back and in the
+timeline we can click and drag any layer
+to the left or right and that will
+change where this layer starts playing
+from so now our footage won't start
+playing until one second in so we get a
+second of nothing and then our footage
+starts and the start of this layer has a
+little black triangle in the top left
+and that lets us know that this is the
+very beginning of the layer but we don't
+need to start our layer at the very
+beginning we can click the start of it
+which brings up these two arrows and
+drag it to the right or to the left to
+trim where this layer starts so now we
+get two seconds of nothing and then our
+clip starts but into starting one second
+into that clip and to move it around we
+just make sure we're clicking inside of
+the visible area not where it has been
+trimmed let's move this back towards the
+start we also have our work area in our
+timeline and that is this gray bar with
+these blue handles on the right and on
+the left and within this area is the
+area that will preview on playback at
+the moment it is the full length of our
+comp we can drag this handle at the
+right bring it all the way forward to
+let's put it at one second and now if we
+play it back it will just Loop this one
+second in our play area which is very
+useful for when you want to focus on one
+area of your edit or animation and you
+don't want to watch through your whole
+composition we can also zoom in on the
+timeline here and we can do that using
+the slider and these icons down here
+clicking the big amount to zoom in and
+the smaller Mountain to zoom out and as
+we zoom in closer we can see the markers
+on our ruler getting more and more
+detailed and we can see it's almost
+showing every frame now we have a markup
+for two frames four frames six frames
+every other frame so you can get really
+detailed maybe we can zoom out a little
+bit though now let's add some text and
+animate it first we select our type tool
+from up here in the toolbar and to
+create a text box we can just click and
+drag anywhere in our composition and
+let's just type in the word welcome
+now that has created a new layer in our
+timeline now the order that your layers
+are in in the timeline is important for
+visibility we can drag our text layer
+with lower footage and now we can no
+longer see it because our footage is on
+top of it in the layer stack in the
+timeline and in the preview in the
+composition window as well so let's
+bring that back up to the top just by
+clicking and dragging and let's adjust
+our text to make it the way we want so
+let's click on it still with our type
+tool selected and highlight everything
+we want to edit which in our case is all
+of it now to edit the text we want to
+open up our character panel over here on
+the right and to do that we just click
+on it and it opens up and moves the
+other panels below it this is handy so
+we can close it when we don't need to
+see it and it's not too distracting now
+I am using the typeface swear display
+which is currently available on Adobe
+font so if you have an adobe
+subscription you should be able to
+activate and use this font now the first
+thing we want to do is change its color
+you might be familiar with the character
+panel which is in pretty much every
+Adobe app and if not you'll see similar
+things in here in the office suite or
+any text editor but to change the color
+we need to select the fill color over
+here we can click on it currently it is
+set to this dark blue but we can just
+drag this up to the top left to create a
+white and hit ok now let's make this
+text nice and big and we can do that by
+clicking and dragging the font size over
+here let's make that really big let's go
+all the way up to 450 and that is so big
+it's cut off some of our text so if we
+just click and drag the outsides of the
+bounding box we can adjust that there we
+finished editing our text we can
+deselect it just by clicking off
+somewhere in the timeline now to get
+this text in the exact center now we can
+do that by selecting that layer and then
+opening up our align panel which is over
+here on the right we want the layer to
+align to the composition which is
+already selected so that's excellent and
+then these buttons here are lined it to
+the left Edge horizontally in the center
+to the right to the top to the vertical
+Center and to the bottom so we want it
+in the vertical Center and the
+horizontal center now it's exactly in
+the middle now let's animate it and
+we're going to do a very basic animation
+of it moving down the screen and to do
+that we need to animate its position
+which we will do with the position
+property to access a layers properties
+we can toggle them open by hitting this
+Arrow here and the property we want is
+in the transform properties so let's
+open that up as well and the transform
+properties are properties that every
+layer has the Anchor Point the position
+scale rotation and opacity we want to
+animate its position and we do that by
+changing the value of this property over
+time which is very simple to do and we
+do that by telling After Effects at the
+start of the animation where we want our
+text position to be and at the end of
+the animation where it should change to
+so first let's tell it where to start
+now we are only going to animate this
+over a second because that is how long
+our shot will be so we don't need it to
+move much so we'll move our playhead to
+the very start of the composition and
+let's move our text up currently we
+still have our text store selected so
+let's select our selection tool which is
+Arrow up here and let's just drag it
+slightly up the comp and as we're
+dragging this if you look down here on
+the left you can see the values of the
+position changing now to tell After
+Effects we want to animate this property
+we need to click this stopwatch to the
+left here and this will toggle the
+ability of the property to change over
+time so as we select it and it's now
+turned blue and we have this marker over
+here on our timeline which is where our
+playhead was when we selected that
+property now this is a keyframe this is
+essentially a marker for artifex to know
+at this time the value of this property
+is this then if we move our playhead one
+second later into our composition and we
+move our text layer downwards it creates
+another keyframe After Effects now knows
+we want our text to start animating up
+here and at the end it needs to be down
+here and that is going to happen over
+one second so if we go back to the start
+hit spacebar and watch it
+we can see we've got our animation and
+if you've just created your first
+animation congrats Now using keyframes
+like this is the most fundamental skill
+in After Effects if you can understand
+keyframes that they work by changing
+values of a property across time you can
+do a lot of Animation in After Effects
+almost every motion you see is some
+variation of that now if we wanted to
+rotate our text we could change its
+Rotation by clicking and dragging it
+over here but that didn't create a
+keyframe and that is because we hadn't
+hit the stopwatch next to rotation so
+its rotation property is not animated
+its rotation stays the same but if we do
+hit the stopwatch on rotation now we
+have the keyframe and if we go back to
+the start of the animation we can try to
+straighten this out or angle it the
+other way and we can also click inside
+any of these properties and type what
+angle we'd like as well so let's hit
+negative 90. and hit OK so now it is at
+a right angle facing up and then
+throughout the animation it rotates to
+the right and because it's rotation so
+big we barely notice its position
+animation as well okay but we don't want
+to take the animated so let's undo that
+so we'll just hit Ctrl z a couple of
+times until both of those keyframes
+disappear and then let's reset this to
+zero degrees as well okay now we want to
+create an effect where the footage is
+only visible within our text and we want
+that to take up the second half of this
+first second of the clip so from 12
+frames onwards so first let's duplicate
+our footage so we're going to select our
+footage layer and we can go up to edit
+duplicate or we can hit Ctrl or command
+D which is the shortcut and when we do
+that now we just have two copies of our
+ocean Drone footage now we want this
+second copy to be on top of our text
+layer and let's trim it at the start so
+it only becomes visible after frame 12.
+so we can't see this layer at the very
+start and then when we hit frame 12 and
+onwards it is covering up both our text
+and our footage layer underneath it now
+at 12 frames we also want our bottom
+footage layer to stop being visible as
+well so let's zoom out a little bit and
+we want to trim it and so it stops here
+now currently our footage extends way
+beyond our five second duration here so
+let's select our layer drag it to the
+left until we see the end and let's drag
+the end forward drag it back until it's
+start it's the very start of our
+composition and then drag the end of it
+here I'll move my playhead to make sure
+that lines up we need to drag it Forward
+one more frame there so now our first
+footage layer is only visible for the
+first 12 frames and then this footage is
+visible for the next 12. let's Zoom back
+in now we just need the second layer of
+footage to be visible only in the area
+shown by this text and we do that by
+using a track matte now a mat
+essentially hides part of a layer and we
+can do that through this column here
+which has track matte now if you can't
+see these columns for track Mount
+blending mode parent and Link you can
+toggle them on or off by hitting these
+icons in the bottom left we also have
+some extra ones for time codes which we
+don't need these are the two I like to
+keep visible but if they ever go missing
+you can bring them back by hitting these
+down here now to use our welcome layer
+as a mat all we need to do is Select
+this drop down menu and choose our
+welcome layer which is layer 2 or we can
+grab this pick Whip and drag that over
+the layer we want to use and release it
+and as soon as we do that we can now see
+our footage is only visible where our
+welcome text is and as that text
+animates we can still see our footage
+layer through it but something else has
+happened our text is now no longer
+visible at the start and that is because
+when you set trackmat in After Effects
+After Effects automatically hides that
+layer it toggles its visibility off and
+we can toggle it back on over here on
+the left so if we hit this visible icon
+it's now visible and you can use this to
+turn on or off any layer that you have
+on screen so if you can't see your layer
+anymore in the composition window you
+may have accidentally turned it off so
+make sure to check down here first all
+right so now we've got a text visible
+and then in the second half our footage
+over where our text is but in the second
+half our background is black and we
+don't want that we want it to be the
+color of our text in the first half
+which is white so second half is a bit
+of an inverse of the first half and one
+thing to know is that in this case even
+though the background appears black it
+is actually transparent and if we hit
+this checkerboard icon down here toggle
+transparency grid we can see that there
+is nothing behind this text at the start
+we have our full footage and our text
+but here we just have the text well the
+footage inside the text now in our
+timeline we can see that that makes
+sense because there is nothing below
+this layer the background only appeared
+black because it is set as a background
+color for this composition so if we go
+to com position composition settings we
+can see the background color that we had
+selected as black and the background
+color doesn't render it's not really
+there and it's just something for you to
+look at so you don't have to look at
+these transparency grids because that
+can become difficult if you had
+something that's all white or all gray
+or something very thin it can be hard to
+see what's going on so let's actually
+create a white background for this and
+the easiest way to do that is to create
+a new solid so let's go up to layer new
+and solid we have our solid settings
+let's select a color here
+drag it up to White hit OK and we want
+to name it not white solid one but
+background and hit OK and drag that
+below all of our layers on the timeline
+and there we have it our first shot is
+complete and if you are finding this
+video useful hitting that like button
+really does help me out a lot and the
+channel gets seen so that I can keep
+making more of this type of content if
+you've got the time to hit it I'd be
+ever so grateful alright now on to shot
+two where we'll be creating this now I
+designed this shot inside illustrator so
+let's import this into After Effects but
+first let's notice that I've separated a
+lot of the elements onto their
+individual layers and that is going to
+make it much easier to animate alright
+let's go over to After Effects and pull
+that file and while we're here we might
+have also noticed that artifacts has
+created a solids folder in our project
+panel and if we open that up we can see
+our background layer here so as soon as
+you create a solid or some other types
+of layers After Effects automatically
+puts it in a little solids folder up
+here but we don't really need to know
+about that just know that after effects
+is doing this no one is hacked into your
+computer and started creating folders so
+let's import our illustrator file go up
+to file import file navigate to where
+it's saved to here it is here and we
+want to make sure we import it not as
+footage because that will import it
+without any layers just as if it was the
+jpeg we want to import it as
+compositioned retain layer sizes and
+create composition we can tick because
+we need to create one anyway so let's
+just import it like this and as we do
+that we see we have a new composition in
+our project panel and a folder called
+shot 02 2 layers if we're opening that
+up we can see all of our layers that we
+created in illustrator we can preview
+them up here on the top left but let's
+close that and open the shot 02
+composition and we can open it just by
+double clicking and if you double click
+welcome it opens that composition as
+well and down here we can also see our
+options for Shot 2 and shot one now by
+default the composition settings are the
+same as their most recently created
+composition which we did for shadow 1
+and that is perfect for us here five
+seconds 1080p 24 frames per second now
+you might ask why are we using five
+second compositions when this shot and a
+previous shot are only one second long
+and that is because it's actually easier
+when you've got more room in the
+timeline to work beyond the area that
+you're actually animating for and you'll
+see why soon and it's also often better
+to create a shot slightly longer than
+you need it because you can always trim
+it down in the edit and you have a
+little bit extra buffer as well exactly
+like if you were filming a scene with a
+camera you always want to get extra
+footage because if you need extra in the
+edit and you don't have it it can be
+hard to work around okay so let's start
+animating the scene and we're going to
+start animating These Bars here which
+we're going to have this blue pink and
+yellow color filling up the bar
+repeating and looping now let's start
+with the Bottom bar which I've labeled
+bar bottom down here and for this
+particular animation it's going to be
+simpler to actually create it from
+scratch in After Effects using shape
+layers so we can do that by selecting
+our rectangle tool from the toolbar up
+here and if you also click and hold we
+can see all of our other shape tools as
+well here which come in handy and we
+have the pen tool to the right which we
+can also use to create different shapes
+but for now we just need a rectangle now
+before we start creating our shape let's
+actually first deselect this layer which
+is already selected we don't need that
+and that will just confuse things so
+let's click off this layer and now let's
+create our shape but first we want to
+choose its color so at the moment its
+field is this hideous looking brown
+color up here so if we click on that we
+can choose another color and let's eye
+drop this dark blue and hit OK and let's
+actually Zoom a little bit into our
+composition I'm going to do with that
+scroll wheel so we're a little closer to
+the shape and if we want to move around
+while we zoomed in we can hold A
+spacebar on our keyboard and click and
+drag to just move about okay now we're
+ready to draw our rectangle I want to be
+as close as I can to this shape so I'm
+going to start at the top left click and
+drag and just try to line it up at the
+bottom right and release when we're
+ready there now that creates a new shape
+in our timeline which is called shape
+layer one but let's rename that to keep
+layer tidy and we can do that by
+selecting it and right clicking it and
+we always label our layers because it
+makes it so much easier to navigate
+especially once we start having a lot of
+layers and especially especially when
+we're working on projects with other
+people it may seem like an annoyance in
+the short term but it saves you so much
+time having a clear and organized
+project and you'll be everyone's
+favorite person to work with I guarantee
+it it is a great habit for anyone at any
+level to have so you may as well start
+developing that habit as soon as
+possible okay we can call this a bar
+blue one and then just deselect it now
+we also don't really need this bar
+bottom layer so we can select that layer
+and then delete our backspace on our
+keyboard to just get rid of it now let's
+animate this layer filling up like a
+loading bar and like most things in
+After Effects there are many many ways
+to accomplish this but an easy way and
+one that introduces another key element
+of After Effects is to do it with a mask
+now mask Works similar to match like we
+did in our first shot they hide and
+reveal specific areas of a layer but
+instead of using another layer to reveal
+that with a mask we can just draw what
+we want to see directly onto this layer
+and we can draw what we want to see with
+the rectangle tool which we already have
+selected or with the other shape tools
+or pen tool so make sure our rectangle
+tool is selected but one thing that is
+important to change is we need to select
+this option up here currently we have
+tool create shape selected but we want
+to go over and select tool creates mask
+because otherwise we're just going to
+keep drawing rectangles on this layer
+which won't help us at all so if we
+click and drag we can see as we do that
+the rectangle that we're creating is
+revealing our layer our shape is only
+visible within the bounds of this mask
+that we're drawing and that's
+essentially what we want to animate we
+want to animate this mask revealing our
+shape exactly like that starting at the
+left and expanding to reveal the whole
+shape so let's finish drawing this mask
+by releasing The Click I have on my
+mouse we want to line it up at the very
+end on the right and release okay now we
+just need to animate it and of course
+we're going to animate that using
+keyframes changing a property over time
+and the property we're going to change
+is the masks path so down here on the
+timeline if we toggle open mask one we
+can see here we have a bunch of
+properties and mask path is one of them
+so one second in is where we want our
+shape to be completely filled so let's
+click the stopwatch on mask path and
+then at the very start of the animation
+we need to drag this all the way to the
+left now the easiest way to do that is
+to get our selection tool and double
+click our mask which will add this
+bounding box and now we can just drag it
+to right Edge all the way to the left
+just in front of where our shape starts
+there
+now we've animated our mask path and we
+have an animation wonderful now our
+timeline is starting to get a little
+crowded we have all these other
+properties visible that we don't really
+need to see and they're just taking up a
+lot of real estate and they will take up
+a lot more once we start having more and
+more layers so a great shortcut to use
+to hide that is you on the keyboard so
+we have this layer selected and if we
+hit you it is going to hide all of the
+properties except the one animated and
+if we hit it again it hides those
+properties too if you want to hide and
+reveal different properties select the
+layers you need and toggle hitting you
+on the keyboard next we're going to
+learn another trick for smoother and
+more appealing animation and to do that
+we're going to want a before and after
+comparison so let's duplicate this layer
+if you will remember from before the
+shortcut is Ctrl or command D so now
+I've got two Bar Blues so let's drag
+this one just below it and I'm going to
+hold shift on my keyboard so it stays
+vertically aligned and I'm also going to
+move the second one down below it in the
+timeline so it matches its position in
+the composition and you on the keyboard
+to bring up its keyframes as well okay
+so the moment the motion we have on both
+of these bars is a linear the bar is
+filling up at a constant consistent
+speed at every single frame the bar is
+filling up the same amount but we can
+make this animation a little bit
+smoother by adding some easing now
+easing is where there is some
+acceleration and deceleration the
+animation will start slower accelerate
+and then slows down as it gets to the
+end and we can do that by selecting both
+keyframes we'll do that on our top bar
+layer and we can select them just by
+clicking and dragging and drawing a box
+around them
+and then if we right click any of them
+go to keyframe assistant and easy ease
+the shortcut of which is F9 very common
+shortcut that is another one useful to
+remember and when we do that we'll
+notice our keyframes have changed shape
+they've now become a sort of hourglass
+shape and that means that these
+keyframes have easing applied to it so
+either coming into this keyframe or
+coming out of this keyframe and motion
+will accelerate or decelerate so let's
+take a look at both animations and we
+can see there is a slight difference on
+the bottom
+it is a linear consistent speed and on
+the top it is eased let's hide the top
+one for a second and we see straight
+linear motion and turn the other one off
+and we have a nice slightly eased
+animation let's drag the work area down
+to one second just so we can Loop that
+and the top more ease motion feels a
+little more natural and organic a
+sprinter or even a car needs to build up
+to their top speed and then decelerate
+to stop and if we look closely I'm just
+going to scrub through very slowly we
+can see the start our top layer is
+moving very slightly there's only a tiny
+amount of animation of it being revealed
+but by the time we get to the middle it
+is having to speed up and move even
+faster than the one below it because it
+has to make up time for being so slow at
+the start so it pulls ahead of our
+linear motioned bar and then as we get
+closer to the end it is slowing down and
+they will finish at the exact same time
+so adding easing doesn't change the time
+that it takes to get from one end to the
+other it just changes how it speeds up
+and slows down within that process it's
+a more familiar motion to us and is
+generally a bit more pleasing now if you
+are animating a robot or something that
+is already in motion linear motion is
+great but generally a little bit of
+eating is nicer okay now we can get rid
+of our second bar that we've made down
+here so let's just delete that and I
+think we can make this motion a little
+bit faster as well and we can do that
+just by pushing these keyframes closer
+together so let's select this keyframe
+and just drag it halfway until it's 12
+frames in half a second so now it's
+doing the same Motion in half the time
+so we get emotion twice as fast okay now
+let's add the other colors of this bar
+to really bring this animation to life
+so let's duplicate this bar with Ctrl or
+command D and let's actually do that one
+more time so now we have three copies so
+for this top one let's change its fill
+color to Yellow so I'm going to select
+the eyedropper choose yellow the one
+below it select the eyedropper and
+choose this pink color and if we toggle
+them on and off we can see the different
+colors they're just stacked on top of
+one another and let's rename our layers
+from bar blue to bar yellow one and bar
+pink one I'm always renaming them let's
+change the label color these layers too
+at the moment they're blue which is the
+default for a shape layer but you can
+change what color they appear in the
+timeline and we can do that by clicking
+this box here on the left and we'll
+change this one to fuchsia and the
+yellow one to Yellow now it's just a
+little more obvious which layer is what
+at a glance in our timeline and let's
+select both of these layers and hit you
+on our keyboard to reveal their
+keyframes too because now we are going
+to offset their motion and that is just
+a bit of a fancy way of saying we're
+going to delay the motion of these to
+create a bit of a fun effect so let's
+drag our pink layer over about six
+frames so it is going to start halfway
+through our blue bars animation and then
+move the yellow one over another
+additional six frames from that so our
+blue layer is going to start then our
+pink layer then our yellow layer let's
+expand our work area two we don't need
+to be restricted to one second so here
+we are we have a bar filling up three
+times once with each color but we don't
+want them to fill up just once with each
+color we want them to do that again and
+again so the best way to do that is to
+select these layers and duplicate them
+so let's select them all I'm going to
+select the bottom one hold shift on my
+keyboard hit the top one and then hit
+Ctrl or command D and that will
+duplicate all of these layers now I do
+want them all on top so I'm going to
+select any of them and just drag them to
+the top of the layer stack and then we
+can drag them over to the right we can
+also hit you on our keyboard to bring up
+their keyframes just so we can line them
+up a little bit easier and now we have
+each one of them filling up the screen
+twice now we do want this to happen a
+few more times so let's again select all
+of these layers hit command or control D
+to duplicate drag them up to the top
+bring them over to the right to offset
+them now we've got a nice few seconds of
+this bar filling up and from one really
+simple animation just a mask path
+animating and a couple of creative
+duplicating moving LA's and changing the
+color we've got a pretty captivating
+little animation here now we still need
+to animate our top bar and our timeline
+is getting pretty full of these bar
+layers luckily we can do something in
+After Effects called pre-composing which
+essentially puts all of these layers in
+their own composition so I'm going to
+select all of these colored bar layers
+right click any of them and select
+pre-compose that prompts me to create a
+new composition name and I will call
+that bar color and hit OK and now in our
+timeline all of those colored layers
+have disappeared and we just have this
+one sand color layer called bar color
+which is in fact a new composition that
+we've made we'll find that up here in
+the project panel and if we double click
+into that we can see it contains all of
+our colored layers and only those
+colored layers and this is kind of the
+equivalent of nesting in Premiere like a
+kind of grouping or creating a symbol in
+other software now if we head back to
+shot O2 we can see the real power of
+pre-composing and that is that we can
+use this composition again and again and
+if we ever needed to make a change to
+this composition we can go into it make
+a change and that change will be in
+effect every instance of that
+composition that we've made all right so
+we need to use this for this top bar
+here so let's duplicate bar color with
+command D and we could just click and
+drag it to move its position up to the
+top and play it back but then we've got
+them animating in the same direction and
+we don't want that so let's undo that
+and I'm actually going to rotate this
+composition so it's animating in the
+other direction so let's open up its
+transform properties and let's increase
+its rotation and we'll try to line it up
+with the top and if we can't do it
+exactly by hand we can click and type
+which we know it'll be
+180 degrees then hit okay there and we
+can also delete our bar top layer as
+well from illustrator so let's select
+that and delete it and now if we play it
+back we've got both bars animating in
+opposite directions wonderful all right
+now we do need to get this to work as
+well as we can for our one second
+animation that this shot will be used in
+and make this first one second the best
+it can be because at the moment the bars
+are appearing out of nothing which we
+don't really want and then at the end
+they're kind of just disappearing or
+just showing the last color that we have
+copied there filling up the bar which is
+yellow so let's grab our work area drag
+it to one second and we want our bars to
+be already filled up and animating by
+this point so very start of our
+animation let's select both of our bar
+color layers and then just drag these
+over to the left until when they start
+they've already completely filled the
+bar there we are so now it doesn't quite
+Loop but that's okay we don't need our
+animation to Loop we won't be looping it
+it'll just be playing one sandwich
+between two scenes so this will be fine
+for us but if we do want it loopable all
+we need to do is find the frame where it
+matches the frame at the very start so
+at the very start we have half pink half
+blue so the next frame where that
+appears we just scrub along is here at
+frame 18 and you can see the frame
+number over here on the left as well so
+if we drag our work area to this 18th
+frame and play it back it should Loop
+seamlessly wonderful or we can find
+where this particular frame appears
+again pink on the left blue on the right
+which should be here at one second 12
+frames or the 36th frame so if we expand
+our work area to there
+it should loop as well not that we need
+it to Loop but it's handy to know as
+well alright now we want all of these
+elements to zoom in we need them to get
+bigger as our imaginary camera moves
+closer and the easiest way to do that is
+by animating their scale now I know that
+our middle rectangle is in the exact
+center of our comp so let's start there
+now we'll open up its transform
+properties again to get to its scale but
+instead of toggling down it transform
+properties like this we can use a
+shortcut and because all of these
+properties are used so often in After
+Effects they've got some really easy
+Shortcuts To Remember s is for scale R
+is for rotation p is the position and T
+is for opacity or opacity or
+transparency if that's easier to
+remember I guess Adobe thought that the
+shortcut o would be too confusing oh
+dear all right so let's animate at scale
+hit s to bring that back up and actually
+the bar cutter on the top we don't need
+any of these properties visible so let's
+select that layer and hit U alright now
+we're just looking at a middle rectangle
+we're just looking at a scale so one
+second in is where we want our animation
+to finish so let's keyframe it scaled
+there at 100 and then at the very start
+of this animation let's raise it to 95.
+it's only going to be a small scale
+animation we don't want to go crazy we
+don't need it exploding out of nothing
+over one second five percent scale
+increase will be more than enough
+playback we can see a yellow square is
+increasing in size and it's zooming in
+now we don't really want to have to do
+this for all about layers so what we can
+do is use another technique which is
+important in life and in animation and
+that is parenting so you'll see this
+column on the right in our timeline
+called parent and Link and with this we
+can essentially attach or link one layer
+to another or multiple layers to one
+layer so let's select all of our other
+layers our bar colors and our type I'm
+just holding shift and clicking on each
+of these and now in Parental link we can
+select from the drop down menu and
+middle rectangle or like with Matt's
+uses pickweb to select her middle
+rectangle layer and when we release we
+can see they're all linked to layer 4
+middle rectangle and now when we play it
+back we can see now all of our layers
+are zooming in and that is because they
+are all attached to they are all linked
+to Middle rectangle middle rectangle is
+now a parent of those layers so they
+inherit its animation that's why it's
+called the parent and now anything we do
+to this rectangle layer will happen to
+the other layers as well if we hit r on
+our keyboard to bring up rotation and
+rotate our middle rectangle all the
+other layers rotate too let's undo that
+and even though we have our scale
+animation animated on our middle
+rectangle we could also scale up our
+other layers too we could scale up our
+type layer and that can happen
+independent of middle rectangle the
+children are free to do their own thing
+the rectangle is not an overbearing
+controlling parent okay there we have it
+Shot 2 is complete the one thing we
+should do is kind of tie tidy up our
+project now it isn't too bad over here
+we only have a few Assets in there but
+as we go to creating the last shot it is
+going to get a little bit Messier so the
+best time to organize a project is
+before it gets too chaotic and it is
+good practice to keep monitoring your
+project and making sure it's as tight as
+it can be really so the best way to
+organize it a bit more is to make some
+folders and organize elements into those
+so I'm going to create a new folder and
+I'm going to call this one zero one
+assets and I'm going to create another
+one called zero two comps now I like to
+add the numbers at the start and that is
+just so they list alphabetically in the
+order that I want and into the assets
+folder I'm going to drag our Drone
+footage and our solids and our layers
+from shot 02 and into comps I'm going to
+put our welcome our Shot 2 and bars
+colors as well let's open up that comps
+folder and then actually within that
+folder I'm going to create a new folder
+and call that one zero one precomps and
+in that folder I'm going to drag bar
+color there that is modernizer and is
+nice and organized now this isn't the
+only one true way to organize a project
+you don't have to use this exact
+structure but it is good that you have a
+structure it will go much much smoother
+than with no structure and I found this
+structure really works for me for small
+projects and for big projects as well
+now this is a natural break to let you
+know that I do have a course available
+that I've designed to be the resource I
+wish I had while starting motion design
+teaching the most foundational elements
+in depth across a whole bunch of fun
+practical projects I'm really proud of
+it and it's available on my website
+there's a link to that down in the
+description anyway back to it on to shot
+three where we will be making this a
+little more involved for this shot so
+get ready and first we will need to
+create a new composition so let's hit
+the new composition icon and let's call
+this shot 03 After Effects all the comp
+settings are fine so let's hit OK drag
+that into our comps folder and then
+we've got a bunch of assets that we need
+for this shot so let's drag all of those
+in we have the after effects icon so
+let's drag that into our assets we have
+this paper texture drag that in there
+too and then we also have this folder of
+lots of photos of hands so let's select
+all of those drag them all in and let's
+also create a new folder for these in
+the project as well that we'll call hand
+Stills and drag all of our hands into
+there now for a quick explanation as to
+how I made all of these hand images is I
+essentially took eight photos of my hand
+in different stages of opening up I took
+them into Photoshop removed the
+background from each one of them with a
+magic wand tool and then just save them
+out as transparent pngs alright now
+let's get started by dragging these
+hands into our comp now I'm going to
+select them all but I'm going to first
+click on hand number 8 hold shift and
+then click up to hand number one and
+that is because when we drag them in it
+will drag them in the correct order with
+the open hand at the top with hand 08 at
+the very top so the first layer you
+select will appear at the very top it's
+not that important you can always
+rearrange the them but why not do it the
+right way first they're all looking
+maybe a bit too big for the composition
+so let's scale them all down so while
+they're all selected I'll hit s on the
+keyboard and then scale them down to
+about to eighty percent there that's
+looking a bit better and let's make sure
+we are aligned to the middle so our line
+tab happens to be open again so let's
+align the layers to composition we don't
+want to align them to one another and
+there we are right in the middle okay
+now we need to put them into a sequence
+so let's actually hide their scale we'll
+do that by hitting U and put them into a
+sequence first we need to trim them down
+to the length of each frame so I'm just
+going to drag the very end to the right
+and drag them down and I want to make
+sure they're about four frames long so
+one two three four okay happened to drag
+correctly to four frames now what we
+need to do is just spread them out so
+one starts where the other one finishes
+starting at handle one finishing a hand
+08 and we're essentially creating a stop
+motion animation let's see how that
+looks alright that is looking pretty
+good got a nice stop motion effect now I
+do think we want to make these last four
+layers last a little bit longer because
+it's not as much movement happening so I
+want them to just be a bit slower so
+let's select these all and I'm just
+going to drag them out another four
+frames and then push them out to be in a
+sequence again okay there we go so the
+hand opens up and then it's a little bit
+slower when the hand is open wonderful
+now at the moment our hand animation is
+lasting two seconds and we do want it to
+last more than that so we're just going
+to repeat the last four frames so let's
+select them all command D to D duplicate
+or Ctrl D move them to the top of the
+layers deck move them to the right and
+then I'm going to select all versions of
+that again duplicate drag to the top and
+offset those as well even extending
+beyond the length of our comp
+all right now we have a nice kind of
+long looping animation while opening
+over the start and then jittering
+slightly once they're open now again our
+timeline is just full of all these
+stills of hands which we don't really
+need to animate any more than that so
+you guessed it we are going to pre-comp
+these to make this comp easier to
+navigate so I'm going to select all of
+these layers right click pre-compose and
+we can call this hand
+stop motion hit OK and then move that
+comp into our precomps folder now we do
+want to have our hand black and white
+and have some more contrast so it looks
+a bit more like a newsprint or maybe
+that it's been photocopied and cut out
+of a magazine or something so let's now
+apply some effects to it which is
+another reason in itself to pre-compet
+so we don't have to apply the effects to
+every single layer now the effects live
+over here on the right and this panel
+effects and presets and as soon as we
+click on that we can see there are a lot
+of effects and these aren't even the
+effects these are just groups of similar
+effects if we open up the distort
+section you can see there is a lot of
+distort effects filling up the entire
+panel just of distort effects and that
+is the reason we have this very handy
+search bar on the top of our effects and
+presets because it is much easier to
+search for the type of effect that you
+need rather than going through all of
+these one by one now first we need to
+make this black and white and again
+there are a bunch of effects that we
+could use to achieve that now one is
+called Hue and saturation so I'm just
+going to type in Hue we can see there
+are a few effects have the word Hue in
+it but color correction Hue and
+saturation is the one we want now we can
+just double click on this effect because
+we already have this layer selected and
+it will apply it and we can see it pop
+up over here on the left and this is the
+effects control panel and you might be
+concerned where is the project panel
+gone but if we select this Arrow here we
+can see project panel is just over here
+it is just being hidden in the meantime
+while we adjust our effects and we can
+click back and forth between these to
+choose what we want to see all right so
+in our effects Hue and saturation you
+might be familiar with this from
+Photoshop or from other effect software
+and we have a few different properties
+we can effect here Master Hue we can
+adjust to change the color of our layer
+let's undo that Master saturation we can
+make it more saturated more colorful or
+less saturated more black or white let's
+leave ours at minus 100 and lightness is
+just how bright or dark it is let's undo
+that back at zero now we need to add
+some more contrast and we're going to do
+that with an effects called curves again
+just double clicking on that curves
+effect and it will pop up over here in
+our effects panel now the curves effect
+is a powerful tool that allows you to
+adjust the brightness and contrast of
+your footage now it works by mapping the
+input values to Output values using this
+customizable curve here so the x-axis
+the horizontal axis is the shadows and
+highlights of an image the y-axis is the
+brightness so at the moment on the
+shadow size the Shadows are not very
+bright at all our curves at the very
+bottom and on the right the brightness
+is at the very top so they're very
+bright and we can manipulate this curve
+to alter those so we can bring the
+Shadows brighter by bringing this curve
+up to the left we can make the
+highlights darker by bringing this down
+we can alter the mid tones by making
+them brighter or darker and we want to
+do both of those last two and we can do
+that by creating an S curve so we make
+the mid tones Close to the Shadows
+darker and click and drag it up to
+create the midtones closer to the
+highlights the brighter mid tones a
+little bit lighter that's maybe a little
+too extreme let's make it around this
+shape like an s and this is sometimes
+called a contrast curve and this is
+looking pretty good to me now we might
+need these effects controls so let's go
+back to our project panel I find it
+comforting to be able to see this and
+it's nice organized glory and now let's
+add a background layer just like we did
+before let's go up to layer and we can't
+choose anything these are all grayed out
+because this layer is selected so let's
+deselect it clicking anywhere else and
+then let's go up to layer new solid and
+we want to change its color let's make a
+bit of a dark gray hit OK and name that
+background and hit OK
+wonderful drag that below our hand and
+now let's add our After Effects icon
+that's over here in our assets panel we
+can close that folder with hand Stills
+we don't need them anymore drag that
+over here and of course we're going to
+need to scale it down so s on our
+keyboard and scale it down until it
+looks kind of like the natural size
+would be in that hand maybe 33 33 will
+be fine and maybe let's scale down our
+hand too maybe it's a little bit big so
+let's open up the scale of the hand and
+drop that down to maybe 90. okay now
+it's cutting off the very bottom so we
+can just drag that down slightly there
+we have it that it looks like a good fit
+for the logo in our hand let's actually
+select the after effects logo move it up
+a little bit more there we are now
+animating the logo now we want it to
+appear as soon as our hand opens so the
+first frame where our hand is open is
+here at 12 frames in so we're going to
+trim the style of that layer so it
+doesn't appear before then and there we
+are that kind of looks okay as it is
+considering this stop motion Style but
+we want to make it a little fancier and
+add a bit more motion to this logo or to
+the icon I keep saying the logo truly an
+icon but maybe both depending how you
+look at it alright so I'm happy with the
+final position of the icon here so let's
+animate a few properties of it getting
+to this place so scale is already open
+let's animate its scale I'll keyframe
+that but also want to add about its
+position and rotation so to bring up
+rotation and position we can hit R and P
+but that only shows one at a time but if
+we hold shift and then hit R and we'll
+now ask to bring up scale they are all
+visible so let's keyframe them all at
+this point one second in and then at 12
+frames in let's make some changes to
+each of these properties so position
+let's just drag it down a little bit so
+it's going to look like it pops up scale
+drag it down a touch two not too much
+and rotation let's just rotate it a
+little bit to the left counterclockwise
+so now when we play it well it looks a
+bit floaty but it's popping up out of
+the end and a bit more of an interesting
+way okay so how can we make it a bit
+more interesting well we can add some
+easing so let's select all of these
+keyframes right click keyframe assistant
+easy ease now there's a bit more of an
+easing that looks a little better but
+not too great I think we can improve it
+by making it faster I think it's a
+little too slow to pop up out here so
+let's grab these last keyframes and just
+drag them over
+to about there so now it's going to be
+pretty quick popping up there that's a
+little better and I think it's going to
+get even better when we add some final
+touches which are coming up now to make
+this look a little more collagey let's
+add some of those border elements and
+we'll do that by creating some shape
+layers again with the rectangle tool
+I'll deselect this layer just to make
+sure we don't accidentally create a mask
+and a great way to create a rectangle or
+any shape that is the exact same size of
+your comp is to just simply double click
+the tool so if I double click the
+rectangle tool we get a shape layer with
+a rectangle the exact size of our comp
+which is what we want to create a border
+but we don't want a solid pink rectangle
+we just want the outline so let's change
+that the fill and the stroke of the
+shape layer are shown up here the feel
+is the color it's filled with if we
+click on the word fill we have our fill
+options and we can choose from no fill
+solar color linear gradient radial
+gradient we want no fill so let's hit
+none hit OK and for stroke we want solid
+color stroke then hit ok now this number
+right next to the stroke here is the
+stroke width in pixels now let's go nice
+and big for this one let's go all the
+way up to around
+250 there and this shape is going to go
+behind our hands so let's drag it to the
+bottom of the layer stack I'll just
+close up its properties here first try
+to get below a hand a bit above our
+background and of course let's rename
+this border one and let's change the
+color of this Stroke by selecting that
+up here and let's eye dropper the dark
+color from the Icon here this dark blue
+hit okay there now for the thinner
+border let's duplicate this border layer
+drag it above our hand in the layer
+stack let's reduce its stroke width
+let's drag this down to about 100 or so
+and then let's change its color from
+this blue we'll eye drop the light
+lavender color from the Icon then hit OK
+all right this is looking a little more
+legit now that it has a nice colorful
+border on it now we just need to add a
+looping texture and some final effects
+to make our looping texture we're going
+to use this paper scan element that we
+have here let's double click on that and
+you can see that this is just a piece of
+paper that I have painted black and as a
+little bit of the paper texture in there
+now I have to scanned this in at pretty
+high resolution but you don't really
+need them to be that high of a
+resolution these are very easy to make
+your own you can even just take pictures
+on a camera and save it out and a decent
+file size texture is everywhere out
+there you can take photos of some
+concrete of an interesting wall fabric
+the options are really Limitless okay
+let's create a new comp rail looping
+texture so again we'll create a new comp
+these settings are all great let's just
+rename it texture Loop one in case we
+want to animate some more textured Loops
+later hit OK let's put that in our
+precomps folder and in this composition
+we'll drag in our paper scan I'm going
+to zoom out a bit because we can see
+that because of the high resolution scan
+this image is very big and a bit bigger
+than we need it to so let's scale it
+down s on that keyboard let's drag this
+down to around 70 just to where we think
+the size of the texture is going to look
+good what level of detail we want our
+texture to have now we're just going to
+drag this around to find a nice a nice
+group of scratches and Speckles that we
+like we don't want to go too close to
+the edge and get the Border in there
+here seems fine for us great now we need
+to make a short sequence just like we
+did with our hand so I'm going to drag
+again the end of this layer so that it
+is only four frames long let's see how
+good I did again four frames exactly I'm
+good at this now you could make this
+much faster by making these layers two
+frames long or six frame long or I think
+four frames long for each instance of
+the texture is this sweet spot for me
+okay then we're going to duplicate this
+Ctrl or command D drag this layer over
+and on this one let's zoom out again and
+we're just going to find another area of
+this scan texture we can go back and
+forth just to check that they look
+pretty different not try like this part
+in the left corner here so I'll drag it
+down all right they look different
+enough now let's do it again I'll
+duplicate it once more drag it over and
+this time to give me some more options
+I'm going to bring up its rotation and
+rotate it 90 degrees so now we have a
+lot more options so we can try different
+areas before we notice similar Speckles
+on landmarks repeating duplicate it once
+more and on the fourth version let's
+just move it around over here let's just
+go through all of those and check that
+they all look decent they all look
+pretty good to me let's drag the end of
+our work area to the end of that layer
+and play it back
+I'll zoom in that all looks good and
+seamless to me now I do think four
+layers are enough but if you do want a
+longer sequence you can do that and it
+will probably be more seamless you can
+do that with six layers eight nine
+images long whatever you like but four I
+think works good for us now at the
+moment this is just looping within our
+work area here so when we place this in
+another comp it will just show this Loop
+once so what we need to do is fill up
+this entire comp with this sequence now
+there are a few ways you can Loop
+elements in After Effects but the way I
+prefer to do it is the simplest one and
+it is to just duplicate these and fill
+up the rest of this comp so that's what
+we'll do I'll select these all duplicate
+with controller command D bring them up
+to the top move them to the right select
+them all again duplicate up to the top
+move them across and I think we should
+be able to get away with doing that just
+once more there now we've got five
+seconds of this looping texture now
+let's add it to our shot so in shot 03
+After Effects let's just drag texture
+Loop one and place it over the top and
+well it's covering everything up but we
+can change that and we can change that
+with its blending mode blending mode is
+this column over here and we have
+options of which blending mode next to
+every layer you'll likely recognize
+these from pretty much any image editing
+software and these are just ways this
+layer can blend with the layers below it
+based on its color and contrast now the
+one we want is screen and what screen
+does is it removes all the darkness from
+that image just lets all the white the
+lighter areas show through so we can see
+the lighter areas of our texture and the
+black becomes transparent now this is
+lightening the overall color of our
+composition so if we turn on and off we
+can see that it's making everything
+maybe just a bit lighter than we'd like
+but we can adjust that with an effect
+and the effect we'll use is curves which
+we conveniently have up here because it
+is the last one we search for so let's
+double click it and this time we're just
+going to drag down the mid tones to give
+it a general darker appearance so the
+main areas that show through are the
+very lightest Speckles and paper texture
+there I think that is looking pretty
+good and there is one more thing to add
+to this scene and that is some subtle
+effects to add on top of the whole comp
+now I think the best way to apply
+effects to everything in this comp at
+the same time is use an adjustment layer
+so let's create a new one by going up to
+layer new adjustment layer and that
+creates a new layer and a timeline let's
+rename that to effects now essentially
+this is just a blank layer but if we
+apply effects to it those effects will
+apply to everything underneath now let's
+add some subtle noise to this shot so
+I'm going to search for noise and you
+can see there are lots of types of noise
+we can add let's just add plane noise
+the one that just says noise and I'm
+going to zoom in a bit so we can really
+notice the noise and increase the noise
+we can see that it's just adding lots of
+chaotic noise to our shot we only want
+it pretty subtle maybe around eight
+percent noise and we can turn an effect
+on or off up here by clicking FX and we
+can see that it just adds a little
+subtle noise I like the way noise looks
+on here you might want your animation
+really super clean but I think if we're
+going for a stop-motion collage you look
+a little bit of noise texture a bit of
+chaos just makes the whole thing come
+together and often you would get
+excessive noise and sort of a printed
+photocopied elements too and it just
+removes a bit of the digital Sheen that
+we aren't getting with this digital
+animation all right so we've added our
+noise let's add one more effect and that
+is going to help make this after effects
+icon animation just work a little bit
+more consistently with the stop motion
+style that we've got for our hand
+animation and our looping texture and
+that effect is called posterize time
+let's search for that post race time
+let's double click to add it and I love
+this effect and what it does is let you
+alter the frame rate of this composition
+so it's currently 24 frames per second
+which is what it says here but let's
+lower it to 12. so it's going to play
+back at half the frame rate and I love
+using 12 frames per second because it is
+a very common frame rate for traditional
+animation and it gives your work a
+slightly more handmade feel because of
+that so let's play it back and we can
+only really notice it during that
+previously pretty smooth animation of
+this of our After Effects icon because
+now it's reducing the amount of frames
+we're seeing so we're only seeing about
+three frames of Animation between these
+two points and that's kind of how you
+would animate it if you were doing it
+stop motion with a lot fewer frames and
+I think it works pretty well here we
+could even lower this to six frames per
+second just to see how that looks and
+that's not bad too that actually looks
+nice and choppy it maybe fits the style
+a little bit better so actually let's
+keep it let's keep it at six frames per
+second that way it's just a little bit
+more noticeable and now this shot is
+done the last thing to do is put all of
+our shots together and render them out
+okay let's go back to our project panel
+and we are going to create a new comp
+which will contain all of our shots so
+let's create a new composition and call
+that welcome to After Effects let's hit
+OK and now we just need to drag in all
+of our shots so we'll drag in welcome
+drag n two and we can drag them into the
+composition window or into the timeline
+doesn't really matter we want to drag
+this one over so it starts one second in
+so we have a Welcome 2 then drag in
+After Effects and have that start right
+here two seconds in and now we have
+welcome to After Effects excellent now
+just like regular layers compositions we
+can trim the start and ends too so say
+if we thought there was maybe too many
+frames of hand at the beginning here we
+could find where the maybe the second
+image of hand starts and click and drag
+to trim the front of that layer then
+drag it across so our icon would be
+revealed a little bit sooner there we
+are I think that works maybe a little
+bit better welcome to After Effects yeah
+I like the timing for that now we're
+ready to render so all we need to do
+here is go up to composition add to
+render queue and when we do that it
+opens up our render queue here and it is
+a queue because we can add multiple
+compositions to this hit render and it
+will render them all in whatever order
+we put them in now we just want to
+render one composition so no need to add
+any more now we have a few options here
+we have render settings currently says
+best settings we have a little drop down
+menu here where we can choose other
+settings we click on best settings it
+gives us more options now best settings
+sounds pretty good it sounds like the
+best settings to have and 99 of the time
+I render with best settings the only
+time I haven't is when I want to render
+at a lower resolution and I've only done
+that if I was working on a really big
+job that was going to take a long time
+to render and I needed to send a render
+to the client so instead of spending the
+last hour of the day rendering I would
+only spend the last half an hour of a
+day rendering so I'd get more time to
+animate and the client normally doesn't
+care if they're watching a half
+resolution video whilst you're still
+working on it best settings for us is
+okay so let's hit OK then we have output
+module and we have another drop down
+menu of some common output and you can
+make custom templates for your own here
+as well now for most cases I would
+recommend outputting a h264 hg64 is the
+name of the codec and it is essentially
+the best compromise for high quality
+with smaller file size the MPS at the
+end is the only difference between these
+three options that's the bitrate the
+higher the bit rate the higher the
+quality and the larger the file size for
+us we can choose 40 megabytes per second
+we probably don't need a bit rate that
+high but it's only five second animation
+it's not like the file size is going to
+be too massive now other options I do
+think you should know about is high
+quality that is a good one if you aren't
+going to upload this directly to
+somewhere like YouTube or online if you
+are going to be placing it into another
+edit which is then going to be rendered
+out and compressed you kind of want to
+have as few stages of compression as
+possible so you can render it out as
+high quality lossless will not compress
+it at all but your file size will be
+absolutely enormous I'm talking
+gigabytes for a few seconds so if you're
+on the highest quality possible will
+choose that and high quality with Alpha
+is great if you have any sort of
+transparency in your file that you want
+to keep if you have any sort of blank
+areas that you want footage to be seen
+under when you add it to an edit but for
+us let's go to hd64 match render
+settings 40 megabits per second and then
+output 2 it is not yet specified this is
+just the output folder so let's select
+this I'm going to render it into the
+renders folder and I'll keep its common
+name welcome to After Effects save it
+and then hit render you'll see the bar
+fill up
+and then we'll get a nice satisfying
+chime meaning we're done and if we go to
+that folder we can see our animation is
+here and we can watch it now we have
+learned a lot in this short time about
+the most important features in After
+Effects and we've only just scratched
+the surface of what's possible and a
+reminder that you can download all of
+the files that we use today in the
+project for free in the description and
+if you are looking to learn motion
+design I do have a course on my website
+that is in the description too and I've
+got plenty of videos on this channel all
+about learning After Effects motion
+design Motion Graphics fun animated
+stuff
+[Music]
+all right

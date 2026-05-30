@@ -1,0 +1,22 @@
+{
+  "handle": "sahilbloom",
+  "channelHandle": "@Sahil_Bloom",
+  "channelId": "UC0vZSXQHRGPNZMFAKPLJcww",
+  "scrapedAt": "2026-05-27",
+  "platform": "youtube",
+  "notes": "Instagram scrape blocked (401 Unauthorized on gallery-dl). YouTube channel handle is @Sahil_Bloom (NOT @sahilbloom which is the IG handle and 404s on YT). Mix of long-form essays + Shorts to capture both the dense-motion-graphic style and the typography-only Shorts style.",
+  "picks": [
+    {"id": "lAg2-wWR5wU", "title": "Busy But Behind? (10 Min Fix)", "duration": 327, "kind": "essay", "url": "https://www.youtube.com/watch?v=lAg2-wWR5wU"},
+    {"id": "qsmjQGw0uiU", "title": "13 Innocent Mistakes Quietly Destroying Your 20s", "duration": 485, "kind": "essay", "url": "https://www.youtube.com/watch?v=qsmjQGw0uiU"},
+    {"id": "Cl7EgF-XIPc", "title": "11 Habits That Cost Me 30 Years", "duration": 382, "kind": "essay", "url": "https://www.youtube.com/watch?v=Cl7EgF-XIPc"},
+    {"id": "EvMEBzrDQVA", "title": "Stop Setting Goals. Do This Instead.", "duration": 1194, "kind": "essay", "url": "https://www.youtube.com/watch?v=EvMEBzrDQVA"},
+    {"id": "Fj8HsHqyMA0", "title": "34 money lessons (no one talks about these)", "duration": 2273, "kind": "essay-long", "url": "https://www.youtube.com/watch?v=Fj8HsHqyMA0"},
+    {"id": "AHb_AFtC-Yk", "title": "The AI Boom Will Break Us (unless we fix this)", "duration": 1144, "kind": "essay-long", "url": "https://www.youtube.com/watch?v=AHb_AFtC-Yk"},
+    {"id": "JcfSxUg6dH0", "title": "7 skills that will outlast AI (become irreplaceable)", "duration": 484, "kind": "essay", "url": "https://www.youtube.com/watch?v=JcfSxUg6dH0"},
+    {"id": "RYLrfpMSkoY", "title": "15 harsh realities that separate winners from losers", "duration": 681, "kind": "essay", "url": "https://www.youtube.com/watch?v=RYLrfpMSkoY"},
+    {"id": "yTp2EhSUwmo", "title": "Stop Wasting Your Life: 5 Questions That Force Real Change", "duration": 394, "kind": "essay", "url": "https://www.youtube.com/watch?v=yTp2EhSUwmo"},
+    {"id": "c7ePpaEvVW4", "title": "How to never be happy", "duration": 60, "kind": "short", "url": "https://www.youtube.com/shorts/c7ePpaEvVW4"},
+    {"id": "28r88tLhNhw", "title": "Stanford proved winners think like this...", "duration": 60, "kind": "short", "url": "https://www.youtube.com/shorts/28r88tLhNhw"},
+    {"id": "0Q0vWA1xH_0", "title": "Work less. Learn Parkinson's Law.", "duration": 60, "kind": "short", "url": "https://www.youtube.com/shorts/0Q0vWA1xH_0"}
+  ]
+}

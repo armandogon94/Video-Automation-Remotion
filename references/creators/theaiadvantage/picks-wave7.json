@@ -1,0 +1,107 @@
+{
+  "creator": "The AI Advantage",
+  "handle": "@aiadvantage",
+  "channel_id": "UCRJFAp0rewx8kzdhEqDHIlA",
+  "channel_url": "https://www.youtube.com/@aiadvantage",
+  "wave": 7,
+  "selected_at": "2026-05-27",
+  "rationale": "Mix of long-form tutorials (how-to formats with screen-rec overlays + motion graphics), news roundups (heavy use of tier cards, callout pills, big-number splashes), and reviews/test videos. Plus 4 highest-engagement shorts to capture the channel's vertical-format motion language.",
+  "videos": [
+    {
+      "id": "kXK_C50MO2w",
+      "title": "How to Use Gemini Canvas in 2 Minutes (For Beginners)",
+      "duration_s": 175,
+      "format": "long",
+      "category": "tutorial-short",
+      "reason": "Compact 2-min how-to — likely a dense parade of UI screen-rec overlays + label callouts. Best ratio of patterns/second."
+    },
+    {
+      "id": "kG0RkK69NyA",
+      "title": "New ChatGPT Library Explained & More AI News You Can Use",
+      "duration_s": 789,
+      "format": "long",
+      "category": "news-roundup",
+      "reason": "News-You-Can-Use format — flagship Igor template. Lower-thirds, tier cards, headline pills."
+    },
+    {
+      "id": "8BKGfajOnlY",
+      "title": "Claude Opus 4.7 is AMAZING! Full Breakdown + Testing Results",
+      "duration_s": 593,
+      "format": "long",
+      "category": "review-breakdown",
+      "reason": "Benchmark bar charts, big-number splashes, side-by-side comparisons are typical here."
+    },
+    {
+      "id": "Q5GxIpzOxOI",
+      "title": "Nano Banana 2 is Here! Full Review & Testing Results",
+      "duration_s": 800,
+      "format": "long",
+      "category": "review-breakdown",
+      "reason": "Image-model review — should have image-grid reveal patterns and before/after comparisons."
+    },
+    {
+      "id": "aK3lAZ5hhm0",
+      "title": "How to Switch from ChatGPT to Gemini (Without Losing Anything!)",
+      "duration_s": 624,
+      "format": "long",
+      "category": "tutorial-howto",
+      "reason": "Switching-tutorial format — checklist reveals, side-by-side feature maps."
+    },
+    {
+      "id": "9Yhhwr0dyS4",
+      "title": "How to Get 10x Better Results with Google Gemini",
+      "duration_s": 494,
+      "format": "long",
+      "category": "tutorial-listicle",
+      "reason": "Listicle 'X tips' framing — numbered card transitions, big-text emphasis."
+    },
+    {
+      "id": "8TkCz3S85rA",
+      "title": "After 10,000 Hours of AI, I'd Only Teach You 3 Things",
+      "duration_s": 716,
+      "format": "long",
+      "category": "essay-listicle",
+      "reason": "Hook-heavy essay listicle — chapter cards, principle reveals, key-takeaway bumpers."
+    },
+    {
+      "id": "K0UwutA4utA",
+      "title": "What You Absolutely NEED to Know About AI in 2026",
+      "duration_s": 926,
+      "format": "long",
+      "category": "essay-trend",
+      "reason": "Trend essay — year/headline graphics, big text emphasis blocks, predictive callouts."
+    },
+    {
+      "id": "BRKYEhJpOzE",
+      "title": "Claude Really is the Best Free AI Now!",
+      "duration_s": null,
+      "format": "short",
+      "category": "vertical-claim",
+      "reason": "15k views — top short. Likely big-text vertical with caption overlay + product zoom."
+    },
+    {
+      "id": "3mTMPEGWRWA",
+      "title": "Claude Code's New /goal Function Explained",
+      "duration_s": null,
+      "format": "short",
+      "category": "vertical-howto",
+      "reason": "16k views — top short. Code/UI overlay with vertical callout pills."
+    },
+    {
+      "id": "Kon8rORVmBE",
+      "title": "Huge Upgrade for Claude Code!",
+      "duration_s": null,
+      "format": "short",
+      "category": "vertical-news",
+      "reason": "13k views. News-flash style vertical with motion graphic emphasis."
+    },
+    {
+      "id": "0uTEcSu5aAg",
+      "title": "They're Finally Solving AI Hallucinations!",
+      "duration_s": null,
+      "format": "short",
+      "category": "vertical-claim",
+      "reason": "12k views. Headline + benchmark short — different category than the others."
+    }
+  ]
+}

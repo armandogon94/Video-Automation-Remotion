@@ -1,0 +1,82 @@
+[
+  {
+    "id": "woGB2vr5wTg",
+    "title": "These 5 Infrastructure Giants Secretly Rule AI",
+    "duration": 1220,
+    "view_count": null,
+    "format": "longform",
+    "orientation": "16:9",
+    "reason": "Numbered breakdown (5 entries) — signals listicle/card animation. Infrastructure topic likely needs diagrams + company logos.",
+    "status": "analyzed"
+  },
+  {
+    "id": "FtCdYhspm7w",
+    "title": "I Broke Down Anthropic's $2.5 Billion Leak. Your Agent Is Missing 12 Critical Pieces.",
+    "duration": 1613,
+    "view_count": null,
+    "format": "longform",
+    "orientation": "16:9",
+    "reason": "Explicit '12 pieces' enumeration. Leak + breakdown verbs = high motion-graphic density expected.",
+    "status": "analyzed"
+  },
+  {
+    "id": "iUSdS-6uwr4",
+    "title": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+    "duration": 1956,
+    "view_count": null,
+    "format": "longform",
+    "orientation": "16:9",
+    "reason": "3-way hardware comparison. Should reveal his benchmark/spec-card patterns and side-by-side device chrome.",
+    "status": "analyzed"
+  },
+  {
+    "id": "9aIYhjeYxzM",
+    "title": "GPT-5.5 vs Claude vs Gemini: The Real Difference Nobody's Talking About",
+    "duration": 1954,
+    "view_count": null,
+    "format": "longform",
+    "orientation": "16:9",
+    "reason": "3-way model comparison — should reveal logo + caption + tier-list patterns specific to LLM coverage.",
+    "status": "skipped-resume-download-incomplete"
+  },
+  {
+    "id": "tJB_8mfRgCo",
+    "title": "Your Prompts Didn't Change. Opus 4.7 Did.",
+    "duration": 3105,
+    "view_count": null,
+    "format": "longform",
+    "orientation": "16:9",
+    "reason": "Longest video in feed (52 min) — flagship analysis. Highest production quality expected; will surface his deep-dive template grammar.",
+    "status": "not-picked-vote1-only-uses-8-picks"
+  },
+  {
+    "id": "oWIXee9h3nU",
+    "title": "Codex Just Valued A Random House In India. I Wasn't Ready.",
+    "duration": null,
+    "view_count": 21000,
+    "format": "shorts",
+    "orientation": "9:16",
+    "reason": "Top-viewed Short. Surprising hook signals editorial discipline + screen-rec reveal pattern.",
+    "status": "analyzed"
+  },
+  {
+    "id": "5RCsb9XMuIU",
+    "title": "The massive mistake in AI memory",
+    "duration": null,
+    "view_count": 20000,
+    "format": "shorts",
+    "orientation": "9:16",
+    "reason": "Second-highest Short. 'Mistake' headline pattern; likely demo + caption motion.",
+    "status": "analyzed"
+  },
+  {
+    "id": "eszYRrsIdHg",
+    "title": "This 30-cent database gives your AI infinite memory",
+    "duration": null,
+    "view_count": 19000,
+    "format": "shorts",
+    "orientation": "9:16",
+    "reason": "Technical hook + number ($0.30) — should reveal pricing-card / big-number Short pattern.",
+    "status": "analyzed"
+  }
+]

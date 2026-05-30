@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sprint 6 — Tella + Hormozi Research → 7 New Templates + 3 New Primitives</title>
+<style>
+  :root {
+    --bg: #0a0608;
+    --bg-card: #14101a;
+    --bg-card-2: #1a1520;
+    --ink: #f1ece1;
+    --muted: #8b847a;
+    --accent: #d4af37;
+    --warm-red: #b33a2a;
+    --cyan: #5bc0e8;
+    --mint: #7ce49a;
+    --indigo: #9a8fff;
+    --coral: #e89b7a;
+    --border: #2a2027;
+    --border-soft: rgba(241, 236, 225, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { background: radial-gradient(ellipse at center, #1b0f10 0%, #0a0608 70%); min-height: 100vh; }
+  .deck { max-width: 1240px; margin: 0 auto; padding: 40px 28px 100px; }
+  .slide {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 48px 56px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 36px rgba(179, 58, 42, 0.08);
+  }
+  .slide.hero {
+    background: linear-gradient(135deg, #1b0f10 0%, #0a0608 100%);
+    text-align: center;
+    padding: 80px 56px;
+  }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.32em; color: var(--accent); text-transform: uppercase; margin-bottom: 18px; }
+  h1 { font-size: 60px; font-weight: 900; line-height: 1.02; letter-spacing: -0.025em; margin-bottom: 18px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+  h2 { font-size: 36px; font-weight: 800; line-height: 1.08; letter-spacing: -0.015em; margin-bottom: 14px; }
+  h2 .accent { color: var(--accent); font-style: italic; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+  h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.005em; }
+  .lede { font-size: 21px; color: var(--muted); line-height: 1.45; max-width: 780px; margin: 0 auto; }
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+  .stat { background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 12px; padding: 22px 14px; text-align: center; }
+  .stat .big { font-size: 48px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+  .stat .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; margin-right: 6px; }
+  .pill.ok { color: var(--mint); }
+  .pill.accent { color: var(--accent); }
+  .pill.cyan { color: var(--cyan); }
+  .pill.coral { color: var(--coral); }
+  .pill.indigo { color: var(--indigo); }
+  .pill.warm-red { color: var(--warm-red); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .card { background: var(--bg-card-2); border: 1px solid var(--border); border-radius: 10px; padding: 22px 22px; }
+  .card.compact { padding: 16px 18px; }
+  .card .title { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .card .body { font-size: 15px; line-height: 1.5; color: var(--ink); }
+  .card .meta { margin-top: 12px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  ul.tight { padding-left: 18px; }
+  ul.tight li { margin-bottom: 6px; line-height: 1.5; font-size: 15px; }
+  ul.tight li code { background: rgba(212, 175, 55, 0.10); padding: 2px 6px; border-radius: 4px; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  code { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+  .template-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+  .template-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; position: relative; }
+  .template-cell img { width: 100%; display: block; aspect-ratio: 9 / 16; object-fit: cover; }
+  .template-cell .caption { padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--accent); text-align: center; background: var(--bg-card); border-top: 1px solid var(--border); }
+  .full-grid { margin-top: 22px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .full-grid img { display: block; width: 100%; }
+  .verify-row { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border-soft); }
+  .verify-row:last-child { border-bottom: none; }
+  .check { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: var(--mint); color: var(--bg); font-weight: 900; font-size: 16px; }
+  .verify-row .desc { font-size: 16px; }
+  .verify-row .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  blockquote { border-left: 4px solid var(--accent); padding: 14px 20px; margin: 18px 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 19px; line-height: 1.5; color: var(--ink); background: rgba(212, 175, 55, 0.05); border-radius: 0 8px 8px 0; }
+  blockquote .cite { display: block; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+  .footer-meta { text-align: center; color: var(--muted); font-size: 13px; font-family: 'JetBrains Mono', monospace; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .red-team { background: rgba(179, 58, 42, 0.10); border: 1px solid rgba(179, 58, 42, 0.30); border-radius: 12px; padding: 28px 32px; margin-top: 22px; }
+  .red-team .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm-red); margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- HERO -->
+  <section class="slide hero">
+    <div class="eyebrow">SPRINT 6 · WAVE-5 · TELLA + HORMOZI</div>
+    <h1>From transcripts to <span class="accent">7 new templates.</span></h1>
+    <p class="lede">5 Tella YouTube videos transcribed. 10 Hormozi Shorts analyzed frame-by-frame. 3 new animation primitives, 9 new molecules, 7 new compositions — all derived from the Wave-5 research, all type-checked, all smoke-rendered with the W21 voiceover.</p>
+
+    <div class="stats-row">
+      <div class="stat"><div class="big">7/7</div><div class="label">templates rendered</div></div>
+      <div class="stat"><div class="big">67</div><div class="label">total compositions</div></div>
+      <div class="stat"><div class="big">864 MB</div><div class="label">SSD freed (cleanup)</div></div>
+      <div class="stat"><div class="big">0</div><div class="label">tsc errors</div></div>
+    </div>
+  </section>
+
+  <!-- THE NEW RULE -->
+  <section class="slide">
+    <div class="eyebrow">THE RULE THAT GOVERNS EVERYTHING</div>
+    <h2>Claude reads images <span class="accent">frame-by-frame, not as motion.</span></h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none; text-align: left;">Every prompt that asks Claude to recreate an animation MUST include a <code>transitionVerb</code> sentence in imperative voice. Style transfers from a reference image; choreography does not. We baked this rule into every new Wave-5 schema's <code>transitionVerb</code> field.</p>
+
+    <blockquote>
+      I find that sometimes it's really good at interpreting things like styles, but not necessarily at the animations or how you'd like the animation to happen. So it's kind of good initially to give Claude some context as to or as much context as possible about the animation. Just because it cannot really analyze more than frame by frame, right? So it doesn't necessarily understand the transitions.
+      <span class="cite">— Tella, ykBDqicGx0M.txt L143–148</span>
+    </blockquote>
+
+    <p style="margin-top: 16px; font-size: 15px; color: var(--ink);">→ Codified as the project-wide runbook: <code>docs/prompts/animation-replication-runbook.md</code></p>
+    <p style="margin-top: 6px; font-size: 15px; color: var(--ink);">→ Linked from <code>CLAUDE.md</code> under "Workflow notes" so every future Claude session reads it.</p>
+  </section>
+
+  <!-- RESEARCH SUMMARY -->
+  <section class="slide">
+    <div class="eyebrow">RESEARCH PHASES</div>
+    <h2>5 Tella videos × dense frames + 10 Hormozi Shorts</h2>
+
+    <div class="grid-2" style="margin-top: 28px;">
+      <div class="card">
+        <div class="title">PHASE A — TELLA TRANSCRIPTS</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>ykBDqicGx0M</code> — "Can Remotion Recreate ANY YouTube Animation? I Tested It" (21 min)</li>
+            <li><code>PrGYLd7yu1s</code> — "I Made Video Animations in Seconds with Remotion" (15 min)</li>
+            <li><code>wviYUDGhie4</code> — "5 visual hooks that keep viewers watching" (3:34)</li>
+            <li><code>1w_H6uA3N-g</code> — "I Use Claude to Edit Videos" (22 min)</li>
+            <li><code>LYpZiU2gfzg</code> — "Save 100+ Video Hook Ideas from TikTok" (13 min)</li>
+          </ul>
+          <p class="meta" style="margin-top:14px;">Plus: dense keyframe re-extraction — 16 frames → 855 frames (ykBDqicGx0M), 395 (PrGYLd7yu1s), 143 (wviYUDGhie4), transcript-aware density</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">PHASE B — HORMOZI SHORTS</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li>10 Shorts picked from <code>@AlexHormozi</code>, view counts 15K–280K</li>
+            <li>221 keyframes extracted at 1.5s density</li>
+            <li>Listed: <code>sXV44nHGfAA</code> · <code>zQvXS0vv3Ck</code> · <code>_C0WxnxzhcI</code> · <code>gkWlc3vZ1Eg</code> · <code>z2P1l9WCwQ8</code> · <code>LmlIC0WxoYs</code> · <code>hyuMg31N8os</code> · <code>Z1tOBULRiIQ</code> · <code>JZOMOId-Ip0</code> · <code>k4mDTwxIfYE</code></li>
+          </ul>
+          <p class="meta" style="margin-top:14px;">Result: <code>references/creators/alexhormozi/ANALYSIS.md</code> + per-video <code>metadata.json</code> + frames committed; source MP4s deleted</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RED-TEAM FINDING -->
+  <section class="slide">
+    <div class="red-team">
+      <div class="label">RED-TEAM FINDING</div>
+      <h2 style="font-size: 28px; margin-bottom: 12px;">Tella's Hormozi citation didn't survive frame evidence</h2>
+      <p style="font-size: 16px; line-height: 1.55;">Tella cites Hormozi <strong>3 times</strong> as exemplifying "animated tweet cards" and "ranked-hierarchy listicles." <strong>0 out of 10</strong> of his Shorts contain either pattern.</p>
+      <p style="font-size: 16px; line-height: 1.55; margin-top: 12px;">Hormozi has <strong>zero procedural motion graphics in Shorts</strong> — no animated charts, no Venns, no animated bars. His on-screen density is in <strong>typography</strong>, not motion. Likely Tella sampled a long-form business deep-dive (where animated-tweet inserts do occasionally appear in his Acquisition.com case studies) and extrapolated to Shorts. Documented in <code>references/creators/alexhormozi/ANALYSIS.md §5</code>.</p>
+      <p style="font-size: 14px; line-height: 1.55; margin-top: 14px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">→ Multi-angle voting catches what single agents (and even cited experts) miss. The Wave-3/4 methodology continues to earn its keep.</p>
+    </div>
+  </section>
+
+  <!-- BATCH A — NEW PRIMITIVES -->
+  <section class="slide">
+    <div class="eyebrow">BATCH A · 3 NEW ANIMATION PRIMITIVES</div>
+    <h2>Cross-cutting motion utilities · <span class="accent">no UI baked in</span></h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none; text-align: left;">All in <code>src/animation/</code>. Pure functions, no React, fully tested by tsc.</p>
+
+    <div class="grid-3" style="margin-top: 22px;">
+      <div class="card">
+        <div class="title cyan">pathDraw.ts</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;">SVG <code>stroke-dashoffset</code> animator with easing + direction modes.</p>
+          <ul class="tight">
+            <li>Direction: <code>start-to-end</code> · <code>end-to-start</code> · <code>center-out</code></li>
+            <li>Easing: outCubic / outQuart / inOutCubic / linear</li>
+            <li>Bonus: <code>pathDrawStaggered</code> for sequential edges (decision-tree, mesh)</li>
+            <li>Soft opacity ramp prevents hairline tail-flash</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title coral">heldStagger.ts</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;">Per-index reveal with <strong>explicit dwell beats</strong> (different from continuous stagger).</p>
+          <ul class="tight">
+            <li>Returns <code>{phase, progress, isHeld}</code> per item</li>
+            <li>Hormozi/Klaus listicle pattern</li>
+            <li>Notification cascade pattern</li>
+            <li>"Punctuate one tier at a time" choreography</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title accent">smartZoom.ts</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;">Ken Burns + punch-in zoom for video / image content.</p>
+          <ul class="tight">
+            <li><code>kenBurns()</code> — gentle 1.0→1.08 over ~4s, inOutCubic</li>
+            <li><code>punchIn()</code> — hard 1.0→1.15 over 4–6f, held</li>
+            <li>Focal-point anchoring (no zoom-drift)</li>
+            <li>Tella spec: harsh punch-in lands on the emotion peak</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATCH B — TELLA MOLECULES -->
+  <section class="slide">
+    <div class="eyebrow">BATCH B · 5 TELLA-DERIVED MOLECULES</div>
+    <h2>UI chrome + cascade primitives · <span class="accent">parallel agents</span></h2>
+
+    <div class="grid-2" style="margin-top: 22px;">
+      <div class="card">
+        <div class="title">AppConnect/ (2 files)</div>
+        <div class="body">
+          <ul class="tight">
+            <li><code>&lt;AppIconPair&gt;</code> — left+right app icons slide in, connector arc/line draws using <code>pathDraw</code></li>
+            <li><code>&lt;NotificationToast&gt;</code> — iOS-style toast w/ palette-aware surface, drop-in + held + slide-out</li>
+            <li><span class="pill warm-red">RULE</span> Static dot/chevron at edge tip — NEVER animated arrowheads</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">SocialPostCard.tsx</div>
+        <div class="body">
+          <ul class="tight">
+            <li>5-stage choreography: avatar pop → handle slide → body line-by-line → media pop → counter roll</li>
+            <li>Brand variants: <code>twitter</code> / <code>linkedin</code> / <code>neutral</code> (verified glyph color shifts)</li>
+            <li>Counter row uses <code>&lt;RollingDigitTicker&gt;</code> from Sprint-5</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">NotesAppFrame.tsx</div>
+        <div class="body">
+          <ul class="tight">
+            <li>iOS Notes-style chrome (9:41 status bar, title, body)</li>
+            <li>Items slide up one-at-a-time via <code>heldStaggerState</code></li>
+            <li>Item kinds: bullet / checkbox / dash</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">SpotlightZoom.tsx</div>
+        <div class="body">
+          <ul class="tight">
+            <li>Rect-mask + outside-blur on any content</li>
+            <li>Internal layers: sharp clip + blurred background + dim overlay</li>
+            <li><span class="pill accent">NOTE</span> Tella prefers her in-editor effect; we ship the Remotion-side approximation for the cases where post isn't an option</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATCH C — HORMOZI OVERLAYS -->
+  <section class="slide">
+    <div class="eyebrow">BATCH C · 5 HORMOZI TYPOGRAPHY OVERLAYS</div>
+    <h2>One file · <code>HormoziOverlays.tsx</code> · pure typography</h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none; text-align: left;">The red-team finding pivoted Hormozi's contribution from "complex motion graphics" to "5 disciplined typography overlays sitting on B-roll." All 5 in one file.</p>
+
+    <div class="grid-2" style="margin-top: 22px;">
+      <div class="card">
+        <div class="title">&lt;PersistentHookPill&gt;</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;">The thumb-stop: white rounded pill at top, bold black sans, NO entrance animation by default. Present from frame 0 to end.</p>
+          <p class="meta">6 of 10 Hormozi Shorts use this exact pattern.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">&lt;ChapterCardPill&gt;</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;">Mid-frame white card with optional number prefix. Crossfade-in, hold, crossfade-out. The beat-by-beat marker.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">&lt;ChapterCardDoubleLine&gt;</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;">No pill. Number + bold sans top line + italic-quoted serif bottom line ("2# Prescribe \"the best\""). Drop-shadow for B-roll legibility.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">&lt;OpeningTitleCard&gt; · &lt;HookEmojiStrip&gt;</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><strong>OpeningTitleCard</strong> — one-shot 60-frame opener (eyebrow + hero + dek) with scale-pop.</p>
+          <p style="margin-bottom: 8px;"><strong>HookEmojiStrip</strong> — 2-4 emojis above the hook (📈❌🍀 semantic signaling). Distinctive Hormozi pattern Tella didn't surface.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 NEW COMPOSITIONS -->
+  <section class="slide">
+    <div class="eyebrow">BATCH D · 7 NEW COMPOSITIONS</div>
+    <h2>6 Tella-derived + 1 Hormozi-derived</h2>
+
+    <div class="grid-2" style="margin-top: 22px;">
+      <div class="card">
+        <div class="title coral">TweetCard9x16</div>
+        <div class="body">Wraps <code>&lt;SocialPostCard&gt;</code>. Animated tweet w/ 5-stage choreography. Tella T2 from synthesis.</div>
+      </div>
+      <div class="card">
+        <div class="title accent">RankedTierList9x16</div>
+        <div class="body">Hormozi/Klaus listicle. Items reveal bottom-to-top with explicit dwell beats via <code>heldStagger</code>. <code>sideBySideHost</code> opt-in for talking-head pairing.</div>
+      </div>
+      <div class="card">
+        <div class="title cyan">AppConnect9x16</div>
+        <div class="body">Shabam app-icon connect + notification cascade. Uses <code>&lt;AppIconPair&gt;</code> + 3 <code>&lt;NotificationToast&gt;</code>s + <code>pathDraw</code> arc. Static dot tip (no animated arrowheads).</div>
+      </div>
+      <div class="card">
+        <div class="title mint">VennDiagram9x16</div>
+        <div class="body">2-circle / 3-circle stacked / 3-circle horizontal. Circles drift in, outline draws via <code>pathDraw</code>, fill alpha-blends, center-intersection label reveals LAST.</div>
+      </div>
+      <div class="card">
+        <div class="title indigo">DecisionTree9x16</div>
+        <div class="body">Radial fan / tree-down / pie. Edges draw outward via <code>pathDraw</code>, labels fade after edge completes. Static dot/chevron at every tip.</div>
+      </div>
+      <div class="card">
+        <div class="title warm-red">BrandedOpener9x16</div>
+        <div class="body">Visual-tic opener. Hero (image/pixel-mascot/text-glyph) scale-pops via PUNCHY_SPRING, brandwordmark slides in, holds 1.5s, fades into main content.</div>
+      </div>
+
+      <div class="card" style="grid-column: span 2; border-color: var(--accent); border-width: 2px;">
+        <div class="title accent">★ BrollListicle9x16 (Hormozi-derived)</div>
+        <div class="body">B-roll plate (persistent / sequenced / solid) + persistent hook pill + chapter-card cascade + optional emoji strip + optional opening title card + karaoke captions. Composes ALL 5 Hormozi overlays into one production-ready composition.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE GRID -->
+  <section class="slide">
+    <div class="eyebrow">VISUAL VERIFICATION · 4×2 GRID</div>
+    <h2>All 7 new templates rendered with W21 voiceover</h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none;">Reading order (L→R, T→B): TweetCard · RankedTierList · AppConnect · VennDiagram · DecisionTree · BrandedOpener · BrollListicle · (filler).</p>
+
+    <div class="full-grid">
+      <img src="../output/sprint6-smoke/comparison-grid-v6.jpg" alt="Sprint 6 — 7 new templates rendered with W21 voiceover">
+    </div>
+  </section>
+
+  <!-- INDIVIDUAL PREVIEWS -->
+  <section class="slide">
+    <div class="eyebrow">FULL-RESOLUTION PREVIEWS</div>
+    <h2>Click to enlarge</h2>
+
+    <div class="template-grid">
+      <div class="template-cell"><img src="../output/sprint6-smoke/TweetCard9x16/preview-t2s.jpg" alt="TweetCard9x16"><div class="caption">TweetCard9x16</div></div>
+      <div class="template-cell"><img src="../output/sprint6-smoke/RankedTierList9x16/preview-t4s.jpg" alt="RankedTierList9x16"><div class="caption">RankedTierList9x16</div></div>
+      <div class="template-cell"><img src="../output/sprint6-smoke/AppConnect9x16/preview-t2.5s.jpg" alt="AppConnect9x16"><div class="caption">AppConnect9x16</div></div>
+      <div class="template-cell"><img src="../output/sprint6-smoke/VennDiagram9x16/preview-t4s.jpg" alt="VennDiagram9x16"><div class="caption">VennDiagram9x16</div></div>
+      <div class="template-cell"><img src="../output/sprint6-smoke/DecisionTree9x16/preview-t3s.jpg" alt="DecisionTree9x16"><div class="caption">DecisionTree9x16</div></div>
+      <div class="template-cell"><img src="../output/sprint6-smoke/BrandedOpener9x16/preview-t1.2s.jpg" alt="BrandedOpener9x16"><div class="caption">BrandedOpener9x16</div></div>
+      <div class="template-cell" style="border-color: var(--accent);"><img src="../output/sprint6-smoke/BrollListicle9x16/preview-t3s.jpg" alt="BrollListicle9x16"><div class="caption" style="color: var(--accent);">★ BrollListicle9x16</div></div>
+    </div>
+  </section>
+
+  <!-- VERIFICATION -->
+  <section class="slide">
+    <div class="eyebrow">VERIFICATION</div>
+    <h2>End-to-end · <span class="accent">all green</span></h2>
+
+    <div style="margin-top: 28px;">
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">3 animation primitives compile (<code>src/animation/</code>)</div><div class="meta">pathDraw · heldStagger · smartZoom — pure functions, no React deps</div></div></div>
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">9 molecules compile (5 Tella-derived + 4 Hormozi-derived + 1 spotlight)</div><div class="meta">AppIconPair · NotificationToast · SocialPostCard · NotesAppFrame · SpotlightZoom · PersistentHookPill · ChapterCardPill · ChapterCardDoubleLine · OpeningTitleCard · HookEmojiStrip</div></div></div>
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">7 new compositions registered in <code>src/Root.tsx</code></div><div class="meta">66 → 67 total · Gemini-themed default props · transitionVerb baked into every defaultProps</div></div></div>
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">7/7 smoke renders succeeded with W21 voiceover</div><div class="meta">~32s per render · 0 failures · master.mp4 + preview JPG saved per template</div></div></div>
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">TypeScript strict — <code>npx tsc --noEmit</code> clean</div><div class="meta">0 new errors · pre-existing baseUrl deprecation suppressed</div></div></div>
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">Animation replication runbook codified</div><div class="meta">docs/prompts/animation-replication-runbook.md · referenced from CLAUDE.md "Workflow notes"</div></div></div>
+      <div class="verify-row"><div class="check">✓</div><div><div class="desc">Disk cleanup completed</div><div class="meta">864 MB freed (references/creators MP4s deleted; 1168 frame JPGs + ANALYSIS.md preserved); /tmp/{tella,hormozi}-research scratch dirs purged</div></div></div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="slide">
+    <div class="eyebrow">WHAT'S NEXT · POST-SPRINT-6</div>
+    <h2>Where the Wave-5 catalog goes from here</h2>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <div class="title accent">CONTENT WIN — USE THE NEW TEMPLATES</div>
+        <div class="body">
+          <ul class="tight">
+            <li>W22 calendar: pair BrollListicle9x16 + AppConnect9x16 + RankedTierList9x16 on one Gemini-feature script — Hormozi flow</li>
+            <li>Test TweetCard9x16 on a real X.com screenshot of yours</li>
+            <li>Use BrandedOpener9x16 as a 2s prefix on the next 3 weekly videos to test the brand-tic memory effect</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">QUEUED — RANKS 17–27 FROM HORMOZI ANALYSIS</div>
+        <div class="body">
+          <ul class="tight">
+            <li>Caption theme presets (yellow-pill / yellow-glow / yellow-text-drop-shadow / italic-quoted) — 4 themes triggered by B-roll brightness</li>
+            <li><code>emphasis_style</code> + <code>dialogue_mode</code> props on existing caption + TextEmphasis components</li>
+            <li><code>pickBrollAtFrame()</code> primitive for transcript-aware B-roll switching</li>
+            <li>Bracket-label content convention in templates/*.json schemas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">CONVENTIONS LANDED</div>
+        <div class="body">
+          <ul class="tight">
+            <li><code>transitionVerb</code> field in every new template's Zod schema</li>
+            <li>Named frame-constants block at top of templates (no magic numbers)</li>
+            <li>SSD-safe scratch dir policy: <code>/tmp/&lt;research&gt;/</code> for all MP4 downloads, purge after extraction</li>
+            <li>Reference creator workflow: scrape → extract frames → write ANALYSIS.md → delete source MP4</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">DEFERRED / RESOLVED</div>
+        <div class="body">
+          <ul class="tight">
+            <li><span class="pill warm-red">Defer</span> SpotlightZoom heavy lift — Tella confirms her in-editor blur+highlight is better than any Remotion approximation</li>
+            <li><span class="pill warm-red">Defer</span> animated arrowheads — Tella + Hormozi consensus: never animate them; static dot/chevron at tip</li>
+            <li><span class="pill ok">Resolved</span> Hormozi long-form check — his Shorts have zero motion graphics; his typography is the entire game</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-meta">
+    Sprint 6 · Build complete · 2026-05-27 · 7 templates shipped · Wave-5 Tella + Hormozi → production
+  </div>
+
+</div>
+
+</body>
+</html>

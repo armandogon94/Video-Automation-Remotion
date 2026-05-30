@@ -1,0 +1,55 @@
+{
+  "creator_handle": "mreflow",
+  "analyzed_count": 4,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "JyWdgDcsmbk",
+      "title": "The REAL Story from NVIDIA GTC This Week!",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=JyWdgDcsmbk",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 15,
+      "clip_count": 0,
+      "has_metadata_json": false,
+      "notes": "frame-only, no clips"
+    },
+    {
+      "id": "PKKN5be_my0",
+      "title": "OpenAI Just Killed Sora",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=PKKN5be_my0",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 32,
+      "clip_count": 0,
+      "has_metadata_json": false,
+      "notes": "frame-only, no clips"
+    },
+    {
+      "id": "b6Ek6-E5V88",
+      "title": "ChatGPT Finance Is Freaking People Out",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=b6Ek6-E5V88",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 12,
+      "clip_count": 0,
+      "has_metadata_json": false,
+      "notes": "frame-only, no clips"
+    },
+    {
+      "id": "bQN-D8qeAgg",
+      "title": "Viral Post Embarrassingly Exposes AI Haters 💀",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=bQN-D8qeAgg",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 15,
+      "clip_count": 0,
+      "has_metadata_json": false,
+      "notes": "frame-only, no clips"
+    }
+  ]
+}

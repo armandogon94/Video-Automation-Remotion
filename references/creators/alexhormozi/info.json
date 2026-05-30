@@ -1,0 +1,67 @@
+{
+  "channel": "AlexHormozi",
+  "channel_url": "https://www.youtube.com/@AlexHormozi",
+  "scraped_date": "2026-05-27",
+  "selected_videos": [
+    {
+      "id": "z2P1l9WCwQ8",
+      "title": "Make Failure Unreasonable",
+      "views": 15000,
+      "reason": "B-roll listicle Short \u2014 bold hook caption + emoji sticker row + karaoke captions over walking footage. Clear hook+caption+icon stack pattern."
+    },
+    {
+      "id": "gkWlc3vZ1Eg",
+      "title": "Add A Minimum Price Tier 1",
+      "views": 96000,
+      "reason": "Studio Short with bracketed package labels '[B]' / '[A]' \u2014 explicit on-screen text labels for spoken options. Tier-naming style we want."
+    },
+    {
+      "id": "hyuMg31N8os",
+      "title": "The Levels Of Employees",
+      "views": 205000,
+      "reason": "Listicle Short with levels \u2014 most likely candidate for ranked-hierarchy visuals \u00e0 la Tella's T3."
+    },
+    {
+      "id": "_C0WxnxzhcI",
+      "title": "2 Ways To Grow A Business",
+      "views": 225000,
+      "reason": "Numbered listicle '2 Ways' \u2014 direct match for our ranked-tier composition reference."
+    },
+    {
+      "id": "sXV44nHGfAA",
+      "title": "6 Ways To Become Who You Want",
+      "views": 31000,
+      "reason": "Numbered listicle, 6 items \u2014 densest Hormozi listicle Short available."
+    },
+    {
+      "id": "zQvXS0vv3Ck",
+      "title": "4 Ways To Influence People",
+      "views": 27000,
+      "reason": "Numbered listicle, 4 items \u2014 text-grid-style enumeration."
+    },
+    {
+      "id": "LmlIC0WxoYs",
+      "title": "3 Steps To Make Money In The U.S. As A Foreigner",
+      "views": 151000,
+      "reason": "Numbered steps listicle, 3 items \u2014 high-view, step-by-step format."
+    },
+    {
+      "id": "Z1tOBULRiIQ",
+      "title": "There's Always 1 Constraint",
+      "views": 52000,
+      "reason": "Single-claim hook short \u2014 useful for big-number / big-text hook pattern."
+    },
+    {
+      "id": "JZOMOId-Ip0",
+      "title": "The Menu Upsell",
+      "views": 280000,
+      "reason": "Top-280K-view Short with conceptual diagram potential ('menu upsell' suggests visual structure)."
+    },
+    {
+      "id": "k4mDTwxIfYE",
+      "title": "Give 2 Options When You Close",
+      "views": 95000,
+      "reason": "Two-option decision short \u2014 possible binary-choice visual layout."
+    }
+  ]
+}

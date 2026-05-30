@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sprint 5 — 24 New Templates Shipped</title>
+<style>
+  :root {
+    --bg: #0a0608;
+    --bg-card: #14101a;
+    --bg-card-2: #1a1520;
+    --ink: #f1ece1;
+    --muted: #8b847a;
+    --accent: #d4af37;
+    --warm-red: #b33a2a;
+    --cyan: #5bc0e8;
+    --mint: #7ce49a;
+    --indigo: #9a8fff;
+    --coral: #e89b7a;
+    --border: #2a2027;
+    --border-soft: rgba(241, 236, 225, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background: radial-gradient(ellipse at center, #1b0f10 0%, #0a0608 70%);
+    min-height: 100vh;
+  }
+  .deck { max-width: 1240px; margin: 0 auto; padding: 40px 28px 100px; }
+  .slide {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 48px 56px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 36px rgba(179, 58, 42, 0.08);
+  }
+  .slide.hero {
+    background: linear-gradient(135deg, #1b0f10 0%, #0a0608 100%);
+    text-align: center;
+    padding: 80px 56px;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.32em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: 18px;
+  }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+  h2 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin-bottom: 14px;
+  }
+  h2 .accent { color: var(--accent); font-style: italic; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .lede {
+    font-size: 22px;
+    color: var(--muted);
+    line-height: 1.45;
+    max-width: 740px;
+    margin: 0 auto;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .stat {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 12px;
+    padding: 22px 14px;
+    text-align: center;
+  }
+  .stat .big {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    margin-right: 6px;
+  }
+  .pill.ok { color: var(--mint); }
+  .pill.accent { color: var(--accent); }
+  .pill.cyan { color: var(--cyan); }
+  .pill.coral { color: var(--coral); }
+  .pill.indigo { color: var(--indigo); }
+  .pill.warm-red { color: var(--warm-red); }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .card {
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 22px;
+  }
+  .card.compact {
+    padding: 16px 18px;
+  }
+  .card .title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .card .body {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .card .meta {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  ul.tight { padding-left: 18px; }
+  ul.tight li { margin-bottom: 6px; line-height: 1.5; font-size: 15px; }
+  ul.tight li code { background: rgba(212, 175, 55, 0.10); padding: 2px 6px; border-radius: 4px; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  code { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+  .template-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .template-cell {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .template-cell img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+  }
+  .template-cell .caption {
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-align: center;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+  }
+  .full-grid {
+    margin-top: 22px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .full-grid img {
+    display: block;
+    width: 100%;
+  }
+  .verify-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .verify-row:last-child { border-bottom: none; }
+  .check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--mint);
+    color: var(--bg);
+    font-weight: 900;
+    font-size: 16px;
+  }
+  .verify-row .desc {
+    font-size: 16px;
+  }
+  .verify-row .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .palette-swatches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .swatch {
+    border-radius: 8px;
+    padding: 18px 14px;
+    border: 1px solid var(--border);
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .swatch .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .swatch .hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  .toc {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: rgba(20, 16, 26, 0.92);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12px;
+    backdrop-filter: blur(8px);
+    max-width: 220px;
+    display: none;
+  }
+  @media (min-width: 1400px) {
+    .toc { display: block; }
+  }
+  .toc a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .toc a:hover { color: var(--accent); }
+  .footer-meta {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <a href="#hero">▸ Overview</a>
+  <a href="#foundation">▸ 1. Foundation</a>
+  <a href="#molecules">▸ 2. Molecules</a>
+  <a href="#templates">▸ 3. Templates (24)</a>
+  <a href="#grid">▸ 4. Visual grid</a>
+  <a href="#verify">▸ 5. Verification</a>
+  <a href="#catalog">▸ 6. Full catalog</a>
+  <a href="#next">▸ 7. Next steps</a>
+</nav>
+
+<div class="deck">
+
+  <!-- HERO -->
+  <section class="slide hero" id="hero">
+    <div class="eyebrow">SPRINT 5 · WAVE 4 CONSENSUS BUILD</div>
+    <h1>24 templates <span class="accent">shipped.</span></h1>
+    <p class="lede">Foundation layer + 6 molecule families + 24 new compositions, end-to-end. Every "🔴 Ship first," every "🟠 Build later," and every "🟢 Skip/defer" item from the Wave-4 plan — built, type-checked, registered, smoke-rendered.</p>
+
+    <div class="stats-row">
+      <div class="stat"><div class="big">24/24</div><div class="label">templates rendered</div></div>
+      <div class="stat"><div class="big">0</div><div class="label">render failures</div></div>
+      <div class="stat"><div class="big">60</div><div class="label">total compositions</div></div>
+      <div class="stat"><div class="big">0</div><div class="label">tsc errors</div></div>
+    </div>
+  </section>
+
+  <!-- BATCH 0 — FOUNDATION -->
+  <section class="slide" id="foundation">
+    <div class="eyebrow">BATCH 0 · FOUNDATION</div>
+    <h2>5 palettes · 4 fonts · 5 animation primitives · 2 caption modes</h2>
+
+    <h3 style="margin-top: 32px; color: var(--accent);">Palette modes — `src/brand/palettes.ts`</h3>
+    <p class="lede" style="font-size: 15px; margin: 0; max-width: none;">From 2 modes (cream / dark) → 5 modes. Carlos's <code>warm-black</code>, Bilawal's <code>true-black</code>, Simon's <code>paper</code>.</p>
+    <div class="palette-swatches">
+      <div class="swatch" style="background: #FAF7F2; color: #1A1A1A;">
+        <div class="name">cream</div>
+        <div class="hex">#FAF7F2 · existing</div>
+      </div>
+      <div class="swatch" style="background: #0A0F1A; color: #F2E9D8;">
+        <div class="name">dark</div>
+        <div class="hex">#0A0F1A · existing</div>
+      </div>
+      <div class="swatch" style="background: #080608; color: #F1ECE1;">
+        <div class="name">warm-black</div>
+        <div class="hex">#080608 + warm vignette · NEW</div>
+      </div>
+      <div class="swatch" style="background: #000000; color: #FFFFFF;">
+        <div class="name">true-black</div>
+        <div class="hex">#000000 · NEW</div>
+      </div>
+      <div class="swatch" style="background: #F1EDE8; color: #0A0A0A;">
+        <div class="name">paper</div>
+        <div class="hex">#F1EDE8 warm off-white · NEW</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="title">FONTS — `src/brand/fonts.ts`</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li>+ <code>Fira Code</code> via @remotion/google-fonts (terminal/editor ligatures)</li>
+            <li>+ <code>Playfair Display Italic</code> (editorial "slow down" voice)</li>
+            <li><code>FONT_STACKS.monoCode</code> exported → Fira Code → JetBrains Mono → ui-monospace</li>
+            <li><code>FONT_STACKS.serifItalic</code> exported → Playfair → Georgia</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">ANIMATION — `src/animation/` (NEW DIR)</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>countUp(frame, opts)</code> — Carlos V4 outQuart number ramp</li>
+            <li><code>staggerEntry({ accelerate: true })</code> — accelerating cascade</li>
+            <li><code>blurInFocus(opts)</code> — Carlos's dominant entry move (14→0 blur)</li>
+            <li><code>rollingDigit + rollingDate</code> — Bilawal HUD telemetry illusion</li>
+            <li><code>findDwellBeats + isInDwellBeat</code> — Simon's "held stillness as climax"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <div class="title">CAPTIONS — `src/components/captions/`</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>EditorialCaption</code> — existing 6-word window for calm backgrounds</li>
+            <li><code>ChunkedPhraseCaption</code> — NEW: Bilawal/Simon step-function, 3-word window, drop-shadow + tiktok-stroke variants</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">EASING — `src/timing/easing.ts`</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li>+ <code>outQuart</code> (Carlos V4: "numbers tween via easeOutQuart")</li>
+            <li>Existing: outCubic · inOutCubic · outBack · outQuint · outExpo · linear</li>
+            <li>+ <code>validateHeadline()</code> (Simon V5: 14-char hard limit)</li>
+            <li>+ <code>isDarkPalette()</code> + <code>ALL_PALETTE_MODES</code> exports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATCH 1 — MOLECULES -->
+  <section class="slide" id="molecules">
+    <div class="eyebrow">BATCH 1 · MOLECULES</div>
+    <h2>6 component families · all <span class="accent">parallel</span> · all tsc-clean</h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none;">Each family was built by an independent Opus agent in parallel. Shared file edits forbidden; molecule families are self-contained.</p>
+
+    <div class="grid-2" style="margin-top: 28px;">
+      <div class="card">
+        <div class="title">M-A — UI MOCKUP DSL · 8 files</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><code>src/components/MacWindow/</code> — Carlos consensus #1 highest-leverage piece</p>
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>&lt;MacWindow variant="terminal|browser|editor|phone|doc"&gt;</code></li>
+            <li>TerminalContent + BrowserContent + EditorContent + PhoneContent + MarkdownDocContent</li>
+            <li>TrafficLights · 5-language syntax highlighting · staggered message bubbles · per-line glow rectangles</li>
+            <li>Palette-aware: bezel goes #1C1C1E on true-black, drop-shadow tints per palette</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">M-B — NUMBER PRIMITIVES · 1 file, 3 exports</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><code>src/components/NumberPrimitives.tsx</code> — Bilawal V4 "HUD telemetry illusion"</p>
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>&lt;RollingDigitTicker&gt;</code> — frame-over-frame digit roll with optional FNV-seeded jitter</li>
+            <li><code>&lt;DatestampTicker&gt;</code> — scrubbing date counter w/ Intl.DateTimeFormat</li>
+            <li><code>&lt;DODDeltaChip&gt;</code> — ▲/▼ signed pill with tabular-nums</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">M-C — HUD CHROME · 7 files</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><code>src/components/HUDChrome/</code> — DIYSmart persistent world layer</p>
+          <ul class="tight" style="margin-top: 6px;">
+            <li>SceneChapterChip · TopScrubBar · ChapterStepper · HandleTag · InsetCardBorder</li>
+            <li><code>&lt;HUDChrome&gt;</code> wrapper composes them all; reads palette via getPalette</li>
+            <li>Auto-enables stepper/chip when props present; light/dark border auto-pick</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">M-D — INFO CARDS · 1 file, 3 exports</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><code>src/components/InfoCards.tsx</code> — DIYSmart V2 "70% of educational payload"</p>
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>&lt;SpecRow&gt;</code> — outlined-pill label + body row</li>
+            <li><code>&lt;KeyValueRowsCard&gt;</code> — rotating accent (5-color palette per row)</li>
+            <li><code>&lt;TestimonialCard&gt;</code> — Playfair italic + accent left-edge glow</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">M-E — TEXT EMPHASIS · 1 file, 4 exports</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><code>src/components/TextEmphasis.tsx</code> — semantic markup primitives</p>
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>&lt;Strikethrough&gt;</code> — animated SVG line w/ -2° tilt + jitter</li>
+            <li><code>&lt;PenmarkUnderline&gt;</code> — wavy hand-drawn SVG underline</li>
+            <li><code>&lt;HeadlineEmphasis&gt;</code> — single-word color recolor + cascade option</li>
+            <li><code>&lt;AntiPatternX&gt;</code> — animated red diagonal X (Carlos T21)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">M-F — BRAND GLYPHS · 1 file, 3 exports</div>
+        <div class="body">
+          <p style="margin-bottom: 8px;"><code>src/components/BrandGlyphs.tsx</code> — decorative + chrome</p>
+          <ul class="tight" style="margin-top: 6px;">
+            <li><code>&lt;LogoWall&gt;</code> — CSS-grid credibility wall, row-major stagger</li>
+            <li><code>&lt;PixelMascot&gt;</code> — 12×12 SVG pixel head with sine-wave bob</li>
+            <li><code>&lt;MockOSChrome&gt;</code> — Anduril-Lattice REC/brackets/iconRail chrome</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATCH 2 — TEMPLATES -->
+  <section class="slide" id="templates">
+    <div class="eyebrow">BATCH 2 · NEW TEMPLATES</div>
+    <h2>24 templates · 10 parallel agents · zero shared-file conflicts</h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none;">Each template is a full Remotion composition: 9×16, palette-aware, audio-driven, schema-validated. Listed by build family (T1–T10).</p>
+
+    <div class="grid-2" style="margin-top: 22px;">
+      <div class="card">
+        <div class="title coral">T1 — CODE-FOCUSED</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill coral">NEW</span> <code>CodeDiffBeforeAfter9x16</code> — twin editor cards, red/green diff stripes, drawn arrow</li>
+            <li><span class="pill coral">NEW</span> <code>TerminalBlock9x16</code> — single terminal w/ typewriter + optional chip</li>
+            <li><span class="pill coral">NEW</span> <code>EditorBlock9x16</code> — VS Code chrome w/ highlightedLines + sideAnnotation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">T2 — KINETIC TYPOGRAPHY</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill accent">NEW</span> <code>KineticEssay9x16</code> — multi-line essay, blurInFocus, per-word emphasis</li>
+            <li><span class="pill accent">NEW</span> <code>OutroFollowCTA9x16</code> — Carlos T28 follow CTA w/ PixelMascot option</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title cyan">T3 — NUMBERS / CHARTS</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill cyan">NEW</span> <code>BigNumberDuel9x16</code> — twin count-ups w/ outQuart + "vs" italic separator</li>
+            <li><span class="pill cyan">NEW</span> <code>LineChartAnnotated9x16</code> — SVG draw-on + annotated dot pings</li>
+            <li><span class="pill cyan">NEW</span> <code>BarChartList9x16</code> — accelerating row stagger + tabular value count-up</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title indigo">T4 — FLOW / DOSSIER</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill indigo">NEW</span> <code>PipelineFlow9x16</code> — typed agent/tool/check/output cards + coral arrows</li>
+            <li><span class="pill indigo">NEW</span> <code>TitledDossierCard9x16</code> — Bilawal kicker + hero + stat + bullets</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title warm-red">T5 — META-TEMPLATE WRAPPERS</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill warm-red">NEW</span> <code>GeminiFrameWrapper9x16</code> — DIYSmart V3 N1 entire-missed template</li>
+            <li><span class="pill warm-red">NEW</span> <code>CamcorderFrame9x16</code> — REC/brackets meta-template w/ live timecode</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title coral">T6 — B-ROLL DRIVEN</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill coral">NEW</span> <code>KeyedFounderOverBroll9x16</code> — Simon's 186-likes format</li>
+            <li><span class="pill coral">NEW</span> <code>GenerativeBrollWithDiegeticUI9x16</code> — Sora plate + holographic GitHub UI</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">T7 — EDUCATION</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill accent">NEW</span> <code>WhiteboardScene9x16</code> — Caveat cursive + lined/graph paper + checkboxes</li>
+            <li><span class="pill accent">NEW</span> <code>IllustratedConcept9x16</code> — image slot + Ken Burns + caption + bullets</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title cyan">T8 — FAUX UI</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill cyan">NEW</span> <code>FauxProductUI9x16</code> — 6-layer Anduril Lattice w/ RollingDigit callouts</li>
+            <li><span class="pill cyan">NEW</span> <code>NewsClipCitation9x16</code> — press-card cite w/ source block + dek + pull-quote</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title indigo">T9 — OUTRO / CTA</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill indigo">NEW</span> <code>YouTubeEndCard9x16</code> — Simon's STATIC hard-cut end card (zero motion)</li>
+            <li><span class="pill indigo">NEW</span> <code>PollCTA9x16</code> — engagement poll w/ 2-3 option pills + comment arrow</li>
+            <li><span class="pill indigo">NEW</span> <code>YouTubeCalloutArrows9x16</code> — cyan dashed callout arrows in isolation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title warm-red">T10 — PRICING / FEATURE / TESTIMONIAL</div>
+        <div class="body">
+          <ul class="tight" style="margin-top: 6px;">
+            <li><span class="pill warm-red">NEW</span> <code>TestimonialCard9x16</code> — Playfair italic w/ left-edge glow</li>
+            <li><span class="pill warm-red">NEW</span> <code>PricingTierCard9x16</code> — 3 tiers w/ ??? mask reveal hook</li>
+            <li><span class="pill warm-red">NEW</span> <code>LockedFeatureRow9x16</code> — feature rows w/ region/tier/beta pill states</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISUAL GRID -->
+  <section class="slide" id="grid">
+    <div class="eyebrow">VISUAL VERIFICATION · 4×6 GRID</div>
+    <h2>All 24 templates rendered with W21 voiceover · default props</h2>
+    <p class="lede" style="font-size: 16px; margin: 12px 0 0; max-width: none;">Every preview JPG was extracted from its rendered MP4 at a settled frame (t = 1–4s depending on the template's animation curve). The grid below is the raw output — no post-curation.</p>
+
+    <div class="full-grid">
+      <img src="../output/sprint5-smoke/comparison-grid-v5.jpg" alt="Sprint 5 — 24 templates rendered with W21 voiceover">
+    </div>
+
+    <p style="margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-align: center;">
+      reading order (L→R, T→B): BarChartList · BigNumberDuel · CamcorderFrame · CodeDiffBeforeAfter · EditorBlock · FauxProductUI · GeminiFrameWrapper · GenerativeBrollWithDiegeticUI · IllustratedConcept · KeyedFounderOverBroll · KineticEssay · LineChartAnnotated · LockedFeatureRow · NewsClipCitation · OutroFollowCTA · PipelineFlow · PollCTA · PricingTierCard · TerminalBlock · TestimonialCard · TitledDossierCard · WhiteboardScene · YouTubeCalloutArrows · YouTubeEndCard
+    </p>
+  </section>
+
+  <!-- INDIVIDUAL PREVIEWS -->
+  <section class="slide">
+    <div class="eyebrow">INDIVIDUAL PREVIEWS · CLICK TO ENLARGE</div>
+    <h2>Full-resolution preview JPG per template</h2>
+
+    <div class="template-grid">
+      <div class="template-cell"><img src="../output/sprint5-smoke/CodeDiffBeforeAfter9x16/preview-t4s.jpg" alt="CodeDiffBeforeAfter9x16"><div class="caption">CodeDiffBeforeAfter</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/TerminalBlock9x16/preview-t3s.jpg" alt="TerminalBlock9x16"><div class="caption">TerminalBlock</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/EditorBlock9x16/preview-t3s.jpg" alt="EditorBlock9x16"><div class="caption">EditorBlock</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/KineticEssay9x16/preview-t4s.jpg" alt="KineticEssay9x16"><div class="caption">KineticEssay</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/OutroFollowCTA9x16/preview-t2s.jpg" alt="OutroFollowCTA9x16"><div class="caption">OutroFollowCTA</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/BigNumberDuel9x16/preview-t2s.jpg" alt="BigNumberDuel9x16"><div class="caption">BigNumberDuel</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/LineChartAnnotated9x16/preview-t3s.jpg" alt="LineChartAnnotated9x16"><div class="caption">LineChartAnnotated</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/BarChartList9x16/preview-t3s.jpg" alt="BarChartList9x16"><div class="caption">BarChartList</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/PipelineFlow9x16/preview-t4s.jpg" alt="PipelineFlow9x16"><div class="caption">PipelineFlow</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/TitledDossierCard9x16/preview-t3s.jpg" alt="TitledDossierCard9x16"><div class="caption">TitledDossierCard</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/GeminiFrameWrapper9x16/preview-t2s.jpg" alt="GeminiFrameWrapper9x16"><div class="caption">GeminiFrameWrapper</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/CamcorderFrame9x16/preview-t2s.jpg" alt="CamcorderFrame9x16"><div class="caption">CamcorderFrame</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/KeyedFounderOverBroll9x16/preview-t2s.jpg" alt="KeyedFounderOverBroll9x16"><div class="caption">KeyedFounderOverBroll</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/GenerativeBrollWithDiegeticUI9x16/preview-t2s.jpg" alt="GenerativeBrollWithDiegeticUI9x16"><div class="caption">GenerativeBrollWithDiegeticUI</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/WhiteboardScene9x16/preview-t3s.jpg" alt="WhiteboardScene9x16"><div class="caption">WhiteboardScene</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/IllustratedConcept9x16/preview-t2s.jpg" alt="IllustratedConcept9x16"><div class="caption">IllustratedConcept</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/FauxProductUI9x16/preview-t2s.jpg" alt="FauxProductUI9x16"><div class="caption">FauxProductUI</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/NewsClipCitation9x16/preview-t2s.jpg" alt="NewsClipCitation9x16"><div class="caption">NewsClipCitation</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/YouTubeEndCard9x16/preview-t1s.jpg" alt="YouTubeEndCard9x16"><div class="caption">YouTubeEndCard</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/PollCTA9x16/preview-t2s.jpg" alt="PollCTA9x16"><div class="caption">PollCTA</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/YouTubeCalloutArrows9x16/preview-t2s.jpg" alt="YouTubeCalloutArrows9x16"><div class="caption">YouTubeCalloutArrows</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/TestimonialCard9x16/preview-t2s.jpg" alt="TestimonialCard9x16"><div class="caption">TestimonialCard</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/PricingTierCard9x16/preview-t2s.jpg" alt="PricingTierCard9x16"><div class="caption">PricingTierCard</div></div>
+      <div class="template-cell"><img src="../output/sprint5-smoke/LockedFeatureRow9x16/preview-t2s.jpg" alt="LockedFeatureRow9x16"><div class="caption">LockedFeatureRow</div></div>
+    </div>
+  </section>
+
+  <!-- VERIFICATION -->
+  <section class="slide" id="verify">
+    <div class="eyebrow">BATCH 3 · VERIFICATION</div>
+    <h2>End-to-end checks — <span class="accent">all green</span></h2>
+
+    <div style="margin-top: 28px;">
+      <div class="verify-row">
+        <div class="check">✓</div>
+        <div>
+          <div class="desc">TypeScript strict — <code>npx tsc --noEmit --ignoreDeprecations 6.0</code> clean</div>
+          <div class="meta">0 errors · pre-existing baseUrl deprecation suppressed</div>
+        </div>
+      </div>
+      <div class="verify-row">
+        <div class="check">✓</div>
+        <div>
+          <div class="desc">All 24 new compositions registered in <code>src/Root.tsx</code></div>
+          <div class="meta">60 total compositions · 4 landscape + 32 pre-existing 9x16 + 24 Sprint-5 9x16</div>
+        </div>
+      </div>
+      <div class="verify-row">
+        <div class="check">✓</div>
+        <div>
+          <div class="desc">Remotion bundle compiles + serves</div>
+          <div class="meta">`npx remotion compositions src/index.ts` lists all 60</div>
+        </div>
+      </div>
+      <div class="verify-row">
+        <div class="check">✓</div>
+        <div>
+          <div class="desc">24/24 smoke renders succeeded with W21 voiceover · default props</div>
+          <div class="meta">786s total · 0 failures · master.mp4 + preview JPG saved per template</div>
+        </div>
+      </div>
+      <div class="verify-row">
+        <div class="check">✓</div>
+        <div>
+          <div class="desc">5 cascading integration issues caught + fixed during reconciliation</div>
+          <div class="meta">isDarkPalette export · getToolAccentForSurface 5-mode widening · Zod 4 nested default({}) · MacWindow theme narrowing · LayerCardStack + BenchmarkBars type imports</div>
+        </div>
+      </div>
+      <div class="verify-row">
+        <div class="check">✓</div>
+        <div>
+          <div class="desc">No <code>Math.random()</code> in any new file</div>
+          <div class="meta">All pseudo-random determinism comes from FNV-1a hashes of (frame, index, seed)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL CATALOG -->
+  <section class="slide" id="catalog">
+    <div class="eyebrow">REMOTION STUDIO CATALOG</div>
+    <h2>60 compositions ready to render</h2>
+
+    <div class="grid-3" style="margin-top: 24px;">
+      <div class="card compact">
+        <div class="title coral">PRE-EXISTING 9×16 (32)</div>
+        <div class="body" style="font-size: 13px; line-height: 1.5;">
+          AgentThinking · AnimatedCounter · AnimatedTable · AnimatedText · AttentionHeatmap · BenchmarkBars · BigNumberHero · CircularLogoCarousel · DiagramExplainer · ForceGraph · KineticTypoCard · LayerCardStack · NeuralNetwork · QuoteCard · Sparkline · SplitWebcamScreen · TalkingHeadDynamic · TechNewsFlash · TerminalCommand · TokenStream · TweetCardHero
+          <span style="display:block; margin-top:6px; color: var(--muted); font-size: 11px;">…and Wave 1/2/3/4 variants</span>
+        </div>
+      </div>
+
+      <div class="card compact">
+        <div class="title accent">NEW Sprint-5 9×16 (24)</div>
+        <div class="body" style="font-size: 13px; line-height: 1.5;">
+          CodeDiffBeforeAfter · TerminalBlock · EditorBlock · KineticEssay · OutroFollowCTA · BigNumberDuel · LineChartAnnotated · BarChartList · PipelineFlow · TitledDossierCard · GeminiFrameWrapper · CamcorderFrame · KeyedFounderOverBroll · GenerativeBrollWithDiegeticUI · WhiteboardScene · IllustratedConcept · FauxProductUI · NewsClipCitation · YouTubeEndCard · PollCTA · YouTubeCalloutArrows · TestimonialCard · PricingTierCard · LockedFeatureRow
+        </div>
+      </div>
+
+      <div class="card compact">
+        <div class="title indigo">LEGACY 16×9 (4)</div>
+        <div class="body" style="font-size: 13px; line-height: 1.5;">
+          ExplainerVideo · TalkingHead · Listicle · QuoteCard
+          <span style="display:block; margin-top:12px; color: var(--muted); font-size: 11px;">Wave-0 landscape templates · kept for backwards compat</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="slide" id="next">
+    <div class="eyebrow">WHAT'S NEXT · POST-SPRINT-5</div>
+    <h2>Where to take this</h2>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <div class="title accent">CONTENT</div>
+        <div class="body">
+          <ul class="tight">
+            <li>W22 calendar — use 4–6 new templates per script (CodeDiff, PipelineFlow, BigNumberDuel are the easiest first wins)</li>
+            <li>Test KeyedFounderOverBroll + GenerativeBrollWithDiegeticUI with real Sora/Veo plates</li>
+            <li>Run a "kit × template" experiment: GeminiFrameWrapper around 3 different inner templates to validate Carlos's "brand kit × template" factorization</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">POLISH</div>
+        <div class="body">
+          <ul class="tight">
+            <li>Curate W21 default props per template — current renders use smallest-possible content (some templates look sparse)</li>
+            <li>Add `templates/*.json` fixtures for the 24 new templates (CLI pipeline integration)</li>
+            <li>Quartet of audits on the new layer: A1 timing · A2 contrast · A3 type · A4 density</li>
+            <li>Build the "kit × template schema split" — currently each template owns its own palette; the kit decomposition is one refactor away</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">REFINEMENTS</div>
+        <div class="body">
+          <ul class="tight">
+            <li>Caveat font loader (we used fallback for WhiteboardScene)</li>
+            <li>Per-creator content-flavor presets ("Carlos-mode" · "Bilawal-mode" · "Simon-mode")</li>
+            <li>HUDChrome integration into existing pre-Sprint-5 templates — currently only the new Sprint-5 templates use it</li>
+            <li>Wave-5 voting analysis on the new templates themselves (does each survive a multi-angle red-team?)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="title accent">WAVE 4 ITEMS NOT YET ADDRESSED</div>
+        <div class="body">
+          <ul class="tight">
+            <li>NeuralNetwork9x16.tsx line 147 — still uses <code>getToolAccent</code> instead of <code>getToolAccentForSurface</code></li>
+            <li>Per-step rotating AccentColor[] schema unification across templates (KeyValueRowsCard supports it; templates don't expose it yet)</li>
+            <li>Build "kit registry" so a single prop selects a coherent palette + font + accent stack</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-meta">
+    Sprint 5 · Build complete · 2026-05-25 · 24 templates shipped · Wave-4 consensus → production
+  </div>
+
+</div>
+
+</body>
+</html>

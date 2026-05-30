@@ -1,0 +1,43 @@
+{
+  "creator_handle": "estebandiba",
+  "analyzed_count": 3,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "DYmdaniIglx",
+      "title": "unknown",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/p/DYmdaniIglx/",
+      "date_first_analyzed": "2026-05-24",
+      "wave": "wave-6",
+      "frame_count": 8,
+      "clip_count": 0,
+      "has_metadata_json": true,
+      "notes": "frame-only, no clips"
+    },
+    {
+      "id": "DYnF97hiZpJ",
+      "title": "unknown",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/p/DYnGGatjMDq/",
+      "date_first_analyzed": "2026-05-24",
+      "wave": "wave-6",
+      "frame_count": 8,
+      "clip_count": 0,
+      "has_metadata_json": true,
+      "notes": "frame-only, no clips"
+    },
+    {
+      "id": "DYreLDtoRN-",
+      "title": "unknown",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/reel/DYreLDtoRN-/",
+      "date_first_analyzed": "2026-05-24",
+      "wave": "wave-6",
+      "frame_count": 8,
+      "clip_count": 0,
+      "has_metadata_json": true,
+      "notes": "frame-only, no clips"
+    }
+  ]
+}

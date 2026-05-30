@@ -1,0 +1,116 @@
+ 
+if there's one motion design technique
+that applies to everything its easing
+that's what gives objects their wobble
+their bounce and makes rigid lifeless
+animations like this feel more natural
+and real like this
+so let's look how we can liven up your
+motion graphics with easy
+[Music]
+let's jump into all the theory with a
+bit of animation 101 the basics of
+animation is having a property be it
+scale rotation position whatever and
+then setting keyframes for two values at
+two different points in our timeline as
+time progresses between those two
+keyframes the value changes in a process
+called interpolation if we graph how the
+value changes over time we can see
+creates a straight line but if we watch
+the actual animation it seems very rigid
+and unnatural
+that's because objects in the real world
+don't move like this weight inertia and
+resistance all influence everything
+around us and so to make our animations
+feel more natural and more real we need
+to emulate what these forces might do to
+our graph this is where the power of
+easing comes in easing changes how our
+value changes over time from simply
+being a straight line it warps it kinks
+it so that even though our value is
+still traveling between the two
+keyframes the results are a lot more
+dynamic when we talk about easing
+between keyframes we have three options
+we can either ease in which only affects
+our value as it moves from the first
+keyframe ease out which affects the
+value as we reach our second keyframe or
+ease in our which combines the two you
+can see how each changes our graph in a
+different way the second half of our
+terminology for easing usually
+references the shape of the graph there
+are many ways to describe this and most
+do the same sort of thing so
+understanding exactly where these names
+come from isn't all that important
+however there are three that are worth
+noting
+back is when the value goes slightly
+over the intended value and then returns
+you can see it gives a line a little bit
+of a hump elastic also known as
+overshoot is similar but has a decaying
+element to it it gives us nice wobble
+finally bounces pretty self explainatory
+think of a ball it's hitting that hard
+value and then bouncing away from it in
+a decaying fashion until settling on
+that final value now all of these can
+apply when easing in easing out or both
+practically there's a number of
+different ways to create easing in Adobe
+After Effects
+the easiest of these is right-clicking a
+keyframe going to keyframe assistant and
+selecting one of the easy ease options
+the second is using the graph editor and
+using it to manipulate the line between
+two keyframes there are two types of
+graphs a speed graph and a value graph
+you can use the speed graph to influence
+the speed of reaching particular values
+on your graph
+the value graph is where you can
+manipulate the actual values have a play
+around and see how changing values
+influences your animation
+another way of easing beyond easy ease
+and using the graph editor is by adding
+additional keyframes to end in some
+dynamics such as keyframing an overshoot
+or bounce animation yourself this method
+often gives you quicker control over the
+look of the resulting animation but
+isn't always as clean and as accurate as
+other ways finally applying expressions
+or scripts to your animation simplifies
+the easing process again dan ebbets
+motion script site has some great
+expressions for bounce and overshoot and
+goes into much more depth with how to
+use them the link to that page is in the
+description below additionally one
+plugin I use a lot of is mr. horses
+animation composer that gives access to
+a number of easing options for position
+rotation scale etc with simple controls
+that saves me a lot of time when I'm
+working on a project for a client saying
+all that though the best tool really is
+your own eye as you can tell what best
+suits your needs for your animation so
+that's an overview of easing the
+different types there are in the
+different ways you can apply them to
+your animations visit easing snap for a
+quick reference to the various types of
+easing there are the link is down below
+and leave a comment with your favorite
+one or ones that you use until next time
+my name is bench thanks for watching

@@ -1,0 +1,1736 @@
+{
+  "videoId": "1w_H6uA3N-g",
+  "language": "en",
+  "duration": 1316.89,
+  "segmentCount": 288,
+  "segments": [
+    {
+      "id": 1,
+      "start": 0.0,
+      "end": 3.28,
+      "text": "Some people are predicting that the future of video editing is going to be"
+    },
+    {
+      "id": 2,
+      "start": 3.28,
+      "end": 7.92,
+      "text": "agintic. What that means is that we, people, won't be editing our video, but AI"
+    },
+    {
+      "id": 3,
+      "start": 7.92,
+      "end": 11.44,
+      "text": "tools like cloud will do everything from cutting out silences to adding"
+    },
+    {
+      "id": 4,
+      "start": 11.44,
+      "end": 15.92,
+      "text": "transitions to adding cool zooms, B-roll, etc. The thing is, that future is"
+    },
+    {
+      "id": 5,
+      "start": 15.92,
+      "end": 19.76,
+      "text": "already here. Just last week I went viral on Twitter by sharing a clipping"
+    },
+    {
+      "id": 6,
+      "start": 19.76,
+      "end": 23.6,
+      "text": "tool that turns long-form content into short-form content. I made that in an"
+    },
+    {
+      "id": 7,
+      "start": 23.6,
+      "end": 27.36,
+      "text": "hour using cloud. My video on remotion where you can use cloud to"
+    },
+    {
+      "id": 8,
+      "start": 27.36,
+      "end": 31.12,
+      "text": "generate motion graphics and you no longer need motion graphic skills to add"
+    },
+    {
+      "id": 9,
+      "start": 31.12,
+      "end": 35.68,
+      "text": "to your videos is now at 20,000 views. And some of my favorite creators like Renee"
+    },
+    {
+      "id": 10,
+      "start": 35.68,
+      "end": 39.76,
+      "text": "are already editing their YouTube videos using cloud. Renee is actually the one"
+    },
+    {
+      "id": 11,
+      "start": 39.76,
+      "end": 43.52,
+      "text": "who put me on to using cloud for video editing. I've since personalized my"
+    },
+    {
+      "id": 12,
+      "start": 43.52,
+      "end": 47.04,
+      "text": "workflow a little bit, but credits do where it's due. In this video I'm"
+    },
+    {
+      "id": 13,
+      "start": 47.04,
+      "end": 50.88,
+      "text": "sharing my end-to-end workflow using cloud to edit my videos. I'll go over"
+    },
+    {
+      "id": 14,
+      "start": 50.88,
+      "end": 55.84,
+      "text": "how it does things like cutting silences, ums and as. It'll find places to"
+    },
+    {
+      "id": 15,
+      "start": 55.92,
+      "end": 61.2,
+      "text": "add b-roll as well as generate said b-roll either using tools like c-dance or"
+    },
+    {
+      "id": 16,
+      "start": 61.2,
+      "end": 64.8,
+      "text": "in our case, remotion. We're going to create motion graphics. I'll show you how you"
+    },
+    {
+      "id": 17,
+      "start": 64.8,
+      "end": 69.2,
+      "text": "can easily add photos, sounds, etc. without going into your editor and"
+    },
+    {
+      "id": 18,
+      "start": 69.2,
+      "end": 72.8,
+      "text": "actually finding the spots to add them. And I'll hint at how you can turn"
+    },
+    {
+      "id": 19,
+      "start": 72.8,
+      "end": 76.4,
+      "text": "longer-form content into social short-form content. You'll also learn"
+    },
+    {
+      "id": 20,
+      "start": 76.4,
+      "end": 80.64,
+      "text": "how in this age of agentic editing you can avoid all of your videos"
+    },
+    {
+      "id": 21,
+      "start": 80.64,
+      "end": 84.24,
+      "text": "looking the same as other people's videos by making sure that you use"
+    },
+    {
+      "id": 22,
+      "start": 84.24,
+      "end": 88.16,
+      "text": "sounds that only you know or memes that are really niche or"
+    },
+    {
+      "id": 23,
+      "start": 88.16,
+      "end": 90.72,
+      "text": "or really specific references. Let's get into the workflow."
+    },
+    {
+      "id": 24,
+      "start": 90.72,
+      "end": 96.24,
+      "text": "Okay, step one of my video editing process is making a rough cut, a big cut,"
+    },
+    {
+      "id": 25,
+      "start": 96.24,
+      "end": 101.76,
+      "text": "to remove any silences, repetitions, mistakes, filler words, etc. I created a"
+    },
+    {
+      "id": 26,
+      "start": 101.76,
+      "end": 105.6,
+      "text": "skill for this that you can give to cloud or codex, whatever you're using."
+    },
+    {
+      "id": 27,
+      "start": 105.6,
+      "end": 109.44,
+      "text": "It removes all silences, etc. and makes a cut while preserving"
+    },
+    {
+      "id": 28,
+      "start": 109.44,
+      "end": 112.8,
+      "text": "laughter for comedic effect. So I'm going to show you how"
+    },
+    {
+      "id": 29,
+      "start": 112.8,
+      "end": 116.8,
+      "text": "to use this skill in cloud. We're just going to open cloud and then we're going"
+    },
+    {
+      "id": 30,
+      "start": 116.8,
+      "end": 120.96,
+      "text": "to go cut video. So just to install this, if you haven't"
+    },
+    {
+      "id": 31,
+      "start": 120.96,
+      "end": 125.68,
+      "text": "done so already, just grab the link to the skill and give it to cloud and say"
+    },
+    {
+      "id": 32,
+      "start": 125.68,
+      "end": 128.48,
+      "text": "install this skill and then you're going to probably have to restart your"
+    },
+    {
+      "id": 33,
+      "start": 128.48,
+      "end": 132.4,
+      "text": "terminal. So here we have cut video and then what we need is obviously a"
+    },
+    {
+      "id": 34,
+      "start": 132.4,
+      "end": 136.64,
+      "text": "source file or raw recording. This is a recording with my dad."
+    },
+    {
+      "id": 35,
+      "start": 136.64,
+      "end": 140.64,
+      "text": "It's seven and a half minutes long and as you can see it hasn't been"
+    },
+    {
+      "id": 36,
+      "start": 140.64,
+      "end": 144.88,
+      "text": "cut at all. So I'm going to give it that and then"
+    },
+    {
+      "id": 37,
+      "start": 144.88,
+      "end": 149.12,
+      "text": "we're going to wait for the output. If you don't like this aggressive"
+    },
+    {
+      "id": 38,
+      "start": 149.12,
+      "end": 153.2,
+      "text": "cut, I tend to cut all of the silences out and leave very little space just"
+    },
+    {
+      "id": 39,
+      "start": 153.2,
+      "end": 157.44,
+      "text": "because I want my videos to be engaging to watch, then you can just prompt it"
+    },
+    {
+      "id": 40,
+      "start": 157.44,
+      "end": 160.8,
+      "text": "and do this differently to match your editing style."
+    },
+    {
+      "id": 41,
+      "start": 160.8,
+      "end": 164.16,
+      "text": "Or what I did to create this skill is I actually gave it a reference video of"
+    },
+    {
+      "id": 42,
+      "start": 164.16,
+      "end": 168.56,
+      "text": "mine initially so it knows how I manually edit my videos. So that might"
+    },
+    {
+      "id": 43,
+      "start": 168.56,
+      "end": 172.88,
+      "text": "be an idea for you to customize it to your editing style. Just so you know what's"
+    },
+    {
+      "id": 44,
+      "start": 172.88,
+      "end": 176.8,
+      "text": "going on in the background, it's easier to edit and then it uses tools like"
+    },
+    {
+      "id": 45,
+      "start": 176.8,
+      "end": 180.96,
+      "text": "whisper to analyze the transcript as well as ffmpeg to look at the frames"
+    },
+    {
+      "id": 46,
+      "start": 180.96,
+      "end": 184.56,
+      "text": "in the video and then it's going to decide what to cut"
+    },
+    {
+      "id": 47,
+      "start": 184.56,
+      "end": 188.88,
+      "text": "out. Just as a time estimate, there's lucky days and unlucky days with Claude"
+    },
+    {
+      "id": 48,
+      "start": 188.88,
+      "end": 192.4,
+      "text": "but it takes a few minutes to make these cuts especially if you're asking"
+    },
+    {
+      "id": 49,
+      "start": 192.4,
+      "end": 195.6,
+      "text": "for a lot of cuts. So this is a seven minute video"
+    },
+    {
+      "id": 50,
+      "start": 195.68,
+      "end": 199.92,
+      "text": "and it is already running for three minutes but again this means you won't"
+    },
+    {
+      "id": 51,
+      "start": 199.92,
+      "end": 203.76,
+      "text": "have to manually touch a video editor ever again"
+    },
+    {
+      "id": 52,
+      "start": 203.76,
+      "end": 207.2,
+      "text": "which I think is great especially if you build agents around this you can just"
+    },
+    {
+      "id": 53,
+      "start": 207.2,
+      "end": 210.8,
+      "text": "give your raw cuts and give it instructions on how to cut this"
+    },
+    {
+      "id": 54,
+      "start": 210.8,
+      "end": 214.32,
+      "text": "and it'll do it in the background while you do other work. All right it has"
+    },
+    {
+      "id": 55,
+      "start": 214.32,
+      "end": 218.16,
+      "text": "outed a video and it reduced it by a minute and a half."
+    },
+    {
+      "id": 56,
+      "start": 218.16,
+      "end": 221.44,
+      "text": "Let's watch some of this to see how well it did. Number one we're gonna guess"
+    },
+    {
+      "id": 57,
+      "start": 221.44,
+      "end": 226.32,
+      "text": "if a photo is AI or real. Yes, show me the picture. It's a fake, it's AI."
+    },
+    {
+      "id": 58,
+      "start": 226.32,
+      "end": 230.96,
+      "text": "This is a picture. It's real? Okay. Remember what you talked about yesterday?"
+    },
+    {
+      "id": 59,
+      "start": 230.96,
+      "end": 235.04,
+      "text": "Cool so I think it did a good job of cutting things out. I can see that in"
+    },
+    {
+      "id": 60,
+      "start": 235.04,
+      "end": 239.2,
+      "text": "the beginning I mean I was speaking as I was getting the camera set up"
+    },
+    {
+      "id": 61,
+      "start": 239.2,
+      "end": 241.68,
+      "text": "so you could also tell it to get rid of that"
+    },
+    {
+      "id": 62,
+      "start": 241.68,
+      "end": 246.32,
+      "text": "point. It's going to tell it to cut out the... So again it looks at transcript"
+    },
+    {
+      "id": 63,
+      "start": 246.32,
+      "end": 249.44,
+      "text": "so it assumes that when you're speaking you might want to add that"
+    },
+    {
+      "id": 64,
+      "start": 249.44,
+      "end": 252.8,
+      "text": "in there to be honest depending on the style of the video I would want to keep"
+    },
+    {
+      "id": 65,
+      "start": 252.8,
+      "end": 255.84,
+      "text": "it in there. So you see here it's saying check out the lights that's good"
+    },
+    {
+      "id": 66,
+      "start": 255.84,
+      "end": 259.44,
+      "text": "so it's going to drop that part where I say checking the lights and I think"
+    },
+    {
+      "id": 67,
+      "start": 259.44,
+      "end": 262.64,
+      "text": "it picks up on that well. Let's check if it cut it out."
+    },
+    {
+      "id": 68,
+      "start": 262.64,
+      "end": 266.24,
+      "text": "Okay so we're going to speak in this little mic. Yeah great so it cut it"
+    },
+    {
+      "id": 69,
+      "start": 266.24,
+      "end": 268.96,
+      "text": "out just based on a prompt which is kind of crazy."
+    },
+    {
+      "id": 70,
+      "start": 268.96,
+      "end": 272.88,
+      "text": "Now that's step one of our editing process so you can see this is an"
+    },
+    {
+      "id": 71,
+      "start": 272.88,
+      "end": 276.32,
+      "text": "interview with my dad and you may have noticed that we're"
+    },
+    {
+      "id": 72,
+      "start": 276.32,
+      "end": 280.88,
+      "text": "showing something on screen so I want to overlay whatever I'm showing him on"
+    },
+    {
+      "id": 73,
+      "start": 280.88,
+      "end": 283.36,
+      "text": "screen. He's doing an AI guessing game basically so"
+    },
+    {
+      "id": 74,
+      "start": 283.36,
+      "end": 288.16,
+      "text": "I'll show you what this looks like in the video that I already edited here"
+    },
+    {
+      "id": 75,
+      "start": 288.16,
+      "end": 291.92,
+      "text": "so I'm just going to play that and you can see that he's looking at these"
+    },
+    {
+      "id": 76,
+      "start": 291.92,
+      "end": 294.64,
+      "text": "photos and guessing whether or not they're AI."
+    },
+    {
+      "id": 77,
+      "start": 294.64,
+      "end": 297.76,
+      "text": "I kind of want to give Claude the slide deck where I have all of these"
+    },
+    {
+      "id": 78,
+      "start": 297.76,
+      "end": 301.76,
+      "text": "photos just because I'm a little bit lazy. So here is my quiz that I made"
+    },
+    {
+      "id": 79,
+      "start": 301.76,
+      "end": 304.96,
+      "text": "for my dad. I'm just going to share this and make it accessible"
+    },
+    {
+      "id": 80,
+      "start": 304.96,
+      "end": 309.36,
+      "text": "for everyone and so I'm going to tell Claude extract"
+    },
+    {
+      "id": 81,
+      "start": 309.36,
+      "end": 314.64,
+      "text": "all of the images in this slide. So I'm saying that it should put it in my"
+    },
+    {
+      "id": 82,
+      "start": 314.64,
+      "end": 318.56,
+      "text": "assets folder. I have an assets folder where I save things like"
+    },
+    {
+      "id": 83,
+      "start": 318.56,
+      "end": 323.76,
+      "text": "screenshots or yeah funny photos that I want to use in"
+    },
+    {
+      "id": 84,
+      "start": 323.76,
+      "end": 327.44,
+      "text": "videos as well as videos or sounds that I"
+    },
+    {
+      "id": 85,
+      "start": 327.44,
+      "end": 331.6,
+      "text": "can give Claude while I'm editing. Funnily enough I just created a slack"
+    },
+    {
+      "id": 86,
+      "start": 331.6,
+      "end": 335.44,
+      "text": "bot where I just drop any screenshot into and then it"
+    },
+    {
+      "id": 87,
+      "start": 335.44,
+      "end": 340.32,
+      "text": "saves it to that assets folder. So this way whenever I'm working on a project"
+    },
+    {
+      "id": 88,
+      "start": 340.32,
+      "end": 344.88,
+      "text": "and I see a fun screenshot or a stat or anything that I need for a video"
+    },
+    {
+      "id": 89,
+      "start": 344.88,
+      "end": 348.0,
+      "text": "project I save it to my finder and then Claude can"
+    },
+    {
+      "id": 90,
+      "start": 348.0,
+      "end": 351.04,
+      "text": "easily access that. I forgot to give it my google slide"
+    },
+    {
+      "id": 91,
+      "start": 351.04,
+      "end": 354.48,
+      "text": "link so I'm going to do that now. Right so here we can see that it"
+    },
+    {
+      "id": 92,
+      "start": 354.48,
+      "end": 358.32,
+      "text": "created a folder called projects. I'm going to move that to projects"
+    },
+    {
+      "id": 93,
+      "start": 358.32,
+      "end": 363.68,
+      "text": "soon but we'll see when we open this we have some PDFs and it's probably going"
+    },
+    {
+      "id": 94,
+      "start": 363.68,
+      "end": 367.44,
+      "text": "to extract the photos from that PDF and cut them."
+    },
+    {
+      "id": 95,
+      "start": 367.44,
+      "end": 371.2,
+      "text": "And then we'll see that we can magically overlay all of these photos at the"
+    },
+    {
+      "id": 96,
+      "start": 371.2,
+      "end": 374.8,
+      "text": "exact right timestamps. Now this process is a bit longer than it"
+    },
+    {
+      "id": 97,
+      "start": 374.8,
+      "end": 378.64,
+      "text": "would have been in the beginning because as I was editing this video manually"
+    },
+    {
+      "id": 98,
+      "start": 378.64,
+      "end": 381.92,
+      "text": "I was saving all of these photos to my computer. I just wanted to show you"
+    },
+    {
+      "id": 99,
+      "start": 381.92,
+      "end": 385.44,
+      "text": "that you can literally give it any format a PDF or anything"
+    },
+    {
+      "id": 100,
+      "start": 385.44,
+      "end": 389.44,
+      "text": "else and it can extract photos for you to use as well. So you can do this with"
+    },
+    {
+      "id": 101,
+      "start": 389.44,
+      "end": 393.68,
+      "text": "logos with anything you want. So here we have the raw"
+    },
+    {
+      "id": 102,
+      "start": 393.68,
+      "end": 397.36,
+      "text": "and it's outputted that. I wanted to get rid of the"
+    },
+    {
+      "id": 103,
+      "start": 397.36,
+      "end": 400.08,
+      "text": "white padding so I'm going to just ask it to do that."
+    },
+    {
+      "id": 104,
+      "start": 400.08,
+      "end": 404.32,
+      "text": "So we can see it also recognizes what's on the slide so it obviously took"
+    },
+    {
+      "id": 105,
+      "start": 404.32,
+      "end": 407.84,
+      "text": "all of the slides out of the PDF but it sees that not every slide"
+    },
+    {
+      "id": 106,
+      "start": 407.84,
+      "end": 411.52,
+      "text": "contains a photo so hopefully it's just going to grab the photo"
+    },
+    {
+      "id": 107,
+      "start": 411.52,
+      "end": 416.0,
+      "text": "ones. All right live we're seeing that it's cropping all of these images"
+    },
+    {
+      "id": 108,
+      "start": 416.0,
+      "end": 419.52,
+      "text": "so that saved me a lot of time finding these images again. Great and now we're"
+    },
+    {
+      "id": 109,
+      "start": 419.52,
+      "end": 423.92,
+      "text": "going to tell it to overlay the image for maybe a second or"
+    },
+    {
+      "id": 110,
+      "start": 423.92,
+      "end": 427.44,
+      "text": "three, two or three right before my dad needs to guess what"
+    },
+    {
+      "id": 111,
+      "start": 427.44,
+      "end": 430.16,
+      "text": "the image is but I just want to show you that step two of"
+    },
+    {
+      "id": 112,
+      "start": 430.16,
+      "end": 432.8,
+      "text": "overlaying images is very much possible"
+    },
+    {
+      "id": 113,
+      "start": 432.8,
+      "end": 436.64,
+      "text": "with cloud editing without doing any manual work. We can see here that it's"
+    },
+    {
+      "id": 114,
+      "start": 436.64,
+      "end": 440.16,
+      "text": "mapping the 20 photo moments slides one to 20"
+    },
+    {
+      "id": 115,
+      "start": 440.16,
+      "end": 446.0,
+      "text": "to when my dad is doing the guessing. So let's take a look at these overlays"
+    },
+    {
+      "id": 116,
+      "start": 446.0,
+      "end": 449.76,
+      "text": "where the game starts. Number one we're going to guess if a photo"
+    },
+    {
+      "id": 117,
+      "start": 449.76,
+      "end": 456.72,
+      "text": "is AI or real right? Yes show me the picture it's a fake it's AI"
+    },
+    {
+      "id": 118,
+      "start": 456.72,
+      "end": 460.4,
+      "text": "this is a picture yeah it's real okay it's AI"
+    },
+    {
+      "id": 119,
+      "start": 460.4,
+      "end": 464.08,
+      "text": "okay remember what we talked about yesterday. Okay so here it looked at"
+    },
+    {
+      "id": 120,
+      "start": 464.08,
+      "end": 467.68,
+      "text": "the transcript and mistakenly added an overlay but that's an easy fix we"
+    },
+    {
+      "id": 121,
+      "start": 467.68,
+      "end": 472.16,
+      "text": "just need to tell it to move that one. This is"
+    },
+    {
+      "id": 122,
+      "start": 472.16,
+      "end": 476.0,
+      "text": "I think AI too but it could be real because it existed."
+    },
+    {
+      "id": 123,
+      "start": 476.0,
+      "end": 479.84,
+      "text": "You can see here that it actually overlaid that one at the right moment so"
+    },
+    {
+      "id": 124,
+      "start": 479.84,
+      "end": 483.76,
+      "text": "it did well for the majority of these I looked at the video and for anyone's"
+    },
+    {
+      "id": 125,
+      "start": 483.76,
+      "end": 486.4,
+      "text": "that are not aligned well or like come at the wrong"
+    },
+    {
+      "id": 126,
+      "start": 486.4,
+      "end": 489.36,
+      "text": "moment you could just say it should move that but that should show you"
+    },
+    {
+      "id": 127,
+      "start": 489.36,
+      "end": 493.28,
+      "text": "that you can add any image to a specific timestamp so even if you"
+    },
+    {
+      "id": 128,
+      "start": 493.28,
+      "end": 497.28,
+      "text": "are going through your video like this no longer in an editor you say hey"
+    },
+    {
+      "id": 129,
+      "start": 497.28,
+      "end": 503.04,
+      "text": "at minute 156 I want to add this image and then you just refer to your assets"
+    },
+    {
+      "id": 130,
+      "start": 503.04,
+      "end": 507.76,
+      "text": "library and it's going to add that image. So my third step in this case would be"
+    },
+    {
+      "id": 131,
+      "start": 507.76,
+      "end": 511.36,
+      "text": "to add sound effects so I'm just going to show you how I'm going to use the"
+    },
+    {
+      "id": 132,
+      "start": 511.36,
+      "end": 515.12,
+      "text": "Duolingo correct sound to add to my video whenever my dad gets"
+    },
+    {
+      "id": 133,
+      "start": 515.12,
+      "end": 518.48,
+      "text": "something correct and then I'll do the wrong sound if he gets it"
+    },
+    {
+      "id": 134,
+      "start": 518.48,
+      "end": 520.88,
+      "text": "incorrect and I'm going to show you exactly how I"
+    },
+    {
+      "id": 135,
+      "start": 520.88,
+      "end": 525.76,
+      "text": "save a sound effect from YouTube I give it to my slack bot and then it"
+    },
+    {
+      "id": 136,
+      "start": 525.76,
+      "end": 529.68,
+      "text": "saves it to my sounds folder so I'll only have to save this once in my life"
+    },
+    {
+      "id": 137,
+      "start": 529.68,
+      "end": 534.0,
+      "text": "my slack bot recognizes what it is so it's going to say it's the Duolingo sound"
+    },
+    {
+      "id": 138,
+      "start": 534.0,
+      "end": 537.28,
+      "text": "and then I'm always going to be able to refer to it all right so I'm going to"
+    },
+    {
+      "id": 139,
+      "start": 537.28,
+      "end": 541.84,
+      "text": "go to my slack bot and I'm going to copy paste the Duolingo sound effect"
+    },
+    {
+      "id": 140,
+      "start": 541.84,
+      "end": 545.2,
+      "text": "link and then it's going to pick up on what this is in this case it's a"
+    },
+    {
+      "id": 141,
+      "start": 545.2,
+      "end": 549.12,
+      "text": "sound effect it's going to automatically save it as we can see here"
+    },
+    {
+      "id": 142,
+      "start": 549.12,
+      "end": 553.04,
+      "text": "it's going to save it directly to my sound effects asset"
+    },
+    {
+      "id": 143,
+      "start": 553.04,
+      "end": 556.24,
+      "text": "folder so here we have it it's going to open"
+    },
+    {
+      "id": 144,
+      "start": 556.24,
+      "end": 560.56,
+      "text": "here but that's fine now we're going to tell Claude to add the Duolingo sound"
+    },
+    {
+      "id": 145,
+      "start": 560.56,
+      "end": 565.36,
+      "text": "effect to whenever my dad is correct in the video"
+    },
+    {
+      "id": 146,
+      "start": 565.36,
+      "end": 572.96,
+      "text": "and then find it in my assets folder under sounds let's see if it applied the"
+    },
+    {
+      "id": 147,
+      "start": 572.96,
+      "end": 576.64,
+      "text": "Duolingo sound effects whenever you get something right so let's play this"
+    },
+    {
+      "id": 148,
+      "start": 576.64,
+      "end": 581.54,
+      "text": "first one it's a fake it's a AI"
+    },
+    {
+      "id": 149,
+      "start": 581.54,
+      "end": 587.14,
+      "text": "nice so it applies the whenever he's right just always make sure to do a"
+    },
+    {
+      "id": 150,
+      "start": 587.14,
+      "end": 591.3,
+      "text": "double triple check especially if he's doing a lot of them like he is"
+    },
+    {
+      "id": 151,
+      "start": 591.3,
+      "end": 595.62,
+      "text": "or he Claude is basing himself off the transcript and sometimes it's kind of"
+    },
+    {
+      "id": 152,
+      "start": 595.62,
+      "end": 599.54,
+      "text": "hard to tell where to add it but he did a good job of adding those"
+    },
+    {
+      "id": 153,
+      "start": 599.54,
+      "end": 603.38,
+      "text": "sound effects so that was step three I showed you how to add"
+    },
+    {
+      "id": 154,
+      "start": 603.38,
+      "end": 607.62,
+      "text": "sound effects I want to show you in a similar technique using my slack bot"
+    },
+    {
+      "id": 155,
+      "start": 607.7,
+      "end": 611.54,
+      "text": "how I can save a meme and then use that in my videos"
+    },
+    {
+      "id": 156,
+      "start": 611.54,
+      "end": 615.7,
+      "text": "so I'm just going to go to slack and I'm going to drop this link in there"
+    },
+    {
+      "id": 157,
+      "start": 615.7,
+      "end": 619.54,
+      "text": "and it's going to download it as a video and then that way I have the"
+    },
+    {
+      "id": 158,
+      "start": 619.54,
+      "end": 623.46,
+      "text": "confused math ladies meme in my assets folder forever"
+    },
+    {
+      "id": 159,
+      "start": 623.46,
+      "end": 626.98,
+      "text": "let's head over to my assets folder again you're seeing this is turning"
+    },
+    {
+      "id": 160,
+      "start": 626.98,
+      "end": 630.82,
+      "text": "into the holy grail and here we can see it described as"
+    },
+    {
+      "id": 161,
+      "start": 630.82,
+      "end": 636.8,
+      "text": "confused confused math lady we can actually play that"
+    },
+    {
+      "id": 162,
+      "start": 636.8,
+      "end": 643.71,
+      "text": "I kind of want to use this meme after my dad's confused about something"
+    },
+    {
+      "id": 163,
+      "start": 643.71,
+      "end": 646.91,
+      "text": "and to make my life a little bit easier I'm going to have some manual"
+    },
+    {
+      "id": 164,
+      "start": 646.91,
+      "end": 651.47,
+      "text": "intervention where I want to add it to a specific moment"
+    },
+    {
+      "id": 165,
+      "start": 651.47,
+      "end": 655.47,
+      "text": "in the video so let me just rewatch this and find the specific timestamp that I"
+    },
+    {
+      "id": 166,
+      "start": 655.47,
+      "end": 658.43,
+      "text": "want to add okay I think it'd be funny to add it"
+    },
+    {
+      "id": 167,
+      "start": 658.43,
+      "end": 664.19,
+      "text": "at around the 150 mark 150 mark so let's see how it does"
+    },
+    {
+      "id": 168,
+      "start": 664.19,
+      "end": 666.99,
+      "text": "and it's going to play that meme of course you can also cut the meme"
+    },
+    {
+      "id": 169,
+      "start": 666.99,
+      "end": 670.43,
+      "text": "you can shorten it just tell it to shorten it or only include"
+    },
+    {
+      "id": 170,
+      "start": 670.43,
+      "end": 674.19,
+      "text": "a small excerpt of a video so here it's going to search for that meme in my assets"
+    },
+    {
+      "id": 171,
+      "start": 674.19,
+      "end": 677.79,
+      "text": "folder and it's going to add it the best way in my opinion to edit"
+    },
+    {
+      "id": 172,
+      "start": 677.79,
+      "end": 681.95,
+      "text": "with claude is to do a lot of the prep work where you source all of the"
+    },
+    {
+      "id": 173,
+      "start": 681.95,
+      "end": 684.51,
+      "text": "screenshots or the memes that you want to use"
+    },
+    {
+      "id": 174,
+      "start": 684.51,
+      "end": 687.55,
+      "text": "and then it can just go into one folder in your"
+    },
+    {
+      "id": 175,
+      "start": 687.55,
+      "end": 691.39,
+      "text": "finder and add those where it thinks it's right let me just"
+    },
+    {
+      "id": 176,
+      "start": 691.47,
+      "end": 695.31,
+      "text": "head over to the 150 mark here we go"
+    },
+    {
+      "id": 177,
+      "start": 695.31,
+      "end": 705.97,
+      "text": "was it oh yeah so great job adding the meme at actually corrected"
+    },
+    {
+      "id": 178,
+      "start": 705.97,
+      "end": 711.41,
+      "text": "146 instead of 150 because it noticed that my dad was the most confused there so"
+    },
+    {
+      "id": 179,
+      "start": 711.41,
+      "end": 714.29,
+      "text": "you can see claude's already doing good thinking here"
+    },
+    {
+      "id": 180,
+      "start": 714.29,
+      "end": 719.33,
+      "text": "all right next part of editing might be to add fun transitions between clips"
+    },
+    {
+      "id": 181,
+      "start": 719.33,
+      "end": 724.13,
+      "text": "or I kind of want to add zooms on my face or my dad's face whenever"
+    },
+    {
+      "id": 182,
+      "start": 724.13,
+      "end": 729.17,
+      "text": "he said something really funny to one of the two speakers"
+    },
+    {
+      "id": 183,
+      "start": 729.17,
+      "end": 734.29,
+      "text": "whenever something funny happens or awkwardness"
+    },
+    {
+      "id": 184,
+      "start": 734.29,
+      "end": 738.61,
+      "text": "so let's see how it does there you could also give it cinematic terms like"
+    },
+    {
+      "id": 185,
+      "start": 738.61,
+      "end": 742.69,
+      "text": "use a ken burns effect which just zooms into something slowly"
+    },
+    {
+      "id": 186,
+      "start": 742.69,
+      "end": 747.73,
+      "text": "could also say you want to add a harsh zoom and just kind of play around"
+    },
+    {
+      "id": 187,
+      "start": 747.73,
+      "end": 751.73,
+      "text": "with how you like to edit your videos again if you have a lot of"
+    },
+    {
+      "id": 188,
+      "start": 751.73,
+      "end": 755.97,
+      "text": "reference videos maybe you found on youtube from other people editing or"
+    },
+    {
+      "id": 189,
+      "start": 755.97,
+      "end": 759.01,
+      "text": "your own then you can ask claude to describe"
+    },
+    {
+      "id": 190,
+      "start": 759.01,
+      "end": 763.09,
+      "text": "what those cuts are or what those effects are that are being used"
+    },
+    {
+      "id": 191,
+      "start": 763.09,
+      "end": 767.17,
+      "text": "okay let's have a look at these zooms that it did or not"
+    },
+    {
+      "id": 192,
+      "start": 767.17,
+      "end": 770.37,
+      "text": "it did a few let's see towards the end here"
+    },
+    {
+      "id": 193,
+      "start": 770.37,
+      "end": 775.09,
+      "text": "I will replace me in zoom I hope not no we're gonna do a little bit of"
+    },
+    {
+      "id": 194,
+      "start": 775.09,
+      "end": 779.25,
+      "text": "current I'm gonna see if you can guess what these words mean"
+    },
+    {
+      "id": 195,
+      "start": 779.41,
+      "end": 782.45,
+      "text": "is it so anything we don't know anything so your brain very good"
+    },
+    {
+      "id": 196,
+      "start": 786.11,
+      "end": 791.15,
+      "text": "I think this did an okay job but I think I need to be a bit more specific with"
+    },
+    {
+      "id": 197,
+      "start": 791.15,
+      "end": 795.47,
+      "text": "the the times I wanted to zoom in he'd actually gave us a list here of when"
+    },
+    {
+      "id": 198,
+      "start": 795.47,
+      "end": 798.11,
+      "text": "it zooms in you know it's not the last one let's look at"
+    },
+    {
+      "id": 199,
+      "start": 798.11,
+      "end": 801.63,
+      "text": "315 and let's see if I agree with that"
+    },
+    {
+      "id": 200,
+      "start": 801.95,
+      "end": 812.19,
+      "text": "yeah so at this moment that was actually a really good idea to zoom to my dad's face"
+    },
+    {
+      "id": 201,
+      "start": 812.19,
+      "end": 815.95,
+      "text": "because he was arguing with me so you can definitely look at your video and say"
+    },
+    {
+      "id": 202,
+      "start": 815.95,
+      "end": 820.99,
+      "text": "I would have added zooms whenever my dad completes a sentence of mine so I can"
+    },
+    {
+      "id": 203,
+      "start": 820.99,
+      "end": 825.46,
+      "text": "say add a zoom to dad when"
+    },
+    {
+      "id": 204,
+      "start": 826.98,
+      "end": 831.46,
+      "text": "so that's my manual intervention there you can actually see that it found the"
+    },
+    {
+      "id": 205,
+      "start": 831.78,
+      "end": 836.1,
+      "text": "exact timestamp where it should add that zoom so let's wait for the zoom"
+    },
+    {
+      "id": 206,
+      "start": 836.1,
+      "end": 842.98,
+      "text": "okay so he added that at 537 let's watch that together just because it's so"
+    },
+    {
+      "id": 207,
+      "start": 842.98,
+      "end": 846.42,
+      "text": "addicting without learning anything so your brain"
+    },
+    {
+      "id": 208,
+      "start": 847.7,
+      "end": 852.5,
+      "text": "very good the important part here is to explain in as much detail as possible"
+    },
+    {
+      "id": 209,
+      "start": 852.5,
+      "end": 857.54,
+      "text": "how you like your edits to be done and which transitions etc you'd like to use"
+    },
+    {
+      "id": 210,
+      "start": 857.54,
+      "end": 862.58,
+      "text": "now before we move on to my demo of how I would edit scream recordings specifically"
+    },
+    {
+      "id": 211,
+      "start": 862.58,
+      "end": 867.7,
+      "text": "ones recorded in tele I'm just going to show you how we can use another skill that I've built"
+    },
+    {
+      "id": 212,
+      "start": 867.7,
+      "end": 873.86,
+      "text": "to turn this long form video into a short form clip and actually add captions as well"
+    },
+    {
+      "id": 213,
+      "start": 873.86,
+      "end": 877.86,
+      "text": "so yes you can even add captions to this so this completely gets rid of the need for a tool"
+    },
+    {
+      "id": 214,
+      "start": 877.86,
+      "end": 885.57,
+      "text": "like opus clip which generates captions and turns something into a video here it's pulling"
+    },
+    {
+      "id": 215,
+      "start": 885.57,
+      "end": 891.25,
+      "text": "what he thinks are the funniest moments in terms of clips I want the clip where he describes what I"
+    },
+    {
+      "id": 216,
+      "start": 891.25,
+      "end": 897.49,
+      "text": "do and we can select a few more if we want but let's just do next and then the format I wanted to be"
+    },
+    {
+      "id": 217,
+      "start": 897.49,
+      "end": 902.83,
+      "text": "reals format and then and then we're going to submit those answers so as I said you can get"
+    },
+    {
+      "id": 218,
+      "start": 902.83,
+      "end": 910.27,
+      "text": "this specific clipify clip that actually got 300 stars on my github so you can get that repo there"
+    },
+    {
+      "id": 219,
+      "start": 910.27,
+      "end": 914.99,
+      "text": "and you can just set that up in cloud and use it for any long form to short form flow"
+    },
+    {
+      "id": 220,
+      "start": 914.99,
+      "end": 919.79,
+      "text": "so let's wait for it to generate this and I'll show you what the final result is it's asking us"
+    },
+    {
+      "id": 221,
+      "start": 919.79,
+      "end": 926.59,
+      "text": "if it wants the hard cut version and let's do big you know what I kind of want kind of one big bold"
+    },
+    {
+      "id": 222,
+      "start": 927.63,
+      "end": 932.27,
+      "text": "captions so it asks us about the format of the captions and if you wanted our vertical video to"
+    },
+    {
+      "id": 223,
+      "start": 932.27,
+      "end": 937.55,
+      "text": "have our faces in a split screen or if it should zoom in on me when I'm speaking zoom in on my"
+    },
+    {
+      "id": 224,
+      "start": 937.55,
+      "end": 943.07,
+      "text": "dad when he's speaking and I prefer that version let's take a quick look at the vertical portion"
+    },
+    {
+      "id": 225,
+      "start": 943.07,
+      "end": 949.23,
+      "text": "of this video now I'd like you to describe as best you can what you think I do as a job"
+    },
+    {
+      "id": 226,
+      "start": 960.35,
+      "end": 966.35,
+      "text": "it clipped it here and also you could tell it to do this on the raw recording instead of the"
+    },
+    {
+      "id": 227,
+      "start": 966.35,
+      "end": 972.67,
+      "text": "already zoomed in version of this video so yeah that was it for the non-screen recording"
+    },
+    {
+      "id": 228,
+      "start": 972.67,
+      "end": 978.27,
+      "text": "editing your videos with clod there's so much you can do connecting it to tools like 11 labs as well"
+    },
+    {
+      "id": 229,
+      "start": 978.27,
+      "end": 985.39,
+      "text": "to do narration for example or even connected to an ai generation video tool like cdans to generate ai"
+    },
+    {
+      "id": 230,
+      "start": 985.39,
+      "end": 990.51,
+      "text": "b-roll all right for this last portion very quickly I want to show you how you can edit"
+    },
+    {
+      "id": 231,
+      "start": 990.51,
+      "end": 995.39,
+      "text": "your screen recordings that you record in tele using our mcp so you can actually perform"
+    },
+    {
+      "id": 232,
+      "start": 995.39,
+      "end": 1000.51,
+      "text": "actions in clod that are directly reflected in your tele editor so you're just going to go to"
+    },
+    {
+      "id": 233,
+      "start": 1000.51,
+      "end": 1005.55,
+      "text": "our docs page and find the mcp doc and then if you haven't done so already you're just going to"
+    },
+    {
+      "id": 234,
+      "start": 1005.55,
+      "end": 1011.41,
+      "text": "copy this and then through your terminal now I've already installed our mcp so I'm just going to"
+    },
+    {
+      "id": 235,
+      "start": 1011.41,
+      "end": 1016.53,
+      "text": "open clod and I'm going to show you where it is or the tools that exist so you can obviously"
+    },
+    {
+      "id": 236,
+      "start": 1016.53,
+      "end": 1023.25,
+      "text": "list your videos etc but we can also upload clips so you can upload your own clips next to"
+    },
+    {
+      "id": 237,
+      "start": 1023.25,
+      "end": 1027.97,
+      "text": "your screen recordings you can sorry you can cut clips you can even get frames from your"
+    },
+    {
+      "id": 238,
+      "start": 1027.97,
+      "end": 1032.21,
+      "text": "video that would be good for a thumbnail for instance so I just did that earlier today"
+    },
+    {
+      "id": 239,
+      "start": 1032.21,
+      "end": 1037.41,
+      "text": "you can remove filler words etc but I'm going to show you how I'm going to cut my video in tele"
+    },
+    {
+      "id": 240,
+      "start": 1037.41,
+      "end": 1042.77,
+      "text": "because it's super easy to do that there with auto cut and then I'm going to add a b-roll layout"
+    },
+    {
+      "id": 241,
+      "start": 1042.77,
+      "end": 1048.05,
+      "text": "which is super new which is essentially layout where we add b-roll and the b-roll I'm going to"
+    },
+    {
+      "id": 242,
+      "start": 1048.05,
+      "end": 1053.01,
+      "text": "add is going to be generated in another tool called remotion and all of that's going to happen"
+    },
+    {
+      "id": 243,
+      "start": 1053.01,
+      "end": 1057.09,
+      "text": "in clod first thing we're going to do is we're going to grab a video you can see here that it"
+    },
+    {
+      "id": 244,
+      "start": 1057.09,
+      "end": 1064.05,
+      "text": "has no cuts applied to it so I'm going to remove all of these silences remove the filler words etc"
+    },
+    {
+      "id": 245,
+      "start": 1064.05,
+      "end": 1070.13,
+      "text": "I would maybe do a more clean cut here but here we can see that there are no cuts applied beside the"
+    },
+    {
+      "id": 246,
+      "start": 1070.13,
+      "end": 1075.97,
+      "text": "base layout so we're going to ask clod to go through and apply layouts where it thinks it's"
+    },
+    {
+      "id": 247,
+      "start": 1075.97,
+      "end": 1079.81,
+      "text": "would be right we're just going to grab the video link here and we're going to head over to"
+    },
+    {
+      "id": 248,
+      "start": 1079.81,
+      "end": 1090.82,
+      "text": "clod again layouts and graphic generated in remotion as b-roll I mean I'm being purposely lazy"
+    },
+    {
+      "id": 249,
+      "start": 1090.82,
+      "end": 1096.26,
+      "text": "and vague because I know what I talked about in this intro and I always want to add b-roll in my"
+    },
+    {
+      "id": 250,
+      "start": 1096.26,
+      "end": 1103.14,
+      "text": "intros to make them more exciting so I'm going to see if it can add b-roll there to describe"
+    },
+    {
+      "id": 251,
+      "start": 1103.14,
+      "end": 1108.98,
+      "text": "a process this video was about how god is now editing video and I just want to show that"
+    },
+    {
+      "id": 252,
+      "start": 1108.98,
+      "end": 1113.94,
+      "text": "with motion graphics so let's see how well it does in our first go I should add if you haven't"
+    },
+    {
+      "id": 253,
+      "start": 1113.94,
+      "end": 1119.7,
+      "text": "done so already watch my video on how to generate motion graphics with remotion because I go over"
+    },
+    {
+      "id": 254,
+      "start": 1119.7,
+      "end": 1125.62,
+      "text": "the steps of installing remotion into clod which is super easy but you do need to set that up before"
+    },
+    {
+      "id": 255,
+      "start": 1125.62,
+      "end": 1130.98,
+      "text": "you can actually generate motion graphics in this way so clod will just remember remotion"
+    },
+    {
+      "id": 256,
+      "start": 1130.98,
+      "end": 1136.02,
+      "text": "as a skill and then it can actually use it to do such things and generate b-roll so be"
+    },
+    {
+      "id": 257,
+      "start": 1136.02,
+      "end": 1140.9,
+      "text": "sure to watch that first cool we can see the steps here so it's looking at the uncut transcript and"
+    },
+    {
+      "id": 258,
+      "start": 1140.9,
+      "end": 1145.38,
+      "text": "it's checking for b-roll moments it's going to generate the motion graphic it's going to upload"
+    },
+    {
+      "id": 259,
+      "start": 1145.38,
+      "end": 1153.62,
+      "text": "that motion graphic as mb4 in totella and then it's going to add um b-roll layouts with set mb4 so"
+    },
+    {
+      "id": 260,
+      "start": 1153.62,
+      "end": 1159.86,
+      "text": "it's asking me yeah it's giving me three suggestions and I like the idea of messy files flying in"
+    },
+    {
+      "id": 261,
+      "start": 1159.86,
+      "end": 1165.06,
+      "text": "and then going into organized folders and then I'm going to go with fast and submit those answers"
+    },
+    {
+      "id": 262,
+      "start": 1165.06,
+      "end": 1171.78,
+      "text": "reading the motion graphic and then it's going to upload it as an mb4 to the b-roll segment which is"
+    },
+    {
+      "id": 263,
+      "start": 1171.78,
+      "end": 1177.78,
+      "text": "new and you should try all right supposedly it has generated these layouts so let's have a look"
+    },
+    {
+      "id": 264,
+      "start": 1177.78,
+      "end": 1183.54,
+      "text": "together we're just going to have to always refresh our page whenever we add changes so here we can"
+    },
+    {
+      "id": 265,
+      "start": 1183.54,
+      "end": 1189.14,
+      "text": "already see it applied our new b-roll layout so let's play this together first impressions"
+    },
+    {
+      "id": 266,
+      "start": 1194.02,
+      "end": 1200.02,
+      "text": "so fun okay so generated that in remotion and then it added that as I was describing this so"
+    },
+    {
+      "id": 267,
+      "start": 1200.02,
+      "end": 1204.82,
+      "text": "this was about my slack bot and how basically I created this assets folder but I think this is a"
+    },
+    {
+      "id": 268,
+      "start": 1204.82,
+      "end": 1209.38,
+      "text": "really cool way of just being able to edit your screen recordings that you make this was just"
+    },
+    {
+      "id": 269,
+      "start": 1209.38,
+      "end": 1214.9,
+      "text": "a small example of things you can do in our mcp it's still work in progress but I'm going to"
+    },
+    {
+      "id": 270,
+      "start": 1214.9,
+      "end": 1218.82,
+      "text": "be playing around with it over the coming weeks and I'd love some of you to play around with"
+    },
+    {
+      "id": 271,
+      "start": 1218.9,
+      "end": 1224.42,
+      "text": "it as well I'm going to show you a second thing that the mcp can do so we're just going to say"
+    },
+    {
+      "id": 272,
+      "start": 1224.42,
+      "end": 1234.9,
+      "text": "find frames in this video of my full face that I could use as a youtube thumbnail let's see it"
+    },
+    {
+      "id": 273,
+      "start": 1234.9,
+      "end": 1240.34,
+      "text": "can actually get frames as well from tell that directly so I'm just going to see if it can find"
+    },
+    {
+      "id": 274,
+      "start": 1240.34,
+      "end": 1246.5,
+      "text": "that from the camera source file and then it's going to save that to our it's selecting"
+    },
+    {
+      "id": 275,
+      "start": 1246.58,
+      "end": 1251.54,
+      "text": "for wherever my eyes are pointing forward because I know I don't always do that when I'm filming"
+    },
+    {
+      "id": 276,
+      "start": 1251.54,
+      "end": 1257.22,
+      "text": "and I expected to return some frames that I can use as it found the winner killer shot"
+    },
+    {
+      "id": 277,
+      "start": 1257.22,
+      "end": 1262.02,
+      "text": "which I'm animated my mouth is open so let's see what it comes up with okay in all fairness I"
+    },
+    {
+      "id": 278,
+      "start": 1262.02,
+      "end": 1266.1,
+      "text": "didn't interrupt Claude because it was taking too long but look at these thumbnails that it found"
+    },
+    {
+      "id": 279,
+      "start": 1266.1,
+      "end": 1271.78,
+      "text": "using tell us mcp now lets you edit your videos using Claude and what this opens up"
+    },
+    {
+      "id": 280,
+      "start": 1271.78,
+      "end": 1277.14,
+      "text": "is that you can integrate many more tools into your editing process not just that not just cap cut"
+    },
+    {
+      "id": 281,
+      "start": 1277.14,
+      "end": 1282.66,
+      "text": "not just one tool by having it all be in AI model I hope you like this introduction to how I edit"
+    },
+    {
+      "id": 282,
+      "start": 1282.66,
+      "end": 1288.26,
+      "text": "my videos with Claude there's a long way to go as you saw sometimes we run into some slowness issues"
+    },
+    {
+      "id": 283,
+      "start": 1288.26,
+      "end": 1292.58,
+      "text": "some understanding issues as you start to edit your videos with Claude you're going to become"
+    },
+    {
+      "id": 284,
+      "start": 1292.58,
+      "end": 1298.02,
+      "text": "much better at defining technically how it is you like to edit so it removes all manual work"
+    },
+    {
+      "id": 285,
+      "start": 1298.02,
+      "end": 1302.58,
+      "text": "which we all hate and it just becomes more of a conversation which I've really liked I'm gonna"
+    },
+    {
+      "id": 286,
+      "start": 1302.58,
+      "end": 1308.1,
+      "text": "link all of the skills that I used below so you can add them to your own Claude and play around with"
+    },
+    {
+      "id": 287,
+      "start": 1308.1,
+      "end": 1313.62,
+      "text": "and then if you like this video please be sure to subscribe a lot of time goes into these videos"
+    },
+    {
+      "id": 288,
+      "start": 1313.62,
+      "end": 1317.22,
+      "text": "and I'd really love to have you around I'll see you for the next video"
+    }
+  ]
+}

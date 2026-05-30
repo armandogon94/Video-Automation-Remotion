@@ -1,0 +1,51 @@
+{
+  "creator_handle": "aiexplained",
+  "analyzed_count": 4,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "2_DPnzoiHaY",
+      "title": "Gemini 3.1 Pro and the Downfall of Benchmarks: Welcome to the Vibe Era of AI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=2_DPnzoiHaY",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 21,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "QVJcdfkRpH8",
+      "title": "Claude Opus 4.7 - A New Frontier, in Performance and Drama",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=QVJcdfkRpH8",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 37,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "WLdBimUS1IE",
+      "title": "GPT-5 has Arrived",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=WLdBimUS1IE",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 34,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "chr2I7CZTfk",
+      "title": "Gemini 3 Pro: Breakdown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=chr2I7CZTfk",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 30,
+      "clip_count": 2,
+      "has_metadata_json": false
+    }
+  ]
+}

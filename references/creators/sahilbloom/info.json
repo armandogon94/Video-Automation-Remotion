@@ -1,0 +1,16 @@
+{
+  "handle": "sahilbloom",
+  "channelHandle": "@Sahil_Bloom",
+  "channelId": "UC0vZSXQHRGPNZMFAKPLJcww",
+  "channelUrl": "https://www.youtube.com/channel/UC0vZSXQHRGPNZMFAKPLJcww",
+  "fullName": "Sahil Bloom",
+  "platform": "youtube",
+  "secondaryPlatform": "instagram (@sahilbloom — scrape blocked 401)",
+  "niche": "finance/business/self-development essays + Shorts",
+  "scrapedAt": "2026-05-27",
+  "wave": "wave-7",
+  "videosScraped": 12,
+  "longformCount": 9,
+  "shortsCount": 3,
+  "discoveryNote": "Channel handle is @Sahil_Bloom (capital S, underscore) — not @sahilbloom (that's the IG handle, returns 404 on YouTube). Roughly 600K+ subs at scrape time. Topics: finance, habits, productivity, NYT bestseller author, ex-private-equity. Brief framed him as 'finance/business essays' — confirmed for long-form, Shorts are pure typography w/ B-roll, no motion graphics."
+}

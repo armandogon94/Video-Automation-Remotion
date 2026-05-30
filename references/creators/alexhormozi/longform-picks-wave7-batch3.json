@@ -1,0 +1,114 @@
+{
+  "voter": "wave7-batch3",
+  "date": "2026-05-28",
+  "selection_methodology": "Wave-7 Batch-3 — extending Hormozi long-form corpus from 10/11 (Wave-6 + qsXxckCbci0) toward 25. Excluded ALL 36 already-touched IDs (10 Shorts manifest + 11 Wave-6 long-form + 15 Wave-7 batches 1-2 picks). Pulled ~60 latest /videos entries from @AlexHormozi; filtered duration > 180s (--match-filter); picked 15 NOT in the exclusion set with these diversity goals: (a) MULTI-stranger case-study chassis (0EqJD2o, BYpTRiRqS1Y, 8C_6qojTA78) — Wave-6 only sampled single-stranger; multi-stranger likely uses NEW chassis like person-roster or split-screen rotation; (b) AI-strategy lane (fr78adfAnuA, XsWSvz-aewA) — companion to 9q5ojtkqsBs but newer (2026 timestamp), likely contains modern AI-tool UI screenshots; (c) FIRST-$100K and START-OVER framings (jfW6gL6hKhk, uWdIgftpvBI) — tests whether 'starting from zero' framings have dedicated visual treatment (e.g. progress-bar from 0); (d) SELF-HELP / DISCIPLINE angle (EonibwnAEME, q9qBqnhdWKw, SE9_1PYsaP0) — Wave-6 was money-heavy; tests whether mind/discipline content uses different chrome (e.g. quote cards, brain-icon, hard-cutaway aesthetic); (e) SERVICE-business companion (jqo0lVveh98) — pairs with Wave-7 N5MExtki at 45min length, both service-themed; (f) EVENT/RECORD-attempt format (u3H7CfpfwHQ Guinness) — UNIQUE format, likely countdown timers, on-set graphics; (g) RETENTION / CRM (-j8_YCWZ05Q) — likely lifetime-value graphics, cohort charts; (h) ORATORY / SALES (sGakuNs9mT4) — likely speech-pattern graphics. All 15 are duration > 180s (long-form, not Shorts). View counts unavailable via flat-playlist on this run (NA). Avoided the 7.5h outlier vhOV_Od0A3M to stay within per-video bandwidth budget.",
+  "exclusion_set_size": 36,
+  "exclusion_summary": "10 shorts (manifest) + 11 long-form Wave-6 (vote1 ∪ vote2 ∪ qsXxckCbci0) + 15 long-form Wave-7 (batches 1-2 picks)",
+  "picks": [
+    {
+      "id": "0EqJD2o-Mnk",
+      "title": "Helping 6 Business Owners Scale in 33 Minutes",
+      "duration": 2031,
+      "view_count": null,
+      "rationale": "MULTI-stranger case-study chassis (6 businesses in 33 min ≈ 5.5 min each). Tests whether multi-stranger format uses the same TwoCamInterviewSlide as the single-stranger OQf2Ba (M1) or upgrades to a person-roster chrome / split-screen rotation. NEW chassis candidate."
+    },
+    {
+      "id": "BYpTRiRqS1Y",
+      "title": "Helping 4 Educational Business Owners Build a $1M Business in 25 Minutes",
+      "duration": 1517,
+      "view_count": null,
+      "rationale": "Multi-stranger case-study + NICHE-FILTER (educational businesses only). Tests whether niche-filtered case studies prepend a niche-banner / scope-chip to the chassis. Companion to 0EqJD2o (6-business) at lower density (4-business in 25 min)."
+    },
+    {
+      "id": "8C_6qojTA78",
+      "title": "Helping E-Commerce Business Owners Scale",
+      "duration": 2453,
+      "view_count": null,
+      "rationale": "Multi-stranger e-comm case study (40 min). Likely contains e-comm UI screenshots (Shopify, ad managers), product-photo cards, revenue-graph charts. Tests whether e-comm vertical unlocks DIFFERENT chassis from generic-business case studies."
+    },
+    {
+      "id": "HGZOxBfnF-E",
+      "title": "Building a $1,000,000 Business for a Stranger in 26 Minutes",
+      "duration": 1576,
+      "view_count": null,
+      "rationale": "Single-stranger $1M variant — direct comparison to OQf2Ba ($2.5M, Wave-6) and Wr6n_zNKvMk ($1M/69min, Wave-7-batch1). 3-way tier comparison ($1M vs $2.5M vs $12M from MH-IMJxbUY4) reveals whether the chassis scales with revenue tier."
+    },
+    {
+      "id": "fr78adfAnuA",
+      "title": "How to Use AI in Your Business in 2026",
+      "duration": 954,
+      "view_count": null,
+      "rationale": "AI-strategy at 16 min — companion to Wave-6's 9q5ojtkqsBs (How to Win With AI). Tests whether AI content in 2026 uses NEW patterns: GPT/Claude/Cursor UI screenshots, model-comparison cards, automation flow diagrams."
+    },
+    {
+      "id": "XsWSvz-aewA",
+      "title": "The New Way of Making Content In The Age of AI",
+      "duration": 833,
+      "view_count": null,
+      "rationale": "AI + creator-economy intersection (14 min). Likely contains social-platform UI screenshots, AI-tool UI screenshots, before/after content comparisons. Tests cross-category content."
+    },
+    {
+      "id": "jfW6gL6hKhk",
+      "title": "If I Wanted to Make My First $100K in 2026, I'd Do This",
+      "duration": 945,
+      "view_count": null,
+      "rationale": "FIRST-$100K framing (16 min). 'First $100K' implies milestone progression. Tests whether milestone-progression videos use NEW patterns: $0 → $100K progress bars, milestone-checkpoint icons, accumulating-counter graphics."
+    },
+    {
+      "id": "uWdIgftpvBI",
+      "title": "If I Started A Business in 2026, I'd Do This",
+      "duration": 1105,
+      "view_count": null,
+      "rationale": "START-OVER framing (18 min) — companion to Wave-7-batch1's i7bLRKwKSms. Direct comparison: do both 'start over' videos use the SAME visual treatment? If yes, pattern is real; if no, framing is loose."
+    },
+    {
+      "id": "EonibwnAEME",
+      "title": "How to Catch Up In Life (Using Logic)",
+      "duration": 649,
+      "view_count": null,
+      "rationale": "Self-help / discipline angle at 11 min. Wave-6 sample was money-heavy. Tests whether mind/discipline content uses DIFFERENT chrome — possibly quote cards, brain-icon callouts, hard-cutaway aesthetic, less revenue-data-density."
+    },
+    {
+      "id": "q9qBqnhdWKw",
+      "title": "how to outlearn everyone",
+      "duration": 1813,
+      "view_count": null,
+      "rationale": "Learning / discipline at 30 min — lowercase-title signals casual mode. Tests whether casual-framed videos drop revenue graphics in favor of book-stack / knowledge-tree / curve-graph visuals."
+    },
+    {
+      "id": "SE9_1PYsaP0",
+      "title": "Build a Mind So Strong It Scares People",
+      "duration": 1365,
+      "view_count": null,
+      "rationale": "Mental-toughness angle at 23 min. Likely contains AGGRESSIVE/DARK aesthetic — black backgrounds, red accents, motivational quote-card format. Tests whether Hormozi's chrome switches palette for tonal-aggressive content."
+    },
+    {
+      "id": "jqo0lVveh98",
+      "title": "Watch This If You Have a Service Business",
+      "duration": 2689,
+      "view_count": null,
+      "rationale": "Service-business deep-dive at 45 min — pairs with Wave-7-batch1's N5MExtki (57min service). Two-video service-business sample tests whether the niche has a dedicated chassis (e.g. process-flow diagrams, client-journey maps)."
+    },
+    {
+      "id": "u3H7CfpfwHQ",
+      "title": "We Broke The Guinness World Record In 24 Hours",
+      "duration": 1644,
+      "view_count": null,
+      "rationale": "EVENT / RECORD-attempt format at 27 min. Likely UNIQUE chrome — countdown timers, on-set BTS graphics, vlog cuts. Could surface NEW patterns: TimerCountdown, EventBannerLowerThird, MultiCamGrid. Different lane from teaching/strategy."
+    },
+    {
+      "id": "-j8_YCWZ05Q",
+      "title": "How to Get Your Customers to Stay FOREVER",
+      "duration": 1169,
+      "view_count": null,
+      "rationale": "Customer-retention / LTV (19 min). Likely contains cohort-retention charts, LTV math overlays (corroboration test for M24 MathFormulaCaptionBurn), churn-funnel diagrams. Tests retention-specific graphics."
+    },
+    {
+      "id": "sGakuNs9mT4",
+      "title": "How to Speak So Well People Give You Money",
+      "duration": 1289,
+      "view_count": null,
+      "rationale": "Oratory / sales (21 min). Likely contains voice/speech-pattern visuals (waveforms?), sales-call frameworks, conversation-tree diagrams. Could surface NEW patterns specific to verbal-skills content."
+    }
+  ]
+}

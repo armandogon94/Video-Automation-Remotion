@@ -1,0 +1,1038 @@
+ 
+You've probably seen those software as a
+service product launch videos. They're
+smooth, minimalistic, and you can make a
+lot of money by making them. And today I
+will show you exactly how to create one.
+I came up with a fake software as a
+service, and this is what we're going to
+create today. If you've ever hired a
+video editor, you know the pain.
+Feedback scattered across emails,
+WhatsApp, Slack, and Frame, without a
+clear overview. Edit from solves this by
+bringing everything into one place.
+Projects, feedback, files, [music] and
+communication. Now, to make it easy, I'm
+going to divide this in three scenes.
+And throughout the video, I will show
+you the secret technique to transition
+between these scenes. Now, let's start
+off with the first scene. I'm here in
+After Effects, and I have this uh
+voiceover already, software as a service
+tutorial. Let's import that. And you can
+actually download this in the
+description. If you want the full
+voiceover, the deep dive, and also the
+tutorial on this subject, then do join
+the Full Stack Editor Club. Link of that
+is also in the description. In this
+video, I'm just going to go over a part
+of this, otherwise this video will also
+become way too long. So, do check out
+the deep dive in the Full Stack Editor
+Club. Check it out. Now, let's create a
+new composition, and I'm going to create
+a 4K 25 frames per second composition.
+Duration, I'm already going to set quite
+high cuz I know uh the voiceover is a
+bit longer, so I'm going to set it to
+around 1 minute. That's fine. We can
+change it later, and just hit okay. Now,
+I'm going to move in the audio, and
+let's drag that in the composition. So,
+the first sentence is, "If you ever
+hired a video editor, you know the
+pain." And I'm thinking of an emoji with
+maybe a hire button that gets clicked by
+a cursor. I'm first going to create a
+background. So, I'm going to go to
+layer, new, solid. The color doesn't
+matter cuz what I'm going to do is I'm
+going to add a four color gradient. Go
+to your effects and presets panel, and
+type in four color gradient.
+Double-click on it while having the
+black solid selected. And let's change
+the colors. I want this to be a bit like
+off-white. I'm going to color pick the
+other color, and I'm going to do the
+same here. And then this blue, I'm going
+to make a bit less bluish, maybe
+something like this. I'm going to turn
+the blend up by a lot, and I'm going to
+change the blue to be a bit more like
+this. Maybe move it a bit. There we go.
+As you can see, we have this really nice
+soft gradient. I'm going to set the
+jitter to 100% to make sure that I don't
+have any banding. This will also add a
+bit of noise to it, which I actually
+like. Now, let's make a quick UI. I'm
+going to go to the rounded rectangle
+tool. I'm going to set the fill to fully
+white, and I'm going to add a stroke to
+it, too.
+I'm going to make this really like light
+grayish, maybe something like this.
+Press okay. And now, let's make a UI,
+which we can later on change, of course,
+but for now, I'm just going to make it
+something like this. Let's change the
+roundness to be nice and high, not too
+high, but something around 60. That
+already looks really nice. I'm also
+going to add a drop shadow to this
+already. So, right-click, layer styles,
+and then drop shadow. In the drop
+shadow, I'm going to make it really
+soft. So, I'm going to increase the size
+by a lot. Maybe something like this. I'm
+going to change the angle to be 90° and
+I'm going to increase the distance, so
+it's a bit below it. And then I'm going
+to change the opacity, so it's really
+nice and soft. It literally only has to
+be like 5% and to make sure there's a
+bit of separation in the background. I'm
+also going to change the stroke color to
+be a bit more light. I think it's a bit
+too noticeable. Something like this is
+nice. Great. Now, I'm going to import a
+Memoji. This can be a custom one that
+you created yourself if you have an
+Apple iPhone. Or you can just find one
+in Google, or you can even create one
+using ChatGPT. Now, let's uh import
+this. I'm going to put it around here.
+Now, let's press S for scale. I'm going
+to scale this person down a bit,
+something like this. Then I'm going to
+go to the uh ellipse tool. I'm going to
+turn my stroke to none, and I'm going to
+add a gradient fill to this. Linear
+gradient is fine. Okay. And I'm just
+going to drag it like this. Hold shift,
+and this looks really ugly. I want to
+change this gradient really quick. So,
+click on the gradient color, and I'm
+going to use the same colors that we
+used in the background. Maybe a bit of
+like a light bluish, something like
+this. Okay. Press V for selection, and
+let's make sure that this is nice and
+smooth. There we go. Now, I want to drag
+this below our image. Move this a bit.
+If you hold command, it might snap in
+place, which it does. It's nice. We can
+do that. Control on Windows. Uh I'm
+going to move this guy a bit, and what
+I'm actually going to do is I'm going to
+make sure that it's cropped off. So,
+let's scale it up so the bottom hits the
+bottom of this ellipse. Then I'm going
+to use the ellipse as a track mat, and
+I'm going to turn it back on. Now, I'm
+going to parent it to the shape, and I'm
+going to press S for scale, and I'm
+going to scale it down a bit. So, I want
+to make sure that it's nice and small.
+Something like this looks really clean.
+Now, let's add some text to this. I'm
+going to just go to the text tool, and
+I'm just going to type here uh video
+editor. Let's make the color a bit
+off-black, maybe something like this.
+Let's move this text. Make it a bit
+smaller. Now, I'm going to duplicate it,
+command D, control D on Windows, and I'm
+going to add some subtitle here. Maybe
+specialized
+in making VSLs and e-commerce VSLs,
+explainers, and e-commerce ads.
+Something like that. Now, this looks
+really ugly, and that is because this is
+a subtitle. So, we either need to make
+this a bit smaller, maybe a bit more
+thin. So, for example, I can make this
+into uh light, and I can also regular,
+and can change the color of the text to
+be a bit more light, and then also make
+it smaller. Something like this. Move
+this a bit. Now, I'm going to change the
+shape a bit because I want to have it a
+bit more longer, so I can fit a button
+under it. So, let's click on the shape
+and unlink it. Make it bigger, maybe
+something like this. And I'm also going
+to make it a bit more thin. We have a
+bit less space around it. Then select
+all of our elements. Click on the first
+one, then on the last one while holding
+shift, and let's move this to maybe
+something like this. And then I want a
+nice higher button under it. And I do
+that by going to the rounded rectangle
+tool. This fill might even be nice that
+we already have. Uh let's see. Let's
+drag this. And I actually quite like it.
+Uh so, let's go to the selection tool,
+V, and let's drag this handle so it's a
+nice soft gradient. What we can even do
+is right-click on this, layer styles,
+and then inner glow, and let's set this
+to normal, and then the color
+white, and then
+increase the size by a lot, and then
+decrease the opacity by a lot. And this
+will just generate this soft glowy look,
+which in my opinion looks really nice.
+Now, I actually like the roundness. I
+don't like how this is aligned, so let's
+center this first so everything is nice
+and centered. We might have to move this
+circle shape, and I just want to make
+sure that this is all aligned properly.
+Then I'm going to select this text or
+this title, duplicate it, and move that
+here. Let's move this above the button,
+and let's change this to higher. Now,
+one thing is really important is now
+black, and as you can see, that looks a
+bit cheap. I want to change this to
+white. So, let's change the fill to
+fully white. As you can see, we have a
+nice clean card. I'm really happy with
+it. Now, let's get animating. What I
+want to do is I want to have it zoom out
+from this card. So, I'm just going to
+create a new null object first. So,
+layer, new, null object. Let's drag this
+up. Let's select all of our layers
+except the PNG because that one is
+already linked to the shape. And let's
+parent that to the null. Now, I'm going
+to press S for scale, set a keyframe,
+drag this out. Then I'm going to zoom it
+in by a lot, just making sure that card
+is fully filling the screen. There we
+go. Then, of course, I'm going to easy
+ease these keyframes. Keyframe
+assistant, easy ease. Go into the graph
+editor. Let's select the last keyframe.
+Let's drag that out. Maybe even drag
+that first keyframe to the left. Maybe
+drag it out a bit so it's a bit more
+quick. A really steep graph, as you can
+see. Now, let's already enable motion
+blur, and then enable motion blur on all
+of our layers. That will already make it
+look nice. Let's animate the elements. I
+want to start with top left with the
+guy. And what I'm going to do is I'm
+just going to press S for scale, set a
+keyframe, go a bit further to the
+beginning, and set it to zero. Now, of
+course, you can easy ease this. In this
+case, I want it to bounce. And to make
+it bounce, you can use an expression, or
+you can use a plugin like Motion Tools,
+but we can even do it manually. And to
+do it manually, it's not that crazy. We
+just hit F9 on our keyboard to make this
+ease. So, we have this nice graph, and
+let's drag this out. And then I'm going
+to set this to a bit larger, so it comes
+in. And as you can see, it already has a
+bounce. However, it's not as smooth. So,
+let's go into this. Can drag this out a
+bit, the last keyframe. Let's drag that
+out like that. So, it goes like this.
+Maybe a bit too much. Can dial it down a
+bit. And then what I want to do is I
+want to move him into the screen, too.
+So, let's press P for position, drag him
+down, and let's easy ease this. So, we
+already have this cool animation. Then,
+of course, the text, we also want to
+animate that. And to animate it, I'm
+just going to go into the text. Going to
+go to animate, and then hit position.
+Then I'm going to go to add, and then
+property, opacity. Let's move the
+position to 50, and opacity to zero.
+Open the range selector, and then go
+into the advanced tab. Let's change the
+based on to words because I want the
+words to animate, not the characters.
+Set the shape to ramp up, the ease low
+to 100%, and then let's keyframe the
+offset by clicking on the stopwatch next
+to offset. Set it to minus 100%. Go a
+bit further, and let's set this to 100%.
+So, we have this nice smooth animation.
+We can even drag this out a bit. And of
+course, we can save this as a preset by
+just dragging this to our preset folder.
+Or we can of course copy this over and
+paste it onto our text. So we now have
+it pasted on the rest of the text, and
+as you can see, it already looks really
+cool. Now we can of course offset it
+too, so for example, that this text
+comes in a bit later, and then the
+higher also comes in later. Now I
+actually also want to animate the shape
+anyway, so let's select the shape, go
+into the shape rectangle, then into the
+rectangle path. Let's animate the size
+and also the roundness. And lastly, I'm
+also going to press S for scale and set
+a keyframe. Now press U to see all your
+keyframes. And what I'm going to do is
+I'm going to drag these out. So I'm
+going to drag these out maybe like 1
+second. I'm going to unlink the size,
+I'm going to make it square, and I do so
+by just copying over the second value
+and pasting that in the first value, so
+we have a nice square. Then I'm going to
+make it really round, somewhere like
+this, so we have a nice circle. And I'm
+going to set a keyframe for the scale,
+and then I'm going to go a bit further
+down, and I'm going to set another
+keyframe for the scale. This time I'm
+going to set it to zero. So it zooms to
+100% and then drags out like that. Now
+this is really ugly because there's no
+smoothness on it, and that's really
+simple to do. We just need to select
+everything, hit F9 on our keyboard,
+let's go to the graph editor, and let's
+make this nice and smooth. I'm first
+going to select the scale keyframe, and
+I want to easy ease this, so it goes
+smooth like that. And then I want it to
+easy ease just like this, a nice smooth
+graph. Wee, just like that. And we can
+even offset this a bit by changing the
+scale, so basically it it scales and
+already moves out. So maybe even move
+this a bit more to the front. Now the
+overall timing isn't great because it
+all happens a bit too slow. Now one more
+thing, I want to spice it up a bit. You
+see this a lot in SaaS animations where
+there's basically some shapes around
+your shape. And to do so, I'm just going
+to duplicate the shape once, press S for
+scale to scale it up. We're going to
+press T for transparency, and let's dial
+this down to a really low number,
+something like five. And then we can
+just do this again, command D, press S
+for scale, scale it up, command D, press
+S for scale, scale it up. And I'm just
+going to do this a few more times till
+my the edge. There we go. Now it's
+really not that visible, so select all
+of them, press T for transparency, and
+let's increase the opacity a bit, not
+too much, maybe to 15% or something.
+That is really dope. And of course, what
+we can even do is select all of them,
+press S for scale, set a keyframe, go to
+the front, and then scale it down. Let's
+select all of these keyframes, right
+click, keyframe assistant, easy ease.
+Can even go into the graph editor and
+make them all nice and eased. However,
+what I also want to do is make sure
+they're offset a bit. So So we can just
+select all of these keyframes and use a
+offset tool like motion tools, or you
+can manually do it by just selecting
+them, moving them like maybe one
+keyframe further, one keyframe further,
+one keyframe further, and one keyframe
+further. And let's select them all and
+then move them a bit. So there's a bit
+of movement in the background, as you
+can see. It's a cool effect, and you can
+do this with any shape. You can also do
+it with a circle or a blob. Now I have
+this cursor, which you can just find
+online. I just drag it in, and we'll use
+this to click on the higher button. So
+I'm just going to press P for position,
+set a keyframe. I'm also going to press
+S for scale, and I'm going to scale it
+down for now, and I want to have it end
+here. So let's press U to see our
+keyframes, and let's drag this out, and
+I want to move it from maybe around
+here. And to make it more natural, let's
+go into the convert vertex tool, and you
+do this by clicking and holding your
+mouse down on the pen tool. So we can
+make this into a nice organic path,
+maybe a bit like this. Of course, we
+also want to easy ease this again, and
+go into your graph editor, make sure
+that this is really nice and eased.
+Let's drag these keyframes, and let's
+see the timing a bit, maybe just like
+that. So it comes in nice and smooth.
+And then once it's here, I want it to
+click. And to make it click, just press
+S for scale and go set a keyframe, go a
+bit further and scale it down, and of
+course, copy this keyframe over and
+paste it, so it clicks. There we go. And
+if we want to be really fancy, we also
+adjust the button. And a mistake that a
+lot of editors and motion designers make
+is they scale the button up once it gets
+clicked, or they make it lighter. It
+needs to be darker, and it needs to go
+in. So what you can do is you can just
+press S for scale, make sure the higher
+text is linked to this shape because we
+want to have that move with it. Let's
+set a keyframe, and then basically once
+it clicks, we also want to make the
+button scale down a bit and make it go
+back up. And to make it darker, we can
+add a exposure, brightness and contrast.
+It doesn't really matter what you use,
+or we can also keyframe the colors. In
+this case, I'm going to add an exposure
+effect. So we can just go to the effects
+and presets, and we can add an exposure.
+And if you just double click on that, it
+will add it to it, and then we can set a
+keyframe for the exposure, press U on
+our keyboard, make sure that this is at
+the start of the click,
+&gt;&gt; [music]
+&gt;&gt; and then let's make it so it goes really
+dark, and then it goes light again. So
+now it should click and it be really
+realistic, as you can see. Boop. And we
+can of course also select all of these
+keyframes. And if you hold Alt, you can
+even drag these keyframes out a bit, so
+it all goes a bit slower. Great. Now
+let's go to the next scene. I'm super
+excited. And for this next scene, we're
+going to of course use a cool
+transition. And what you see a lot is
+match cut, where basically a motion that
+happens in this first scene will
+transfer to the next scene. And in this
+case, I'm going to do that too. I'm
+going to make sure that everything in
+this scene moves to the left, and then
+the next scene cuts really hard and
+comes from the right. So let's start it
+with the transition first. I'm going to
+just use our null that we already have.
+Press P for position and set a keyframe.
+Now what I notice is that my cursor is
+not linked to the null. Let's do that
+first. So make sure that every layer
+except your background, which I'm going
+to unlink, is linked to this null. And
+now I'm just going to go a bit further,
+maybe something like half a second to a
+second, and I'm going to move everything
+to the left, something like this. Now of
+course, you want to easy ease these
+keyframes, so hit F9 on your keyboard,
+go into the graph editor, and make a
+nice graph that is nice and pointy,
+maybe something like this. We can
+quickly preview it just to see what that
+looks like. That is nice. I wanted to
+have a bit more movement, so let's
+change it so it's more to the left. This
+is nice. And now I also want to create
+depth to it, so I'm going to add 3D
+layers. In this case, I'm just going to
+make sure that the cursor is 3D, and I'm
+also going to make sure the null is 3D.
+Let's press P for position on the
+cursor, make sure we click on position,
+and make sure your playhead is on one of
+the keyframes. What we can do now is we
+can move it more towards the camera. I
+would say maybe something like minus
+2,000. And what will happen now also in
+the movement, you will see that there
+will be a bit more depth. The cursor
+will go quicker than the rest. That's
+exactly what I want. Now as you can see,
+the cursor did become a bit too big, and
+also the location is not perfect
+anymore, so let's move the location
+first, and then press S for scale. What
+I want to make sure is to select the
+scale and scale it down, something like
+this. That is very nice. So it goes like
+this, it moves all the layers to the
+left. Perfect. Now the trick is to cut
+it all off right on the moment where it
+goes the quickest. So if you look to our
+graph editor when we clicked on our
+null's position, basically I want to cut
+everything off right at the peak. So if
+you go out of the graph editor, I can
+select all of my layers excluding the
+background, so hold shift, hit Alt right
+bracket, and then here we want to have
+our next scene. Now for the next scene,
+we have feedback scattered across
+emails, WhatsApp, Slack, and Frame
+without a clear overview. Basically,
+what I want to do is I want to have all
+of these feedback windows floating
+around. And for this, I'm going to reuse
+this shape that we already created. Just
+saves a bit of time. So let's find our
+original shape. Let's unlink this for
+now, or unparent it. And then let's move
+this to the right, and let's move this
+on top of everything. Now I'm also going
+to do the same with the text, command D
+to duplicate this and unlink it. Let's
+go to here. Make sure it's active and
+drag this above. I'm not going to link
+it yet to our null, we can do this
+later. But for now, I have the text.
+Let's make sure that this is animated at
+the right time. That works. I just of
+course need to change the positioning
+and stuff like that. So for example,
+what I'm going to do is I'm going to
+type here Gmail. I'm going to change
+this text into a paragraph by going to
+the text tool and then right clicking,
+convert to paragraph text. I also have
+some feedback here. This is fake
+feedback that I generated using Chat
+GPT, maybe something like this. Can now
+move this over nicely, maybe move this
+around here. Let's import some icons
+that I downloaded. They're not all
+perfect, but that's fine. Start out with
+Gmail. So press S for scale, way too
+big, and I'm going to make this nice and
+small to make it nice and luxurious,
+maybe somewhere like this. This works.
+Nice first feedback message. I'm going
+to of course make sure that this is
+a bit more thin by clicking on the shape
+and changing the size here. Now I also
+want to move it a bit, so it's nicely
+aligned. There we go. And to make this
+even nicer, we can also add a bit of a
+feathering to this by going to the
+rectangle tool, selecting the text, and
+then just dragging a rectangle something
+like this, pressing F for feather, and
+then feathering it by quite a lot, make
+it look a bit more luxurious, and it
+also makes it look like there's more
+text at the bottom. Maybe a bit too much
+feedback, but I think it also works
+fine. Now, we don't even need much
+animation because the text is already
+animated. I do want to, however, make
+the logo appear nicely. So, what I'm
+going to do is I'm going to cut this
+off. I'm going to press P for position,
+set a keyframe, and then T for
+transparency, set a keyframe, press U,
+drag these out. And why I do this? Just
+to make sure that it's matching the text
+a bit. I can also, of course, like make
+it bounce, scale up, things like that,
+but it sometimes doesn't have to be that
+crazy. We can just keep it minimalistic,
+and that's also the nice thing about
+these software-as-a-service product
+videos is that a lot of them they're
+nice and minimalistic anyway. So, having
+it like this can just work really well.
+Cool. And now that we made our first
+one, we have three more to go. In terms
+of placement, what I'm going to do is
+I'm going to just make sure that all of
+these layers are nicely cut off. So, I'm
+going to select them, and I'm going to
+cut them off, and I'm going to make them
+3D. And now we have our animation, as
+you can see. What I'm going to do now is
+I'm going to link the text and the Gmail
+logo. Let's move this down, so it's all
+together. Let's select them all and link
+it to the shape. And because they're all
+3D now, we can just move this shape in
+3D space. Let's move the Gmail logo
+below the null object just to make sure
+that these are all nice together. So, we
+have the Gmail logo, text, and we have
+the Gmail, and then we have the shape
+layer. I want to basically link this all
+to the shape layer. And because the
+shape layer is 3D and the rest is also
+3D, we can now move it more towards the
+camera. And this is important later on.
+Now, I can move this a bit to the left,
+for example, move this maybe a bit up,
+and we can even scale it down if it's
+too big. So, pressing S for scale, we
+can also scale that down. Cool. Now that
+we made our first one, I'm going to go
+to the next one. And this is really
+simple. We can just select all of these
+layers. It's command D or control D on
+Windows, and then move this above it. We
+can select the shape layer, move this
+maybe towards the right, move this down
+a bit, maybe press P for position, then
+move it a bit more to the back. Then go
+to the text tool, and we can change the
+Gmail to Slack. Then we just need the
+Slack icon, make the 3D, turn it on, and
+it's way too big. Now, trick to get it
+to the same spot, we can just go to the
+Gmail logo, open this, and copy the
+transform. So, I'm just going to copy
+that. Going to go to the start, and
+before we paste it, just make sure that
+this is also linked to that shape layer,
+and then paste it. And as you can see,
+it will be on the exact same location.
+Maybe it's not big enough. Let's see.
+Actually, this is perfect. If it is not
+big enough because you have a different
+icon, that's totally fine. Then we have
+to go into S for scale and scale it up a
+bit. In this case, I can just delete the
+Gmail logo, and there we go. We have
+Slack. The only thing I now want to do
+is replace this feedback. I have another
+feedback line, so I can just copy over
+this feedback. Let's paste that in
+there. There we go. Now, I am also going
+to change the shape so it's a bit more
+thin, maybe something like this, just so
+it fits the scene a bit. Let's move the
+Slack also, so it's nicely tucked
+together. Select all of these, and we're
+going to move this down a bit, so it's
+nicely centered in that shape. Look at
+the padding. Two more to go. So, again,
+I'm going to use the Slack one now. So,
+let's select those, command D, drag it
+up, bloop. Get the shape layer, press P
+for position, let's move this a bit,
+maybe down here, maybe a bit more
+towards the camera. This one is going to
+be WhatsApp. Let's get the WhatsApp
+logo. There we go. And same thing that
+we did before, we can just drag this
+down, so it's nicely tucked together,
+make it 3D, link it to the shape, and
+then copy the transform. This is a bit
+the same as the Slack logo, and let's
+paste in some more fake feedback. There
+we go. Nice. One more to go. Again,
+command D. You know the drill. Now, as
+you can see, it's quite boring, and
+that's because we still need to add the
+animation. And the cool thing is is that
+we created that null, right? And we have
+a transition on this already. So, what
+we can do now is we can select all of
+the shape layers. So, shape 1 2 3 4,
+we've selected them all. We're going to
+link them to the null while making sure
+that we're a bit further in the
+timeline. You just need to make sure
+that you're behind this keyframe. And
+then, once we go back to the front, you
+will see
+that they will all move with the motion.
+So, if we play this transition, as you
+can see, we have this really nice match
+cut. Now, what is missing is continuous
+motion. This is a mistake that a lot of
+editors make. It just makes it really
+boring. We're just looking at a static
+frame, nothing is happening here. And to
+do so, what I'm going to do is I'm going
+to go to layer, new, null object. I'm
+going to link the current null to this
+other null, and we can also make the 3D.
+It doesn't have to be, but we can now
+press P for position, set a keyframe,
+drag this to the center of this other
+transition, go a bit further, and then
+move it. And basically, what this will
+do, it will make sure that even after
+this transition has happened, we will
+still have some movement in our image.
+I'm even going to adjust our transition
+a bit, so it's more dragged out like
+this. The only thing we need to make
+sure is that that peak is still at this
+center point. So, let's go into the
+graph editor, and let's make sure that
+peak is indeed in the center. There we
+go. Now, I'm not sure about the
+placement. I'm going to make sure that
+this Gmail is set a bit more to the
+right, so it it doesn't fall out of the
+screen yet. And maybe the Slack a bit
+more to the top. Now, I'm also going to
+offset everything a bit because now
+everything comes in the screen at the
+same time, and that always is a bit
+boring. So, to do so, I'm just going to
+select a few layers. For example, I'm
+going to select the frame one, which is
+this image and this text. Let's move
+this a bit, so this comes in a bit
+later. Same thing with WhatsApp, just
+like that. Again, just so there's a bit
+of visual variety in there. Now, let's
+go to the last scene. And that is scene
+three, and as you can see, edit from
+Solves this by bringing everything into
+one place, project feedback files, and
+communication design specifically for
+working with video editors. I want to
+basically have maybe a circle or maybe
+an element in the center with all of
+these points, or projects, feedback
+files, communication, have that linked
+to it. But before we do, I want, of
+course, another transition. Now, I'm
+going to already set up the next
+transition, and that is a scale
+transition. I want to basically zoom
+through this. And to do so, I'm going to
+create another null. Let's go to layer,
+new, null object, link this null two to
+null three, make it 3D, and we're going
+to press P for position, set a keyframe,
+and let's go a bit further.
+Also, make sure that all of these layers
+are not cut off, alt right bracket.
+There we go. And I'm going to zoom
+through it. And the cool thing is
+because these are 3D already, there will
+be some motion. And because we created a
+new null, we can even start this motion
+a bit earlier. So, maybe move this
+keyframe to around here. And of course,
+like always, hit F9 on your keyboard,
+make sure there is a nice graph to this.
+Nice and smooth. And again, right at the
+peak, I'm going to select all of the
+layers that we don't want anymore, which
+is our which are these. So, let's cut
+them off. I don't want to see them
+anymore. And actually, what I also want
+to do is I want to change the
+background. So, in this case, we have a
+nice light background. I want to change
+it to a bit of a darker scene. So, I
+also want to cut this off. However,
+there's a trick for this. Basically, I
+want to go to the peak again. As you can
+see, all of these layers are cut off.
+I'm going to hit command shift D,
+control shift D on Windows. So, this
+will become a different layer. Now, we
+can go into the effect controls and
+change the colors to something dark,
+maybe like this. And let's use the
+eyedropper tool on the others. There we
+go. So, we have this really nice,
+elegant background. So, once it zooms
+in, we have this next background. Now, I
+actually generated this a fake logo that
+I want to use now. I might want to
+include this icon, too, but for now, I
+just want to have a text animation. So,
+let's just use the text tool. I'm going
+to type here edit from Let's turn off
+the image for now. Let's make this a bit
+bigger, and let's select the from, and I
+want to change this fill to black, press
+okay, and then right-click on the text,
+layer styles, gradient overlay, change
+the blending mode to screen. So, now the
+gradient will just be applied to the
+black text, and let's click on edit
+gradient, and I'm going to change this
+to a nice light blue that we had to
+maybe something like this. That already
+looks really clean. I really like that.
+Now, what I do want to, of course, make
+sure that it's aligned in the center.
+So, let's align that nicely. And for the
+animation, I'm going to use a cool
+technique. Hit animate, and then
+position, and then again on animate,
+enable per character 3D, so we can
+change the 3D position of this. And this
+will all make sense in a bit. We can go
+now into the position and move that a
+bit towards the back, maybe something
+like 1,700. Then I'm going to add
+property, opacity, set this to zero, and
+then we're going to do the same thing
+that we did before. We're going to go
+into the range selector, I'm going to go
+into advanced, and I'm going to change
+the shape to ramp up, ease low, 100%,
+and then I'm going to animate the
+offset. So, let's set a keyframe for the
+offset, minus 100 to
+100%. Now, let's close the text, and
+let's, of course, make sure that this is
+nicely aligned. So, basically, once this
+starts, we want to also have this start.
+This looks nice. Now, I want to circle
+around this, and let's go to the ellipse
+tool. Let's change the fill to a radial
+gradient, okay. Go into the radial
+gradient, and I'm going to make it so it
+goes from really dark, something like
+this, to maybe a bit more light bluish
+or really dark bluish. We can always
+adjust this later on. Press okay. And
+then lastly, I'm going to add a stroke
+to this. So, click on the stroke, and
+let's see if we can use the same bluish
+color. Maybe it's a bit too bright, but
+we can adjust that later on. And then
+let's drag our ellipse. Hold shift to
+make sure that it's a nice and round.
+There we go. Press V for the gradient
+and then I want to adjust that a bit to
+be something like this. And as you can
+see, we already have a nice cool
+ellipse. Want to make sure that this is
+below our text. And of course, I want to
+also make sure that this is aligned in
+the center. And we can even make this a
+bit more transparent just so it blends a
+bit better in the background. And now we
+have four keywords, right? Project,
+feedback, files, and communication. I'm
+just going to keep it minimal. I'm just
+going to add some circles to this. So
+let's go to the ellipse tool and let's
+turn the stroke off. So I'm going to
+turn that to none. And for the fill, we
+can also keep it a radial gradient, but
+I want to change it to linear. It's just
+a bit easier to work with. And let's
+make some nice blue balls. I'm going to
+make it so it's they're a bit more
+light. Maybe something like this. And
+the trick here is also to go to
+brightness. B for brightness and then we
+can increase the brightness and we can
+go to S for saturation and decrease the
+saturation a bit. There we go. Press
+okay. Let's just make one just to see
+what this will look like. Hold shift. I
+don't want my blue balls to be too big.
+Something like this. So let's go into
+the selection tool. Change this gradient
+and I want it nice and light cuz it
+looks nice and fresh. Cool. Let's move
+this. And if you hold to command, it
+will snap into place, which is really
+nice. That's what we want. Now once you
+align this perfectly, I'm going to show
+you a nice trick. Basically, what I'm
+going to do is I'm going to duplicate
+the shape layer
+three more times. So 1 2 3. So we have
+four balls and we're going to link the
+first one to our ellipse that we made,
+which is this background orb. We're
+going to press R for rotation and I'm
+going to set this to 90°. That's one.
+And then link the next one. Set this to
+180°. There we go. Link the next one.
+Set it to 270 and link the next one.
+There we go. So now they're perfectly
+aligned, which is really nice. Now what
+you can do, we can already link this
+shape now to the null that we created
+before. And I'm just going to link it to
+the null one, which is the easiest. And
+as you can see, it will now move with
+it. I want to of course, like before,
+cut this off. So select all of the
+layers in the new scene. Hit alt left
+bracket to cut it off. So now we have a
+really cool match cut, as you can see.
+However, what I don't like is the added
+from the animation goes way too quick. I
+want to change this so it goes a bit
+slower. That will make it a bit more
+elegant. I want to make the shape or the
+ellipse smaller, something like this.
+And then of course, we can make it
+rotate on the Z axis. So let's also do
+that. Maybe set this to something like
+212 to 270. It eases nicely. Go to the
+graph editor and let's drag this
+something like this. I'm even going to
+start this rotation already a bit
+earlier. So it's already rotating. As
+you can see, you have this really nice
+match cut. And then once the animation
+is stationary, as you can see, there's
+no movement anymore. I'm going to add
+one more transition. And since
+everything is linked to this last null
+anyway, we can just use this null for
+that. I'm going to set a keyframe for
+the position and a keyframe for the
+scale. I'm going to go one frame further
+and I'm going to press S for scale
+again. Going to scale it up by a lot.
+Let's move this. Now your text might be
+acting weird. That's because we're using
+that enable per character 3D. Now to fix
+this, we can just go into the text,
+press P for position, and just make sure
+that it's moved more towards the camera.
+So in this case, I'm just going to set
+the P from position on the text to zero
+and then I'm going to press S for scale.
+I'm going to scale it down a bit.
+Something like this.
+Nice and small. Let's center this a bit.
+So as you can see, we now have that null
+movement and now it's perfect. What I
+also want to do is press U on the
+keyboard, select these first two
+keyframes, right click, toggle hold
+keyframe. And that is important if we're
+going to add motion blur later on, which
+I do also want to add to all of our
+layers. And once it's here, I want it to
+have continuous movement. So I'm going
+to go a bit further and I'm going to
+move it from left to right. Something
+like this. Let's also make sure it's a
+bit higher. Copy this over. Go a bit
+later.
+Paste this. Let's move it even further.
+So there's just a a nice smooth motion.
+We can even turn this in a normal
+keyframe. So right click, keyframe
+interpolation, and let's change this
+back to linear. So it's a linear
+keyframe. So we have a nice slow
+movement. Same with this one. Keyframe
+interpolation, linear. So if you were to
+play this now, we'll have this really
+smooth motion. Now I'm going to add the
+text, but before I do, I also want to
+make sure that the rotation of the shape
+doesn't end that soon. I still want it
+to animate a bit while we're here. So
+let's drag this out. So really that last
+animation happens here. There we go. And
+then it's really simple. I'm just going
+to add a text. We can even duplicate
+this text that we already have here. So
+duplicate that. Move that to the right
+and we can change this to projects. Now
+this is way too thick and way too big.
+So let's select this. Make this a bit
+smaller in terms of font size. Let's
+move this. Make sure it's aligned nicely
+somewhere around here. And then in terms
+of animation, let's go into the text.
+Open the text. And I can just use the
+same animator. However, I do want to
+change the position. Now it's using 3D
+depth. I think that's a bit too much.
+Let's set this to zero and let's make
+sure it comes from the top. And let's
+make sure the alignment is so it starts
+here. So we have this nice text just
+like that. It's like projects. I think
+it looks really clean. It also aligns
+with this motion of this rotation. I'm
+just going to do this again for the
+other three. And to do so, I'll show you
+another trick. So what we can do now, we
+can link this to the shape layer. And
+that is of course the circle that we're
+animating. If you now set a keyframe for
+that Z rotation, we go a bit further and
+and we set this to zero, it will go to
+the next circle. As you can see, and we
+set this to one rotation and then 0°, it
+will animate to the next circle. And it
+will look a bit lame because the
+projects will move with it and I think
+that looks a bit stupid, but we can work
+with this. We just need to drag this
+keyframe out. Go into the graph editor.
+Make sure this is nice and smooth. So it
+eases in and eases out. So let's just
+drag this out. And then what I'm going
+to do is I'm going to just fade out the
+projects. So let's press T for
+transparency. Set a keyframe and just
+fade it out once it goes down. And once
+we enable motion blur with this, it will
+also look way nicer. So it just looks
+like this.
+And then we go to the next one. And to
+get the next one, it's really simple. We
+just go back here where we can still see
+our text. We duplicate the projects. For
+now, we're going to unlink it. So let's
+set this to none. We can go a bit
+further. Wee. Till it's right here. And
+then I'm going to link it again. And I'm
+also going to drag it out so it aligns
+nicer with the animation. So now we have
+our next text. I'm going to make sure it
+starts a bit later. Might have to move
+it a bit to the left. So we have the
+first one, second one, and we can put
+the text here. Feedback. Maybe we have
+to align it a bit different and so forth
+so forth. And let's do this with the
+others, too. Now one more thing. I'm
+going to select everything and enable
+motion blur. And then you get something
+like this. Again, if you want the full
+deep dive, the project file, learn more
+about minimalistic SaaS product videos,
+and the whole ideation process, then do
+join the Full Stack Editor Club. Link is
+in the description. People in the club
+have been getting amazing results. Do
+also drop a comment what you want to see
+next. Don't forget to subscribe and then
+I'll see you in the next one. Bye-bye.

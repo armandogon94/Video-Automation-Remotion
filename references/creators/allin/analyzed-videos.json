@@ -1,0 +1,139 @@
+{
+  "creator_handle": "allin",
+  "analyzed_count": 12,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "5bSGrQou4Lo",
+      "title": "YouTube CEO Neal Mohan on AI, Censorship & Creators",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=5bSGrQou4Lo",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 137,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "5nCbHsCG334",
+      "title": "Satya Nadella on AI's Business Revolution",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=5nCbHsCG334",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 152,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "ElhxzUO7YQM",
+      "title": "California Forever: The Startup Building America's Next Great City",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=ElhxzUO7YQM",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 67,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "G2KvA4QD-IY",
+      "title": "Rick Caruso on California's Collapse",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=G2KvA4QD-IY",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 116,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "KG_nHmHUZLw",
+      "title": "Ari Emanuel: AI, Attention, and Ownership",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=KG_nHmHUZLw",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 134,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "R1q4wcV-ImY",
+      "title": "Orlando Bravo's Private Equity Playbook",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=R1q4wcV-ImY",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 140,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "TKtIoF4yLos",
+      "title": "Sequoia's Roelof Botha on VC",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=TKtIoF4yLos",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 136,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "XXPISZI_big",
+      "title": "Bryan Johnson's Best Health Hack: Lower Your RHR Before Sleep",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=XXPISZI_big",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 67,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "_m_jwz5hzzw",
+      "title": "How Chamath Optimized His Health",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=_m_jwz5hzzw",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 74,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "eWE6xmHu6Jw",
+      "title": "The Next Bubble Is Already Here - Chamath Palihapitiya",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=eWE6xmHu6Jw",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 71,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "ijbLOWFmVe8",
+      "title": "Multicoin Capital's Kyle Samani on Internet Capital Markets",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=ijbLOWFmVe8",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 78,
+      "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "oNJ_ouDNNT0",
+      "title": "Cathie Wood on AI/GDP, Bitcoin $1M, Elon's Trillion-Dollar Pay",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=oNJ_ouDNNT0",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 101,
+      "clip_count": 3,
+      "has_metadata_json": false
+    }
+  ]
+}

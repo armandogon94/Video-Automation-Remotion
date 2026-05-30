@@ -1,0 +1,345 @@
+ 
+I'm no video editor, so these kinds of
+motion graphics in my videos seemed
+completely impossible for me. But I'm
+going to show you today how you can
+recreate these in just seconds using AI
+and personalize them to your content
+using a tool called Remotion. So, let's
+dive in. Of course, even as a non-motion
+graphic designer, you could use
+templates and insert them into your
+videos, but I always found that those
+didn't quite match the vibe of my video,
+didn't quite match my branding, and
+weren't easy to personalize with my
+content. Here's just a few examples of
+graphic designs that I made using
+Remotion. Here's a ven diagram that you
+can insert your own content into. Here's
+one where I drew inspiration from a
+static graph and turned it into an
+animation. And this one I actually took
+inspiration from Ali Abdal's video and
+recreated it. All right, let's go ahead
+and install Remotion on your machine. I
+will assume that you've already
+installed cloud code which you'll need
+to be using Remotion and kind of
+prompting your motion graphics with.
+Step one is to go to reotion.dev/doccks
+and you'll end up on this page. We're
+going to copy this and we're going to
+open our terminal and we're going to
+copy paste this in. So now it's going to
+ask us how we'd like to start our first
+project and we're just going to go with
+blank. You can switch between these
+using your up and down arrow keys. Let's
+go ahead with blank. And then we're just
+going to enter every time we accept
+something. Yes, we want to add Tailwind
+CSS. That's what they use to do the
+emotion graphics with. And then yes. And
+add agent skills to Claude. Right. So we
+want Remotion as a skill. So every time
+I'm just pressing enter as a key here.
+All right. It's asking us which agents
+to install. And we're just going to go
+with the recommended. So enter.
+Installation scope project sim link.
+Just accept whatever they're saying
+here. proceed with installation. Done.
+Install the fine skills. So this is how
+you can actually call the remotion skill
+in cloud code. We're going to go with
+yes.
+Perfect. So here you have some commands
+to call the skill with to start creating
+your motion graphics. So here we have
+the name of the project which is going
+to be in your home directory. As you can
+see here, it's called my video. to look
+into this file. You can actually go cd
+as a command in my video. So just open
+that folder and then uh you can run
+remotion. So let's open a new tab here
+and we're just going to go
+claude.
+Yes, I trust this folder. So before we
+start, just navigate to my video which
+is the correct f folder.
+Yes. And now npm rundev.
+And that's basically going to open up
+remotion in Chrome. So we can actually
+view whatever motion graphic we're
+making or creating.
+Over here we can see that that command
+opened up remotion for us. And this is
+actually where we're going to see every
+motion graphic that we prompt just be
+created as a new composition as they're
+called. So on the left here we have our
+compositions. This one doesn't have a
+name yet. We can rename it. But whenever
+we start making them, they'll just
+automatically be added there in
+Remotion. Um, and you can actually view
+what's being done here, as well as
+render them in the end. But we'll go
+over that. Now that we've set up
+Remotion on our machine, we can actually
+start grabbing inspiration for motion
+graphics that we'd like to recreate in
+Remotion. So you can think of any graph,
+any title page, any diagram that you'd
+like to recreate. I will preface this by
+saying that some things work better in
+reotion than others. So try to keep it
+simple initially um and not too
+complicated. Things like arrows are kind
+of hard to recreate. But I'm going to
+show you how I created the four videos
+that I showed you at the start of this
+video. And we're just going to recreate
+them together. I'll show you exactly
+where I find inspiration for motion
+graphics. So you can actually start
+building your own inspiration folder as
+well. The first place I go to for
+inspiration for motion graphics or
+diagrams that I'd like to animate using
+remotion is Pinterest. Now you might
+think that most things on there are
+static and that is true, but that's
+okay. We can actually animate a static
+image and that's kind of the power of
+using Claude and Remotion to create
+animations like this. So, this one
+actually happens to be a GIF, but we can
+actually feed that to Claude and it can
+use it as inspiration to recreate this
+as a motion design. I don't want the
+Polish currency in my graph, but I want
+to make a graph about my newsletter
+subscription growth. So, we're just
+going to go ahead and save this image as
+something. So, let's say graph. And I
+actually have in my home directory a
+folder called animation examples which
+we're going to save this to.
+So we've saved that to graph. Now we're
+going to head back to our terminal and
+we're going to ask claude to recreate
+this using remotion. I'm just going to
+copy this
+command C and then command V. And then
+I'm going to tell it to use this as
+information inspiration to create a new
+composition.
+It's going to ask us if we want to
+proceed and we're going to say yes.
+Now, in the background, we can actually
+see when we go back to Chrome to our dev
+environment, it created this animation.
+So, let's play it and see how good of a
+job it did.
+Nice. So, that's super close to the
+image that we fed it, right? Of course,
+as I mentioned, I want this to be about
+my subscription or my newsletter
+subscription rate going up. So, we can
+actually just prompt that using super
+literal terms to make amendments here.
+I'm going to say make this an upward
+graph showing
+newsletter
+subscription subscriber growth to 12,500
+subscribers.
+It's so cool to see how it actually
+comes up with the code for these graphs
+and the actual motion design. So, you
+have some context there. Let's see what
+it came up with here.
+Nice. So much for our first recreation
+of the videos I showed you initially.
+Let's do another one. Now, let's head
+back to Pinterest and do another one
+from my inspo folder. Personally, I
+really like this one and I've already
+saved it to my inspo folder. So, I'm
+just going to drop that into cloud and
+ask it to turn it into a motion graphic.
+So, here's my example.
+And here you can see by just drag and
+dropping it the images here.
+I'm just telling it to change the labels
+of the bar because they're just an
+example. I'm going to say change the
+labels of the bars to Q1 to Q4 and
+change the graph title to I don't know
+marketing performance
+2025 just to switch it up. Cool. So
+Claude has been cooking and we're going
+to see how well of a job it did with
+this one. Here we go. Let's play this
+one.
+That's so cool. I'll be very honest,
+I've tried this one a few times and
+every time the result is different. So
+that's really cool to see. Something
+that's good to know is that you can also
+feed this your own data. So let's say
+you have an Excel spreadsheet with some
+with some data that you could turn into
+graphs. You can just upload that to
+Claude and make the motion graphic super
+realistic just increasing and following
+your own data. Before I show you how I
+draw inspiration from YouTube, let's do
+one more drawing inspiration from
+Pinterest. And we're going to be looking
+at this ven diagram. I think ven
+diagrams are so cool, but whenever you
+use a template, I can't get them to be
+personal to my content. So, I've already
+saved this to my inspiration folder. As
+always, we're going to go ahead and open
+Claude again,
+grab this from my folder, and again,
+drag and drop. So, this is called image
+two because it's the second image in our
+chat. And we're going to say, animate
+this ven diagram.
+I find that the best thing to do is just
+to give it an image and see what Claude
+comes up with first because the more
+information you give it initially, the
+further away or the more room for
+interpretation there is for Claude. So,
+let's see how good of a job it does for
+now. And then we can always change the
+text, the font, or even the layout of
+the video and make it horizontal. Let's
+go open this in Remotion and see how
+well it did.
+Okay. So, there's room for improvement
+here, but we can see that it did a
+pretty good job. So, here you just have
+to prompt the font to be smaller. Um,
+and maybe we could even make this
+horizontal. So, we can say make the
+diagram horizontal
+and make sure center font isn't
+yellow.
+intersection.
+These singing verbs in Claude actually
+send me every time and I can't wait to
+turn them off.
+Flipp
+fling.
+That's nauseiating. Cool. So, my bestie
+said that we're done. So, let's go ahead
+and see what it came up with here.
+Awesome.
+This is exactly what I wanted and it did
+it in two tries. So, we can see that the
+fonts on the sides are a bit off, but
+you can basically go in um to a little
+bit of this CSS here and just check like
+what the height should be. Uh move it
+lower or you can just describe that in
+literal terms. Now I'd like to show you
+the second way I find inspiration for
+motion animations and that is while
+watching videos. So the way this
+workflow works is with one additional
+step which is just that we can't upload
+video directly to clots. So we just need
+to analyze it frame per frame. So the
+options you have here are let's say you
+saw this Ali Abdal video and you like
+the motion graphic that's coming up. You
+can use TA to record your screen and
+just save that video for reference. Or
+you can use a tool like uh QuickTime or
+Clean Shot to do that as well. I'm using
+Tela, so I'm just going to show you in
+quick shot. Uh Clean Shot, sorry.
+And I'm just going to save that to my
+inspiration folder as always.
+Just going to rename that
+Okay, so I've already mentioned that we
+can't just drop videos into Claude code
+directly. So we're just going to use a
+tool called ffmpeg to analyze each frame
+of the video that we've provided and ask
+Claude to create a similar animation. So
+here I'm going to tell it where to find
+my inspiration file. Use ffmpeg
+to analyze
+in animation inspiration
+folder
+here and let's see
+animation
+where words come in one by one.
+Okay, so terminal is asking me if it can
+if it can access uh folders. Yes, it
+needs to access it. It's asking me to
+get some video data. That's fine. So now
+it got the description of the video. You
+can see here cream background with
+decorative wavy shapes, icon at the top,
+rounded square, and then the words that
+were in the original animation. So that
+did a good job. And now it's creating a
+similar composition. Cool. Let's see how
+well of a job it did by going over here.
+And we're just going to play this.
+I think that did really well. If we go
+back to our original inspo pick,
+inspo video, we can see that it's
+somehow interpreted
+red for the ages. But if anything, it
+looks even better. It kept the same
+colors and the same style. And then the
+only thing that it didn't do very well
+is to have a wavy uh background. But you
+can always prompt that um and add that
+there. Okay, so we're at the end of our
+demo and I just want to show you how you
+can use any of these animations in Tela
+using the upload clip feature. You can
+do this for any other um video tool as
+well. Now, once we're done and we're
+ready to use this, we're going to go
+ahead and render this. And we select the
+quality here. All right, let's go ahead
+with the highest quality ProRes. And
+let's call this
+top.
+Cool. Let's open this. And here we can
+see that we have our title page ready to
+use in our videos. Okay. So now this
+video is actually ready to be used in
+Tela. We're going to head over to Tela.
+We're going to go add clip, use web app,
+and we're going to go upload. And we're
+going to drag and drop this file in
+there. For now, in Tala, this works best
+for title pages. So, let's say you
+wanted to switch between sections or
+chapters in your video. You can actually
+use a motion animated title page. So,
+this is what this would look like as a
+title page.
+And then it would just go into the rest
+of your video. I know I'll be using this
+to jazz up my videos. If you want more
+tips on how to make your videos stand
+out, whether it's in Tela or not, be
+sure to subscribe to our YouTube channel
+cuz we'll be sharing more videos very
+soon. And I can't wait to be using this
+to level up my presentations and level
+up my

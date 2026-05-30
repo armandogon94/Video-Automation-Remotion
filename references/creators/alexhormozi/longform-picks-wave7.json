@@ -1,0 +1,112 @@
+{
+  "voter": "wave7",
+  "date": "2026-05-27",
+  "selection_methodology": "Continuation of Wave-6 with 15 ADDITIONAL videos (no overlap with the 11 unique videos picked across Wave-6 vote1 + vote2). Filtered the most recent ~100 long-form videos from @AlexHormozi/videos and dropped duration <= 600s. View counts unavailable via yt-dlp flat-playlist on this run (NA), so picks driven by title heuristics + explicit diversity goals: (a) extend the case-study chassis sample (more strangers), (b) extend the listicle sample (26-item, 4-item, TIER LIST formats), (c) extend the masterclass tier (2.7h and 7.5h outliers), (d) extend the brand-breakdown sample (Ryan Reynolds, $600M bacon CEO), (e) add an interview format (Dave Ramsey) which was absent from Wave-6, (f) add the math-overlay-likely format (Mathematics of Business), (g) add explicit rhetorical-myth format (Biggest MYTH). All 15 are duration > 600s (long-form, not Shorts). Excluded the 11 already analyzed: OQf2Ba-Lp_4, 3fsJFUvA6Ts, hHkdbr6_JJs, rMJIOK_FgJk, 9q5ojtkqsBs, XGm2ERU9qtA, JDR-R--4HhM, qsXxckCbci0, _KlZoPxbStk, 3SVksBB3_YY, nSQdjim8CsE.",
+  "picks": [
+    {
+      "id": "MH-IMJxbUY4",
+      "title": "Building a $12,000,000 Business for a Stranger in 25 Minutes",
+      "duration": 1487,
+      "view_count": null,
+      "reason": "Acquisition.com case-study format — wave-6 only sampled one ($2.5M). The $12M variant tests whether higher-revenue case studies use the same TwoCamInterviewSlide chassis or upgrade the chrome. Likely heavy on revenue tables, money-flow diagrams."
+    },
+    {
+      "id": "Jmkq5RLjm0U",
+      "title": "If I Wanted To Grow An Audience In 2026, I'd Do This",
+      "duration": 9634,
+      "view_count": null,
+      "reason": "2h 41m masterclass — tests whether the 80-min ZERO-overlays rule from wave-6 (qsXxckCbci0) extends to even longer formats, or if 2h+ unlocks new pattern density. Title implies social-media tactics so might use platform UI screenshots."
+    },
+    {
+      "id": "A_tx40lNpf8",
+      "title": "The Mathematics of Business, Explained",
+      "duration": 3744,
+      "view_count": null,
+      "reason": "62-min explicit math-themed masterclass — high probability of equation-burn captions (M24 deepening), whiteboard math (H6 confirmation), and possibly NEW patterns like animated formula derivations or graph plots."
+    },
+    {
+      "id": "i7bLRKwKSms",
+      "title": "How I Would Build a Business in 2026 (If I Had to Start Over)",
+      "duration": 1622,
+      "view_count": null,
+      "reason": "27-min 'If I Had to Start Over' framing — Hormozi signature rhetorical template. Tests visual treatment for the 'start over from scratch' angle. Replaces the originally picked 7.5h outlier (vhOV_Od0A3M) which exceeded the per-video bandwidth budget on this run."
+    },
+    {
+      "id": "YONIUpk-kAs",
+      "title": "26 Harsh Lessons I Learned in 2025",
+      "duration": 6153,
+      "view_count": null,
+      "reason": "26-item listicle — denser than wave-6's 15-truth anchor. Direct corroboration test for HormoziTweetCardListicle (H1+H2+H3) at higher item count. Critical for confirming the paginated listicle pattern scales."
+    },
+    {
+      "id": "6BQ3whjWG3M",
+      "title": "How the Top 1% Actually Think About Money",
+      "duration": 1683,
+      "view_count": null,
+      "reason": "Wealth-tier framing — 'Top 1%' implies ranked hierarchy / percentile visualizations. Tests whether Hormozi uses cumulative-distribution graphics, pyramid graphs, or other wealth-hierarchy idioms beyond the 4 already cataloged."
+    },
+    {
+      "id": "N5MExtki_VI",
+      "title": "If I Wanted To Scale A Service Business In 2026, Here's What I'd Do",
+      "duration": 3421,
+      "view_count": null,
+      "reason": "57-min strategy-teaching format. Long enough to surface multiple distinct patterns. 'If I Wanted to' framing is Hormozi's signature rhetorical template — tests whether this framing has dedicated visual treatment."
+    },
+    {
+      "id": "Mst4hreQYl0",
+      "title": "Watch This To Generate 1000s of Leads (In Any Niche)",
+      "duration": 1892,
+      "view_count": null,
+      "reason": "Marketing-tactics video — likely includes funnel diagrams, conversion-rate graphics, platform UI screenshots (Meta, Google ads). Probes territory adjacent to JDR-R--4HhM (marketing) at half the length."
+    },
+    {
+      "id": "Wr6n_zNKvMk",
+      "title": "Building a $1,000,000 Business for a Stranger in 69 Minutes",
+      "duration": 4184,
+      "view_count": null,
+      "reason": "Longest case-study format (69 min) — direct comparison to OQf2Ba (36 min) to see if TwoCamInterviewSlide scales to 70-minute runtime with additional chassis variants."
+    },
+    {
+      "id": "npi7UeOE_0o",
+      "title": "I Ranked the Best Superbowl Ads 2026 [TIER LIST]",
+      "duration": 2018,
+      "view_count": null,
+      "reason": "EXPLICIT TIER LIST format in title — almost guaranteed to contain ranked-hierarchy graphics (S/A/B/C/D rows). Most direct test of the ranked-hierarchy claim possible. Could surface NEW pattern: TierListGrid."
+    },
+    {
+      "id": "-HJg4TYBgtI",
+      "title": "Watch These 51 Minutes if You Want to Grow Your Business in 2026 (Dave Ramsey Interview)",
+      "duration": 3059,
+      "view_count": null,
+      "reason": "INTERVIEW FORMAT — absent from wave-6 sample. Tests whether interviews use the case-study chassis, a different two-shot chassis, or pure handheld talking-head. New visual surface for the corpus."
+    },
+    {
+      "id": "orMbq2LtzKE",
+      "title": "He Makes $600,000,000/Yr Selling Bacon",
+      "duration": 5579,
+      "view_count": null,
+      "reason": "1h 33m brand-breakdown of a single CEO. Likely heavy on company logos, product photography, supply-chain diagrams, revenue charts. Different chrome than the case-study chassis — pure documentary breakdown."
+    },
+    {
+      "id": "BO_59sGxztY",
+      "title": "How to Become Ultra Wealthy (4 Methods)",
+      "duration": 3649,
+      "view_count": null,
+      "reason": "4-item enumerated listicle at 60min. Direct comparison to 3fsJFUvA6Ts (5 Things at 20min) — does the SAME perforated-ticket listicle scale to 60min, or do longer videos use a different listicle visual idiom?"
+    },
+    {
+      "id": "HwPXctiw_rY",
+      "title": "STEAL Ryan Reynolds' $1.3B Marketing Strategy [NO FAME REQUIRED]",
+      "duration": 3778,
+      "view_count": null,
+      "reason": "63-min brand breakdown (Mint Mobile / Aviation Gin). Different angle than orMbq2LtzKE — celebrity brand. Likely heavy on ad-clip cutaways, brand logos, before/after metrics, social media stat callouts."
+    },
+    {
+      "id": "kQFSiEDvXws",
+      "title": "The Biggest MYTH You Probably Still Believe",
+      "duration": 1509,
+      "view_count": null,
+      "reason": "25-min rhetorical-myth format — tests whether 'myth vs reality' has dedicated visual treatment (e.g., red-X stamp over old idea, green-check stamp over new idea, side-by-side wrong/right comparison)."
+    }
+  ]
+}

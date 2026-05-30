@@ -1,0 +1,12 @@
+{
+  "id": "BYpTRiRqS1Y",
+  "platform": "youtube",
+  "url": "https://www.youtube.com/watch?v=BYpTRiRqS1Y",
+  "title": "Helping 4 Educational Business Owners Build a $1M Business in 25 Minutes",
+  "duration": 1517,
+  "creator": "alexhormozi",
+  "scraped_at": "2026-05-28",
+  "wave": "wave-7-batch3",
+  "scrape_tool": "yt-dlp",
+  "rationale": "Multi-stranger case-study + NICHE-FILTER (educational businesses only). Tests whether niche-filtered case studies prepend a niche-banner / scope-chip to the chassis. Companion to 0EqJD2o (6-business) at lower density (4-business in 25 min)."
+}

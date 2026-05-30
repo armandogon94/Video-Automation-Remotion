@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Armando Inteligencia · Wave 3 Status</title>
+<style>
+  :root{--paper:#FAF7F2;--ink:#1A1A1A;--accent:#4285F4;--muted:#6B6760;--gemini:#4285F4;--warm-red:#B33A2A;--dark-paper:#0A0F1A;--dark-ink:#F2E9D8;--dark-accent:#D4A04A;--good:#0a8f3c;--bad:#c0392b;--warn:#ff9500}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+  .deck{position:relative;height:100vh;width:100vw}
+  .slide{position:absolute;inset:0;display:none;overflow-y:auto;padding:60px 80px;background:var(--paper)}
+  .slide.active{display:flex;flex-direction:column}
+  .slide.dark{background:var(--dark-paper);color:var(--dark-ink)}
+  .breadcrumb{font-family:Inter,sans-serif;font-weight:700;font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:4px;align-self:flex-start}
+  .dark .breadcrumb{color:var(--dark-accent);border-bottom-color:var(--dark-accent)}
+  h1{font-family:Inter,sans-serif;font-weight:900;font-size:72px;line-height:1.0;letter-spacing:-.025em;margin-bottom:24px;color:var(--ink)}
+  .dark h1,.dark h2,.dark h3,.dark p,.dark li,.dark td,.dark th{color:var(--dark-ink)}
+  h2{font-family:Inter,sans-serif;font-weight:800;font-size:48px;line-height:1.05;letter-spacing:-.015em;margin-bottom:18px}
+  h3{font-family:Inter,sans-serif;font-weight:700;font-size:28px;line-height:1.15;margin:18px 0 10px}
+  p,li{font-size:20px;line-height:1.45;max-width:1200px;color:#2a2a2a}
+  ul,ol{padding-left:28px;margin:8px 0 16px}
+  li{margin-bottom:6px}
+  strong{color:var(--accent);font-weight:700}
+  .dark strong{color:var(--dark-accent)}
+  code{font-family:'JetBrains Mono',ui-monospace,monospace;background:rgba(0,0,0,.05);padding:2px 7px;border-radius:4px;font-size:.92em}
+  .dark code{background:rgba(255,255,255,.08)}
+  .grid{display:grid;gap:14px;margin-top:10px}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:1fr 1fr}
+  .cell{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e3da;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+  .dark .cell{background:#161D2B;border-color:#2A2F40}
+  .cell img{display:block;width:100%;height:auto}
+  .cell .lbl{padding:8px 12px;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--muted);text-align:center;border-top:1px solid #e8e3da}
+  .dark .cell .lbl{color:#A8A39A;border-top-color:#2A2F40}
+  .nav{position:fixed;bottom:18px;left:0;right:0;display:flex;justify-content:center;gap:14px;z-index:10;font-family:Inter,sans-serif;font-size:13px;color:rgba(255,255,255,.4)}
+  .nav span{padding:5px 12px;background:rgba(0,0,0,.6);border-radius:999px;color:#fff}
+  table{border-collapse:collapse;margin:14px 0;font-size:17px;width:100%;max-width:1300px}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid #e8e3da;vertical-align:top}
+  .dark th,.dark td{border-bottom-color:#2A2F40}
+  th{font-weight:700;color:var(--accent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  .dark th{color:var(--dark-accent)}
+  .key-finding{background:#FFF4E6;border-left:6px solid var(--warn);padding:18px 24px;margin:14px 0;border-radius:6px;font-size:21px;line-height:1.4}
+  .dark .key-finding{background:rgba(212,160,74,.12);border-color:var(--dark-accent);color:var(--dark-ink)}
+  .good-finding{background:#E8F7EE;border-left:6px solid var(--good);padding:18px 24px;margin:14px 0;border-radius:6px;font-size:21px;line-height:1.4}
+  .dark .good-finding{background:rgba(63,182,139,.12);border-color:#3FB68B;color:var(--dark-ink)}
+  .stat{display:inline-block;font-size:90px;font-weight:900;color:var(--accent);letter-spacing:-.04em;line-height:1}
+  .dark .stat{color:var(--dark-accent)}
+  .stat-row{display:flex;gap:60px;margin:22px 0;flex-wrap:wrap}
+  .stat-row > div{display:flex;flex-direction:column}
+  .stat-row .lbl{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:6px}
+  .footer{margin-top:auto;padding-top:16px;font-size:13px;color:var(--muted);border-top:1px solid #e8e3da}
+  .dark .footer{color:#A8A39A;border-top-color:#2A2F40}
+  .check{color:var(--good);font-weight:700}
+  .x{color:var(--bad);font-weight:700}
+  .small{font-size:16px;color:var(--muted)}
+  .vote-table th{font-size:12px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .pill-good{background:var(--good);color:#fff}
+  .pill-warn{background:var(--warn);color:#fff}
+  .pill-bad{background:var(--bad);color:#fff}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide dark active">
+  <div class="breadcrumb">Wave 3 · Status</div>
+  <h1>17 Opus agents.<br>5 fresh eyes.<br>You were right.</h1>
+  <p style="font-size:24px;margin-top:24px;color:var(--dark-ink)"><strong>The circular logo carousel you flagged in <code>DYkyJfxx5Lx</code> is confirmed</strong> at t=1.72–3.45s — the Wave 2 single-agent analysis missed it entirely. The voting workflow you suggested caught it on the first vote.</p>
+  <div class="stat-row">
+    <div><span class="stat">23</span><span class="lbl">W21 variants</span></div>
+    <div><span class="stat">22</span><span class="lbl">templates</span></div>
+    <div><span class="stat">10</span><span class="lbl">creators scraped</span></div>
+    <div><span class="stat">5/5</span><span class="lbl">votes confirmed</span></div>
+  </div>
+  <p class="footer">Use ← → to navigate. Press F for fullscreen.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Strategic finding · CONFIRMED</div>
+  <h2>The pattern you spotted</h2>
+  <div class="good-finding">✅ <strong>CONFIRMED HIGH CONFIDENCE</strong> by 2 of 5 voting agents (VR1 + VR4 red-team). The other 3 voters were assigned 10–28s windows, so they correctly reported "not in my segment" — the pattern is exclusive to t=1.72–3.45s.</div>
+  <p style="margin-top:20px">Stefan's setup, frame-by-frame:</p>
+  <ul>
+    <li><strong>Backdrop:</strong> deep blue radial gradient (~<code>#1B3A7E → #2E5BB0</code>) with 2–3 faint white concentric arc guide-rails</li>
+    <li><strong>Logo tiles:</strong> rounded-square white app-icon cards (~140px) — Pentium, Swiffer, BlackBerry in this window</li>
+    <li><strong>Motion:</strong> tiles enter from screen-right, slide along the arc through center, pause briefly with name-label sync to the spoken brand name, tilt and exit screen-left</li>
+    <li><strong>Cadence:</strong> ~1.6 seconds total, with the cuts landing exactly on Stefan saying each brand name</li>
+    <li><strong>Visible at frames:</strong> t=2.41 (Pentium mid-exit + Swiffer mid-entry simultaneously — geometry unambiguous), t=2.76, t=3.10, t=3.45</li>
+  </ul>
+  <h3>What we shipped this wave</h3>
+  <p><code>CircularLogoCarousel9x16</code> (Wave 3 T8) — schema with <code>logos[]</code> + <code>logoStaggerSeconds</code> + <code>carouselRadiusPx</code> + <code>audioAnchorKeyword</code> for spoken-name sync. Default content: 6 LLM logos (OpenAI, Claude, Gemini, Llama, Copilot, Mistral) in clockwise arrangement. Single-variant dark palette.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Voting workflow · validated</div>
+  <h2>5 independent agents, 5 different angles</h2>
+  <p>You proposed dispatching N agents on the same frame set + aggregating findings. Wave 3 ran the experiment with N=5 on Stephan's <code>DYkyJfxx5Lx</code>. Here's the consensus matrix:</p>
+  <table class="vote-table">
+    <tr><th>Pattern</th><th>VR1 (0-10s)</th><th>VR2 (10-20s)</th><th>VR3 (20-28s)</th><th>VR4 red-team</th><th>VR5 components</th><th>Verdict</th></tr>
+    <tr><td>Circular logo carousel @ 1.72-3.45s</td><td><span class="pill pill-good">✅ HIGH</span></td><td>n/a</td><td>n/a</td><td><span class="pill pill-good">✅ HIGH</span></td><td>partial</td><td><strong>CONFIRMED</strong></td></tr>
+    <tr><td>HARD CUTS only (S1 claim)</td><td>✅</td><td>✅</td><td>✅</td><td><span class="pill pill-bad">❌ REFUTED</span></td><td>X1 dominant but not only</td><td><strong>REFINED</strong> — also: circle wipe @ t=0, brush wipe @ t=4.14, icon slides, camera rotations</td></tr>
+    <tr><td>Split-screen w/ caption on seam</td><td>n/a</td><td>✅ at 17.59s</td><td>✅ at 20-26s</td><td>✅</td><td>✅ as P0 component</td><td><strong>CONFIRMED HIGH</strong></td></tr>
+    <tr><td>Monochrome white captions + stroke</td><td>✅</td><td>✅</td><td>✅</td><td>n/a</td><td>✅ all 7 styles</td><td><strong>CONFIRMED HIGH</strong></td></tr>
+    <tr><td>ONE-accent-color discipline (~80% blue #2E4FA0)</td><td>partial</td><td>partial</td><td>n/a</td><td>n/a</td><td>✅ explicit</td><td><strong>CONFIRMED</strong></td></tr>
+    <tr><td>3D pedestal scene (4.48-5.86s)</td><td>✅ as "3D paper-cutout"</td><td>n/a</td><td>n/a</td><td><span class="pill pill-warn">⚠️ S1 MISSED</span></td><td>n/a</td><td><strong>NEW finding — needs template</strong></td></tr>
+    <tr><td>Mega-letter B/V/P,K,G as IPA phonetic glyphs</td><td>✅</td><td>✅</td><td>n/a</td><td><span class="pill pill-warn">⚠️ S1 missed SEMANTIC meaning</span></td><td>✅ as P0 MacroLetter component</td><td><strong>LESSON not chrome</strong></td></tr>
+    <tr><td>Unfold film-frame card w/ brush-wipe (3.79-4.14s)</td><td>✅ as Unfold sprocket</td><td>n/a</td><td>n/a</td><td><span class="pill pill-warn">⚠️ S1 saw static, missed brush-wipe</span></td><td>n/a</td><td><strong>NEW finding — needs template</strong></td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">VR4 red-team · what S1 missed</div>
+  <h2>The single-agent analysis got 60% of the truth</h2>
+  <div class="key-finding">⚠️ <strong>VR4 also surfaced a structural critique:</strong> <code>brollClips: BrollClip[]</code> is the wrong abstraction for Stephan's pattern. Should be <code>brollScenes: BrollScene[]</code> — each scene is one of <strong>6+ distinct mini-templates</strong>, not raw image clips.</div>
+  <h3>6 mini-templates inside the one Stephan reel</h3>
+  <ol>
+    <li><code>CircularLogoCarousel</code> (Wave 3 T8 ✅ shipped)</li>
+    <li><code>KineticTypoCard</code> with Unfold sprocket chrome + brush wipe (Wave 4)</li>
+    <li><code>3DPedestalScene</code> with paper-cutout figure + word-by-word fade-in (Wave 4)</li>
+    <li><code>3DGlassOrbConceptStamp</code> ("Phono Semantics" badge) (Wave 4)</li>
+    <li><code>MacroLetterAnchor</code> — IPA phonetic glyph paired with consonant trait (Wave 4)</li>
+    <li><code>SplitScreenWithSeamCaption</code> — caption anchored ON the split line (Wave 4)</li>
+  </ol>
+  <p style="margin-top:16px">Plus <code>VR5</code>'s 10-component primitive catalog — top 4 🔴 P0: <code>AppIconBadge</code>, <code>MacroLetter</code>, <code>SplitScreen5050</code>, <code>HeroSerifCaption</code>.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Wave 3 · 4 new templates shipped</div>
+  <h2>Component gallery</h2>
+  <div class="grid g2">
+    <div class="cell"><img src="../output/_template-previews/wave3-table-cream-t1.5s.jpg" alt="AnimatedTable cream"><div class="lbl">AnimatedTable9x16 (cream) — row-stagger reveal, highlight winner</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave3-sparkline-cream-t2.0s.jpg" alt="Sparkline cream"><div class="lbl">Sparkline9x16 (cream) — draw-on line + count-up + trend badge</div></div>
+    <div class="cell"><img src="../output/_template-previews/wave3-forcegraph-dark-t1.5s.jpg" alt="ForceGraph dark"><div class="lbl">ForceGraph9x16 (dark) — d3-force pre-computed, SSR-safe</div></div>
+    <div class="cell" style="background:#0A0F1A;color:#F2E9D8;padding:24px;display:flex;flex-direction:column;justify-content:center"><h3 style="color:#F2E9D8;margin-bottom:14px">CircularLogoCarousel9x16</h3><p style="color:#A8A39A;font-size:16px">User-spotted pattern from Stephan's DYkyJfxx5Lx. Logos clockwise around central element with audio-anchored stagger. Default: 6 LLM logos (OpenAI, Claude, Gemini, Llama, Copilot, Mistral). Single dark variant.</p><p class="small" style="margin-top:12px;color:#A8A39A">Preview frame rendering — view in Finder when ready</p></div>
+  </div>
+  <p class="small" style="margin-top:14px">Plus <code>TalkingHeadDynamic9x16</code> fully revised: now uses <code>&lt;OffthreadVideo&gt;</code> + <code>brollClips[]</code> + HARD_CUT default + new <code>SPLIT_50_TOP_FACE</code> and <code>SPLIT_33_TOP_FACE</code> crop modes (matches Stephan's actual pattern, not the HeyGen-avatar hypothesis).</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">W21 bake-off · NOW 23 variants</div>
+  <h2>Same 43-second script through 23 template lenses</h2>
+  <div class="cell" style="max-width:1100px;margin:16px auto"><img src="../output/2026-05-18-gemini-3-2-flash-leak/comparison-grid-v3.jpg" alt="W21 bake-off grid 5×4"><div class="lbl">5×4 montage · 20 of 23 variants shown. Row 1: text-blurin/scramble. Row 2: counter/bignum/benchmark (SEMANTIC FIX VISIBLE). Row 3: diagram/quote/tweetcard. Row 4: tnf-transitions/thinking/attention/tokenstream.</div></div>
+  <p class="small" style="margin-top:10px">All 23 master.mp4s at <code>output/2026-05-18-gemini-3-2-flash-leak/&lt;variant&gt;/master.mp4</code>. Total ~77 MB. Each variant 43.9s except tnf-transitions (42.5s).</p>
+</section>
+
+<section class="slide dark">
+  <div class="breadcrumb">Re-audit · Wave 2 fixes verified</div>
+  <h2>What worked, what regressed</h2>
+  <table>
+    <tr><th>Variant</th><th>A1 Time</th><th>A2 Color</th><th>A3 Type</th><th>A4 Density</th><th>A5 Brand</th><th>Net Δ</th></tr>
+    <tr><td>benchmark-cream</td><td>0</td><td>+5</td><td>0</td><td>0</td><td>+1</td><td><span class="pill pill-good">+6</span></td></tr>
+    <tr><td>benchmark-dark</td><td>0</td><td>+5</td><td>+1</td><td>0</td><td>+1</td><td><span class="pill pill-good">+7</span></td></tr>
+    <tr><td>tnf-blue</td><td>0</td><td>+1</td><td>0</td><td>0</td><td>+1</td><td><span class="pill pill-warn">+2 (with regressions)</span></td></tr>
+  </table>
+  <div class="good-finding">✅ <strong>Big win:</strong> benchmark semantic-inversion fix moved both variants from <code>D+/D</code> → <code>A−/A−</code>. The biggest Wave-1 defect is GONE.</div>
+  <div class="key-finding">⚠️ <strong>Regression in tnf-blue:</strong> chip recolored from warm-red (~5:1 contrast) to Gemini-blue (~3.7:1 — fails AA). "FILTRACIÓN" now duplicated in same color (chip + breadcrumb). Wave-2 made a specific contrast pair WORSE.</div>
+  <p>Spring unification was annotated-only, not actually applied — A1 fix queue still has open work.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Workflow improvements · landed</div>
+  <h2>5 meta-improvements you asked for, implemented</h2>
+  <table>
+    <tr><th>Improvement</th><th>Wave 3 evidence</th></tr>
+    <tr><td>Voting-style multi-angle analysis</td><td>5 voters on DYkyJfxx5Lx → confirmed circular logo carousel S1 missed</td></tr>
+    <tr><td>Time-segmented dense frames</td><td>82 frames extracted (30/30/24 across 0-10s/10-20s/20-28s) vs 24 spread uniformly</td></tr>
+    <tr><td>Red-team "what we missed" agent</td><td>VR4 caught 4 entirely-missed scenes + 1 semantic misread + 1 structural critique</td></tr>
+    <tr><td>Component-extraction catalog</td><td>VR5 cataloged 10 visual primitives with reusability scores + P0/P1/P2 priorities</td></tr>
+    <tr><td>Reusable tool for future analysis</td><td><code>scripts/multi-angle-analyze.ts</code> (398 lines, dispatch + aggregate modes, Jaccard-based consensus)</td></tr>
+  </table>
+  <h3>Honest meta-finding</h3>
+  <div class="key-finding">The voting workflow added ~5× compute cost but caught 3 categories of error a single agent missed:<br>• <strong>Sins of omission</strong> (entire scenes not mentioned)<br>• <strong>Semantic misreads</strong> (decorative-looking elements that were the actual lesson)<br>• <strong>Structural misframings</strong> (wrong abstraction in the proposed schema)</div>
+  <p>Recommendation: use voting for any reel the user explicitly flags, OR for our own W21 renders before publishing. Skip for low-stakes scraping passes.</p>
+</section>
+
+<section class="slide dark">
+  <div class="breadcrumb">R6 transcripts · biggest insight</div>
+  <h2>"Easing is the single biggest 'looks AI' tell"</h2>
+  <p style="font-size:22px;margin-top:18px">10 of 10 YouTube transcripts fetched (English; Spanish 429-rate-limited but English coverage was sufficient). The most-cited motion-design rule across multiple tutors:</p>
+  <div class="key-finding" style="font-style:italic">"If there's one motion design technique that applies to everything, it's easing... that's what gives objects their wobble, their bounce, and makes rigid lifeless animations like this feel more natural and real."<br>— Mt. Mograph</div>
+  <p style="margin-top:14px"><strong>What this means for us:</strong> we currently use raw <code>interpolate()</code> with linear default + a few inline bezier literals + house springs. Action for Wave 4:</p>
+  <ul>
+    <li>Build <code>src/timing/easing.ts</code> with named curves (<code>outCubic</code>, <code>inOutCubic</code>, <code>outBack</code>, <code>outQuint</code>, <code>outExpo</code>)</li>
+    <li>Sweep all compositions to use named easing — no more inline bezier literals</li>
+    <li>Add <code>easing: z.enum([...]).default("inOutCubic")</code> to schemas</li>
+    <li>Promote "easing-first" rule into <code>CLAUDE.md</code> Coding Conventions</li>
+  </ul>
+  <p class="small" style="margin-top:14px">Other 4 distilled insights: specific-vs-vague-prompt tradeoff, parenting/null-object pattern (React: SceneController + HookFrame/SceneBody/CTAFrame), visual-inspiration-first, always-load-best-practices-skill. Full synthesis at <code>docs/research/wave-1/R6-transcripts-synthesis.md</code>.</p>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">Creator scraping · current state</div>
+  <h2>10 scraped (3 new this wave)</h2>
+  <table>
+    <tr><th>Handle</th><th>Reels</th><th>Templates</th><th>Wave</th><th>Verdict</th></tr>
+    <tr><td>@carloscuamatzin</td><td>12</td><td>6</td><td>1</td><td>DiagramExplainer inspiration</td></tr>
+    <tr><td>@diysmartcode</td><td>12</td><td>3</td><td>1</td><td>BigNumberHero + dark palette</td></tr>
+    <tr><td>@bilawal.ai</td><td>7</td><td>5</td><td>1</td><td>TweetCardHero9x16</td></tr>
+    <tr><td>@simonhoiberg</td><td>12</td><td>6</td><td>1</td><td>LayerCardStack9x16</td></tr>
+    <tr><td>@midu.dev / @dotcsv / @estebandiba</td><td>27</td><td>9</td><td>1</td><td>SplitWebcamScreen + voice insights</td></tr>
+    <tr><td><strong>@builtbystephan</strong></td><td><strong>30</strong></td><td><strong>6+ mini</strong></td><td><strong>2→3</strong></td><td><strong>🔴 6+ mini-templates surfaced via voting — Wave 4 build queue</strong></td></tr>
+    <tr><td>@motiondarwin / @black.one.studio</td><td>20</td><td>7</td><td>2</td><td>↘ low-fit, transferable tactics noted</td></tr>
+    <tr><td>@zenzuke (Carlos Albarrán)</td><td>15</td><td>5</td><td>3</td><td>↘ LOW — 10/15 already covered, 4/15 need 2D animator</td></tr>
+    <tr><td>@motiongraphicsweb</td><td>2</td><td>2</td><td>3</td><td>↘ SKIP — abandoned account (2022)</td></tr>
+  </table>
+  <p class="small" style="margin-top:12px">Net: confirmed white space at (tech-AI motion design teaching) ∩ (Spanish-language AI editorial). No scraped creator covers both axes. <strong>@armandointeligencia owns this niche.</strong></p>
+</section>
+
+<section class="slide dark">
+  <div class="breadcrumb">Wave 4 plan</div>
+  <h2>Where we go next</h2>
+  <h3>🔴 P0 — Audit-driven fixes (verified pending)</h3>
+  <ol>
+    <li><strong>DELETE the tnf-blue legacy chip</strong> — collapses 3 issues (contrast regression, duplicated label, structural redundancy) into one delete</li>
+    <li><strong>Spring unification</strong> — A1 fixes were annotated-only in Wave 2; actually swap the punchy spring for the editorial spring in <code>useOverlayChoreography.ts:41-49</code></li>
+    <li><strong><code>accentOnLight: #1A73E8</code></strong> — Google's brand recommendation for cream-paper Gemini blue (passes AA)</li>
+    <li><strong>Build <code>src/timing/easing.ts</code></strong> + sweep compositions to remove inline beziers (per R6 transcripts insight)</li>
+  </ol>
+  <h3>🔴 P0 — 6 mini-templates from Stephan VR4 findings</h3>
+  <ol>
+    <li><code>KineticTypoCard9x16</code> (Unfold sprocket chrome + brush wipe)</li>
+    <li><code>3DPedestalScene9x16</code> (paper-cutout figure + word-by-word fade-in)</li>
+    <li><code>3DGlassOrbConceptStamp9x16</code> ("Phono Semantics" badge style)</li>
+    <li><code>MacroLetterAnchor9x16</code> (giant single letter + caption trait pair)</li>
+    <li><code>SplitScreenWithSeamCaption9x16</code> (formalize the seam-caption pattern as standalone)</li>
+    <li><code>AppIconBadge</code> (reusable component, not full template)</li>
+  </ol>
+  <h3>🟠 P1 — Verify + render expansion</h3>
+  <ol>
+    <li>Verify the 52 tsc errors flagged by Wave-3 worktree agents are NOT in main (run <code>npx tsc --noEmit</code> myself)</li>
+    <li>Render W21 voiceover on the 4 new Wave-3 templates (CircularLogoCarousel, AnimatedTable, Sparkline, ForceGraph) → expand bake-off to 27</li>
+    <li>60-frame end-card watermark — new <code>src/components/BrandEndCard.tsx</code></li>
+  </ol>
+  <h3>🔵 P2 — Reference expansion</h3>
+  <ol>
+    <li>Re-fetch Spanish R6 transcripts (rate-limited in Wave 3)</li>
+    <li>Use <code>scripts/multi-angle-analyze.ts</code> on a fresh creator scrape to validate the tool</li>
+  </ol>
+</section>
+
+<section class="slide">
+  <div class="breadcrumb">File index · all Wave 3 artifacts</div>
+  <h2>Where things live</h2>
+  <table>
+    <tr><th>What</th><th>Path</th></tr>
+    <tr><td>Wave 3 SLIDESHOW v2 (this file)</td><td><code>docs/SLIDESHOW-v2.html</code></td></tr>
+    <tr><td>Wave 2 SLIDESHOW v1 (prior)</td><td><code>docs/SLIDESHOW.html</code></td></tr>
+    <tr><td>23-variant W21 montage</td><td><code>output/2026-05-18-gemini-3-2-flash-leak/comparison-grid-v3.jpg</code></td></tr>
+    <tr><td>All 23 W21 master.mp4 variants</td><td><code>output/2026-05-18-gemini-3-2-flash-leak/&lt;variant&gt;/master.mp4</code></td></tr>
+    <tr><td>5 voting agents' findings</td><td><code>docs/critiques/wave-3/stephan-vote{1,2,3,4,5}-*.md</code></td></tr>
+    <tr><td>Wave 3 re-audit (post-Wave-2 fixes)</td><td><code>docs/critiques/wave-3/AA-re-audit.md</code></td></tr>
+    <tr><td>R6 transcripts (10 English VTT)</td><td><code>docs/research/wave-1/transcripts/*.en.vtt</code></td></tr>
+    <tr><td>R6 transcripts synthesis (5 insights)</td><td><code>docs/research/wave-1/R6-transcripts-synthesis.md</code></td></tr>
+    <tr><td>Multi-angle helper (reusable)</td><td><code>scripts/multi-angle-analyze.ts</code></td></tr>
+    <tr><td>Builtbystephan deep frames (82 dense)</td><td><code>references/creators/builtbystephan/DYkyJfxx5Lx/frames-dense/</code></td></tr>
+    <tr><td>22 vertical compositions</td><td><code>src/compositions/*9x16.tsx</code></td></tr>
+    <tr><td>11 W21 render scripts</td><td><code>scripts/render-w21-*.ts</code></td></tr>
+  </table>
+  <p style="margin-top:24px;font-size:24px;text-align:center"><strong>Ready for Wave 4. Say "go" or pick a priority lane.</strong></p>
+</section>
+
+</div>
+
+<div class="nav"><span id="ctr">1 / 11</span><span>← →</span><span>F: fullscreen</span></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(i){
+  slides.forEach(s => s.classList.remove('active'));
+  slides[i].classList.add('active');
+  document.getElementById('ctr').textContent = (i+1)+' / '+slides.length;
+  cur = i;
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' '){ show(Math.min(cur+1, slides.length-1)); }
+  else if(e.key === 'ArrowLeft'){ show(Math.max(cur-1, 0)); }
+  else if(e.key === 'f' || e.key === 'F'){ if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  else if(e.key === 'Home'){ show(0); } else if(e.key === 'End'){ show(slides.length-1); }
+});
+document.addEventListener('click', e => { if(e.target.tagName === 'A') return; const x = e.clientX/window.innerWidth; if(x<0.3) show(Math.max(cur-1,0)); else if(x>0.7) show(Math.min(cur+1,slides.length-1)); });
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "wave": 7,
+  "creator": "DIYSmartCode",
+  "platform": "youtube_shorts",
+  "scraped_at": "2026-05-27",
+  "existing_count": 12,
+  "target_total": 25,
+  "new_count": 13,
+  "selection_criteria": "Diverse topic mix (Claude Code updates, Google I/O, MCP/Skills, dev-tool comparisons, npm/security, viral high-view) + skip videos already analyzed. Bias toward newer titles + high view counts to capture latest motion grammar.",
+  "existing_ids": [
+    "rfzA7HWcpCQ",
+    "-LxJJwOjif4",
+    "DgDK5KWtJAw",
+    "fpNTqli9cs8",
+    "eEy1oMeGfhQ",
+    "-FNswl7pVcA",
+    "jOorXKrbTHU",
+    "0HIf4AlajNY",
+    "o9MSAAXma-I",
+    "6nVW14npcO4",
+    "Jj3m_R2627Y",
+    "dzn9KVVtZLc"
+  ],
+  "picks": [
+    { "id": "WwuUuLsmOWw", "title": "Model vs. Harness: The real AI bottleneck", "views": 3100, "reason": "concept-explainer / dual-comparison template" },
+    { "id": "lRmp0SYLCd8", "title": "The end of messy codebases? UNDERSTAND-ANYTHING Skills!", "views": 13000, "reason": "Skills explainer, likely heavy editor/terminal blocks" },
+    { "id": "IKqgG31EG7g", "title": "900 stars in 24 hours — what's the catch with Zero?", "views": 27000, "reason": "high-engagement, big-number hero variant" },
+    { "id": "_OjKDANNzEo", "title": "Mike Krieger Could Build Instagram Solo Now - The Founders Playbook 2026", "views": 23000, "reason": "editorial / founder profile template variant" },
+    { "id": "3DGN5kuG2xQ", "title": "Markdown Can't Do This (HTML Can)", "views": 275000, "reason": "viral peak — top-performing pattern" },
+    { "id": "CunDklNGqUc", "title": "Anthropic's surprise move breaks Claude plans in half", "views": 119000, "reason": "viral, pricing/comparison" },
+    { "id": "v0zG69WGKAQ", "title": "Anthropic Just Solved The Biggest Claude Code Problem!", "views": 116000, "reason": "viral, /goals feature reveal" },
+    { "id": "8okBCfyVptI", "title": "Claude just made manual work obsolete - Claude Connectors!", "views": 43000, "reason": "Connectors product reveal, likely LogoWall / connector grid" },
+    { "id": "Yy_mQhsaP4w", "title": "This Google Omni leak is insane", "views": 42000, "reason": "leak-format, Gemini family template" },
+    { "id": "sM9BIzLP1Qo", "title": "The AI bubble is getting expensive fast", "views": 39000, "reason": "opinion / commentary template" },
+    { "id": "sLM5qSxXKVE", "title": "Anthropic Just Released What Wall Street Needed", "views": 29000, "reason": "finance angle — possibly bar chart / data viz" },
+    { "id": "zpEVJ2Ulcfc", "title": "claude.md vs Skills: Which One Actually Wins!", "views": 10000, "reason": "duel/comparison template — versus card" },
+    { "id": "2SUQ7LDGiBQ", "title": "28 New Features Just Dropped in Claude Code", "views": 7800, "reason": "feature enumeration listicle — many sections" }
+  ]
+}

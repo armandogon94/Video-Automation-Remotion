@@ -1,0 +1,24 @@
+{
+  "handle": "mreflow",
+  "displayName": "Matt Wolfe",
+  "channelId": "UChpleBmo18P08aKCIgti38g",
+  "url": "https://www.youtube.com/@mreflow",
+  "platform": "youtube",
+  "niche": "AI news, AI tools, AI tutorials, tech commentary",
+  "audience": "AI-curious creators, developers, knowledge workers, business operators",
+  "languages": ["en"],
+  "primaryFormats": [
+    "long-form AI news roundup (25-40 min)",
+    "tool roundup / listicle (15-25 min)",
+    "step-by-step tutorial (20-40 min)",
+    "shorts (vertical, <60s)"
+  ],
+  "scrapedAt": "2026-05-27",
+  "scrapedBy": "wave-7 creator-analysis pipeline (yt-dlp + ffmpeg)",
+  "notes": [
+    "Heavy motion graphics relative to other AI educators — animated overlays, comparison cards, tool roundups.",
+    "Recurring 'AI News:' weekly series — strong template repeatability candidate.",
+    "Voiceover-first delivery; static B-roll of screenshots layered with animated annotations (boxes, arrows, callouts).",
+    "Channel has 900k+ subs as referenced in their own video titles."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "voter": "vote2",
+  "channel": "@NateBJones",
+  "channelUrl": "https://www.youtube.com/@NateBJones",
+  "analyzedAt": "2026-05-27",
+  "selectionStrategy": "Mix of long-form (4) and shorts (4) across diverse topics: infrastructure deep-dive, hardware comparison, listicle, model comparison, technical builds, kinetic arguments, side-by-side comparisons.",
+  "longForm": [
+    {
+      "id": "z3pbrFKVyQE",
+      "title": "The Infrastructure Nightmare Nobody Is Talking About",
+      "durationSec": 2797,
+      "why": "Long deep-dive (46m) — likely diverse motion graphics across infrastructure topics"
+    },
+    {
+      "id": "iUSdS-6uwr4",
+      "title": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+      "durationSec": 1956,
+      "why": "Hardware comparison — strong chance of side-by-side specs, charts, benchmark animations"
+    },
+    {
+      "id": "woGB2vr5wTg",
+      "title": "These 5 Infrastructure Giants Secretly Rule AI",
+      "durationSec": 1220,
+      "why": "Listicle format — numbered intros, item reveal animations"
+    },
+    {
+      "id": "9aIYhjeYxzM",
+      "title": "GPT-5.5 vs Claude vs Gemini: The Real Difference Nobody's Talking About",
+      "durationSec": 1954,
+      "why": "Three-way model comparison — comparison tables and charts likely"
+    }
+  ],
+  "shorts": [
+    {
+      "id": "DVS-cTSVKv4",
+      "title": "How to build a 10-cent AI brain",
+      "why": "Technical short — possible diagrams/architecture animations"
+    },
+    {
+      "id": "xkC_WDLmfS8",
+      "title": "Why switching AI models is now impossible",
+      "why": "Argument-driven — possible kinetic typography"
+    },
+    {
+      "id": "eszYRrsIdHg",
+      "title": "This 30-cent database gives your AI infinite memory",
+      "why": "Product/data short — likely UI mockups/dashboards"
+    },
+    {
+      "id": "x8Y404We8O8",
+      "title": "2025 Prompting vs 2026 Prompting",
+      "why": "Side-by-side comparison short — likely split-screen or before/after animation"
+    }
+  ]
+}

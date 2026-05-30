@@ -1,0 +1,30 @@
+{
+  "creator_handle": "bilawal.ai",
+  "wave": "wave-7",
+  "batch": "batch-3",
+  "extension_of": "picks-wave7.json",
+  "selected_at": "2026-05-28",
+  "previous_corpus_count": 7,
+  "new_count": 13,
+  "target_total": 20,
+  "selection_rationale": "picks-wave7.json pre-staged 13 NEW shortcodes (all 13 are absent from analyzed-videos.json). Took the FULL set since each was already vetted by the wave-7 planner. Three (DY0Y, DYu6, DWT*) came from gallery-dl --count 25 (gallery-dl returned 10 reels; 7 were already-analyzed exclusions, 2 were new picks, 1 was DWT-56ED4Hu which wasn't in picks and was discarded). The remaining 11 older shortcodes (DVoZ → DRVR) required yt-dlp fallback because they fell outside the gallery-dl --count=25 window (Bilawal posts often, so 25 only covered ~Mar 2026 → present).",
+  "scrape_method_notes": {
+    "gallery-dl": "Returned 10 reels for --count 25. 3 NEW: DY0YpxjPrYV, DYu6vmbPQQW (also DWT-56ED4Hu, discarded).",
+    "yt-dlp": "Used as fallback for 11 older shortcodes pre-staged in picks-wave7.json. All 11 downloaded successfully with --write-info-json. URL form: https://www.instagram.com/p/<shortcode>/"
+  },
+  "shortcodes": [
+    "DY0YpxjPrYV",
+    "DYu6vmbPQQW",
+    "DVoZEiqCZOF",
+    "DVd8ggvuk4x",
+    "DVbYOgbOmep",
+    "DVWy2FVD6w7",
+    "DVJTSypDSYA",
+    "DU_J1JRjtoB",
+    "DU6I_rkD586",
+    "DUi2dGFDxg3",
+    "DUGqilRDwnh",
+    "DT2-WbPFs-H",
+    "DRVRQm0kw0Q"
+  ]
+}

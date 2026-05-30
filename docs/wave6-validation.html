@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wave-6 Validation — Reference vs Our Recreation</title>
+<style>
+  :root {
+    --bg: #0a0608;
+    --bg-card: #14101a;
+    --bg-card-2: #1a1520;
+    --ink: #f1ece1;
+    --muted: #8b847a;
+    --accent: #d4af37;
+    --lime: #c4f84a;
+    --warm-red: #b33a2a;
+    --cyan: #5bc0e8;
+    --mint: #7ce49a;
+    --coral: #e89b7a;
+    --border: #2a2027;
+    --border-soft: rgba(241, 236, 225, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { background: radial-gradient(ellipse at center, #1b0f10 0%, #0a0608 70%); min-height: 100vh; }
+  .deck { max-width: 1480px; margin: 0 auto; padding: 40px 28px 100px; }
+
+  .slide {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 40px 48px;
+    margin-bottom: 32px;
+  }
+  .slide.hero {
+    background: linear-gradient(135deg, #1b0f10 0%, #0a0608 100%);
+    text-align: center;
+    padding: 64px 56px;
+  }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.32em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-size: 52px; font-weight: 900; line-height: 1.02; letter-spacing: -0.025em; margin-bottom: 16px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+  h2 { font-size: 32px; font-weight: 800; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 12px; }
+  h2 .accent { color: var(--accent); }
+  h3 { font-size: 18px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+
+  .lede { font-size: 19px; color: var(--muted); line-height: 1.5; max-width: 920px; margin: 0 auto; }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 22px;
+  }
+  .pair .col {
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .pair .col .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pair .col.reference .label { color: var(--mint); }
+  .pair .col.ours .label { color: var(--lime); }
+  .pair .col .label .pip { width: 10px; height: 10px; border-radius: 999px; background: currentColor; box-shadow: 0 0 12px currentColor; }
+  .pair video {
+    width: 100%;
+    display: block;
+    border-radius: 6px;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+  }
+
+  .meta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .meta-row .col {
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .meta-row .col .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .meta-row .col .v {
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .meta-row .col code {
+    color: var(--accent);
+    background: rgba(212,175,55,0.10);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .verdict-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .verdict-row .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .verdict-row .chip.high { color: var(--mint); }
+  .verdict-row .chip.med { color: var(--accent); }
+  .verdict-row .chip.creator { color: var(--coral); }
+  .verdict-row .chip.tella { color: var(--cyan); }
+  .verdict-row .chip.orientation { color: var(--lime); }
+
+  .verb {
+    background: rgba(212,175,55,0.06);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .verb .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .toc {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(20, 16, 26, 0.95);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    backdrop-filter: blur(8px);
+    max-width: 240px;
+    display: none;
+    z-index: 100;
+  }
+  @media (min-width: 1600px) { .toc { display: block; } }
+  .toc a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 3px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc .header { color: var(--accent); font-weight: 700; margin-bottom: 6px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  .footer-meta {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .controls {
+    background: rgba(91,192,232,0.08);
+    border: 1px solid rgba(91,192,232,0.20);
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--cyan);
+    line-height: 1.5;
+  }
+  .controls strong { color: var(--mint); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .stats .stat {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .stats .stat .big {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stats .stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <div class="header">Wave-6 validation</div>
+  <a href="#hero">▸ Overview</a>
+  <a href="#hormozi">▸ HormoziTweetCardListicle</a>
+  <a href="#beforeafter">▸ BeforeAfterText</a>
+  <a href="#bignumber">▸ BigNumberHorizontalBars</a>
+  <a href="#splitscreen">▸ SplitScreenInterview</a>
+  <a href="#titlecard">▸ TitleCardKineticTwoLine</a>
+  <a href="#pipeline">▸ PipelineFlow</a>
+</nav>
+
+<div class="deck">
+
+  <section class="slide hero" id="hero">
+    <div class="eyebrow">WAVE-6 · SIDE-BY-SIDE ANIMATION VALIDATION</div>
+    <h1>Reference vs <span class="accent">our recreation</span></h1>
+    <p class="lede">For each animation we copied from a creator, this page shows the SOURCE clip on the LEFT and OUR recreation on the RIGHT. Validate that we identified and replicated each pattern correctly. Both videos are silent and loop automatically — click any to pause.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="big">6</div><div class="label">new 16:9 templates</div></div>
+      <div class="stat"><div class="big">2</div><div class="label">creators analyzed</div></div>
+      <div class="stat"><div class="big">4</div><div class="label">independent voters</div></div>
+      <div class="stat"><div class="big">73</div><div class="label">total compositions</div></div>
+    </div>
+
+    <div class="controls">
+      ▸ Each panel autoplays muted/looped — <strong>click to pause</strong> · scroll to compare all 6 pairs · keyboard: <strong>space</strong> = play/pause focused video
+    </div>
+  </section>
+
+  <!-- 1. HormoziTweetCardListicle16x9 -->
+  <section class="slide" id="hormozi">
+    <div class="eyebrow">PAIR 1 OF 6 · HORMOZI LONG-FORM · HIGH-PRIORITY TELLA-CLAIM PAYOFF</div>
+    <h2><span class="accent">HormoziTweetCardListicle16x9</span> — numbered tweet cards · animated stack build · pagination</h2>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @AlexHormozi long-form</span>
+      <span class="chip high">consensus: HIGH (both voters)</span>
+      <span class="chip tella">Tella claim #1 verified</span>
+      <span class="chip orientation">16:9 horizontal</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `XGm2ERU9qtA-anim-03.mp4` (Hormozi)</div>
+        <video src="../docs/research/wave-6/references/alexhormozi/XGm2ERU9qtA-anim-03.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="col ours">
+        <div class="label"><span class="pip"></span>OUR RECREATION · `HormoziTweetCardListicle16x9` (stack mode)</div>
+        <video src="../output/wave6-smoke/HormoziTweetCardListicle16x9/master.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="col">
+        <div class="k">Pattern source</div>
+        <div class="v">Consensus pattern <code>H1</code> + <code>H2</code> + <code>H3</code> combined. Single numbered tweet card → multi-card stack with append-up/down → paginated transition between items.</div>
+      </div>
+      <div class="col">
+        <div class="k">Our molecules used</div>
+        <div class="v"><code>SocialPostCard variant="text-only"</code> + <code>TweetStackPanel</code> + <code>PaginatedListSlide</code> + <code>NumberedBadge</code></div>
+      </div>
+    </div>
+
+    <div class="verb">
+      <div class="label">transitionVerb (Wave-5 contract)</div>
+      In stack mode, each numbered tweet card slides in from below at 2-second intervals — as each new card enters from the bottom edge, the existing cards concurrently shift up to make room, building a visible stack of N cards anchored right. The lime-green numbered badge overhangs the top-left corner of each card.
+    </div>
+  </section>
+
+  <!-- 2. TitleCardKineticTwoLine16x9 -->
+  <section class="slide" id="titlecard">
+    <div class="eyebrow">PAIR 2 OF 6 · NATE B JONES · MOST-USED TEMPLATE (5+ INSTANCES)</div>
+    <h2><span class="accent">TitleCardKineticTwoLine16x9</span> — dark-slate section divider with radial glow</h2>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @NateBJones long-form</span>
+      <span class="chip high">consensus: HIGH (both voters)</span>
+      <span class="chip orientation">16:9 horizontal</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `iUSdS-6uwr4-anim-01-v2.mp4` "Cloud Or Local" (Nate)</div>
+        <video src="../docs/research/wave-6/references/natebjones/iUSdS-6uwr4-anim-01-v2.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="col ours">
+        <div class="label"><span class="pip"></span>OUR RECREATION · `TitleCardKineticTwoLine16x9`</div>
+        <video src="../output/wave6-smoke/TitleCardKineticTwoLine16x9/master.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="col">
+        <div class="k">Pattern source</div>
+        <div class="v">Consensus pattern <code>H1</code> (most-used Nate template — 5+ instances across 3 videos). Bold headline + muted subtitle on dark slate with soft accent-tinted radial glow.</div>
+      </div>
+      <div class="col">
+        <div class="k">Our primitives used</div>
+        <div class="v"><code>blurInFocus</code> + <code>BrandBreadcrumb16x9</code>. STATIC after fade-in (no typewriter — that's KineticTypoCard9x16's role).</div>
+      </div>
+    </div>
+
+    <div class="verb">
+      <div class="label">transitionVerb (Wave-5 contract)</div>
+      Title card fades in over 12 frames using blurInFocus (14px → 0px blur, 0.96 → 1.0 scale, opacity 0 → 1), holds STATIC for 60 frames (no typewriter, no per-word reveal), then fades out over 12 frames. A soft radial glow halo sits behind the typography for depth.
+    </div>
+  </section>
+
+  <!-- 3. BeforeAfterText16x9 -->
+  <section class="slide" id="beforeafter">
+    <div class="eyebrow">PAIR 3 OF 6 · NATE B JONES</div>
+    <h2><span class="accent">BeforeAfterText16x9</span> — two-column text contrast with central operator</h2>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @NateBJones</span>
+      <span class="chip high">consensus: HIGH (both voters)</span>
+      <span class="chip orientation">16:9 horizontal</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `iUSdS-6uwr4-vote1-anim-02.mp4` "Cloud Home → Cloud Guest" (Nate)</div>
+        <video src="../docs/research/wave-6/references/natebjones/iUSdS-6uwr4-vote1-anim-02.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="col ours">
+        <div class="label"><span class="pip"></span>OUR RECREATION · `BeforeAfterText16x9`</div>
+        <video src="../output/wave6-smoke/BeforeAfterText16x9/master.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="col">
+        <div class="k">Pattern source</div>
+        <div class="v">Consensus pattern <code>H2</code>. Two text columns side-by-side with tracked-uppercase labels, colored accent underlines, large sans-bold bodies, central operator (`TO`/`VS`/`→`).</div>
+      </div>
+      <div class="col">
+        <div class="k">Our primitives used</div>
+        <div class="v"><code>blurInFocus</code> mirrored slide-from-edge + <code>EmphasisPill</code> bottom + <code>BrandBreadcrumb16x9</code>. NOT same as <code>CodeDiffBeforeAfter9x16</code> (that's for code).</div>
+      </div>
+    </div>
+
+    <div class="verb">
+      <div class="label">transitionVerb (Wave-5 contract)</div>
+      Left column slides in from the left over 14 frames with blurInFocus; right column slides in from the right over 14 frames, staggered 6 frames after the left; central operator fades in 0.3 seconds after both columns settle; an optional emphasis pill below fades in last.
+    </div>
+  </section>
+
+  <!-- 4. BigNumberHorizontalBars16x9 -->
+  <section class="slide" id="bignumber">
+    <div class="eyebrow">PAIR 4 OF 6 · NATE B JONES (VOTE 1 EXCLUSIVE — RICHEST MOTION-GRAPHIC VIDEO)</div>
+    <h2><span class="accent">BigNumberHorizontalBars16x9</span> — hero count-up + 5 staggered horizontal bars</h2>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @NateBJones</span>
+      <span class="chip med">consensus: MED (vote1 only — FtCdYhspm7w)</span>
+      <span class="chip orientation">16:9 horizontal</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `FtCdYhspm7w-vote1-anim-03.mp4` "Security Stack / 18 modules" (Nate)</div>
+        <video src="../docs/research/wave-6/references/natebjones/FtCdYhspm7w-vote1-anim-03.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="col ours">
+        <div class="label"><span class="pip"></span>OUR RECREATION · `BigNumberHorizontalBars16x9`</div>
+        <video src="../output/wave6-smoke/BigNumberHorizontalBars16x9/master.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="col">
+        <div class="k">Pattern source</div>
+        <div class="v">Consensus pattern <code>M3</code> (vote1 only — vote2 didn't pick this video). Hero count-up number on LEFT + 5 horizontal colored bars on RIGHT with per-row counts.</div>
+      </div>
+      <div class="col">
+        <div class="k">Our primitives used</div>
+        <div class="v"><code>countUp</code> (outQuart easing) + <code>staggerEntry</code> (accelerating) + <code>EmphasisPill</code> + <code>BrandBreadcrumb16x9</code>.</div>
+      </div>
+    </div>
+
+    <div class="verb">
+      <div class="label">transitionVerb (Wave-5 contract)</div>
+      Hero number on the LEFT counts up from 0 to value over 1.2 seconds using outQuart easing while bars on the RIGHT enter staggered 4 frames apart; each bar's fill width interpolates from 0 to (value/max)*containerWidth over 0.8 seconds with outQuart easing, and the bar's count value rolls up via countUp synced to the fill window.
+    </div>
+  </section>
+
+  <!-- 5. PipelineFlow16x9 -->
+  <section class="slide" id="pipeline">
+    <div class="eyebrow">PAIR 5 OF 6 · NATE B JONES</div>
+    <h2><span class="accent">PipelineFlow16x9</span> — horizontal stage cards + chevron/operator connectors</h2>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @NateBJones</span>
+      <span class="chip high">consensus: HIGH (both voters)</span>
+      <span class="chip orientation">16:9 horizontal</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `iUSdS-6uwr4-anim-02-v2.mp4` "Weights → Runtime → Endpoint → Tools" (Nate)</div>
+        <video src="../docs/research/wave-6/references/natebjones/iUSdS-6uwr4-anim-02-v2.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="col ours">
+        <div class="label"><span class="pip"></span>OUR RECREATION · `PipelineFlow16x9`</div>
+        <video src="../output/wave6-smoke/PipelineFlow16x9/master.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="col">
+        <div class="k">Pattern source</div>
+        <div class="v">Consensus pattern <code>H7</code> = vote2's `FourStageHorizontalFlowDiagram` + vote1's `NamedCardEquation` family unified. Horizontal stage cards with parameterized connector style.</div>
+      </div>
+      <div class="col">
+        <div class="k">Our primitives used</div>
+        <div class="v"><code>staggerEntry</code> + <code>pathDraw</code> (for arrow connector variant) + <code>EmphasisPill</code> bottom. Static chevron/dot tip — NEVER animated arrowheads (Wave-5 rule).</div>
+      </div>
+    </div>
+
+    <div class="verb">
+      <div class="label">transitionVerb (Wave-5 contract)</div>
+      Each stage card slides up from below over 10 frames staggered by 0.6 seconds (cumulative); after each card lands, the connector to its right (chevron / arrow / + / →) draws via stroke-dashoffset over 10 frames; the emphasis-pill caption fades in 0.3 seconds after the last stage settles.
+    </div>
+  </section>
+
+  <!-- 6. SplitScreenInterviewLayout16x9 -->
+  <section class="slide" id="splitscreen">
+    <div class="eyebrow">PAIR 6 OF 6 · NATE B JONES (PODCAST FORMAT)</div>
+    <h2><span class="accent">SplitScreenInterviewLayout16x9</span> — 50/50 podcast layout with name tags + lower-third</h2>
+
+    <div class="verdict-row">
+      <span class="chip creator">creator: @NateBJones</span>
+      <span class="chip med">consensus: MED (vote2 only — z3pbrFKVyQE)</span>
+      <span class="chip orientation">16:9 horizontal</span>
+    </div>
+
+    <div class="pair">
+      <div class="col reference">
+        <div class="label"><span class="pip"></span>REFERENCE · `z3pbrFKVyQE-anim-01-v2.mp4` (Nate)</div>
+        <video src="../docs/research/wave-6/references/natebjones/z3pbrFKVyQE-anim-01-v2.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="col ours">
+        <div class="label"><span class="pip"></span>OUR RECREATION · `SplitScreenInterviewLayout16x9`</div>
+        <video src="../output/wave6-smoke/SplitScreenInterviewLayout16x9/master.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="col">
+        <div class="k">Pattern source</div>
+        <div class="v">Consensus pattern <code>M7</code> (vote2 only — vote1 didn't pick this video). 50/50 webcam podcast layout, persistent for entire video duration.</div>
+      </div>
+      <div class="col">
+        <div class="k">Our primitives used</div>
+        <div class="v"><code>OffthreadVideo</code> for B-roll (or placeholder rect) + name-tag rows + optional lower-third banner. Our recreation shows the layout chrome (placeholder rects) since we have no actual podcast B-roll for the W21 episode.</div>
+      </div>
+    </div>
+
+    <div class="verb">
+      <div class="label">transitionVerb (Wave-5 contract)</div>
+      Two video panels render side-by-side at 50/50 ratio for the entire composition duration (no transitions, persistent layout). Each speaker has a name tag below with optional accent-colored title. Optional lower-third banner crossfades in at enterFrame and out at exitFrame.
+    </div>
+  </section>
+
+  <div class="footer-meta">
+    Wave-6 · 6 pairs of reference ↔ recreation · validate that we identified and copied each pattern correctly<br>
+    Source consensus: <code>docs/research/wave-6/alexhormozi-longform-consensus.md</code> + <code>docs/research/wave-6/natebjones-consensus.md</code>
+  </div>
+
+</div>
+
+</body>
+</html>

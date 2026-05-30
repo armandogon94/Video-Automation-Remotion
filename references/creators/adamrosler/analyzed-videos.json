@@ -1,0 +1,249 @@
+{
+  "creator_handle": "adamrosler",
+  "analyzed_count": 22,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "1aVyHmt2-Uo",
+      "title": "GridSFM: a tiny transformer that unlocks $20B of US grid cost in milliseconds",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=1aVyHmt2-Uo",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 52,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "1eBmR1n0VNk",
+      "title": "Diffusion Language Models: Write a Whole Block at Once, Then Revise (NVIDIA Nemotron Diffusion)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=1eBmR1n0VNk",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 54,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "2n4Mc8Bh8KQ",
+      "title": "DeepSeek V4 fires 49B of 1.6T params and matches GPT-5 on code",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=2n4Mc8Bh8KQ",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 55,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "7RhJawm2nw4",
+      "title": "How neural networks actually learn — backpropagation in 45 seconds, from miss to math",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=7RhJawm2nw4",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 69,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "I30REYSeA0s",
+      "title": "Your CPU guesses the next 200 instructions — and it's right 95% of the time",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=I30REYSeA0s",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 55,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "I9pjllzSNK0",
+      "title": "The internet routes on the honor system — how a 2008 BGP leak killed YouTube globally",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=I9pjllzSNK0",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 54,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "L2xSh1nlmgo",
+      "title": "Python 3.13 no-GIL ships mimalloc as default — +14% on Redis vs jemalloc",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=L2xSh1nlmgo",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 52,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "O8RfsSzybEU",
+      "title": "Your 1M Context Window Stops Listening At 32K — Here's Why",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=O8RfsSzybEU",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 55,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "OnRw0D0nnDI",
+      "title": "One API Call Now Runs a Whole Coding Agent in a Linux Sandbox (Google Managed Agents)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=OnRw0D0nnDI",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 55,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "P55GHPFTMQI",
+      "title": "The npm Worm That Shipped With a Valid Sigstore Badge: Mini Shai-Hulud, Explained",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=P55GHPFTMQI",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 47,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "S5ZFkY756IY",
+      "title": "Linux fork() clones a 4GB process in under a millisecond by copying nothing",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=S5ZFkY756IY",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 66,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "U6O4yv1XR34",
+      "title": "Google just shrunk LLM memory 5x — here's how TurboQuant works",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=U6O4yv1XR34",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 60,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "ehVpELha2ss",
+      "title": "Your RAG Can't Find the Answer Because You Split the Doc Mid-Sentence (Chunking Strategy)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=ehVpELha2ss",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 52,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "gaGcC_OOGQ0",
+      "title": "Async continuous batching: same model, 22% faster",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=gaGcC_OOGQ0",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 48,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "hvtB3UaQ1wg",
+      "title": "Microsoft measured 19–34% semantic drift over 20 chained agent edits — the fix",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=hvtB3UaQ1wg",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 42,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "knSbdZTglzQ",
+      "title": "Your agent skill never fires because the model routes on the description, not the body",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=knSbdZTglzQ",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 51,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "lEH0kNy54Ao",
+      "title": "Why ChatGPT can't count the R's in strawberry",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=lEH0kNy54Ao",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 48,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "mZgCDFEBna0",
+      "title": "The #1 agent on OpenRouter is open source and runs on a 20GB laptop — Hermes",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=mZgCDFEBna0",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 51,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "omeIyf2Zja4",
+      "title": "How A Model Reads 10 Million Tokens Without Loading The Document",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=omeIyf2Zja4",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 54,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "pthNSkWU8VM",
+      "title": "Claude 4 Opus blackmailed engineers 96% of the time. Here's how Anthropic fixed it.",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=pthNSkWU8VM",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 52,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "rQxA1i4pQTg",
+      "title": "Is The Million-Token Context Window A Lie? The Honest Verdict",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=rQxA1i4pQTg",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 53,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "tY40HHLnNxE",
+      "title": "OpenAI tried 3 Windows sandboxes for Codex — all failed. Here's the hybrid they shipped.",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=tY40HHLnNxE",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 48,
+      "clip_count": 2,
+      "has_metadata_json": false
+    }
+  ]
+}

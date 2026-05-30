@@ -1,0 +1,139 @@
+{
+  "creator_handle": "theaiadvantage",
+  "analyzed_count": 12,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "0uTEcSu5aAg",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=0uTEcSu5aAg",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 29,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "3mTMPEGWRWA",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=3mTMPEGWRWA",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 12,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "8BKGfajOnlY",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=8BKGfajOnlY",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 59,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "8TkCz3S85rA",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=8TkCz3S85rA",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 68,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "9Yhhwr0dyS4",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=9Yhhwr0dyS4",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 53,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "BRKYEhJpOzE",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=BRKYEhJpOzE",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 11,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "K0UwutA4utA",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=K0UwutA4utA",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 82,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "Kon8rORVmBE",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=Kon8rORVmBE",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 21,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "Q5GxIpzOxOI",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=Q5GxIpzOxOI",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 87,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "aK3lAZ5hhm0",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=aK3lAZ5hhm0",
+      "date_first_analyzed": "2026-05-28",
+      "wave": "wave-7",
+      "frame_count": 62,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "kG0RkK69NyA",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=kG0RkK69NyA",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 93,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "kXK_C50MO2w",
+      "title": "unknown",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=kXK_C50MO2w",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 32,
+      "clip_count": 1,
+      "has_metadata_json": false
+    }
+  ]
+}

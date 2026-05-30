@@ -1,0 +1,20 @@
+{
+  "creator": "allin",
+  "channel": "https://www.youtube.com/@allin",
+  "wave": 7,
+  "selection_criteria": "Prioritized clips 60-2000s (1-33 min) over 4500s+ full episodes; selected for motion-graphics density (chyrons, headline cards, infographics, animated stats). Mix of interview clips, news segments, expert breakdowns, and explainer-style content.",
+  "picks": [
+    {"id": "XXPISZI_big", "title": "Bryan Johnson's Best Health Hack: Lower Your RHR Before Sleep", "duration": 639, "rationale": "Health hack explainer — likely RHR/biometric infographic overlays"},
+    {"id": "ElhxzUO7YQM", "title": "California Forever: The Startup Building America's Next Great City", "duration": 650, "rationale": "Startup spotlight — likely maps, renderings, headline cards"},
+    {"id": "eWE6xmHu6Jw", "title": "The Next Bubble Is Already Here - Chamath Palihapitiya", "duration": 713, "rationale": "Financial commentary — chyrons, market data overlays"},
+    {"id": "_m_jwz5hzzw", "title": "How Chamath Optimized His Health", "duration": 751, "rationale": "Bio/health infographics"},
+    {"id": "ijbLOWFmVe8", "title": "Multicoin Capital's Kyle Samani on Internet Capital Markets", "duration": 812, "rationale": "Crypto/finance — token logos, market data"},
+    {"id": "oNJ_ouDNNT0", "title": "Cathie Wood on AI/GDP, Bitcoin $1M, Elon's Trillion-Dollar Pay", "duration": 1155, "rationale": "ARK Invest style charts & stats — high infographic density"},
+    {"id": "G2KvA4QD-IY", "title": "Rick Caruso on California's Collapse", "duration": 1376, "rationale": "Politics/news — headline cards, B-roll lower thirds"},
+    {"id": "KG_nHmHUZLw", "title": "Ari Emanuel: AI, Attention, and Ownership", "duration": 1645, "rationale": "Media exec interview — chyrons, name lower thirds"},
+    {"id": "TKtIoF4yLos", "title": "Sequoia's Roelof Botha on VC", "duration": 1677, "rationale": "VC interview — likely Sequoia portfolio company logos, fund stats"},
+    {"id": "5bSGrQou4Lo", "title": "YouTube CEO Neal Mohan on AI, Censorship & Creators", "duration": 1693, "rationale": "Platform exec — likely YouTube analytics overlays"},
+    {"id": "R1q4wcV-ImY", "title": "Orlando Bravo's Private Equity Playbook", "duration": 1737, "rationale": "PE explainer — likely fund/deal infographics"},
+    {"id": "5nCbHsCG334", "title": "Satya Nadella on AI's Business Revolution", "duration": 1920, "rationale": "Microsoft CEO — chyrons, brand insertions"}
+  ]
+}

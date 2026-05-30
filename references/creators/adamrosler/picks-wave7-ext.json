@@ -1,0 +1,41 @@
+{
+  "wave": "wave-7-extension",
+  "selected_at": "2026-05-28",
+  "rationale": "Hit the user-requested 20-video baseline by adding 4 NEW videos beyond the existing 18. Variety: 1 viral hit (~21k views), 1 high-performer (~4k), 1 mid (~2.9k), 1 long-tail mid (~1.9k). Topical mix: LLM tokenization, LLM memory/quantization, ML fundamentals (backprop), OS internals (Linux fork). All Shorts (45-60s vertical).",
+  "previously_analyzed": [
+    "1aVyHmt2-Uo", "1eBmR1n0VNk", "2n4Mc8Bh8KQ", "I30REYSeA0s", "I9pjllzSNK0",
+    "L2xSh1nlmgo", "O8RfsSzybEU", "OnRw0D0nnDI", "P55GHPFTMQI", "ehVpELha2ss",
+    "gaGcC_OOGQ0", "hvtB3UaQ1wg", "knSbdZTglzQ", "mZgCDFEBna0", "omeIyf2Zja4",
+    "pthNSkWU8VM", "rQxA1i4pQTg", "tY40HHLnNxE"
+  ],
+  "newly_picked": [
+    {
+      "id": "lEH0kNy54Ao",
+      "title": "Why ChatGPT can't count the R's in strawberry",
+      "duration_estimate_sec": 50,
+      "view_count": 21000,
+      "reason": "Viral hit (21k views — 4x his average). Classic tokenizer-explainer topic; likely strong character/letter visual primitives."
+    },
+    {
+      "id": "U6O4yv1XR34",
+      "title": "Google just shrunk LLM memory 5x — here's how TurboQuant works",
+      "duration_estimate_sec": 55,
+      "view_count": 4000,
+      "reason": "High performer in his top tier. Memory + compression topic likely to surface NEW bar/gauge primitives (memory reduction visualizations)."
+    },
+    {
+      "id": "7RhJawm2nw4",
+      "title": "How neural networks actually learn — backpropagation in 45 seconds, from miss to math",
+      "duration_estimate_sec": 50,
+      "view_count": 2900,
+      "reason": "ML fundamentals — backprop is graph/arrow heavy. Expected: gradient flow animations, weight update sequences. Tests catalog coverage of math/arrow primitives."
+    },
+    {
+      "id": "S5ZFkY756IY",
+      "title": "Linux fork() clones a 4GB process in under a millisecond by copying nothing",
+      "duration_estimate_sec": 50,
+      "view_count": 1900,
+      "reason": "Systems/OS topic (vs the heavily LLM-focused existing 18). Copy-on-write is a well-known visualization opportunity: parent/child process trees, shared memory pages. Tests if Adam's templates generalize beyond AI topics."
+    }
+  ]
+}

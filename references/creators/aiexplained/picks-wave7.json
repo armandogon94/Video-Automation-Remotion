@@ -1,0 +1,107 @@
+{
+  "creator": "aiexplained-official",
+  "channel": "AI Explained",
+  "channel_url": "https://www.youtube.com/@aiexplained-official",
+  "presenter_real_name": "Philip",
+  "scrape_date": "2026-05-27",
+  "wave": "wave-7",
+  "pick_rationale": "Mix of recent model breakdowns, year-end recaps, research-paper analyses, image-gen reviews, and high-views milestone videos to surface the full range of overlay graphics templates (paper screenshots, benchmark tables, citation cards, animated quotes). Long-form 11-34 min each.",
+  "picks": [
+    {
+      "id": "chr2I7CZTfk",
+      "title": "Gemini 3 Pro: Breakdown",
+      "duration_s": 1303,
+      "upload_date": "2025-11-19",
+      "views_at_scrape": 118886,
+      "why_picked": "Recent Google DeepMind model release breakdown - paper-heavy with benchmark tables, citation cards"
+    },
+    {
+      "id": "QVJcdfkRpH8",
+      "title": "Claude Opus 4.7 - A New Frontier, in Performance and Drama",
+      "duration_s": 1180,
+      "upload_date": "2026-04-17",
+      "views_at_scrape": 87911,
+      "why_picked": "Recent Anthropic-niche match (our brand-set). Likely tweet cards + paper screenshots"
+    },
+    {
+      "id": "2_DPnzoiHaY",
+      "title": "Gemini 3.1 Pro and the Downfall of Benchmarks: Welcome to the Vibe Era of AI",
+      "duration_s": 1130,
+      "upload_date": "2026-02-20",
+      "views_at_scrape": 109190,
+      "why_picked": "Benchmark visualization heavy + ranked tier list signals"
+    },
+    {
+      "id": "WLdBimUS1IE",
+      "title": "GPT-5 has Arrived",
+      "duration_s": 901,
+      "upload_date": "2025-08-07",
+      "views_at_scrape": 163710,
+      "why_picked": "High views milestone-model breakdown; iconic AI Explained reaction format"
+    },
+    {
+      "id": "jz0rNhfAKo8",
+      "title": "GPT 5.5 Arrives, DeepSeek V4 Drops, and the Compute War Intensifies",
+      "duration_s": 1519,
+      "upload_date": "2026-04-24",
+      "views_at_scrape": 106580,
+      "why_picked": "Multi-story news roundup format - chapter cards likely visible"
+    },
+    {
+      "id": "Iar4yweKGoI",
+      "title": "Claude AI Co-founder Publishes 4 Big Claims about Near Future: Breakdown",
+      "duration_s": 1333,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "Citation-card heavy - explicit '4 Big Claims' format implies numbered chapter molecules"
+    },
+    {
+      "id": "eczw9k3r6Ic",
+      "title": "When Will AI Models Blackmail You, and Why?",
+      "duration_s": 1580,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "Research-paper heavy alignment piece. Likely cited-quote overlays + paper screenshots"
+    },
+    {
+      "id": "Xn_5aIhrJOE",
+      "title": "Claude 4: Full 120 Page Breakdown ... Is it the Best New Model?",
+      "duration_s": 1145,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "120-page system card breakdown - definitive paper-screenshot overlay reference"
+    },
+    {
+      "id": "9hv4nr_46Ao",
+      "title": "Nano Banana Pro: But Did You Catch These 10 Details?",
+      "duration_s": 896,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "Image-gen review - generated-image overlays + listicle ('10 Details') format"
+    },
+    {
+      "id": "tVHZy-iml5Q",
+      "title": "Genie 3: The World Becomes Playable (DeepMind)",
+      "duration_s": 715,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "Video-overlay heavy (world-model demos) - tests how he frames inline video content"
+    },
+    {
+      "id": "FMMpUO1uAYk",
+      "title": "What the Freakiness of 2025 in AI Tells Us About 2026",
+      "duration_s": 2007,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "Year-end recap (33 min, longest pick) - likely full template diversity in one video"
+    },
+    {
+      "id": "g9ZJ8GMBlw4",
+      "title": "How Not to Read a Headline on AI (ft. new Olympiad Gold, GPT-5 ...)",
+      "duration_s": 1040,
+      "upload_date": null,
+      "views_at_scrape": null,
+      "why_picked": "Headline-overlay heavy by definition. Tests his news-screenshot annotation style"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "creator_handle": "motiongraphicsweb",
+  "analyzed_count": 2,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "Cjk4DUgoKD7",
+      "title": "unknown",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/p/Cjk4DUgoKD7/",
+      "date_first_analyzed": "2026-05-25",
+      "wave": "wave-7",
+      "frame_count": 10,
+      "clip_count": 0,
+      "has_metadata_json": true,
+      "notes": "frame-only, no clips"
+    },
+    {
+      "id": "CjoH5mFIEC2",
+      "title": "unknown",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/p/CjoH5mFIEC2/",
+      "date_first_analyzed": "2026-05-25",
+      "wave": "wave-7",
+      "frame_count": 10,
+      "clip_count": 0,
+      "has_metadata_json": true,
+      "notes": "frame-only, no clips"
+    }
+  ]
+}

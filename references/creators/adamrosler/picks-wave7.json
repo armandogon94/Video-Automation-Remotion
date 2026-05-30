@@ -1,0 +1,151 @@
+{
+  "wave": "wave-7",
+  "platform": "youtube",
+  "criteria": "Mix of recent (top of feed) + high-view (>1K) + topical diversity (RAG, agents, training, inference, infra, security). Target 18 shorts. All ~45-60s 9:16.",
+  "picks": [
+    {
+      "id": "mZgCDFEBna0",
+      "title": "The #1 agent on OpenRouter is open source and runs on a 20GB laptop — Hermes",
+      "duration": 55,
+      "view_count": 23000,
+      "platform": "youtube",
+      "reason": "TOP VIEW (23K) — best signal for what works for him; agent topic"
+    },
+    {
+      "id": "hvtB3UaQ1wg",
+      "title": "Microsoft measured 19-34% semantic drift over 20 chained agent edits — the fix",
+      "duration": 55,
+      "view_count": 5200,
+      "platform": "youtube",
+      "reason": "high-view (5.2K) — stat-heavy title, likely chart-template candidate"
+    },
+    {
+      "id": "I9pjllzSNK0",
+      "title": "The internet routes on the honor system — how a 2008 BGP leak killed YouTube globally",
+      "duration": 55,
+      "view_count": 4200,
+      "platform": "youtube",
+      "reason": "high-view (4.2K) — historical/incident narrative, likely diagram-heavy"
+    },
+    {
+      "id": "gaGcC_OOGQ0",
+      "title": "Async continuous batching: same model, 22% faster",
+      "duration": 55,
+      "view_count": 3400,
+      "platform": "youtube",
+      "reason": "high-view (3.4K) — perf-comparison topic, likely BigNumberDuel/chart"
+    },
+    {
+      "id": "P55GHPFTMQI",
+      "title": "The npm Worm That Shipped With a Valid Sigstore Badge: Mini Shai-Hulud, Explained",
+      "duration": 55,
+      "view_count": 2300,
+      "platform": "youtube",
+      "reason": "recent + 2.3K views — security narrative, may have flow diagrams"
+    },
+    {
+      "id": "omeIyf2Zja4",
+      "title": "How A Model Reads 10 Million Tokens Without Loading The Document",
+      "duration": 55,
+      "view_count": 2000,
+      "platform": "youtube",
+      "reason": "2K views — algorithmic explainer, may have architecture diagrams"
+    },
+    {
+      "id": "1aVyHmt2-Uo",
+      "title": "GridSFM: a tiny transformer that unlocks $20B of US grid cost in milliseconds",
+      "duration": 55,
+      "view_count": 2400,
+      "platform": "youtube",
+      "reason": "2.4K views — big-money headline, BigNumberHero candidate"
+    },
+    {
+      "id": "rQxA1i4pQTg",
+      "title": "Is The Million-Token Context Window A Lie? The Honest Verdict",
+      "duration": 55,
+      "view_count": 1600,
+      "platform": "youtube",
+      "reason": "recent + 1.6K — myth-buster framing, likely before/after"
+    },
+    {
+      "id": "L2xSh1nlmgo",
+      "title": "Python 3.13 no-GIL ships mimalloc as default — +14% on Redis vs jemalloc",
+      "duration": 55,
+      "view_count": 1500,
+      "platform": "youtube",
+      "reason": "1.5K — benchmark comparison, likely bar-chart"
+    },
+    {
+      "id": "pthNSkWU8VM",
+      "title": "Claude 4 Opus blackmailed engineers 96% of the time. Here's how Anthropic fixed it.",
+      "duration": 55,
+      "view_count": 1500,
+      "platform": "youtube",
+      "reason": "viral hook + 1.5K — narrative + before/after"
+    },
+    {
+      "id": "I30REYSeA0s",
+      "title": "Your CPU guesses the next 200 instructions — and it's right 95% of the time",
+      "duration": 55,
+      "view_count": 1600,
+      "platform": "youtube",
+      "reason": "1.6K — systems-internals explainer, candidate for diagram-heavy"
+    },
+    {
+      "id": "tY40HHLnNxE",
+      "title": "OpenAI tried 3 Windows sandboxes for Codex — all failed. Here's the hybrid they shipped.",
+      "duration": 55,
+      "view_count": 1800,
+      "platform": "youtube",
+      "reason": "1.8K — 3-option enumeration, listicle candidate"
+    },
+    {
+      "id": "2n4Mc8Bh8KQ",
+      "title": "DeepSeek V4 fires 49B of 1.6T params and matches GPT-5 on code",
+      "duration": 55,
+      "view_count": 1800,
+      "platform": "youtube",
+      "reason": "1.8K — versus comparison, BigNumberDuel candidate"
+    },
+    {
+      "id": "OnRw0D0nnDI",
+      "title": "One API Call Now Runs a Whole Coding Agent in a Linux Sandbox (Google Managed Agents)",
+      "duration": 55,
+      "view_count": 1200,
+      "platform": "youtube",
+      "reason": "RECENT (top of feed) — flow/pipeline topic"
+    },
+    {
+      "id": "knSbdZTglzQ",
+      "title": "Your agent skill never fires because the model routes on the description, not the body",
+      "duration": 55,
+      "view_count": 1200,
+      "platform": "youtube",
+      "reason": "1.2K — instructional, layered card candidate"
+    },
+    {
+      "id": "ehVpELha2ss",
+      "title": "Your RAG Can't Find the Answer Because You Split the Doc Mid-Sentence (Chunking Strategy)",
+      "duration": 55,
+      "view_count": 1000,
+      "platform": "youtube",
+      "reason": "RECENT — RAG/chunking topic, may show docs being sliced"
+    },
+    {
+      "id": "1eBmR1n0VNk",
+      "title": "Diffusion Language Models: Write a Whole Block at Once, Then Revise (NVIDIA Nemotron Diffusion)",
+      "duration": 55,
+      "view_count": 1000,
+      "platform": "youtube",
+      "reason": "RECENT — diffusion narrative, may have token/block animation"
+    },
+    {
+      "id": "O8RfsSzybEU",
+      "title": "Your 1M Context Window Stops Listening At 32K — Here's Why",
+      "duration": 55,
+      "view_count": 2900,
+      "platform": "youtube",
+      "reason": "2.9K — popular myth-bust, likely line-chart/dropoff"
+    }
+  ]
+}

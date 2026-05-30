@@ -1,0 +1,23 @@
+{
+  "channel": "@matthew_berman",
+  "channel_url": "https://www.youtube.com/@matthew_berman",
+  "channel_id": "UCzi5kcwU8aT4aLR7LcYhfWQ",
+  "uploader": "Matthew Berman",
+  "scraped_at": "2026-05-27",
+  "wave": 7,
+  "rationale": "AI tool demos, agent reviews, model comparisons. Heavy screen recordings + comparison overlays + animated tweet quotes. Mix of long-form (model launches, news, interviews) + Shorts (quick takes).",
+  "picks": [
+    {"id": "6LwQ8RbU9as", "kind": "long",  "duration": 1023, "title": "DeepSWE just changed the benchmark game..."},
+    {"id": "GBISeUYMzoU", "kind": "long",  "duration": 1882, "title": "Cursor just beat EVERYONE."},
+    {"id": "ak6fQ2Yjwy0", "kind": "long",  "duration": 2465, "title": "We only have 2 years..."},
+    {"id": "tNV9_I-zLO0", "kind": "long",  "duration": 1146, "title": "OpenAI just dropped GPT-5.5... (WOAH)"},
+    {"id": "N4ZWCc_Fr3U", "kind": "long",  "duration": 1087, "title": "Opus 4.7 just dropped... and I'm confused."},
+    {"id": "BrJdGP21B5g", "kind": "long",  "duration": 587,  "title": "Google just dropped Gemma 4... (WOAH)"},
+    {"id": "dYG8JxtSgmM", "kind": "long",  "duration": 900,  "title": "Claude Code was just leaked... (WOAH)"},
+    {"id": "I0me2uEbfuE", "kind": "long",  "duration": 1235, "title": "Every AI Model Explained in 20 Minutes"},
+    {"id": "ROKgDeeFAnk", "kind": "short", "duration": 60,   "title": "New BEST AI Memory System"},
+    {"id": "a-IOrLvd9B4", "kind": "short", "duration": 60,   "title": "Earth SHATTERING New AI Model"},
+    {"id": "KJrqRJzSErw", "kind": "short", "duration": 60,   "title": "Anthropic is in trouble"},
+    {"id": "mR2Rh9RtyR4", "kind": "short", "duration": 60,   "title": "Turns out, HTML is King"}
+  ]
+}

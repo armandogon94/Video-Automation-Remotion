@@ -1,0 +1,22 @@
+{
+  "handle": "allin",
+  "channel_name": "All-In Podcast",
+  "channel_url": "https://www.youtube.com/@allin",
+  "hosts": ["Chamath Palihapitiya", "Jason Calacanis", "David Sacks", "David Friedberg"],
+  "format": "Long-form panel podcast (avg 1.5h-3h full episodes) + medium-length interview clips (10-30 min)",
+  "topics": [
+    "Technology / AI",
+    "Venture capital & private equity",
+    "Public markets & macroeconomics",
+    "US politics",
+    "Geopolitics",
+    "Health & longevity"
+  ],
+  "fetch_method": "yt-dlp flat-playlist of /@allin/videos, top 80 by recency",
+  "fetched_at": "2026-05-27",
+  "total_listed": 80,
+  "selected_for_analysis": 12,
+  "selection_strategy": "Prioritized 1-33 min clips over 60-180 min full episodes; balanced across business interviews, finance commentary, politics, AI panels.",
+  "languages": ["en"],
+  "first_seen_in_references": "2026-05-27 (Wave 7)"
+}

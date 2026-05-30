@@ -1,0 +1,1645 @@
+ 
+You've probably seen these smooth SAS
+animations online, and by mastering
+these SAS animations, you can make a
+crazy amount of money. And today, we're
+going to create one about notion. So,
+this is what we're going to create. If
+you ever try to organize your work, you
+know how messy it gets. Notes in one
+app, tasks in another, ideas scattered
+everywhere. Notion fixes that by
+bringing everything into one place. Now,
+let's jump into it. Now, we're here in
+After Effects. So, what I'm going to do
+is I'm going to create a new
+composition, and I'm going to make it 25
+frames per second. duration. Uh,
+something like this should be fine. And
+then I'm going to keep that the same.
+You can also use the preset 4K. Uh,
+that's a really nice preset. Press okay.
+And we have our comp. I'm going to
+import our voice over. And the voice
+over
+is here. There we go. If you want the
+voice over, you can just download it
+down below. And you can also download
+the project file and see the full deep
+dive of this notion tutorial. And you
+can do so by joining the full stack
+editor club. Link is down below. Uh,
+join if you want. and then I'll see you
+there. Now, let's uh drag this voice
+over in the comp. And there we go. And
+here we have the script. I'm going to
+first focus on scene one, two, and
+three. And in the full stack editor
+club, I will go also into the scene four
+and scene five. And of course, the
+inspiration beforehand. First, what I'm
+going to do is I'm going to go create a
+new solid. So, let's go to layer, new
+solid. And I want to make this not fully
+white, a bit of like a a creme cranle, a
+nice like warm white. I'm thinking of
+something like this. Press okay. Press
+okay. And then I'm going to import this
+video. Uh I created this using AI. So
+let's press open. I generated the image
+using midjourney and then I animated it
+using Hickfield. Now if you don't want
+to generate this yourself, you can just
+download it down below. Let's drag that
+in. And as you can see, it's not the
+right color. Also, not the right size.
+So, first thing I'm going to do is I'm
+going to scale it up a bit. Press S for
+scale. And I'm going to set my quality
+to full so I can at least see it a bit
+how it looks like. And I'm just going to
+change the screen mode here on the side
+to multiply. That will make the white
+transparent and blend with the
+background. I do still see some edges
+here. And to get rid of that, we just
+need to add a levels. So, let's go to
+the effects and presets and add a
+levels. There we go. And then we can
+just drag it a bit uh so it's a bit more
+contrasty. I want that anyway also on
+the left side because I want it to be a
+bit more black. I I like it to have it a
+bit gray, but something like this should
+work. Now, the first animation I'm just
+going to use scale and make it so it
+goes from this to 100%. And I also need
+to offset the timing a bit because uh I
+think this needs to happen a bit more
+soon. Let's do it something like this.
+And I'm going to easy ease this so it's
+nice and smooth. Let's go to the graph
+editor and let's select the last key
+frame and let's make it so it rams in.
+Going to set it to quarter. So quickly
+preview it. I think it all happens a bit
+too slow. So right click time, enable
+time remapping. And then what I'm going
+to do is I'm going to move this last key
+frame just a bit more towards the
+beginning. Then drag this scale out.
+Okay, this is perfect. I might even fade
+it in so we have a nice transition in
+the beginning. Nice. And what I want to
+do is basically have a paper flying into
+the screen basically as a transition.
+And to do so, we need to have a paper
+that is a bit similar. And to do or to
+create a paper like this, it's really
+simple. I'm just going to go to the pen
+tool and I'm just going to draw a shape
+uh with that color and with this stroke.
+So, let's go to the stroke and select
+this color. And then let's select the
+fill and select the background color.
+Press okay. And then I'm just going to
+go to the pen tool and I'm going to draw
+a really like jaggedy paper. Uh maybe
+like have it rounded a bit. Something
+like this. But then also I'm going to
+just like make a quite rough shape of a
+paper. And like always, you can also
+adjust this later on, but that's fine.
+We can just have it maybe something like
+this. It looks like has a bit of a a
+butt. Maybe we have to adjust this a bit
+so it's a bit harsher. Let's go. We have
+a paper and that's nice. And we don't
+even have to animate this in. And the
+other papers appear quite harsh. Uh so
+we can do the same with this one. So
+just hold alt and then left bracket or
+uh on Windows alt on Mac also alt uh but
+it's called option. Um and then of
+course on the shape layer. So basically
+this this just appears like that. And
+then basically what I want to do is I
+want this to this paper to move towards
+the screen. Now of course we can make it
+3D and stuff like that. However we can
+also add a CC page turn. And with this
+we can make this awesome animation. And
+as you can see, we can make it fold a
+bit. And by the way, you can just search
+for CC page turn in the effects and
+presets to edit. We do want to change
+some uh values. So the back opacity I
+want to set it to 100%. And then there's
+also this ugly ass light on it. I don't
+want that. So the light direction I'm
+just going to set to zero or align it so
+it doesn't add any light to it. Maybe a
+bit more to the right. There we go. Now
+I'm going to turn this uh controls to
+classic UI. Uh select the past turn
+again. And where's my controller? It's
+here. So, we can control it a bit more.
+Nice. And then I can also change the
+fold direction. I want to have it folded
+like this. And now that we have our
+shape and page turn, what I'm going to
+do is I'm going to just pre-ompose it.
+And we do this by hitting command shift
+C or control shift C on Windows. Okay.
+And then I'm going to link it again to
+the animated video. And let's go into
+the shape. And then we have to animate
+it here. And to do so, I'm just going to
+go into the fold position and set a key
+frame for that classic UI so we can
+easily change it. And then we can just
+move this around. Let's set this to
+quarter. So it will be a bit more quick.
+So I'm just going to start here and then
+go a few seconds further and then just
+fold it around like a pancake. Maybe
+something like this. Uh let's see if we
+need to change the fold radius also. I
+think I like it when the radius is a bit
+bigger. makes it look a bit more
+realistic. And the fault direction I'm
+going to change a bit so it's also a bit
+more you can see the fold a bit better.
+Then the light direction. Let's change
+that so it's not as harsh. Just a tiny
+bit. Maybe on 57. That works. So let's
+see. Looks nice, but it is a bit harsh.
+So let's press U on our keyboard and hit
+F9 on that last key frame just to easy
+ease it a bit. Maybe even a bit more.
+the beginning. I don't mind if it goes a
+bit quick. Yeah, that works. That works
+really nice. Maybe we can even drag this
+out a bit. This is more smooth. Perfect.
+Very nice. Cool. Now, we go back to our
+comp and it will look a bit ugly, but we
+need we now have to add some animation
+to it. So, let's see. It starts around
+here. Let's press P for position. Set a
+key frame. Uh, go a bit further. Let's
+move it like below here. We also have to
+scale it up, but let's do that later.
+And then maybe here back here. Let's
+move it to the center again. And I'm
+going to go into my convert vertex tool.
+If you don't see this, click and hold
+your mouse down on the pen tool. And
+then we're going to make a nice circle.
+Let's make it a bit like this. That will
+make it look a bit more realistic, a bit
+more organic. So it falls like that.
+Let's see. Maybe I want to even move
+this a bit. So it's even more organic.
+We can also rotate it. So let's press R
+for rotation. and P for position. And we
+already had that. S for scale. Set.
+Press U on our keyboard. And let's move
+these to the beginning in the
+beginninging. And then uh let's see what
+we can do here. Maybe make this one F9
+so it's a bit more smooth. And then we
+want to end it here around here. Scale
+it by a ton. I want it to fill the whole
+screen. Scale and position. Something
+like this. And I want this scale to
+happen a bit later. So we can just hit
+F9 on our keyboard on both key frames
+too. But we can go to the graph editor
+and then uh just adjust it a bit. So
+this happens a bit later. Uh so it's
+like more like this. It's already cool
+in my opinion. The end it goes a bit
+weird with the position and the scale.
+We can fix that with a null object or we
+can just go into the position and then
+let's see if we can maybe adjust the key
+framing here a bit. There's a bit of a
+dip here. So let's see if we can move it
+this better. Very nice. However, uh as
+you might notice, uh this goes quite
+smooth comparing to the rest of the
+comp. And that is because we have a bit
+of like posterized time, which basically
+is like a low frames per second. I
+didn't do that on purpose on the
+animation. That's just how it is.
+However, we can also add that to this
+animation. And to do so, I'm just going
+to go to my effects and presets and add
+a posterized time on this. And then
+maybe set this to 15. That should work.
+maybe even lower, maybe even 10, which
+looks all right. However, because of the
+animation and the page fold effect, this
+the frames don't align well. And that is
+mainly because the animation is still
+smooth, but the page fold isn't. So,
+what we're going to do is going to go to
+layer, new adjustment layer, and then
+we're going to go to this posterized
+time effect and just cut it and paste it
+on that adjustment layer. Now, it will
+also affect the video down below, which
+actually is not bad cuz it will blend it
+a bit better. I think it looks really
+cool. The only thing that our layer is a
+bit too sharp in my opinion. So, last
+thing what I'm going to do is I'm going
+to add a mosaic effect to this. So,
+basically just go to the effects and
+presets and add a mosaic. And this is
+basically an effect normally to create
+like a pixelated effect. You just want
+to set this quite high. Maybe even 500
+by 500. Even more,000 by,000 already
+works better. Uh with and without. With
+without really sharp with blends a bit
+more. Now maybe this is a bit too much,
+but also when it goes bigger, it should
+be Let's see. Yeah, I do want to
+increase it even more cuz I don't want
+it to be super unsharp when it's uh
+zoomed in like this. I think this could
+work. Let's see. As you can see, it
+blends so much better. It's a small
+effect, but without it and with it, you
+can see the difference, uh, it just
+blends better with the background. Now,
+we can also upscale the video. That is
+also a solution. However, um, this is
+just an easy way to blend objects. And
+then I want to have a text here, how
+messy it gets. And I don't want to have
+everything uh with a posterized time.
+So, I'm just going to make sure that all
+the layers from now on are above that
+posterized time. Let's go to the
+horizontal type tool or just the text
+tool. And then uh let's click here how
+messy it gets. San Francisco Pro medium.
+That's fine. Let's change the fill to
+almost black, but like a off black.
+Something like this. Press okay. Let's
+make this really nice and big. And let's
+center this. Now, normally I like smooth
+animations, but with notion, I think a
+bit of like a harsher effect can work
+well. So, no motion blur. Maybe also not
+really like feathered masks, which is a
+challenge, but let's see. For the first
+one, I want to have the words just pop
+up out of thin air. Uh, so what I'm
+going to do is I'm going to add a mask
+to this. So, let's go to the rectangle
+tool and then make this mask really nice
+and white. And I'm doing this because uh
+we can then later on reuse this. So,
+let's drag this down to something like
+here. And if you want to move your mask
+around, you can hold spacebar to move it
+around. um to have it something like
+this. Just make sure the whole object is
+in there. There we go. And now let's go
+to the animate and then position. And
+then I want to go into the range
+selector and go into advanced and then
+change the uh based on to words because
+I just want to animate the words. Now
+what I want to do is change the position
+to be below the mask as you can see.
+Just make sure they are all disappeared.
+I'm going to change the shape to ramp up
+and then the ease low to 100%. And then
+I'm going to go to the offset and key
+frame the offset. So the offset goes
+from minus 100 to a bit further down to
+100. Now let's close this text and press
+U to see the key frames. And let's align
+this a bit better. Uh and I might want
+to start it already here. Something
+around here. Just so it's like
+continuous movement, right? Maybe a bit
+more quick. Nice.
+And that's it for scene one. So let's go
+to scene two. And in scene two, we have
+notes in one app, task in another ID
+scattered everywhere. And I'm thinking
+to have a fake notes UI and then maybe a
+task UI and transition between these two
+scenes. And to transition between these
+two scenes, I'm going to use a technique
+that a lot of these size explainers use.
+And that is by going to layer, new, no
+object. Link this text to this no
+object. And then I'm going to choose a
+movement. In this case, I'm going to
+press P for position, set a key frame,
+and then I'm going to go a bit further,
+and I'm just going to make it quite
+high. I would say maybe even around
+here. So, there's quite a lot of
+movement. Let's drag this out to the
+beginning. And then select these key
+frames, hit F9, go into the graph
+editor, and make sure that this graph is
+really spiked. Just like this. So,
+there's like a nice peak. Just something
+like this. And then, uh, we're just
+going to cut this off right here. Hit
+alt right bracket so it goes like this.
+Then we're going to make a note tap. And
+to make a note tap, I'm just going to go
+to the rounded rectangle tool. The fill
+and stroke are fine. I want to change
+the stroke to be a bit more thin.
+Probably uh five. And I'm also going to
+use a trick later on. You don't even
+have to turn the fill on. Uh but if it's
+the same background color, that's also
+totally fine. So now we can just draw a
+shape. And I'm just going to make it
+sort of like a phone shape. Probably
+something like this. I want to increase
+the roundness by a lot and maybe also
+increase the stroke with a bit to
+something like this. There we go. Now
+I'm going to right click layer styles
+and then do another stroke. And in this
+stroke I'm going to change the color to
+white. And then set the size to maybe
+like 15 or something. Let's quickly
+check this in full quality. And as you
+can see, we have this nice black stroke
+and then this white stroke. And this
+looks really cool in my opinion. I've
+seen this in quite a few designs, so
+that's why. Now, let's center this using
+the align tool. So, it's nicely in the
+center. And then I'm just going to go to
+the text tool and type something like my
+notes. Let's make this way smaller. And
+let's of course align this in the
+center. There we go. Maybe make this
+text even smaller. Uh then I'm going to
+go to the text tool again and I'm going
+to make a paragraph text. So, I'm just
+going to click and drag. Let me paste
+this text. There we go. Uh, also make
+sure that this is aligned to the left.
+And maybe make this a bit bigger. Uh, I
+also have these titles here that need to
+be bold. So, let's make those bold. And
+then let's make this bold, too. And then
+this bolt, too. Let's see what this
+looks like. Pretty nice. I think it's a
+bit too small even. Uh, let's quickly
+check. This was 49 pixels. So, I just
+want to make sure that this is not much
+more than that. So, maybe 39. And then
+maybe I'm going to add a quick button.
+So let's add the ellipse tool. Make sure
+nothing is selected. And the fill. I'm
+going to set the same color as this
+stroke. And the stroke I'm going to turn
+off. So let's click on stroke none. And
+then I'm going to create a quick like
+plus button here in the bottom right. So
+hold shift just to add a bit of visual
+style to this. Otherwise it's a bit
+boring in my opinion. Let's align this
+nicely. Quick alignment tip. I see a lot
+of people they put it like uh just like
+this or something. It looks horrible
+because the padding on the right is not
+the same as the bottom. And also give it
+room to breathe. So put it somewhere
+around here. If you then zoom out, you
+can see that also looks really clean.
+Now, of course, I want a quick plus
+button on this. So let's just go to the
+text tool and type a plus and make the
+fill color the same as here. Or I can
+actually make it white. Let's see what
+this looks like if it's white. make it a
+bit bigger. Of course, um it's quite
+thick. So, let's change this to maybe
+medium. And then let's move this. I
+think that looks pretty clean. Although,
+as you can see, or maybe you don't see,
+but this plus is now quite huge. I think
+it's uh nicer if it's a bit more like
+regular. And then just a bit more thin
+or a bit smaller somewhere like this.
+Align the anchor point in the center.
+You can use a tool like motion tools or
+you can hold command or control and
+double click on the pen behind tool.
+That will center the anchor point too.
+Now I'm going to link this to the shape
+and we have a nice scene already. I
+think this looks cool. Now of course we
+still need to animate it. And to animate
+it what I'm going to do is quite simple.
+I'm going to make sure that the text is
+just linked to this uh shape which is
+the iPhone or the phone. Um, so just
+parent them. This button I'm also going
+to parent to the shape. Uh, so it's all
+linked to the shape. And then just make
+sure that the animation of the null is
+done. So press U on your keyboard to see
+the position of this null. And make sure
+you're behind this last key frame. And
+if you then link this to this null and
+we go towards the front, you will see
+that this already has a cool animation.
+Now the only thing we have to do is
+basically make sure that this is cut in.
+So let's select all of these, hit alt
+left bracket, and we already have a cool
+animation. If we now just quickly play
+this back, you will see this really cool
+match cut, which we want. However, I do
+think it's still a bit boring. And to
+make it a bit less boring, I'm going to
+animate the text, too. Uh maybe I'm
+going to just keep this my notes or just
+fade that in. So let's press T for
+transparency. uh set a key frame and
+make sure that it goes from zero to 100.
+And then for the text, I'm just going to
+go into the text. I'm going to go
+animate opacity
+and then uh just set the opacity to
+zero. And then go into the range
+selector going into advanced and uh
+change the based on to lines and shape
+ramp up ease 100%. And then change the
+offset to minus 100. Set a key frame. Go
+a bit further till here or something.
+and then set it to 100. And this will
+add a nice animation to the text. I do
+think that the animation can go a bit
+smoother. All in all, so what I'm going
+to do is I'm just going to close this
+and I'm just going to drag this key
+frame out of this null. Do make sure
+that the peak is still here. So for
+example, if we move it here, we can do
+that. But we just need to go into the
+graph editor and adjust the peak a bit
+because we want the most movement to
+have the match cut basically.
+This is already nice. And then I'm going
+to change the notes to be even longer.
+Press U on that paragraph. Let's drag
+this out a bit. Somewhere like here. We
+want the button to pop up. So let's
+press S for scale on that shape layer.
+Set a key frame. Drag this out. Set this
+to zero. Press R for rotation. Set a key
+frame. Press U to see the key frames.
+Drag this to the right. And then maybe
+set this to minus 45. Then I'm going to
+make sure that it's a bit bigger here.
+So go a few key frames before the scale
+is 100%. And let's set this to
+five. Then I'm going to select all of
+the key frames, hit F9 on my keyboard,
+go into the graph editor, and then maybe
+drag these last two key key frames out a
+bit. and maybe make the scale a bit
+smoother at the end. Select that last
+key frame. Just like this. This comes in
+a bit too late. So, let's move this. So,
+it's notes in one app and then tasks in
+another. And to create the tasks app,
+I'm going to basically just select the
+shape layer and also the paragraph and
+the notes. I'm going to reuse that. So,
+I'm going to duplicate this. Command D
+on Mac. Control D on Windows. Let's drag
+this above all of the other layers. And
+then what I'm going to do is I'm going
+to unlink this shape layer for now. So
+let's just set this to none. And then
+open the shape layer by pressing S. And
+then I'm going to make it really big
+because I want to have this as a like a
+scaled up version. I think that will
+look awesome. Maybe something like this.
+And now it looks really ugly. But we're
+going to use a transition again. And
+since this is unlin, we can just go and
+turn this off for now, just so we can
+see it a bit better. Then I'm going to
+go to layer, new null object, and I'm
+going to use a new null. And it's
+important because I want to have an
+overlap of animation. I already want to
+start this animation when this hasn't
+ended yet. And that will make it really
+nice and smooth. So let's go press P for
+position and set a key frame around
+here. Then I want to link this null to
+this new null that we created. Go a bit
+further to maybe around here. And then
+move it all the way to the left. And
+actually quite far cuz I want to have
+quite a lot of movement. And maybe even
+drag this out to around here. Select
+both of these key frames. Hit F9 on our
+keyboard. And we can always adjust this
+a bit. But let's go into the graph
+editor and make this nice and spiky. So,
+it's like notes in one app, tasks in
+another. Nice. And again, what we're
+going to do is the same thing. Just go
+behind this last key frame. And now we
+can link all of these by just linking
+this shape layer to this null. We can
+link it to the null one because that's
+basically our main null. And now it
+should have a nice movement. I might
+even move it a bit more to the left so
+it's aligned like this. We go. Now again
+on the peak which should be around here
+doesn't have to be perfect. We can just
+select all of these layers and hit alt
+left bracket and then with the old
+layers that we have here we need to hit
+alt right bracket so they're cut off. So
+right on the moment they're cut off and
+this comes in. So it's like
+that's in one app tasks in another. Now
+of course this is not animated and we
+need to change this into a task
+management app. So, let's change the
+text first to tasks and then we need to
+change this into a task management and
+that doesn't have to be crazy. I found
+this inspiration on dribble and I'm
+going to recreate it somewhat. So, I am
+going to steal some elements here. Uh,
+what makes a task management tool? So,
+we already have the title. I'm not going
+to do anything with that. Maybe I'm
+going to change the text to like today's
+tasks. press U on our keyboard to make
+sure that this animation starts at the
+right point and then this text uh I am
+going to use but for example with so for
+example what we can do here is do the
+dishes or you know what let's keep it in
+editing so like sort out footage let's
+change this to regular it doesn't really
+make sense that it's still a paragraph
+but it's fine for now I'm going to add
+the text today under that. Let's select
+that text, make that a bit less dark.
+So, maybe something like this. And we
+can also make that a bit smaller. And we
+can even add a bit more spacing to that.
+Something like that. Nice. Now, I'm
+going to go to the rounded rectangle
+tool. Uh, change the fill to white.
+Press okay. Stroke set to none. And
+then, I'm just going to draw a quick
+box. Something like this. There we go.
+Roundness, nice and rounded. Probably
+something like 55. Make sure that this
+is below our text. And let's align this
+a bit nicer. So, we need to move this a
+bit up. Let's see what this looks like.
+I think it looks clean. I think it looks
+cool. It looks like a a to-do app. Maybe
+we have to make it even a bit bigger by
+going to the size and doing it like
+this. And as you can see, we now have
+the same padding here on the left of
+this and also on the left of this. And
+then also on the top and bottom. So, it
+just looks really nice to the eyes.
+Maybe I'm going to select them both.
+Move them down a tiny bit. Just like
+that. And now we just need like a nice
+button. Now, of course, after this, do
+make sure that this is parented to this
+null, too. If we don't do that, then you
+will see that it looks really ugly
+because we didn't parent this shape yet.
+It's fine if you animate it behind the
+key frame or add it behind the key
+frame. Uh so, let's go a bit more to the
+front and maybe I'm going to reuse that
+circle that we made. So, let's just uh
+grab that circle. Where is it? Uh, I
+think it's here. I'm just going to
+duplicate that. Bloop. There we go. And
+then move this up. And then make sure
+it's unlin. Let's go a bit towards here.
+And let's move this. And we already have
+this shape. I think it's actually nice
+in terms of the uh size. Let's drag it
+out so it's a bit longer. Um, let's move
+this to a nice point. Maybe around here.
+Press S for scale. And make sure that
+you're on one of these key frames. You
+can just click on this left arrow, click
+on the scale and then we can just scale
+it up. And what this does is basically
+scaling all the key frames. Uh so you
+don't have to go bit by bit per key
+frame and then change it. The only thing
+you do have to take into account it will
+also change the first key frame which
+should be always on zero. So let's
+change that. Let's see what this looks
+like first.
+I think it's clean. Nice. Uh now we just
+need uh like a check mark. And to add a
+check mark, you can download an icon, of
+course, or you can just create one. A
+check mark is not too crazy. We can just
+go to the uh pen tool and just uh make
+sure the fill is set to none and the
+stroke is set to white. And then the
+stroke width is set to like 5 pixels or
+something. And then let's just draw
+something like this. You can hold shift
+to make it like nice and straight. Um so
+we have something like this. Maybe I'm
+going to select this by going to V. Make
+it a bit smaller. You can also adjust
+the way it's set up. Don't make it like
+this. Don't make it like this. Just make
+it like this. There we go. Nice. Maybe a
+bit too thin. So, let's make it a bit
+thicker. Let's change this to full so we
+can see what this will look like. Looks
+nice. And then you can keep it or that
+it's uh quite harsh, I would say, on the
+on the lines. You can also go into the
+shape, go into contents, shape stroke,
+and then change the butt cap to round
+cap. And that will make it rounded. It's
+more like a stylistic choice if you
+prefer that. I do prefer that in this
+case. I think it's nicer. Nice. I just
+want to move it a bit so it's aligned a
+bit better. And I'm going to link that
+to this shape. I'm just going to quickly
+see what this animation look like. Also,
+with the rotation, I'm not sure if that
+works as well. I do think it can work
+well. Let's press U on that text. Since
+we already animated that before, we can
+just uh drag that out. So, it's animated
+already. Everything is animated now
+except the box. Now we can of course
+move that in or we can just add opacity
+to this. Sometimes it can be really
+easy. You don't have to overdo it. So
+press T for transparency opacity and
+let's fade this in. So it like fades in
+nicely from zero to 100. Now what I want
+to do basically of course link this and
+uh also link this to the null. So it's
+all nicely linked. Again make sure
+you're after that key frame of that
+null. So let's see where is the key
+frame? It's here. Uh, so we're nicely
+after it. So we can just link this one
+and this one. I always just check the
+parenting. As you can see, these ones
+still say none. So that means they still
+need to be parented. And we're going to
+parent them to the null one. Uh, just to
+make sure. You don't have to, but it's
+just easier in terms of workflow to
+always link it to the same null and then
+make new nulls for the other animation
+later on. We quickly preview this. As
+you can see, we already have this cool
+animation. Uh the only thing I would say
+is we need a few more tasks. And to do
+so, of course, really simple, guys. We
+can just make sure these layers are cut
+off nicely. So, hold alt left bracket.
+And then we can literally just select
+all of these layers and duplicate them.
+Except the phone and accept the today's
+task. So, just these four layers.
+Duplicate. Drag them up. Drag them up.
+And then, uh just offset them a bit. And
+then, uh we can just move them down
+holding shift and then the arrow keys.
+Make sure it's nicely aligned. Just
+going to go a bit further so we can see
+the spacing. Probably something like
+this. And then we can even add another
+one to make it realistic. Move that out
+a bit. Try to get the same padding. Now,
+of course, I want to change the text to,
+I don't know, edit base edit. And then
+it goes to ID scattered everywhere. What
+I want to do is basically have one task
+in the middle and then maybe have like
+IDs popping from the back or something.
+But for this to happen, we do have to
+have these uh or have one in the center.
+So the first thing I'm going to do is
+I'm going to go into the null, press P
+for position, and make sure that this
+null at least aligns everything in the
+center. And you can also go to the title
+action save to make it uh a bit easier
+to align. As you can see, we have some
+lines where we can align this to the
+center, too. There we go. Then I'm going
+to go to layer, new null object. Again,
+link this to the null object. Press P
+for position. Press S for scale because
+we're also going to animate the scale.
+Press U on your keyboard. And let's drag
+these key frames a bit more to the left
+again to have a bit of overlap. Then
+let's go a bit later and let's move
+this. Then I'm going to change this to
+maybe export. Export something like
+that. And I'm also going to scale it
+down. We probably have to reposition it.
+Uh again, probably something like this.
+There we go. Then of course, select
+them. Uh hit F9 on your keyboard. Go
+into the graph editor and make a nice
+peak of both the key frames peak content
+here. Very good. Very nice. This all
+goes a bit too quick. I want it to
+happen a bit more late like a bit later.
+So we can just select these key frames,
+move them a bit. Cool. Nice. And for
+this next animation then, like I said, I
+want to have maybe like postit appear
+from this uh export edit. I might even
+change this text to like um find ids or
+something. Find ids. I think that makes
+more sense. And then when this happens,
+we can or cut it off or we can fade it
+out. In this case, uh I might just fade
+it out and also fade the background
+because we have had the background the
+same the whole time and I think it could
+be cool to have it different now. So,
+let's select the the phone, press C for
+transparency, set a key frame. Uh, I
+want to fade out the rest. So, I want to
+set a key frame for today's tasks. And
+let's see. And also this, uh, I want to
+fade out everything except defined IDs.
+And the last, uh, two shapes. So, let's
+select these, press T for transparency,
+set a key frame. For the others, we
+might have to just click that button.
+Then, we go a bit further till here. And
+then, I'm just going to fade this out.
+So it all fades out while when this
+animation happens. As you can see, a
+fade out can be really smooth. Also,
+might want to easy ease the one for the
+phone to make it a bit more smooth. And
+to add a bounce to this. So press S for
+scale. I'm going to make sure that these
+are all linked to this shape. So let's
+uh link this find ids today also to the
+shape. And then also
+this shape which is this circle. We also
+need to link that to this shape. So if
+we scale this now, it all scales with
+it. And we can set a key frame. And then
+I just want it to uh bounce. So
+basically when it's here, I want to have
+it go to maybe like 70. Then we might
+not even have to scale it down too much
+with the other animation. Something like
+this. And then hold alt, click on that
+stopwatch, and paste this expression,
+which you can also find down below. So
+we move this a bit closer. Make sure
+this happens a bit earlier. Now, let's
+change the background. And I'm just
+going to do that by hitting layer, new
+solid. And then let's make this almost
+fully black. Uh, just something like
+this. Okay. And then let's press T for
+transparency. Set a key frame. And then,
+of course, fade this in. Just a simple
+fade in when this happens. And now I
+just want to have some postits pop up.
+And for this I have uh this paper
+texture, which you can also download
+below. And I'm going to use this for the
+postits. Now, I like to keep it simple.
+So, I'm just going to use the texture
+itself and just add a mask to this. You
+can also add a shape and alphamat and
+stuff like that, but I I think we can
+just keep it easy and keep it simple.
+And then to change the color, we can
+just add a tint and levels to this. So,
+maybe the levels first and then the
+tint. And you can just search these in
+your effects and presets. And let's
+first use the levels to add a bit of
+more contrast to this. So just drag the
+right slider and the left slider to
+something like this. And then change the
+white in the tint to a color you like.
+So for example, we can change that to
+yellow. I'm going to do something like
+this. Okay. And we can then also adjust
+the levels a bit so it's a bit less
+heavy. There we go. And that's our first
+postit. And as you can see, this small
+like a little texture here that really
+adds to it uh to make it really
+realistic. And then I'm just going to
+add the text um idea. Let's make this a
+written font. Make it a bit like darker
+gray. And let's make it a bit more big.
+Let's turn the quality to full just to
+see what this will look like. Idea.
+Create a personal
+brand. Let's change the paragraph size
+to auto. And then let's make this a bit
+smaller. And I'm going to align it in
+the center, too. So, just like that.
+It's not perfect, but that's totally
+fine. We can now just make sure that
+these are linked to each other. So, the
+text is linked to the texture. I'm going
+to select them both and move them below.
+There we go. Below. There we go. And
+then, of course, we also have to link
+lastly, where is it? The texture to the
+null one. So, everything is nicely
+linked. And now to animate it, I just
+want to have them like pop out. And what
+I've seen a lot is that they're not
+fully like scaled down. So it's
+basically you scale it from uh for
+example, now it's at 158. We just set a
+key frame. You go a bit to the front and
+you scale it down a bit. Just like that.
+Press P for position. Set a key frame.
+And then we move it a bit to here. Press
+R for rotation. Set a key frame. Drag
+this out really far. and then maybe
+rotate it a bit. And then basically what
+it does if we now select them both and
+we hit alt left bracket to cut them off.
+It basically adds this animation to it.
+As you can see where it already is
+scaled so you don't scale it from zero.
+Now of course we need to uh nicely
+animate this and like now it looks
+really ugly. So maybe have to move it a
+bit to here have the rotation so it goes
+more like this. And then we need to add
+a few of these elements. What I also
+want to do, uh, what you might notice is
+that there's no shadow behind this. I
+also want like a nice drop shadow around
+this. And of course, we need a few more
+IDs. But let's start with the easing.
+So, I'm just going to select all of
+them, hit F9 on my keyboard, and then
+also make sure that the position is
+nicely eased. So, I'm just going to drag
+this all the way to the right. And then
+the rotation, the same thing. Uh, I'm
+also going to make sure that this is
+like nicely ease. So, it just moves like
+this. Maybe even have the rotation just
+set to zero. You can even cut it off a
+bit later and move it a bit more to the
+front. So, it's like this. And then, uh,
+next part is just really simple.
+Duplicating, rinse, and repeat. Changing
+the position a bit. And that's it. So,
+I'm also going to do that. Uh, I'm just
+going to duplicate this once. Drag this
+above it. Make sure to just select the
+texture. or press P for position so we
+can see where the key frame is and we
+can move this for example uh to here. We
+can also change the scale a bit. So
+press S for scale. Uh make sure it's
+scaled down so it's not the same size.
+And then we can change the color to
+maybe like off red. And then we can
+change the text to like ID film uh
+video. Film a YouTube video. Nice. Press
+R for rotation on the texture. And uh
+now I want to for example change this so
+it's a bit more like this. And now I'm
+just going to do that a few more times.
+There you go. We have some notes here.
+Uh to top it off, what I'm going to do
+is I'm going to add a soft glow around
+this. Maybe in this like yellowish
+color. And to do so I'm going to just
+use the dark orange solid. And I'm going
+to add a four color gradient to this.
+And uh just make sure all the uh colors
+are set to the dark grayish. Maybe just
+copy this over. But you can also use the
+color pinpoint tool. And then only the
+last one which is this yellow. Going to
+make a bit more like whitish. There we
+go. Just like that. Press okay. Now
+let's change this point to the center.
+And for that I'm just going to add a
+gradient ramp to this. And then let's
+change the ramp to radial ramp. Uh the
+start color I'm going to set to like a
+yellowish. Something like this. Press
+okay. And the end color, of course, to
+like that dark black that we had before.
+Something like this. Okay. Now, let's
+change the point to the center. Uh we
+can also just type that in. It's 1920 by
+1080. And then I'm going to change the
+ramp scatter to really high. And that
+will add this cool uh noise effect to
+this. That will also make sure there's
+less of a bending effect happening. I
+think we can set this to maybe like 80
+or something. That should be enough.
+There we go. Now this is still a bit
+ugly. Uh we can change that by changing
+the end ramp to be a bit more uh spread
+out. And then what we can do is of
+course we can blend it with the original
+which automatically will make it less
+bright. And it will just add a bit of a
+glow to it. It doesn't have to be much.
+And then I'm going to even key frame it.
+So set a key frame where at the start
+this is set to 100% and then later on it
+will basically go up. Maybe we can set
+this even a bit lower to 70 so it's even
+a bit more visible. And like I said, it
+will add this cool glow effect to it.
+Now, let's go to the next scene. And
+that is notion fixes that by bringing
+everything into one place. So, of
+course, we're going to have to
+transition from here. Uh we can make a
+smooth transition from this window. We
+can change this into a notion. So, let's
+just do that. And to do so, we can just
+press S for scale. However, uh there is
+an expression on this. So if we would
+now scale this, it would keep bouncing.
+Uh so unfortunately what we have to do
+is create a new null uh and just use the
+NLES to animate it in. And we already
+have this null three. So we can just go
+to layer, new null object, link this
+null three to the null 4, and press S
+for scale. And I actually want to make
+sure, so let's press U on the null 3
+that again we start this key frame
+already before. And that will make it so
+again we have continuous movement. Let's
+scale this up. And again we can cut this
+uh cut these off. And for the shape of
+course key frame the size, not the
+scale. I can't say that enough. Let's
+drag this out to the front. And then
+let's make this unlin. And then I'm
+going to make it bigger so it's more of
+a notion UI. And then this needs to be
+aligned with the null. Um what I'm going
+to do is I'm going to select the null
+key frames. Hit F9 on the keyboard and
+let's key frame these first. Make sure
+that they're nicely spiked again. Just
+like that. This looks really lame now.
+And that is because this needs to go a
+bit later. And again, we can literally
+already select all of these layers. Um,
+except of course this shape and of
+course this text because I want to fade
+out the text. Press T for opacity. Drag
+that out. And then go a bit further.
+Let's fade that out. And then uh of
+course this needs to be nice and easy
+east. And then all of the other layers
+we can just literally cut off. So let's
+see. That's I think all of these. Yes.
+Alt right bracket. Something like that.
+Let's quickly preview this. Basically
+what you will see is that it will go
+like this. A bit too late in my opinion.
+I think it needs to go a bit further.
+And in this case you can see that a
+harsh cut like this can also work
+against you. That it doesn't work as
+nicely. And that is because this center
+piece will stay the same. So in this
+case, we tried it, didn't look great. So
+what we do is we just fade it out. And
+then we can or fade out all of the
+elements or we can just create a new uh
+solid, which I prefer to do because it's
+just a bit easier. And I want to change
+the background. Anyway, we're going to a
+new scene. So let's just grab that solid
+that we had before, the pale orange
+solid. Command D. Drag that up.
+There we go. And uh then just make sure
+that it's on top of all the other
+layers. Press T for transparency. Set a
+key frame. And then we can fade that in.
+So let's fade that in. Make sure it's
+starts at zero. So maybe around here. So
+it goes like we maybe a bit earlier. So
+it's done before the transition. Notion
+fixes that. Really clean. The only thing
+of course is uh this is ugly because
+these uh also need to fade out. We can
+just fade those out together with the
+find IDs today. Maybe we can move those
+a bit more to the left. Select both of
+these. T for transparency. Set a key
+frame. Wee. Make sure to drag these to
+the left. There we go. So, they fade out
+together with the text and the
+background. And then we have a clean
+slate to start from. Now, I'm going to
+even uh we have the shape of course like
+popping out. I'm even going to make that
+bounce. And and you can use an
+expression for this on the uh scale or
+on the size. However, you can also
+easily just copy and paste this uh key
+frame, make it a bit bigger. So, it
+basically is going to be a bit too big
+and then size down. And now we just need
+to recreate a bit of a notion uh notion
+UI. And I want to have it minimalistic.
+Notion is already really minimalistic,
+but a lot of these tasks are not. So,
+what I always like to do is squint my
+eyes a bit to see a bit like which
+elements pop out and then use those
+elements because you don't have to
+recreate the whole UI if it just looks a
+bit like it. It will save a lot of time.
+Now that we set this up, let's go to the
+next scene. And in this next scene, we
+have the notion fixes that by bringing
+everything into one place. And for that,
+I'm just going to add the notion logo,
+have that popup, and then have the
+notion UI popup. So, I have the notion
+logo here. Uh, let's start out with that
+first. So, I'm just going to press S for
+scale, set a key frame, and make sure
+that that pops up around here. So, zero,
+and then 200. And then I'm going to add
+a expression. Uh, and you can copy that,
+of course, down below just to make it
+bounce nicely. And once it's around
+here, then I'm going to move this with a
+P. Set a P for position. Move this to
+the left probably even more. And then I
+want the text notion to appear. notion
+no motion a bit bigger. There we go.
+Maybe move this a bit. Make sure this is
+nicely aligned. And to align something
+really well, you can always uh make sure
+nothing is selected. Uh make a quick
+shape the same size as the text and the
+logo combined and then align it in the
+center just to quickly see how far we're
+off. We're a bit off. So that means that
+we can both move these uh a bit to the
+left. And it doesn't have to be perfect,
+but uh this does look a bit nicer. And
+then for the animation, I'm not going to
+do anything crazy. I'm just going to add
+a opacity animation and then add also a
+rotation. And then also add a position.
+And then basically what I'm going to do
+is I'm going to rotate it a tiny bit,
+move the position a bit down, and have
+the opacity set to zero. And then to
+animate it, like always, just go into
+the range selector. Just change the
+shape to ramp up ease low 100%. And then
+let's key frame the offset. So it goes
+from zero to 100. Something like that.
+Now, of course, I also want to easy ease
+the position of the notion logo. And
+then make that really nice and smooth. A
+nice spiky curve. Maybe drag that out a
+bit. And then move the notion below the
+logo. Cool. But I do want to have a bit
+of delay between this. So let's drag
+this position out. and make sure the
+notion logo appears a bit later.
+And then from here, uh, we can link them
+to each other, but I'm just going to
+create a new null just for these two.
+Uh, so we can basically move them both.
+I press S for scale, P for position, U
+to see the key frame. Drag them out.
+Maybe start it around here. So it's like
+we And then basically what I want to do
+is make sure that this is like a nice
+logo on top of this notion page.
+probably even a bit smaller. Then I'm
+going to add a new shape to this just to
+make the UI. So let's add the fill.
+Change the fill to something like this,
+but then a bit darker. Just like this.
+Okay. Stroke I'm going to turn off.
+Okay. And then I'm just going to draw it
+just like this. Maybe it's even a bit
+too dark. Um we can change that. Let's
+go into the fill. Maybe make it a bit
+lighter. There we go. Then of course
+select this and use the trackmat tool.
+So it's trackmatted to the background on
+top of my head. That's shape layer 11.
+Uh, it should be fine. Let's see. Let's
+select it quickly. Now, shape layer 10.
+Uh, you can also just uh trackmat it
+using the pick wave tool. Shape layer
+10. Bloop. Turn shape layer 10 back on.
+And there we go. We have a sidebar. Now,
+what I also noticed in terms of the UI,
+uh, the background now blends in a bit.
+Um, so I might just add a really soft
+drop shadow to it. And this is basically
+like the Apple style drop shadow. to do.
+So, I'm just going to duplicate the uh
+shape layer. Then, I'm going to add the
+effect drop shadow. Double click. And
+then we can turn the shadow only on.
+Let's make sure that this is below our
+shape layer. And then we just have to
+adjust this a bit. So, let's set this to
+180. Uh distance quite high. Something
+like this. And then softness really
+high. There we go. And then opacity
+really low. Just has to be a tiny bit.
+Just so we have a bit of separation.
+Maybe 10 to maybe 15%. Let's see what
+this looks like. Nice and soft. That's
+how we like it. Perfect. Now, I also
+want to fade this in because otherwise
+it's going to be active all the time.
+Uh, and that's nice because now we
+separated it. Uh, we can even rename
+this to drop shadow. So, we know this is
+our drop shadow because if we don't do
+that, then it will also be active here.
+And then, uh, we might see that. As you
+can see, looks a bit stupid. We also
+have to change this, but we can do that
+later on. So, what I'm going to do is
+I'm just going to go to where I want it
+active, which is around here. I think
+here it actually looks quite cool. So, I
+might just move these opacities so it's
+like not visible here, but it is visible
+later on. So, I might just change the
+opacity of the drop shadow so it's a bit
+like it turns on here. Nice. Perfect.
+Really, really cool. I do notice that
+this logo can even go a bit smaller in
+my opinion. Um, I like it. I like it
+small P. There we go. Nice. Looks cool
+already in my opinion. Now, we need to
+create a sidebar. And to create the
+sidebar, I'm just going to add some text
+to it. So, let's just go to the text
+tool. I'm not even going to use the
+paragraph. I'm just going to click here
+and then like editor limited. Then the
+next one is quick find all updates
+settings and members. This already looks
+quite ugly. So, let's select the whole
+uh left paragraph. I'm going to make it
+way smaller. And then we also have to uh
+change the styling of some of the text.
+Um that word workspace for example, we
+want that smaller uh just like the
+shared uh and private. And I want to
+make sure that those are the same font
+size. So basically you just make it 36
+for example. Then you remember that.
+Then let's also make this one 36. Then
+we can make this editor limited uh bolt.
+I'm going to make the quick find
+settings and members a bit like a
+lighter gray. Something like this. And
+I'm going to copy this hex code because
+we can then paste that on the rest.
+Maybe even lighter. I think like can go
+as far as this. And then the workspace
+I'm going to make even lighter. And I'm
+going to copy this hex code and paste
+that on the shared and private. There we
+go. This already looks cool. However, we
+do have to change a few things. Uh the
+spacing between the text is definitely
+too tight. Uh, so we can just select the
+whole thing and then increase the
+spacing between it. Then we can even
+scale it down by pressing S on your
+keyboard to make it even more neat. And
+then I can align it a bit. And
+officially uh the notion UI, you would
+have to uh like overlay it and put this
+in the top left. But sometimes you can
+just keep it how it is. Or for example,
+we officially need to select this text
+and add a bit of paragraph indent to
+have it like this and then add some
+emojis. I'm not going to do that because
+adding those emojis will just take a lot
+of time. Now we can already use the same
+trackmat uh that we just had of the
+shape layer and that is to shape layer
+10. And then what I want to do is
+basically animate this um and of course
+also link it. So let's select these both
+and let's link those also to shape layer
+10. And then uh let's animate this. I'm
+going to even link the text to shape
+layer 13. Uh and then press P for
+position. Set a key frame. And then
+let's see. We basically want to move
+this in once this logo goes down. So
+maybe somewhere around here. We just
+move it from the left. And I'm not done
+yet cuz I was also thinking maybe we can
+animate the text. So let's go into the
+text animate the position and the add
+property opacity. Basically, what I'm
+going to do is I'm going to make it so
+it moves a bit from the left, not too
+much. Something like this. And I'm going
+to set the range selector in the
+advanced tab on lines. So basically,
+they move in by bit by bit. So based on
+lines again, shape ramp up ease high on
+100%. And then key frame the offset. So
+let's set this to minus 100. Bit more to
+the front. And then here to 100. And
+then of course the opacity. set it to
+zero. So it starts with a zero and it
+fades in nicely. It's a really nice and
+smooth animation as you can see. Now the
+only thing we have to do is of course
+easy ease the shape. So select the key
+frames, F9 and easy ease them. So now
+it's like like this. That notion
+animation is still horrible. We also
+need to smooth that out. Just like that.
+Nice, nice, nice. And maybe we can also
+add a slow scale to this. That could
+also work. Now I have like a cool house
+emoji. Uh I mean notion does work with a
+lot of emojis. Let's align this nicely.
+Something around here. Very good. Very
+nice. And then we can just add another
+text. Let's add a title here. Um editor
+editor home. And let's make that dorm
+room. I also want to make it nice and
+big and bold. Something like that. There
+we go. Now in terms of alignment, I want
+to of course align this with the uh
+home. So it's something like this. Then
+of course we want to animate this too.
+And to animate this I'm going to just
+add a to animate this I'm just going to
+use the same animation that we have on
+the notion text logo. So we can just
+open that and copy and paste the
+animator. There we go. Press U on our
+keyboard and let's move this so the
+timing is a bit better. Let's make this
+emoji pop. And we can use the same skill
+animation for that. So let's copy that
+and paste that on the logo or the not
+the logo but on the house ploop. So it
+bounces nicely. Let's quickly play this
+back in quarter.
+Now one thing I want to do is I want to
+make sure that this logo or not this
+logo but this emoji is nice and high
+res. It's definitely not. Now so we can
+actually use a detail preserving upscale
+for this. Uh let's double click on that.
+And then we can upscale it by quite a
+lot. Change the alpha to detail
+preserving. And uh if you turn this on
+and off, there's a huge difference. And
+you can also use a AI upscaler for this.
+But for now, this could work. And now
+I'm going to scale it down. And by doing
+so, we can just later on make it uh a
+bit bigger. Cuz from here, I actually
+want to transition into the next
+animation. And for this next part, I'm
+not going to do a crazy transition. I'm
+just going to make it snap into place.
+So, we'll just do a layer new null. Make
+sure it's above our previous null. So,
+layer new null. Bloop. And I'm going to
+press S for scale and P for position.
+And what we're going to do is we're
+going to go one key frame further by
+holding command or control on Windows
+and then right arrow key. Press S for
+scale and then scale it up by a lot.
+Now, nothing happens. And that is
+because we didn't link everything yet.
+And we do have to do that. And to do so,
+we just need to make sure that
+everything above here is linked,
+especially the things that are not
+linked yet. Uh, so as you can see, the
+editor, house, that kind of stuff. Uh,
+I'm just going to select that. I see
+here another null. I'm also going to
+select that. And I think that's
+basically it. We can just, uh, parent
+these now to the null that we just
+created. Or we can even do it nicer
+where we just link it to null one. And
+because null one is linked to null two,
+null three, null four, null five. You
+get the point. Let's link null four to
+null six that we created. And then it
+should work where it's like where if we
+now go back to where we were, we scale
+it in. And as you can see, it will move
+with everything. And now we can also
+move it right here. And we can then have
+a slow movement from left to right.
+Press P for position. And then let's
+move it slowly. Just like that. So what
+happens now? It snaps into place. Just
+like that. Maybe drag this out a bit so
+it's a bit slower. And now I want to
+create a quick UI. And to do that, I'm
+just going to create a rounded
+rectangle. And we don't have to animate
+this per se. We can fade them in. Uh so
+it doesn't have to be crazy. However,
+what I want to do is for example have
+like a income thingy and then uh maybe
+like task task of this week. So let's
+just create the first shape. Make sure
+that it's rounded. Let's increase the
+roundness. And I'm just going to make it
+white. And I'm just going to add a soft
+drop shadow to it. Right click, layer
+styles, drop shadow. And just make sure
+that that drop shadow is really nice and
+soft. So increase the size, the distance
+to zero. Now the angle on 90°. And then
+let's increase the distance a bit. So
+it's like bit like floating. Size
+opacity really low. Really low. Just
+like that. Just so it pops off the
+screen a bit. As you can see, looks
+cool. And to make it easy for myself,
+I'm just going to duplicate this text.
+Uh because everything is linked to this.
+So, we can just make it a bit easier.
+Change this to regular. And then, uh,
+income. Let's make this smaller. There
+we go. I'm going to add another line to
+this. And then do plus 54. Wait, 5475.
+Let's select that and make that a bit
+lighter and a bit smaller. Select both
+of the text. Decrease that line height.
+There we go. And then a few bars. Um,
+we're just going to draw some bars. I'm
+going to fill that with the color gray.
+And I'm also going to make it nicely
+rounded. Not too rounded, but something
+like this. There we go. And then I'm
+just going to duplicate this a few
+times. Make it smaller. I I think Oh,
+unlink it. Um, what we can even do is
+just keep it like this. Duplicate it.
+Duplicate it. One, two, three, four,
+five, six, seven. Six, seven. I might
+even fit um seven of these. That would
+be nice. There we go. Uh to make it
+nicely aligned, I'm just going to select
+them all and then I'm just going to go
+to my align and then you can change this
+to uh distribute layers and center it.
+Then at least the spacing between it
+will be the same. Uh we still have to
+align it a bit, but I think actually
+this could work. Uh it looks quite nice
+in my opinion. I think they're a bit too
+dark. So maybe just select all of them
+and change the fill to be a bit lighter.
+Something like this. That makes all the
+difference. And then, of course, I also
+want to animate them. And to animate
+them, I'm going to select them all.
+Properties. Select all of the
+rectangles. We can just set a key frame
+for this. And then, let's see. Set a key
+frame. Also, parent these to the null.
+Um, we actually have to parent this all.
+Let's see. All of this stuff. Ideally,
+you want to do the animation later on. I
+did it the wrong way around. And then if
+we now move our cursor, you will see
+that they're off off sync. and they that
+you have to align it. It's it's a bit
+unhandy. So I would definitely recommend
+to do that later on, but for now it's
+fine. I'm going to link this again to
+our null one. It's easy to remember.
+Same with this shape. This also needs to
+go to null one. Uh let's go back to our
+shape layers. Press U on our keyboard.
+We still have the sizing. Uh basically
+what I want to do is that once this is
+here, these are all sized up. So, let's
+just uh what we're going to do is I'm
+just going to set the second value to
+zero on all of them. Just like that. I'm
+missing one. This one also to zero.
+There we go. So, they all go like This
+looks a bit lame uh because it's not
+ease. And also, I want to have them
+offset. So, basically, you just uh right
+click, key frame assistant, easy ease.
+And if you have motion tools, you can
+just make it nice and smooth. And you
+can also offset them. Uh so, basically,
+the um first one goes like this. So,
+there's a bit of offset in there. You
+can also do this manually by just
+selecting them and then moving them
+around or moving them one frame. Uh,
+let's see what this looks like now. Very
+nice. Now, what I do want to do is, of
+course, fade this in because I don't
+want it to be visible here yet. So, we
+do need to change the timing a bit. Uh,
+and to do so, just go to this income,
+press U on our keyboard. Make sure that
+this starts at least later on. And then
+this shape. I'm just going to fade in.
+So, press T for opacity or transparency.
+And then drag this to zero. Moving the
+key frame out first. And then it will
+just fade in just like that. Nice. So,
+we have our income. Uh, I don't like the
+animation of the income and the text. I
+think it's a bit too much. So, let's
+open this text and then the animator. As
+you can see, the position is set quite
+high. I want to change that. The
+rotation I don't want to move anyway.
+And then uh the or the position I'm just
+going to move. So, it's has just less
+animation. So, it's just like smooth
+animation.
+And then we just need one more and that
+is a task list or something like that.
+And to do so, we can just duplicate
+things. For example, the shape and the
+text. However, I don't want to uh
+duplicate these shapes. I don't need
+those. So, I'm just going to duplicate
+these two. There we go. Drag them up so
+it's nicely ordered. And we can move
+these to the right. And then we can
+change this to today. Today to do maybe
+change this to Monday mat Monday. And
+then for the um things, I just want like
+a list of things. And u I'm just going
+to make a simple ellipse. Make sure
+nothing is selected. And let's just draw
+it. Hold shift to make sure it's
+proportional. Uh the fill I'm going to
+turn off. And then uh the stroke I am
+going to turn on. And I'm going to make
+that so it's like a bit like a darker
+gray but not too dark. Something like
+that. It's like a nice circle. I can
+make them pop up. I can trim the paths
+whatever you want. Whatever you prefer.
+I might just copy the scale key frame
+again from our uh home emoji. There we
+go. Now, of course, we need to change
+the key frames and stuff like that. Uh,
+so we of course need to make sure this
+is linked to the null one. And then we
+can just quickly check how this looks
+like or what this looks like. I think
+the to-do and this one needs to be
+offseted a bit. Uh, as you can see, so
+we can just drag this a bit. These come
+in a bit later. We have quite a lot of
+time here. So, we can just drag that
+out. Let's maybe set this to 22. We have
+one. and then uh the next to-do, then
+the next to-do, and then maybe one more
+in terms of spacing. I also think they
+can also all be a bit smaller. So, let's
+just select them all and make them a
+tiny bit smaller. That will make it a
+bit more luxurious. Then, they have to
+move a bit more to the left to be
+aligned. Then, we just need to have some
+to-dos. We can, of course, offset them
+too. Uh or by using Moser tools or we
+can just uh manually drag them uh drag
+them out. So, just like this. One, two.
+three. So they go like nice. We can add
+a text here. Might just duplicate this
+text that we already have. That will
+save some time. And then we can type in
+uh headit for client. And then maybe
+like finish headit for client. Of
+course, also with this text, I don't
+want it to be this big. I think it's way
+too big. So this can be a bit smaller.
+Maybe the same size as Monday. Let's see
+what is this. Uh 24.1. So we can just
+select this. and also typed that in
+24.1. And then I also like this
+grayness. I think that also works for a
+title like this. So we can color pick
+that. Um maybe a bit too dark or too
+light. Looks clean. And then let's align
+this. Make sure there's like nice uh
+there spacing is nice. And then open the
+text. And then let's go into the
+animator. Um what I want to do is let's
+see. go into the range selector and
+change go to advanced and change the um
+based on to words because I don't want
+to have too much of those character
+animations. I think character animations
+are nice for like titles, but I don't
+want to overdo it and have too much of
+those character animations. I might
+actually change it also with the income.
+Um, this is like a nice big title. And
+then in terms of the animation, I think
+it's too much if everything has the
+character animation. So, let's change
+this to words. Let's change this one
+also to words. And then, uh, it's all a
+bit more clean. We just need to come up
+with three more to-dos. And that is
+create a personal brand. Nice small
+tasks, tangible. All right. Picture is
+aligned nicely. And then maybe offset
+the timing a bit. And then you get
+something like this. If you want to see
+the full deep dive, then do join the
+full stack editor club. You also get the
+project file. You also get access to all
+the other deep dives and also access to
+a amazing community of editors that all
+want to help you out. I would say, but
+I'm really biased, but the best editing
+community in the world. Of course, don't
+forget to subscribe. We're almost at the
+100K subs. I'm really looking forward to
+that. I'm also going to give something
+away when I'm at the 100K subs. Then I
+want to thank you for watching. Thanks
+for all the support. And then I'll see
+you next time. Bye-bye.

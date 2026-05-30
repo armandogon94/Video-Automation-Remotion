@@ -1,0 +1,64 @@
+{
+  "voter": "vote2",
+  "method": "Coarse scan at 1 frame per 15s, plus targeted 1f/5s and 1f/3s probes around suspected animation moments. Recorded ranges below are conservative wall-clock windows around each visible animation event. Frames outside these ranges are plain talking-head with the standard burned-in word-by-word caption (omitted from this catalog because it is a baseline, not an animation event).",
+  "videos": {
+    "XGm2ERU9qtA": {
+      "title": "15 Brutal Truths I Know at 36 That I Wish I Knew at 20",
+      "duration_s": 1684.5,
+      "ranges": [
+        { "id": "anim-01", "start_s": 290, "end_s": 320, "label": "tweet-card #2 enters (left side), text type-on reveal, item-number badge top-right" },
+        { "id": "anim-02", "start_s": 320, "end_s": 360, "label": "tweet-card #3 enters below #2 (vertical stack), both visible" },
+        { "id": "anim-03", "start_s": 720, "end_s": 760, "label": "tweet-card #5 (under-30 work hours quote)" },
+        { "id": "anim-04", "start_s": 1010, "end_s": 1080, "label": "tweet-card #7+#8 stacked (hardest part is continuing)" },
+        { "id": "anim-05", "start_s": 1040, "end_s": 1090, "label": "tweet-card #9 enters above (most dangerous person quote)" }
+      ]
+    },
+    "JDR-R--4HhM": {
+      "title": "14 Years of Marketing Advice in 35 Minutes",
+      "duration_s": 2133.2,
+      "ranges": [
+        { "id": "anim-01", "start_s": 580, "end_s": 615, "label": "whiteboard hard-cutaway: handwritten numbered list 1-4 (HEADLINES COME 1ST / SAY WHAT ONLY YOU CAN SAY / etc.)" }
+      ],
+      "notes": "JDR-R--4HhM is mostly raw talking head + paper props on desk + occasional whiteboard hard-cutaway. Almost no overlay graphics in the coarse sample."
+    },
+    "qsXxckCbci0": {
+      "title": "How To Grow ANY Business FASTER (Masterclass)",
+      "duration_s": 4775.9,
+      "ranges": [],
+      "notes": "Despite being 80 minutes, this masterclass is almost entirely two camera angles (front and overhead) with physical paper / sharpies. NO tweet cards, NO numbered listicle overlays in any of the ~318 coarse-sampled frames. The animations are physical: paper props with hand-drawn lines and graphs. The closest 'animation' is the angle-switch hard cut between front camera and overhead camera, which is itself unanimated. Excluded from dense extraction."
+    },
+    "_KlZoPxbStk": {
+      "title": "It took me 36 years to realize what I'll tell you in 26 minutes",
+      "duration_s": 1615.9,
+      "ranges": [
+        { "id": "anim-01", "start_s": 0, "end_s": 25, "label": "intro tweet-card right-side (type-on reveal 'It's not about doing what you...')" },
+        { "id": "anim-02", "start_s": 295, "end_s": 320, "label": "full-screen 'GODMODE' graphic: stick-figure icon centered, yellow underline label, dark navy bg, white glow" },
+        { "id": "anim-03", "start_s": 440, "end_s": 470, "label": "side-text reveal: multi-line text-block on right with red highlight on key words, type-on reveal" },
+        { "id": "anim-04", "start_s": 1175, "end_s": 1215, "label": "tweet-card right-side with PROGRESSIVE word-dimming reveal ('There is nothing' — 'nothing' grayed out mid-reveal)" }
+      ]
+    },
+    "3SVksBB3_YY": {
+      "title": "Give me 20 Minutes and I'll Give You Back 20 Years of Your Life",
+      "duration_s": 1170.4,
+      "ranges": [
+        { "id": "anim-01", "start_s": 0, "end_s": 15, "label": "opening b-roll of building exterior + name-tag lower-third 'ALEX HORMOZI / FOUNDER, ACQUISITION.COM'" },
+        { "id": "anim-02", "start_s": 55, "end_s": 90, "label": "top-down whiteboard hard-cutaway with handwritten word 'GROCERIES' being written live (live-marker effect)" },
+        { "id": "anim-03", "start_s": 215, "end_s": 250, "label": "burned-in math formula caption '$1000/mo = Extra 23 HOURS/wk' over front-camera shot" },
+        { "id": "anim-04", "start_s": 280, "end_s": 320, "label": "tall left-aligned caption stack with multi-color emphasized words ('IT INCREASES THE PRODUCTIVITY PER HOUR')" },
+        { "id": "anim-05", "start_s": 350, "end_s": 400, "label": "cartoon illustration overlay: orange-and-grey boot/sock graphic on left of frame (top-left corner)" },
+        { "id": "anim-06", "start_s": 400, "end_s": 460, "label": "numbered carousel badges across bottom-third: '01' ... '06' ... circular green/grey badges + active item pill 'DRIVER/UBER'" },
+        { "id": "anim-07", "start_s": 760, "end_s": 800, "label": "lower-third category caption 'LANDSCAPING / TIME SAVED' yellow-on-white split pill" },
+        { "id": "anim-08", "start_s": 815, "end_s": 845, "label": "full-screen purple-bg pyramid hierarchy graphic with three tiers (Economy / Transportation / Energy)" }
+      ]
+    },
+    "nSQdjim8CsE": {
+      "title": "Making Money is a Game (Here's the Cheat Code)",
+      "duration_s": 1863.2,
+      "ranges": [
+        { "id": "anim-01", "start_s": 580, "end_s": 620, "label": "top-down whiteboard hard-cutaway with handwritten green-marker LBO math (21/$21, 100=$2000, etc.)" },
+        { "id": "anim-02", "start_s": 880, "end_s": 920, "label": "top-down whiteboard hard-cutaway with multi-color marker breakdown ($53 highlighted in green box, leads=100, sales=15, etc.)" }
+      ],
+      "notes": "nSQdjim8CsE is also mostly raw talking head + book prop + occasional overhead-camera whiteboard hard-cutaway. No tweet cards in the coarse sample."
+    }
+  }
+}

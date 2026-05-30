@@ -1,0 +1,335 @@
+[00:00:00] Honestly, this might be the easiest way I've ever found to make your videos go from amateur to a pro YouTuber level.
+[00:00:06] Adding motion graphics to your screen-recorded videos means your demos and tutorials will be up there with some of the best creators on YouTube.
+[00:00:13] But what kind of motion graphics should you create and add to your videos?
+[00:00:16] To help us answer that question, I looked at some of the best creators like Alex Armosi, Ali Abdel and Jay Klaus.
+[00:00:23] Keep it simple and just do what the pros are doing.
+[00:00:25] In this video, I'm going to demonstrate how you can use remotion and cloud code to create a series of really cool motion graphics that are going to elevate your screen-recorded videos.
+[00:00:34] Number one, we'll look at communities and tweets, then lists and hierarchies, notifications, decision trees,
+[00:00:41] and then a fun bonus is we'll see how you can blur your screen and highlight certain elements using tele-action.
+[00:00:47] To recreate these, you'll just need to set up remotion and cloud code onto your machine.
+[00:00:51] If you've done that, we can head over to our terminal and begin our tutorial.
+[00:00:55] Cool, so let's head to our terminal and open cloud.
+[00:00:59] Yes, and then make sure that you've set up the cloud code extension on Chrome.
+[00:01:06] And I find that whenever I start a new session, it logs me out.
+[00:01:09] So make sure that you're logged in by just going to your extensions in the top right corner here.
+[00:01:16] And then if you're logged out, it'll prompt you to log in.
+[00:01:19] So make sure that you've done that and now we're going to say open remotion in Chrome.
+[00:01:27] Just give it the necessary permissions to open a remotion in Chrome.
+[00:01:31] They call it the Remotion Studio.
+[00:01:33] Okay, so for the purpose of this demo, I've already gone ahead and saved a few motion graphics
+[00:01:38] that I really liked from creators and have saved them to my home directory.
+[00:01:41] I definitely recommend having a folder like this with videos or screenshots of motion graphics
+[00:01:47] that you'd like to recreate.
+[00:01:49] I'm going to show you how you can easily do this by simply using a tool like Tela to
+[00:01:53] screen record a video as it's playing.
+[00:01:55] I'm going to show you how you can screen record inspiration and then save that to your animation
+[00:02:00] inspiration folder.
+[00:02:01] I'm going to use CleanShout for this because I'm using Tela to record this video.
+[00:02:06] Just record the area here and then go ahead and record that animation.
+[00:02:11] So here we can already see we're going to be recreating something like this where
+[00:02:17] he's basically pointing out his YouTube comments.
+[00:02:20] So we can stop that and then you can save that anywhere you'd like.
+[00:02:23] For me, it saves it automatically to my desktop and then I just have to move it to my animations
+[00:02:29] examples.
+[00:02:30] We can actually see this video saved right here.
+[00:02:34] All right, so I put out this poll on my YouTube community tab.
+[00:02:36] Now I really like this idea of having an animation of comments or like posts in
+[00:02:42] your community.
+[00:02:43] So you could even do this for your LinkedIn feed or something else.
+[00:02:46] So if you want to recreate this, we do actually need a screenshot of our own community or something
+[00:02:52] and then we're going to give it the original inspiration for the motion graphic by Ali Abdaal.
+[00:02:58] So we need two things.
+[00:02:59] We need the link to the inspiration and we need a photo of our own community.
+[00:03:07] So great.
+[00:03:26] So here we're saying that it should use a tool called FFMPEG to analyze this video.
+[00:03:31] Typically, it already knows to do this, but it's good to specify just in case if this is
+[00:03:36] the first time.
+[00:03:37] And then I'm going to attach an image for the actual content I want to use.
+[00:03:41] For that inspo image, I'm just going to go ahead to our own circle community and take
+[00:03:45] a screenshot.
+[00:03:46] So let me just screenshot this and we'll see how good of a job it does.
+[00:03:50] I'm just going to drop that in here and you can see image one here.
+[00:03:55] So let's see how well it animates this.
+[00:03:57] All right.
+[00:03:58] So let's take a look at the results.
+[00:03:59] Nice.
+[00:04:05] I like that it's highlighting that text there.
+[00:04:07] Cool.
+[00:04:09] So I think the original reference video by Ali Abdaal actually included some blurring
+[00:04:14] at the top and bottom post, but I really like how it highlighted the text there.
+[00:04:18] So this is a great way of using a static screenshot of your community or some quotes
+[00:04:24] or something and actually animating that and then just adding a voiceover in your
+[00:04:28] video.
+[00:04:29] So you can easily import this rendered animation into Tela and just can talk over
+[00:04:34] it by having a side by side.
+[00:04:37] Okay.
+[00:04:38] The next thing I think is really cool as a motion graphic to add to your videos is an
+[00:04:41] animated tweet.
+[00:04:43] So let's look at this video by Alex Ramosy.
+[00:04:45] So basically you have your tweet there, your handle, whatever, and then the image kind
+[00:04:57] of animates.
+[00:04:58] So we're going to try to recreate this.
+[00:05:00] Once again, we're going to head to the original file and we're going to copy
+[00:05:03] this.
+[00:05:04] So this is just you telling Claude where to find the reference visual.
+[00:05:09] So create a new composition and back again.
+[00:05:22] And then I want to actually personalize this to my own tweet, right?
+[00:05:26] So I'm going to give it a screenshot of a tweet that I posted and we'll see that
+[00:05:30] we'll need a few things.
+[00:05:31] We'll need the screenshot of the tweet to just have the content of the tweet.
+[00:05:36] We'll need the original image that the tweet includes and you'll actually
+[00:05:39] need an avatar.
+[00:05:41] So I'm going to show you all of the things we need to collect.
+[00:05:43] So first up, let's grab a screenshot of a tweet.
+[00:05:46] You can even include the likes or not.
+[00:05:51] You can always change the number of likes if you'd like.
+[00:05:54] So we have that screenshot and then I have here saved the tweet image and my avatar.
+[00:06:01] So just make sure to go to your Twitter and then save this image, this avatar basically
+[00:06:08] so you can use it.
+[00:06:09] Let's go ahead back to our terminal and give Claude all of these images.
+[00:06:14] Those files.
+[00:06:38] So you see you can also drop images if you don't want to use links.
+[00:06:42] Let's go ahead and see how that does.
+[00:06:47] We get this as a result.
+[00:06:56] So you might want some things to appear sooner rather than later.
+[00:07:00] I actually had to prompt this one a few times, which I'm going to spare you.
+[00:07:04] But basically make sure that it includes your avatar and then make sure it uses the
+[00:07:09] correct source image in your tweet basically.
+[00:07:12] But I like that it even had my likes there.
+[00:07:15] That's pretty cool.
+[00:07:16] So yeah, that was just me showing you how you can use community screenshots, comments, posts,
+[00:07:21] as well as social media tweets and animate them whenever you're making a video.
+[00:07:25] I think that's pretty cool for anyone who's in marketing or runs a solo business or something.
+[00:07:32] Next up, I want to show you some fun ways to make lists or add lists that are animated
+[00:07:37] to your videos as well as some hierarchies.
+[00:07:40] So I have three insposed.
+[00:07:42] I'm just going to show you this first one by Alex R. Mosey that I've already saved.
+[00:07:50] So I think in this video he was basically ranking a few things.
+[00:07:54] You could see here one, two, three, four, five, six, etc.
+[00:07:58] So let's give Claude this and see how it does in animating this.
+[00:08:13] So I've gone ahead and told it to make this teller related because it has some
+[00:08:17] context about me.
+[00:08:18] I'm kind of curious what kind of hierarchy it comes up with.
+[00:08:21] So let's see.
+[00:08:23] OK, let's look at the results.
+[00:08:38] OK, so we can see at the end there, the text didn't really fit anymore.
+[00:08:42] But I think it did a good job of keeping the same style as the original Alex R.
+[00:08:48] Mosey inspo graphic.
+[00:08:50] And it actually came up with content for this as well.
+[00:08:52] I think this is cool if you're doing like some sort of ranking or listicle
+[00:08:57] of sorts where you have a hierarchy, basically, I think could be cool to have
+[00:09:02] a title screen have the very bottom element or the very bottom of the list.
+[00:09:08] And then every time you've covered that, you go and you move up to the tier above that.
+[00:09:13] So that's a cool way to animate your videos.
+[00:09:16] Now, I want to show you this really cool one by Ali Abdaal,
+[00:09:19] where he basically animates his notes app.
+[00:09:21] So let's try and recreate that one.
+[00:09:25] Not sweet.
+[00:09:25] And so at some point you might ask yourself, wait a minute,
+[00:09:27] what if I were to just modify the recipe so that I just added more sugar up front?
+[00:09:31] And you look at the recipe and you see the recipe involves one cup of sugar.
+[00:09:35] Cool.
+[00:09:35] So I think we got the point.
+[00:09:36] The static, otherwise static notes app screenshots basically comes up from below.
+[00:09:42] So what we need to do for that is just grab a screenshot of a note that we want.
+[00:09:48] I've already taken a screenshot.
+[00:09:50] We can.
+[00:09:52] So I've taken this one about my daily reading material.
+[00:09:56] And then we're going to give that to Claude, just going to grab the inspo.
+[00:10:08] We're just going to give it the image of my notes app.
+[00:10:20] And let's see how it does.
+[00:10:22] I'm going to give it some more instructions to keep it simple and basically just have the
+[00:10:26] content come swipe up from below.
+[00:10:39] I find that sometimes it's really good at interpreting things like styles,
+[00:10:42] but not necessarily at the animations or how you'd like the animation to happen.
+[00:10:47] So it's kind of good initially to give Claude some context as to or as much
+[00:10:52] context as possible about the animation.
+[00:10:54] Just because it cannot really analyze more than frame by frame, right?
+[00:10:59] So it doesn't necessarily understand the transitions.
+[00:11:02] Okay, let's look at the result here.
+[00:11:08] All right, so we can see that it's kind of scrolling through all of my reading.
+[00:11:12] I think that that works as well, but I kind of wanted to come up from the top
+[00:11:17] rather than scrolling through it.
+[00:11:18] So we're just going to tell it to do this differently.
+[00:11:21] We're going to say make each list.
+[00:11:45] Okay, so I just told it to make each list item appear one by one from the bottom
+[00:11:51] to the top, so let's see if it can do that.
+[00:11:53] I don't want the scrolling effect, although I do think that's kind of cool already.
+[00:11:57] Cool, let's see if our amendments worked.
+[00:12:05] Okay, I think that's perfect.
+[00:12:06] I think it did a really good job.
+[00:12:08] Let's move on to the third listicle that I liked, which is by Jay Klaus,
+[00:12:11] where he basically ranks things.
+[00:12:13] So take a look.
+[00:12:19] Cool, let's try this.
+[00:12:20] As always, grab the link.
+[00:12:22] Let's head back to our terminal.
+[00:12:29] And then I'm going to tell it, ignore the face.
+[00:12:47] Sometimes I find that when you give it a side by side,
+[00:12:52] like graphic, emotion graphic, and then person on the side,
+[00:12:56] it also creates a sort of thumbnail for you.
+[00:12:59] So I just tell it that I want my graphics to be full screen
+[00:13:03] unless you're going to use them in like side by side view.
+[00:13:08] That's fine.
+[00:13:09] Cool, let's see how well of a job it did.
+[00:13:11] I like that it like also showed you the content
+[00:13:14] and it always adapts it to tell out,
+[00:13:17] which I think is super cute.
+[00:13:18] All right, let's look at the result together
+[00:13:20] for the first time.
+[00:13:28] Nice, I like this, ha ha.
+[00:13:31] I like that it put a loom video above no video at all.
+[00:13:34] I guess we could say that.
+[00:13:36] Anyways, I think that this is really cool
+[00:13:37] if you use again the hierarchy
+[00:13:40] to kind of punctuate a point you're making
+[00:13:43] so you can cover each part of this hierarchy
+[00:13:46] or whatever is in here.
+[00:13:47] And then that makes your video
+[00:13:49] and then you don't need to make a bunch of motion graphics.
+[00:13:51] You just use the same one,
+[00:13:53] but you show each tier as it goes.
+[00:13:56] So much for our lists and hierarchies.
+[00:13:59] I gave you three examples there.
+[00:14:00] Now we're going to move on to notifications and apps.
+[00:14:03] I think it's kind of the style
+[00:14:04] that we see in a lot of YouTube videos
+[00:14:06] is just to animate apps or connect apps somehow.
+[00:14:09] So I have this really cool example by Shabam,
+[00:14:12] which I'm going to show you.
+[00:14:13] All right, let's take a look.
+[00:14:14] It's very subtle, but we can use it.
+[00:14:18] All right, so let's try to animate this one.
+[00:14:20] As always, just grab the link.
+[00:14:22] I'm going to tell it to...
+[00:14:24] When it comes to apps,
+[00:14:25] I have noticed that you need to give it
+[00:14:27] the actual image of the app, right?
+[00:14:32] So the GPT logo as well as the Gmail logo.
+[00:14:42] So I've actually gone ahead and looked those up on Google
+[00:14:45] and saved them.
+[00:14:46] They're here and we're just going to give them to Claude.
+[00:14:49] So I'm going to go ahead and look those up on Google
+[00:14:52] and save them.
+[00:14:53] They're here and we're just going to give them to Claude.
+[00:14:57] So you can use them for the motion graphic.
+[00:15:04] Now, the cool part of the original video, if you remember,
+[00:15:07] is that the notifications go up really quick.
+[00:15:10] No, they go down really quickly.
+[00:15:12] So we actually need to tell it to do that as well.
+[00:15:35] So it happens once the Gmail app is connected to GPT,
+[00:15:39] basically saying that GPT has helped him clear his inbox.
+[00:15:42] So let's see how it does.
+[00:15:43] Cool, it says Gmail GPT is live.
+[00:15:45] Let's see how well of a job it did.
+[00:15:57] OK, so I think here there's some room for prompting the
+[00:16:01] notifications to be a little bit more in Gmail style,
+[00:16:05] like their design kit.
+[00:16:06] So you can actually just go ahead and give it the
+[00:16:09] references for that.
+[00:16:10] I'm not going to do that now.
+[00:16:11] I thought that was pretty cool to animate a process.
+[00:16:14] So what I've noticed with a lot of YouTubers is that
+[00:16:17] within like the first five seconds of their video,
+[00:16:20] they just cram a bunch of motion graphics because
+[00:16:23] we're such visual people.
+[00:16:25] We want to see a lot going on.
+[00:16:27] And then we get hooked to the video.
+[00:16:28] So I recommend you do this kind of stuff to explain the
+[00:16:31] process that you're about to take.
+[00:16:33] I could have done this with, let's say,
+[00:16:35] Remotion and Claude and tell you we're going to use
+[00:16:37] Remotion and Claude to then upload motion graphics to
+[00:16:41] our tele-videos, for instance.
+[00:16:42] And then use those two logos.
+[00:16:44] Next up, I briefly want to show you a decision tree.
+[00:16:47] I saw one by a guy called Jeff Seuss.
+[00:16:48] I'm just going to copy that.
+[00:16:50] And then we're going to try and recreate that.
+[00:16:52] Okay, so this is the inspo for the decision tree.
+[00:16:55] Well, but simply this is a mental model for deciding
+[00:16:58] when to delegate to AI, when to collaborate with it
+[00:17:01] and when to avoid it entirely.
+[00:17:03] Think of it like a pie.
+[00:17:08] Now I will preference this by saying it uses arrows.
+[00:17:11] And I've noticed that Remotion doesn't do an
+[00:17:13] amazing job at arrows.
+[00:17:15] It kind of shows the pointy bits of the arrow
+[00:17:19] too quickly or in strange places.
+[00:17:22] So I expect we're going to have to prompt this again.
+[00:17:25] Let's look at what it came up with.
+[00:17:36] Not bad at all.
+[00:17:37] I think the original motion graphic
+[00:17:40] was a little bit faster,
+[00:17:42] but it can be good to slow it down a little bit.
+[00:17:44] So you have time to talk about each point
+[00:17:46] if you'd like that.
+[00:17:47] And if not, if you're just naming things like
+[00:17:50] delegate to AI, human working together,
+[00:17:52] avoid AI entirely, like as a listicle,
+[00:17:54] you might want to speed this motion graphic up.
+[00:17:56] I've shown you all of the motion graphics
+[00:17:58] that I use Remotion for,
+[00:17:59] but now I'm going to show you one of the cool
+[00:18:01] animations that you can actually create within Tella,
+[00:18:04] which are blurs and highlights
+[00:18:07] that are really hard to recreate while using Remotions.
+[00:18:10] So I'm just going to show you on a screen share
+[00:18:12] of my calendar, how I would use our
+[00:18:15] highlight and blur feature.
+[00:18:17] So here I just recorded my calendar.
+[00:18:20] We can actually go ahead and crop this.
+[00:18:27] Cool.
+[00:18:28] So now we have a bit of a cleaner view of my calendar.
+[00:18:30] I'm just going to move to the center here.
+[00:18:32] So what I really like are these effects
+[00:18:34] where it highlights one event in your calendar.
+[00:18:37] So we can actually do that with a combination
+[00:18:40] of zooms and our effects here.
+[00:18:43] So highlights and blurs.
+[00:18:45] So let's go ahead and zoom right here.
+[00:18:56] We can just edit how far it zooms out here.
+[00:19:02] So we kind of just zoom in on my calendar here.
+[00:19:07] And now I'm going to add the highlight effect
+[00:19:10] right there to only highlight this event, really.
+[00:19:15] So let's see how it does that.
+[00:19:23] So if you wanted to change the duration here,
+[00:19:26] you can actually do that.
+[00:19:27] And I think we can also align the zoom
+[00:19:31] to happen at the same moments.
+[00:19:36] Yeah.
+[00:19:43] I think that's pretty cool.
+[00:19:48] Yeah.
+[00:19:49] So that's it.
+[00:19:50] In just a few seconds in Tella,
+[00:19:51] you can actually highlight events like that.
+[00:19:53] So let's say we want to get rid of our highlight
+[00:19:56] but we want to blur everything else here.
+[00:19:59] Or we want to blur a few things.
+[00:20:02] You can actually do that like so.
+[00:20:05] This one you might have to get a bit creative with, sorry.
+[00:20:08] And just kind of layer these.
+[00:20:12] So let's say you really just wanted to show one thing
+[00:20:16] and blur out all other sensitive information.
+[00:20:20] This is how you would go about that.
+[00:20:22] Do you hear?
+[00:20:24] Yeah.
+[00:20:25] So you would just kind of, there you go.
+[00:20:31] So that was just a little bonus
+[00:20:32] to show you that within Tella,
+[00:20:34] there's also a few effects that you can use.
+[00:20:36] I really like the highlight one
+[00:20:38] and I use it quite a lot for my videos
+[00:20:40] to just hone in attention on something important.
+[00:20:43] If you liked this video, please don't hesitate
+[00:20:46] to subscribe to our channel
+[00:20:47] because I make a ton of videos
+[00:20:49] about how to elevate your content marketing,
+[00:20:51] your video marketing, et cetera.
+[00:20:53] You guys seem to really like
+[00:20:54] the previous tutorial on remotion.
+[00:20:56] Let me know what kind of videos you're making
+[00:20:58] so maybe I can make more examples
+[00:21:00] of how to use remotion, et cetera,
+[00:21:02] to make your videos more fun to watch.
+[00:21:05] I'll see you next time.

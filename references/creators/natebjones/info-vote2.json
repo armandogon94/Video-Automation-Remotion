@@ -1,0 +1,553 @@
+{
+  "voter": "vote2",
+  "channel": "@NateBJones",
+  "channelId": "UC0C-17n9iuUQPylguM1d-lQ",
+  "channelUrl": "https://www.youtube.com/@NateBJones",
+  "fetchedAt": "2026-05-27",
+  "longFormCount": 60,
+  "shortsCount": 30,
+  "longFormEntries": [
+    {
+      "id": "MFzxIT88zfg",
+      "title": "I Built a Deck With AI, Then Made a Second AI Attack It.",
+      "duration": 1169.0,
+      "url": "https://www.youtube.com/watch?v=MFzxIT88zfg"
+    },
+    {
+      "id": "NRBQmwlILjk",
+      "title": "Shopify CEO Reveals Their Secret AI Developer",
+      "duration": 985.0,
+      "url": "https://www.youtube.com/watch?v=NRBQmwlILjk"
+    },
+    {
+      "id": "z3pbrFKVyQE",
+      "title": "The Infrastructure Nightmare Nobody Is Talking About",
+      "duration": 2797.0,
+      "url": "https://www.youtube.com/watch?v=z3pbrFKVyQE"
+    },
+    {
+      "id": "Poyi6X7rOwY",
+      "title": "Why the AI boom is about to hit a wall",
+      "duration": 1417.0,
+      "url": "https://www.youtube.com/watch?v=Poyi6X7rOwY"
+    },
+    {
+      "id": "RHV8DWAmjAs",
+      "title": "Claude's AI Town Voted Yes On Everything. That's Not A Good Sign.",
+      "duration": 676.0,
+      "url": "https://www.youtube.com/watch?v=RHV8DWAmjAs"
+    },
+    {
+      "id": "ltbzgzZZmgI",
+      "title": "The One AI Writing Hack Nobody Talks About.",
+      "duration": 1311.0,
+      "url": "https://www.youtube.com/watch?v=ltbzgzZZmgI"
+    },
+    {
+      "id": "ogTLWGBc3cE",
+      "title": "Opus 4.7 and OpenAI 5.5 Made Your Prompting Style Obsolete.",
+      "duration": 1504.0,
+      "url": "https://www.youtube.com/watch?v=ogTLWGBc3cE"
+    },
+    {
+      "id": "woGB2vr5wTg",
+      "title": "These 5 Infrastructure Giants Secretly Rule AI",
+      "duration": 1220.0,
+      "url": "https://www.youtube.com/watch?v=woGB2vr5wTg"
+    },
+    {
+      "id": "zP6TnEiueEc",
+      "title": "Google Spent a Year Stitching MCP, A2A, AG-UI Together. I/O Today.",
+      "duration": 1242.0,
+      "url": "https://www.youtube.com/watch?v=zP6TnEiueEc"
+    },
+    {
+      "id": "725QE_LNXT4",
+      "title": "The Prove-It Economy is Here | And Most Marketers Aren't Ready",
+      "duration": 1343.0,
+      "url": "https://www.youtube.com/watch?v=725QE_LNXT4"
+    },
+    {
+      "id": "LIkYVsxMpS8",
+      "title": "When to Automate, Build, Buy, Hire, or Wait on AI",
+      "duration": 1666.0,
+      "url": "https://www.youtube.com/watch?v=LIkYVsxMpS8"
+    },
+    {
+      "id": "dm3_Z-5PYnQ",
+      "title": "Anthropic's Mythos Just Beat OpenAI's GPT-5.5 At Real Hacking",
+      "duration": 1458.0,
+      "url": "https://www.youtube.com/watch?v=dm3_Z-5PYnQ"
+    },
+    {
+      "id": "adNErrz2aA0",
+      "title": "Your SaaS Bill Just Got a Second Meter. You're About to Pay It.",
+      "duration": 983.0,
+      "url": "https://www.youtube.com/watch?v=adNErrz2aA0"
+    },
+    {
+      "id": "jwtpMSRAPAQ",
+      "title": "The Trillion Dollar Agentic Workflow Opportunity Is Here",
+      "duration": 1553.0,
+      "url": "https://www.youtube.com/watch?v=jwtpMSRAPAQ"
+    },
+    {
+      "id": "lqiwQiDglGk",
+      "title": "Pinecone Just Demoted Vector Search. Here's the Knowledge Layer.",
+      "duration": 1209.0,
+      "url": "https://www.youtube.com/watch?v=lqiwQiDglGk"
+    },
+    {
+      "id": "j5_wcDifNko",
+      "title": "ChatGPT Has 900M Weekly Users. Almost None Can Buy In It.",
+      "duration": 1122.0,
+      "url": "https://www.youtube.com/watch?v=j5_wcDifNko"
+    },
+    {
+      "id": "SX1myuPEDFg",
+      "title": "LLM Agents: The Security Breach Pattern Nobody's Talking About",
+      "duration": 1157.0,
+      "url": "https://www.youtube.com/watch?v=SX1myuPEDFg"
+    },
+    {
+      "id": "EpJ0CjTJSag",
+      "title": "Anthropic And OpenAI Just Admitted The Model Isn't Enough.",
+      "duration": 1248.0,
+      "url": "https://www.youtube.com/watch?v=EpJ0CjTJSag"
+    },
+    {
+      "id": "647pSnX5H_Y",
+      "title": "You're Wasting 40% Of Your AI Time On Something Fixable",
+      "duration": 1633.0,
+      "url": "https://www.youtube.com/watch?v=647pSnX5H_Y"
+    },
+    {
+      "id": "W79FW7iUkro",
+      "title": "271 Vulnerabilities: What Mozilla's AI Found Changes Everything",
+      "duration": 1841.0,
+      "url": "https://www.youtube.com/watch?v=W79FW7iUkro"
+    },
+    {
+      "id": "85Q9htV2CBE",
+      "title": "Your AI Agent Is Locked To One Model. OpenClaw Just Killed That.",
+      "duration": 1562.0,
+      "url": "https://www.youtube.com/watch?v=85Q9htV2CBE"
+    },
+    {
+      "id": "b1fxYGPbHeo",
+      "title": "The Work Primitive: What Every AI Product Leader Gets Wrong",
+      "duration": 1397.0,
+      "url": "https://www.youtube.com/watch?v=b1fxYGPbHeo"
+    },
+    {
+      "id": "Z0HizICooiw",
+      "title": "Consumer AI Has a Problem Nobody's Naming.",
+      "duration": 1975.0,
+      "url": "https://www.youtube.com/watch?v=Z0HizICooiw"
+    },
+    {
+      "id": "rYqt6mMlv7o",
+      "title": "AI's 'Thin Ice' Moment: Is Your Job Already Gone?\"",
+      "duration": 2056.0,
+      "url": "https://www.youtube.com/watch?v=rYqt6mMlv7o"
+    },
+    {
+      "id": "XGvDbeoSN3E",
+      "title": "Stripe, Visa, Mastercard, Microsoft, Meta. All Building The Same Thing.",
+      "duration": 1879.0,
+      "url": "https://www.youtube.com/watch?v=XGvDbeoSN3E"
+    },
+    {
+      "id": "FDkvRl1RlT0",
+      "title": "Anthropic Might Buy Atlassian For $40B. Here's Why It Makes Sense.",
+      "duration": 1748.0,
+      "url": "https://www.youtube.com/watch?v=FDkvRl1RlT0"
+    },
+    {
+      "id": "iUSdS-6uwr4",
+      "title": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+      "duration": 1956.0,
+      "url": "https://www.youtube.com/watch?v=iUSdS-6uwr4"
+    },
+    {
+      "id": "JvCtGjrn_N0",
+      "title": "Microsoft Is Testing Claude Against Its Own Copilot. Here's Why.",
+      "duration": 1488.0,
+      "url": "https://www.youtube.com/watch?v=JvCtGjrn_N0"
+    },
+    {
+      "id": "dQK_pTXrGDk",
+      "title": "Salesforce Killed The Browser. Every Agent Runs Your CRM Now.",
+      "duration": 1388.0,
+      "url": "https://www.youtube.com/watch?v=dQK_pTXrGDk"
+    },
+    {
+      "id": "9aIYhjeYxzM",
+      "title": "GPT-5.5 vs Claude vs Gemini: The Real Difference Nobody's Talking About",
+      "duration": 1954.0,
+      "url": "https://www.youtube.com/watch?v=9aIYhjeYxzM"
+    },
+    {
+      "id": "QrvVkm-8Jx4",
+      "title": "OpenAI Just Gave Every Team A Free Employee. Here's The Catch.",
+      "duration": 1394.0,
+      "url": "https://www.youtube.com/watch?v=QrvVkm-8Jx4"
+    },
+    {
+      "id": "RaAFquzj5B8",
+      "title": "Apple Just Positioned Itself for the Next Trillion Dollars",
+      "duration": 1256.0,
+      "url": "https://www.youtube.com/watch?v=RaAFquzj5B8"
+    },
+    {
+      "id": "brBPsPPyuQM",
+      "title": "ChatGPT Images Just Replaced Three People on Your Team.",
+      "duration": 1546.0,
+      "url": "https://www.youtube.com/watch?v=brBPsPPyuQM"
+    },
+    {
+      "id": "KlPxWaY91rE",
+      "title": "Claude Design Does In 30 Minutes What Your Team Does In A Sprint",
+      "duration": 1422.0,
+      "url": "https://www.youtube.com/watch?v=KlPxWaY91rE"
+    },
+    {
+      "id": "2d9ZmA-4QzU",
+      "title": "Your Apps Don't Need an API Anymore. Codex Just Proved It.",
+      "duration": 1260.0,
+      "url": "https://www.youtube.com/watch?v=2d9ZmA-4QzU"
+    },
+    {
+      "id": "dxq7WtWxi44",
+      "title": "Karpathy's Wiki vs. Open Brain. One Fails When You Need It Most.",
+      "duration": 2469.0,
+      "url": "https://www.youtube.com/watch?v=dxq7WtWxi44"
+    },
+    {
+      "id": "tJB_8mfRgCo",
+      "title": "Your Prompts Didn't Change. Opus 4.7 Did.",
+      "duration": 3105.0,
+      "url": "https://www.youtube.com/watch?v=tJB_8mfRgCo"
+    },
+    {
+      "id": "-dJ9WrTG6zQ",
+      "title": "Nobody Knows What You're Worth Anymore | The AI Job Market Reality",
+      "duration": 1289.0,
+      "url": "https://www.youtube.com/watch?v=-dJ9WrTG6zQ"
+    },
+    {
+      "id": "fm6mYqFAM5c",
+      "title": "Block Laid Off Half Its Company for AI. AI Can't Do the Job.",
+      "duration": 1221.0,
+      "url": "https://www.youtube.com/watch?v=fm6mYqFAM5c"
+    },
+    {
+      "id": "xnG8h3UnNFI",
+      "title": "Karpathy's Agent Ran 700 Experiments While He Slept. It's Coming For You.",
+      "duration": 1645.0,
+      "url": "https://www.youtube.com/watch?v=xnG8h3UnNFI"
+    },
+    {
+      "id": "4KAF72BTyCE",
+      "title": "Anthropic And OpenAI Are Fighting Over Your Memory. You're Going To Lose.",
+      "duration": 1785.0,
+      "url": "https://www.youtube.com/watch?v=4KAF72BTyCE"
+    },
+    {
+      "id": "XlfumXPPrLY",
+      "title": "Your AI Is 50x Faster. You're Getting 2x. You're Fixing the Wrong Thing.",
+      "duration": 1198.0,
+      "url": "https://www.youtube.com/watch?v=XlfumXPPrLY"
+    },
+    {
+      "id": "2PWJu6uAaoU",
+      "title": "The Real Problem With AI Agents Nobody's Talking About",
+      "duration": 2259.0,
+      "url": "https://www.youtube.com/watch?v=2PWJu6uAaoU"
+    },
+    {
+      "id": "0vdlwOK_Qdk",
+      "title": "3 Model Drops. $15M/Day in Burn. One Product Dead. Nobody Connected Them.",
+      "duration": 1250.0,
+      "url": "https://www.youtube.com/watch?v=0vdlwOK_Qdk"
+    },
+    {
+      "id": "E1idsrv79tI",
+      "title": "I Looked At Amazon After They Fired 16,000 Engineers. Their AI Broke Everything.",
+      "duration": 1121.0,
+      "url": "https://www.youtube.com/watch?v=E1idsrv79tI"
+    },
+    {
+      "id": "zhXgkQ3nYeE",
+      "title": "I Watched 3 Companies Lay Off Their Managers. All 3 Hit the Same Wall.",
+      "duration": 1972.0,
+      "url": "https://www.youtube.com/watch?v=zhXgkQ3nYeE"
+    },
+    {
+      "id": "erV_8yrGMA8",
+      "title": "This New Method Just Killed RAM Limitations",
+      "duration": 1342.0,
+      "url": "https://www.youtube.com/watch?v=erV_8yrGMA8"
+    },
+    {
+      "id": "ib2m9HVX7as",
+      "title": "There Are Only 5 Safe Places to Build in AI Right Now. Are You in One?",
+      "duration": 1571.0,
+      "url": "https://www.youtube.com/watch?v=ib2m9HVX7as"
+    },
+    {
+      "id": "9N7qXkmntlU",
+      "title": "The $3 Trillion IPO Trap Nobody's Talking About",
+      "duration": 1370.0,
+      "url": "https://www.youtube.com/watch?v=9N7qXkmntlU"
+    },
+    {
+      "id": "ro5jpbi5uYc",
+      "title": "I Analyzed 512,000 Lines of Leaked Code. It Shows What's Coming for Your AI Tools.",
+      "duration": 1474.0,
+      "url": "https://www.youtube.com/watch?v=ro5jpbi5uYc"
+    },
+    {
+      "id": "BiqG3it0gY0",
+      "title": "A Polymarket Bot Made $438,000 In 30 Days. Your Industry Is Next. Here's What To Do About It.",
+      "duration": 1770.0,
+      "url": "https://www.youtube.com/watch?v=BiqG3it0gY0"
+    },
+    {
+      "id": "7HP1jFJ9W1c",
+      "title": "The Missing Orchestration Layer Destroying Teams Right Now",
+      "duration": 1373.0,
+      "url": "https://www.youtube.com/watch?v=7HP1jFJ9W1c"
+    },
+    {
+      "id": "kVPVmz0qJvY",
+      "title": "Your Agent Produces at 100x. Your Org Reviews at 3x. That's the Problem.",
+      "duration": 1274.0,
+      "url": "https://www.youtube.com/watch?v=kVPVmz0qJvY"
+    },
+    {
+      "id": "D-Ww1wLIp60",
+      "title": "Wall Street Just Bet $285 Billion on AI Agents. The Best One Barely Works.",
+      "duration": 1350.0,
+      "url": "https://www.youtube.com/watch?v=D-Ww1wLIp60"
+    },
+    {
+      "id": "FtCdYhspm7w",
+      "title": "I Broke Down Anthropic's $2.5 Billion Leak. Your Agent Is Missing 12 Critical Pieces.",
+      "duration": 1613.0,
+      "url": "https://www.youtube.com/watch?v=FtCdYhspm7w"
+    },
+    {
+      "id": "5ztI_dbj6ek",
+      "title": "Your Claude Limit Burns In 90 Minutes Because Of One ChatGPT Habit.",
+      "duration": 1595.0,
+      "url": "https://www.youtube.com/watch?v=5ztI_dbj6ek"
+    },
+    {
+      "id": "hV5_XSEBZNg",
+      "title": "Your AI Stack Isn't Ready for Claude Mythos",
+      "duration": 1881.0,
+      "url": "https://www.youtube.com/watch?v=hV5_XSEBZNg"
+    },
+    {
+      "id": "BhXNtvZvziY",
+      "title": "Your iPhone Is About to Control Every AI App You Use. Here's What This Means For You.",
+      "duration": 1332.0,
+      "url": "https://www.youtube.com/watch?v=BhXNtvZvziY"
+    },
+    {
+      "id": "0cVuMHaYEHE",
+      "title": "Anthropic, OpenAI, and Microsoft Just Agreed on One File Format. It Changes Everything.",
+      "duration": 1580.0,
+      "url": "https://www.youtube.com/watch?v=0cVuMHaYEHE"
+    },
+    {
+      "id": "sTkqCREdMXo",
+      "title": "48 Days. That's How Long Before the Helium Runs Out for AI Chips.",
+      "duration": 1341.0,
+      "url": "https://www.youtube.com/watch?v=sTkqCREdMXo"
+    }
+  ],
+  "shortsEntries": [
+    {
+      "id": "pW6JKTf95lo",
+      "title": "Why millions are switching to Claude #ai #claude #tech",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/pW6JKTf95lo"
+    },
+    {
+      "id": "6_7Tk0ZH9bU",
+      "title": "Why you're using Claude completely wrong #ai #claude #chatgpt",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/6_7Tk0ZH9bU"
+    },
+    {
+      "id": "C9BfGswIRnk",
+      "title": "The mistake everyone makes switching to Claude #ai #claude",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/C9BfGswIRnk"
+    },
+    {
+      "id": "rg6xNfwHYUU",
+      "title": "Are AI Agents Actually Boosting Productivity? #futureofwork #ai #tech",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/rg6xNfwHYUU"
+    },
+    {
+      "id": "dSUkYOUX0fc",
+      "title": "Why you should never trust ChatGPT's memory #ai #tech #chatgpt",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/dSUkYOUX0fc"
+    },
+    {
+      "id": "DVS-cTSVKv4",
+      "title": "How to build a 10-cent AI brain #ai #programming #tech",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/DVS-cTSVKv4"
+    },
+    {
+      "id": "xkC_WDLmfS8",
+      "title": "Why switching AI models is now impossible \ud83d\ude33 #chatgpt #ai #tech",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/xkC_WDLmfS8"
+    },
+    {
+      "id": "5RCsb9XMuIU",
+      "title": "The massive mistake in AI memory #ai #tech #programming",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/5RCsb9XMuIU"
+    },
+    {
+      "id": "eszYRrsIdHg",
+      "title": "This 30-cent database gives your AI infinite memory #ai #tech #coding",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/eszYRrsIdHg"
+    },
+    {
+      "id": "CgsOqhYgl1E",
+      "title": "Cognitive Architecture Beats AI Detection Every Time #ai #education #parenting",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/CgsOqhYgl1E"
+    },
+    {
+      "id": "OQlf4UwugBg",
+      "title": "How ChatGPT Became Teenagers' Best Friend #AI #Psychology",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/OQlf4UwugBg"
+    },
+    {
+      "id": "a6GOGmzJ-OU",
+      "title": "The calculator moment nobody's talking about in education #AIinEducation #Learning #Parenting",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/a6GOGmzJ-OU"
+    },
+    {
+      "id": "hYDJnwgJr4Y",
+      "title": "40% growth nobody saw coming #expansion #tech",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/hYDJnwgJr4Y"
+    },
+    {
+      "id": "_rLgj8VcaVU",
+      "title": "The biggest lie you've heard about AI jobs #ai #futureofwork #shorts",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/_rLgj8VcaVU"
+    },
+    {
+      "id": "WwpDswEjTXg",
+      "title": "How teams accidentally sabotage AI adoption #ai #aitools",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/WwpDswEjTXg"
+    },
+    {
+      "id": "D0Lc4HF5pzE",
+      "title": "Agents vs Chatbots: Codex Changes Everything #aiagents #codex #automation",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/D0Lc4HF5pzE"
+    },
+    {
+      "id": "tpmCddboe74",
+      "title": "GPT-5.5 vs 1000 Piece Lego Set #ai #challenge",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/tpmCddboe74"
+    },
+    {
+      "id": "9bA49Yc3dlw",
+      "title": "Sarah Friar on the Tool That Scaled Her Fundraise #OpenAI #funding",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/9bA49Yc3dlw"
+    },
+    {
+      "id": "IQ5zojQHHKE",
+      "title": "The Secret Behind GPT's Simplicity #chatgpt #ai",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/IQ5zojQHHKE"
+    },
+    {
+      "id": "oWIXee9h3nU",
+      "title": "Codex Just Valued A Random House In India. I Wasn't Ready. #codex",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/oWIXee9h3nU"
+    },
+    {
+      "id": "F4p1kc2wKOQ",
+      "title": "Parents Using AI Tutors Are Making This Critical Mistake #Parenting #AI #ChildDevelopment",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/F4p1kc2wKOQ"
+    },
+    {
+      "id": "8n4OV0jotDs",
+      "title": "Professors Notice Something's Drastically Wrong #college #teacher",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/8n4OV0jotDs"
+    },
+    {
+      "id": "fsFxiXzwvp8",
+      "title": "I Built 2 AI Agents. One Had This. Total Game Changer #aiagents #ai #engineering",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/fsFxiXzwvp8"
+    },
+    {
+      "id": "x8Y404We8O8",
+      "title": "2025 Prompting vs 2026 Prompting #ai #comparison #shorts",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/x8Y404We8O8"
+    },
+    {
+      "id": "OhtcvogXtok",
+      "title": "While Execs Panic, This Skill Gets Rare #ai #career",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/OhtcvogXtok"
+    },
+    {
+      "id": "lNX4m6KmX4U",
+      "title": "Human Oversight Isn't Slowing AI Down, It's Protecting It #AIGovernance #Shorts",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/lNX4m6KmX4U"
+    },
+    {
+      "id": "BXb4AovU-VY",
+      "title": "How Fast Can We Actually Replace Workers with AI? #AI #jobs #career",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/BXb4AovU-VY"
+    },
+    {
+      "id": "cUo-QtAectY",
+      "title": "Frontier vs Comfortable: Where Do You Actually Sit? #ai #strategy #career",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/cUo-QtAectY"
+    },
+    {
+      "id": "5FLfz7KzV50",
+      "title": "While Markets Panic, This Happens #ai #opportunity",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/5FLfz7KzV50"
+    },
+    {
+      "id": "MfO_Edrgy0w",
+      "title": "16 Million Fake Accounts Stealing AI Capabilities #ai #news",
+      "duration": null,
+      "url": "https://www.youtube.com/shorts/MfO_Edrgy0w"
+    }
+  ]
+}

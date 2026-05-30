@@ -1,0 +1,17 @@
+{
+  "channel": "AI Explained",
+  "uploader": "AI Explained",
+  "presenter_real_name": "Philip",
+  "handle": "@aiexplained-official",
+  "channel_id": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+  "channel_url": "https://www.youtube.com/@aiexplained-official",
+  "channel_follower_count_at_scrape": 426000,
+  "platform": "YouTube",
+  "format": "long-form 16:9",
+  "language": "English",
+  "niche": "AI/research analysis, model breakdowns, alignment, citation-heavy",
+  "scrape_date": "2026-05-27",
+  "scrape_tool": "yt-dlp",
+  "scrape_command": "yt-dlp --flat-playlist --playlist-end 50 https://www.youtube.com/@aiexplained-official/videos",
+  "videos_listed_in_channel_dump_at_scrape": 50
+}

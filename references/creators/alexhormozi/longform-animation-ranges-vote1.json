@@ -1,0 +1,242 @@
+[
+  {
+    "videoId": "OQf2Ba-Lp_4",
+    "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+    "animationId": "anim-01",
+    "name": "numbered-circle-listicle-counter",
+    "rangeSeconds": [0, 15],
+    "guessedKind": "numbered-listicle-with-lime-circles",
+    "confidence": 0.9,
+    "notes": "Lime-green outlined circle (1) + yellow-highlight title 'THAT $1.2M ISN'T ALL PROFIT' + faded next-item (2) below. Counter-style enumeration."
+  },
+  {
+    "videoId": "OQf2Ba-Lp_4",
+    "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+    "animationId": "anim-02",
+    "name": "two-cam-interview-slide-with-bullets",
+    "rangeSeconds": [55, 70],
+    "guessedKind": "interview-slide-template",
+    "confidence": 0.95,
+    "notes": "Persistent template: two side-cam thumbnails left+right, purple bg, white card center holds bulleted list with yellow-highlight on key bullet, top section breadcrumb chip 'WHAT'S THE PROBLEM?'. THE canonical Hormozi business-breakdown template."
+  },
+  {
+    "videoId": "OQf2Ba-Lp_4",
+    "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+    "animationId": "anim-03",
+    "name": "animated-revenue-table-with-yellow-row-highlight",
+    "rangeSeconds": [205, 220],
+    "guessedKind": "tabular-data-card",
+    "confidence": 0.95,
+    "notes": "Same two-cam template, but card shows a 'NUMBERS' table with rows TTM Revenue / TTM Profit / Net Margin / Marketing Spend / Show Rate / Close Rate. First TWO rows are highlighted yellow. Pure tabular animation."
+  },
+  {
+    "videoId": "OQf2Ba-Lp_4",
+    "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+    "animationId": "anim-04",
+    "name": "embedded-screenshot-card-with-side-cams",
+    "rangeSeconds": [580, 600],
+    "guessedKind": "screenshot-product-tour-card",
+    "confidence": 0.9,
+    "notes": "Same two-cam template, but card holds a website screenshot (Pro Shine cleaning), persistent breadcrumb 'ADS' at top. Browser frame visible with URL bar. Likely uses Mac/window chrome primitive."
+  },
+  {
+    "videoId": "OQf2Ba-Lp_4",
+    "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+    "animationId": "anim-05",
+    "name": "purple-section-breadcrumb-bar",
+    "rangeSeconds": [1190, 1210],
+    "guessedKind": "section-chapter-breadcrumb",
+    "confidence": 0.9,
+    "notes": "Persistent purple pill at top of frame with current section name (e.g. 'REACTIVATION EMAILS', 'AFFILIATES'). Persistent across many frames; acts as a chapter beacon."
+  },
+  {
+    "videoId": "OQf2Ba-Lp_4",
+    "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+    "animationId": "anim-06",
+    "name": "cta-link-pill-lower-third",
+    "rangeSeconds": [356, 372],
+    "guessedKind": "cta-pill",
+    "confidence": 0.9,
+    "notes": "Lower-third bold-text pill 'ACQUISITION.COM/ROADMAP' purple bg + white text + drop shadow. Brief call-to-action overlay."
+  },
+  {
+    "videoId": "3fsJFUvA6Ts",
+    "title": "What Makes The Perfect Business (5 Things)",
+    "animationId": "anim-01",
+    "name": "price-comparison-card-with-icon",
+    "rangeSeconds": [130, 145],
+    "guessedKind": "side-by-side-price-duel",
+    "confidence": 0.95,
+    "notes": "Big rounded-rect dark card 'MONTHLY MEMBERSHIP' yellow title, dividing line down middle: left has user icon + $9, right has $99 + multi-color 'skool' logo. Direct BigNumberDuel candidate."
+  },
+  {
+    "videoId": "3fsJFUvA6Ts",
+    "title": "What Makes The Perfect Business (5 Things)",
+    "animationId": "anim-02",
+    "name": "perforated-ticket-listicle-cream",
+    "rangeSeconds": [880, 905],
+    "guessedKind": "ranked-hierarchy-listicle",
+    "confidence": 0.95,
+    "notes": "STRONG TELLA MATCH. Stacked cream-colored ticket cards on dark navy bg with vertical perforated divider between number column and label column. Bold serif number on left, bold sans-serif label on right. Items 1-STICKY, 2-EXPENSIVE, 3-EXPANSION, 4-AIR, 5-UNIQUE animate in sequence."
+  },
+  {
+    "videoId": "3fsJFUvA6Ts",
+    "title": "What Makes The Perfect Business (5 Things)",
+    "animationId": "anim-03",
+    "name": "tag-list-yellow-title-bullets",
+    "rangeSeconds": [655, 670],
+    "guessedKind": "chip-list-broll-overlay",
+    "confidence": 0.9,
+    "notes": "Yellow bold sans title 'SHRINKING INDUSTRIES' top-left, then bulleted comma-grid of tags (Newspaper, Tobacco, Alcohol, Retail, Administrative Role, Clerical, Data Entry) below. Each tag prefixed with white triangle. Overlay on talking-head B-roll."
+  },
+  {
+    "videoId": "3fsJFUvA6Ts",
+    "title": "What Makes The Perfect Business (5 Things)",
+    "animationId": "anim-04",
+    "name": "sponsor-product-callout-with-color-logo",
+    "rangeSeconds": [805, 820],
+    "guessedKind": "sponsor-card",
+    "confidence": 0.85,
+    "notes": "Centered multi-color 'skool' logo + 2-line description text underneath. Subtle gradient transparency on talking-head bg. Mid-roll sponsor segment."
+  },
+  {
+    "videoId": "3fsJFUvA6Ts",
+    "title": "What Makes The Perfect Business (5 Things)",
+    "animationId": "anim-05",
+    "name": "yellow-text-broll-lower-third",
+    "rangeSeconds": [430, 445],
+    "guessedKind": "text-overlay-on-broll",
+    "confidence": 0.85,
+    "notes": "Two-line yellow bold all-caps text 'SOFTWARE / PHYSICAL PRODUCTS' lower-third on talking-head with poster B-roll. Word-pair emphasis pattern."
+  },
+  {
+    "videoId": "hHkdbr6_JJs",
+    "title": "How Acquisition.com Makes Money",
+    "animationId": "anim-01",
+    "name": "lower-third-yellow-allcaps-title",
+    "rangeSeconds": [10, 25],
+    "guessedKind": "title-overlay",
+    "confidence": 0.85,
+    "notes": "Yellow bold ALL CAPS sans 'CO-FOUNDER OF / THE COMPANY' two-line lower-third with thin black drop-shadow. On dark studio bg."
+  },
+  {
+    "videoId": "hHkdbr6_JJs",
+    "title": "How Acquisition.com Makes Money",
+    "animationId": "anim-02",
+    "name": "overhead-whiteboard-marker-draw",
+    "rangeSeconds": [135, 600],
+    "guessedKind": "live-marker-drawing-broll",
+    "confidence": 1.0,
+    "notes": "B-roll mode: overhead camera on a giant white sheet of paper, Hormozi (offscreen) draws diagrams with blue marker. NOT animated post-hoc — filmed live. But the diagrams (radial tree from MEDIA, funnel pipelines) are conceptually animations. Could be REPLICATED procedurally."
+  },
+  {
+    "videoId": "rMJIOK_FgJk",
+    "title": "The 6 Levels of Making Money",
+    "animationId": "anim-01",
+    "name": "iconified-concept-card-grid",
+    "rangeSeconds": [0, 18],
+    "guessedKind": "concept-card-grid-with-icons",
+    "confidence": 0.95,
+    "notes": "Three floating purple rounded-rectangle cards (MARRY / INHERIT / TRADE) each with a flat white silhouette icon (bride+groom, house, podium-clerk). Cards arranged in a triangle layout. Each card animates in sequence."
+  },
+  {
+    "videoId": "rMJIOK_FgJk",
+    "title": "The 6 Levels of Making Money",
+    "animationId": "anim-02",
+    "name": "milestone-checklist-progress-toggle",
+    "rangeSeconds": [130, 150],
+    "guessedKind": "progress-checklist-with-state-toggle",
+    "confidence": 0.95,
+    "notes": "Vertical checklist on dark bg. 'Milestone 1' has filled checkbox + yellow '$145' amount lit up, 'Milestone 2' has empty checkbox + dimmed grey text, 'Milestone 3' is empty placeholder. Toggle-state animation showing progress. Direct candidate for new molecule."
+  },
+  {
+    "videoId": "rMJIOK_FgJk",
+    "title": "The 6 Levels of Making Money",
+    "animationId": "anim-03",
+    "name": "two-line-title-subtitle-yellow-chyron",
+    "rangeSeconds": [55, 75],
+    "guessedKind": "title-subtitle-chyron",
+    "confidence": 0.95,
+    "notes": "Two-line lower-third on talking-head: large yellow bold all-caps title 'W-2 AGREEMENT', smaller yellow bold-caps subtitle 'BEING A COMPANY EMPLOYEE (ON PAYROLL)'. Used to define a term during voiceover."
+  },
+  {
+    "videoId": "rMJIOK_FgJk",
+    "title": "The 6 Levels of Making Money",
+    "animationId": "anim-04",
+    "name": "single-word-yellow-emphasis-lower-third",
+    "rangeSeconds": [280, 295],
+    "guessedKind": "single-word-keyword-overlay",
+    "confidence": 0.85,
+    "notes": "Single yellow bold all-caps word 'PEOPLE' lower-left, no pill, drop-shadow. Brief single-keyword emphasis."
+  },
+  {
+    "videoId": "9q5ojtkqsBs",
+    "title": "How to Win With AI in 2026",
+    "animationId": "anim-01",
+    "name": "full-screen-animated-news-headline-page",
+    "rangeSeconds": [0, 12],
+    "guessedKind": "animated-news-press-article",
+    "confidence": 0.95,
+    "notes": "STRONG TELLA-RELATED MATCH. Full-screen serif Times-style article headline 'nClaw Creator Gets Offers to Acquire AI ... Will It Stay [Open] Source?'. Page is skewed in 3D + motion blur on text. Reads like an animated press clipping."
+  },
+  {
+    "videoId": "9q5ojtkqsBs",
+    "title": "How to Win With AI in 2026",
+    "animationId": "anim-02",
+    "name": "descending-3d-bar-chart-with-rank-labels",
+    "rangeSeconds": [28, 45],
+    "guessedKind": "ranked-hierarchy-bars",
+    "confidence": 0.98,
+    "notes": "STRONG TELLA MATCH. Tall purple 3D bars arranged in descending height (largest left, smallest right), 8 bars total. Yellow '#1' and '#2' labels on top of first two bars. Spotlight glow under each bar. Classic ranked-list bar visualization."
+  },
+  {
+    "videoId": "9q5ojtkqsBs",
+    "title": "How to Win With AI in 2026",
+    "animationId": "anim-03",
+    "name": "product-page-screenshot-with-cta",
+    "rangeSeconds": [1420, 1450],
+    "guessedKind": "product-page-screenshot",
+    "confidence": 0.85,
+    "notes": "Full-screen Skool community page screenshot (ACQ VANTAGE) + yellow lower-third 'LINK IN DESCRIPTION'. Page has subtle motion (slight zoom / drift). Promo for own product."
+  },
+  {
+    "videoId": "XGm2ERU9qtA",
+    "title": "15 Brutal Truths I Know at 36 That I Wish I Knew at 20",
+    "animationId": "anim-01",
+    "name": "yellow-broll-lower-third-with-glow",
+    "rangeSeconds": [0, 18],
+    "guessedKind": "lower-third-text-with-glow",
+    "confidence": 0.95,
+    "notes": "Lower-third yellow bold all-caps text 'WORTH SUFFERING FOR' with strong yellow glow halo. Drops in from below, holds, exits. Opening hook text."
+  },
+  {
+    "videoId": "XGm2ERU9qtA",
+    "title": "15 Brutal Truths I Know at 36 That I Wish I Knew at 20",
+    "animationId": "anim-02",
+    "name": "two-line-caption-with-yellow-emphasis-words",
+    "rangeSeconds": [130, 145],
+    "guessedKind": "karaoke-caption-with-word-emphasis",
+    "confidence": 0.9,
+    "notes": "Two-line lower-third caption 'you will SUFFER / in order to ACHIEVE IT' — white text with yellow emphasis on SUFFER and ACHIEVE IT. Yellow glow on emphasis words."
+  },
+  {
+    "videoId": "XGm2ERU9qtA",
+    "title": "15 Brutal Truths I Know at 36 That I Wish I Knew at 20",
+    "animationId": "anim-03",
+    "name": "animated-tweet-card-listicle-with-numbered-badge",
+    "rangeSeconds": [275, 295],
+    "guessedKind": "animated-tweet-card-with-rank-badge",
+    "confidence": 1.0,
+    "notes": "STRONG TELLA MATCH — animated tweet cards EXIST in Hormozi's long-form. Tweet card upper-left of frame: white rounded-rect with avatar (Hormozi) + verified handle '@AlexHormozi' + body 'You can beat 99% of people'. Purple circular badge upper-right with item number '2'. Body text reveals progressively."
+  },
+  {
+    "videoId": "XGm2ERU9qtA",
+    "title": "15 Brutal Truths I Know at 36 That I Wish I Knew at 20",
+    "animationId": "anim-04",
+    "name": "tweet-card-slide-transition-between-items",
+    "rangeSeconds": [1030, 1050],
+    "guessedKind": "list-item-slide-transition",
+    "confidence": 0.95,
+    "notes": "Previous tweet card (truth #N-1) slides UP and exits top, while new tweet card (truth #N=9) slides IN from below. Two cards visible simultaneously during transition. Numbered badge updates per card. Classic 'paginated-list with slide transition' animation."
+  }
+]

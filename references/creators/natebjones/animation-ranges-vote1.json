@@ -1,0 +1,128 @@
+[
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 1,
+    "rangeSeconds": [292, 312],
+    "guessedKind": "stacked-progress-card",
+    "confidence": 0.9,
+    "orientation": "16:9",
+    "note": "Big number '0' + 'Primitives' label parent, with 3 children rows (Orchestration/Integration/Foundation) each with colored dot-progress and counts (3/5/4). Looks like a build-up over time."
+  },
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 2,
+    "rangeSeconds": [337, 355],
+    "guessedKind": "tree-of-child-cards",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "note": "Database icon + 'Tool Registry' parent with 4 child cards arranged: Description / Risk Level / Capabilities / Permissions, each card has its own accent color + monoline icon."
+  },
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 3,
+    "rangeSeconds": [500, 525],
+    "guessedKind": "big-number-with-horizontal-bars",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "note": "Big '18' number + 'Security Modules' label, then 5 stacked horizontal colored bars (Auth/Validation/Execution/Audit/Recovery — orange/cyan/violet/green/yellow) with right-side counts, plus emphasis-word caption 'Layered security architecture' bottom."
+  },
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 4,
+    "rangeSeconds": [500, 522],
+    "guessedKind": "benchmark-bars-percent",
+    "confidence": 0.9,
+    "orientation": "16:9",
+    "note": "Cyan check icon + 'Framework Quality' title with 4 horizontal progress bars: Tool Coverage 85%, Error Handling 72%, Context Mgmt 91%, Delegation 68% — green/orange thresholded bars with percent labels right-aligned. Distinct from anim 3 — appears later in same section."
+  },
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 5,
+    "rangeSeconds": [1315, 1345],
+    "guessedKind": "decision-tree-3-cards",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "note": "Anthropic-style star icon + 'Claude Code' parent with subtitle, then 'Operationalize' word in orange + vertical line connector, then 3 colored child cards (Custom Agent / Your Harness / Any Stack — cyan/violet/green outlines, monoline icons), plus emphasis-word caption pill 'Agentic harness translates lessons across implementations'."
+  },
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 6,
+    "rangeSeconds": [1320, 1340],
+    "guessedKind": "two-column-compare",
+    "confidence": 0.85,
+    "orientation": "16:9",
+    "note": "Left side: red warning triangle + 'Random' label + scattered red person icons + 'No constraints' caption. Right side: green check + 'Scoped' label (empty area — likely fills in). Comparison/contrast layout with a vertical divider."
+  },
+  {
+    "videoId": "FtCdYhspm7w",
+    "animIndex": 7,
+    "rangeSeconds": [1395, 1420],
+    "guessedKind": "tree-of-child-cards-with-caption-pill",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "note": "Shield icon + 3 child cards (Interactive/Coordinator/Swarm Worker — green/orange/violet outlines with icon + label + tiny subtitle), plus mono-font badge 'Permission state as first-class object' below, and full-width caption pill with emphasis word '3 types' in orange at bottom."
+  },
+  {
+    "videoId": "iUSdS-6uwr4",
+    "animIndex": 1,
+    "rangeSeconds": [665, 685],
+    "guessedKind": "fullscreen-title-card",
+    "confidence": 0.85,
+    "orientation": "16:9",
+    "note": "Section-divider title card: large bold 'Runtime Defaults' + small light subtitle 'simple starting path' centered on dark gradient with faint bookshelf+glasses watermark left edge. No data, pure section break."
+  },
+  {
+    "videoId": "iUSdS-6uwr4",
+    "animIndex": 2,
+    "rangeSeconds": [1790, 1815],
+    "guessedKind": "before-after-text-comparison",
+    "confidence": 0.8,
+    "orientation": "16:9",
+    "note": "Two-column-ish text: left column 'DEFAULT / Cloud Home / rented memory' with orange divider, right column 'TO' (likely fills in target). Same dark/watermark style as section dividers but with comparison label arrangement."
+  },
+  {
+    "videoId": "woGB2vr5wTg",
+    "animIndex": 1,
+    "rangeSeconds": [340, 360],
+    "guessedKind": "fullscreen-title-card",
+    "confidence": 0.85,
+    "orientation": "16:9",
+    "note": "Section-divider: bold 'Authority Risk' + light subtitle 'identity ambiguity' centered on dark gradient with the same bookshelf+glasses watermark — Nate's segment-marker pattern."
+  },
+  {
+    "videoId": "woGB2vr5wTg",
+    "animIndex": 2,
+    "rangeSeconds": [370, 390],
+    "guessedKind": "watermark-fade-transition",
+    "confidence": 0.6,
+    "orientation": "16:9",
+    "note": "Pure dark gradient transition frame between segments — likely a 1-2s breath beat with only the bookshelf+glasses watermark visible. Not a 'card' per se but a deliberate negative-space pause."
+  },
+  {
+    "videoId": "5RCsb9XMuIU",
+    "animIndex": 1,
+    "rangeSeconds": [0, 60],
+    "guessedKind": "tiktok-captions-with-cta-pill",
+    "confidence": 0.95,
+    "orientation": "9:16",
+    "note": "Entire Short is talking-head with persistent overlay: TikTok-style word-by-word burned captions (active word neon green, upcoming word white, 2-line stack at lower-third) PLUS a sliding-in 'CTA pill' bottom-right that alternates between '@nate.b.jones' badge and 'Read more' / 'Full guide' label with the bookshelf+glasses logo. The captions are the entire animation — there are no insert-screen graphics."
+  },
+  {
+    "videoId": "eszYRrsIdHg",
+    "animIndex": 1,
+    "rangeSeconds": [0, 57],
+    "guessedKind": "tiktok-captions-with-cta-pill",
+    "confidence": 0.95,
+    "orientation": "9:16",
+    "note": "Same Short pattern: word-by-word green/white captions + sliding CTA pill bottom-right. Reinforces that for Shorts Nate relies on caption motion + persistent CTA chrome, not insert graphics."
+  },
+  {
+    "videoId": "oWIXee9h3nU",
+    "animIndex": 1,
+    "rangeSeconds": [0, 100],
+    "guessedKind": "podcast-2up-vertical-crop",
+    "confidence": 0.85,
+    "orientation": "9:16",
+    "note": "Podcast clip reformatted to 9:16: 2 hosts at a table cropped to a central horizontal letterbox band with mirrored/blurred extension above and below (the classic 'TikTok podcast pillarbox' look). Subtle floating CTA pill bottom-right. No captions visible — different style from the other 2 Shorts (this is a clip from a 2-person episode)."
+  }
+]

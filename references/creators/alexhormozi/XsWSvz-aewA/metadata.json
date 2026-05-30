@@ -1,0 +1,12 @@
+{
+  "id": "XsWSvz-aewA",
+  "platform": "youtube",
+  "url": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+  "title": "The New Way of Making Content In The Age of AI",
+  "duration": 833,
+  "creator": "alexhormozi",
+  "scraped_at": "2026-05-28",
+  "wave": "wave-7-batch3",
+  "scrape_tool": "yt-dlp",
+  "rationale": "AI + creator-economy intersection (14 min). Likely contains social-platform UI screenshots, AI-tool UI screenshots, before/after content comparisons. Tests cross-category content."
+}

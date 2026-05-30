@@ -1,0 +1,12 @@
+{
+  "id": "u3H7CfpfwHQ",
+  "platform": "youtube",
+  "url": "https://www.youtube.com/watch?v=u3H7CfpfwHQ",
+  "title": "We Broke The Guinness World Record In 24 Hours",
+  "duration": 1644,
+  "creator": "alexhormozi",
+  "scraped_at": "2026-05-28",
+  "wave": "wave-7-batch3",
+  "scrape_tool": "yt-dlp",
+  "rationale": "EVENT / RECORD-attempt format at 27 min. Likely UNIQUE chrome \u2014 countdown timers, on-set BTS graphics, vlog cuts. Could surface NEW patterns: TimerCountdown, EventBannerLowerThird, MultiCamGrid. Different lane from teaching/strategy."
+}

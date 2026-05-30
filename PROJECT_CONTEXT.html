@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Armando Inteligencia · Video Factory · Project Context</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F1B2D;
+    --navy-2: #1B3A6E;
+    --gold: #D4AF37;
+    --gold-soft: #b8962e;
+    --paper: #F6F2EA;
+    --ink: #11151C;
+    --muted: #6B7280;
+    --line: rgba(212,175,55,0.28);
+    --line-strong: rgba(212,175,55,0.55);
+    --pos: #4ade80;
+    --neg: #f87171;
+    --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--navy);
+    color: var(--paper);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100vh;
+  }
+  .deck {
+    height: 100vh; width: 100vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide {
+    position: absolute; inset: 0;
+    padding: 64px 96px 88px;
+    display: flex; flex-direction: column;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 320ms ease, transform 320ms ease;
+    overflow-y: auto;
+  }
+  .slide.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  /* Top brand strip */
+  .brand-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px; margin-bottom: 32px;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .brand-bar .left { display: flex; align-items: center; gap: 14px; }
+  .brand-bar .dot { width: 8px; height: 8px; background: var(--gold); }
+  .brand-bar .right { color: var(--muted); letter-spacing: 0.14em; }
+
+  /* Typography */
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(40px, 5.6vw, 76px); line-height: 1.04; margin: 0 0 14px; }
+  h2 { font-size: clamp(28px, 3.4vw, 44px); line-height: 1.1; margin: 0 0 18px; }
+  h3 { font-size: clamp(20px, 2vw, 26px); margin: 0 0 10px; color: var(--gold); font-weight: 500; }
+  .kicker {
+    color: var(--gold); font-family: 'Inter', sans-serif; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase; font-size: 12px;
+    margin-bottom: 14px;
+  }
+  .italic-serif { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+  p { color: rgba(246,242,234,0.86); max-width: 880px; }
+  .lede { font-size: clamp(17px, 1.4vw, 21px); line-height: 1.6; color: rgba(246,242,234,0.88); }
+
+  /* Cover */
+  .cover { justify-content: center; }
+  .cover h1 { max-width: 1100px; }
+  .cover .meta {
+    margin-top: 32px;
+    display: grid; grid-template-columns: repeat(3, max-content); gap: 48px;
+    color: var(--muted); font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .cover .meta strong { display: block; color: var(--paper); margin-top: 4px; font-size: 15px; letter-spacing: 0.04em; text-transform: none; font-family: 'Fraunces', serif; font-weight: 500;}
+  .cover .signature { margin-top: 56px; color: var(--gold); font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; }
+
+  /* Generic layouts */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+  .card {
+    border: 1px solid var(--line);
+    padding: 22px 24px;
+    background: rgba(255,255,255,0.02);
+  }
+  .card h3 { color: var(--gold); margin-top: 0; }
+  .card .lbl { color: var(--muted); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+  .card p { margin: 6px 0; font-size: 14px; line-height: 1.55; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid rgba(246,242,234,0.08); }
+  th {
+    color: var(--gold); font-weight: 500; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  td .pill {
+    display: inline-block; padding: 2px 8px; font-size: 11px;
+    border: 1px solid var(--line); color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+  td .pill.warn { color: var(--warn); border-color: rgba(251,191,36,0.4); }
+  td .pill.neg { color: var(--neg); border-color: rgba(248,113,113,0.4); }
+  td .pill.pos { color: var(--pos); border-color: rgba(74,222,128,0.4); }
+  code, pre { font-family: 'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace; }
+  code { background: rgba(212,175,55,0.08); color: var(--gold); padding: 1px 6px; border-radius: 0; font-size: 0.9em; }
+  pre {
+    background: #060B14; border: 1px solid var(--line);
+    padding: 18px 22px; font-size: 13px; line-height: 1.5;
+    color: var(--paper); overflow-x: auto;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+
+  ul.tight { list-style: none; padding: 0; margin: 0; }
+  ul.tight li {
+    padding: 9px 0; border-bottom: 1px solid rgba(246,242,234,0.07);
+    font-size: 15px; display: flex; gap: 12px; align-items: flex-start;
+  }
+  ul.tight li:last-child { border-bottom: none; }
+  ul.tight li .mark { color: var(--gold); flex-shrink: 0; font-weight: 600; }
+  ul.tight li .mark.done { color: var(--pos); }
+  ul.tight li .mark.todo { color: var(--warn); }
+  ul.tight li .mark.skip { color: var(--neg); }
+
+  /* Pipeline flow diagram */
+  .flow {
+    display: flex; align-items: stretch; gap: 14px;
+    margin: 24px 0 8px;
+    flex-wrap: wrap;
+  }
+  .flow .step {
+    flex: 1; min-width: 180px;
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.02);
+    position: relative;
+  }
+  .flow .step .num {
+    color: var(--gold); font-family: 'Fraunces', serif;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .flow .step .title { font-size: 15px; font-weight: 600; margin: 6px 0 4px; }
+  .flow .step .sub { font-size: 12px; color: var(--muted); line-height: 1.45; }
+  .flow .arrow { color: var(--gold); font-size: 20px; align-self: center; }
+
+  /* Navigation */
+  .nav {
+    position: fixed; bottom: 24px; left: 96px; right: 96px;
+    display: flex; align-items: center; justify-content: space-between;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .nav .counter {
+    color: var(--muted); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .nav .counter strong { color: var(--gold); font-weight: 500; }
+  .nav .controls { display: flex; gap: 8px; pointer-events: auto; }
+  .btn {
+    background: transparent; color: var(--paper);
+    border: 1px solid var(--line);
+    padding: 8px 14px; font-size: 12px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: all 160ms ease;
+  }
+  .btn:hover { border-color: var(--gold); color: var(--gold); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--gold);
+    transition: width 240ms ease;
+    z-index: 101;
+  }
+
+  /* Versus comparison */
+  .vs {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px;
+    align-items: stretch; margin-top: 16px;
+  }
+  .vs .col { border: 1px solid var(--line); padding: 22px; background: rgba(255,255,255,0.02); }
+  .vs .col h3 { margin-top: 0; }
+  .vs .col .stat { color: var(--muted); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;}
+  .vs .versus {
+    align-self: center; color: var(--gold);
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 28px; padding: 0 6px;
+  }
+  .vs ul { list-style: none; padding: 0; margin: 0; }
+  .vs ul li { padding: 8px 0; border-bottom: 1px solid rgba(246,242,234,0.07); font-size: 13.5px; }
+  .vs ul li:last-child { border-bottom: none; }
+
+  .swatch-row { display: flex; gap: 14px; margin: 14px 0 6px; }
+  .swatch {
+    flex: 1; border: 1px solid var(--line);
+    padding: 14px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .swatch .chip { display: block; height: 60px; margin-bottom: 8px; }
+  .swatch .name { color: var(--paper); }
+  .swatch .hex { color: var(--muted); font-family: monospace; font-size: 12px; letter-spacing: 0; }
+
+  .three-paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 18px; }
+  .path {
+    border: 1px solid var(--line); padding: 26px 24px;
+    background: rgba(255,255,255,0.02);
+    display: flex; flex-direction: column;
+  }
+  .path .label {
+    color: var(--gold); font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .path h3 { color: var(--paper); font-size: 22px; line-height: 1.2; margin-bottom: 12px; }
+  .path p { font-size: 14px; color: rgba(246,242,234,0.78); flex-grow: 1; }
+  .path .why { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--gold); font-style: italic; font-family: 'Fraunces', serif; }
+
+  /* Hint */
+  .hint {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    color: var(--muted); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    z-index: 99;
+  }
+  .hint kbd {
+    border: 1px solid var(--line); padding: 1px 6px; margin: 0 2px;
+    font-family: 'Inter', sans-serif; font-size: 10px; color: var(--gold);
+  }
+
+  @media (max-width: 880px) {
+    .slide { padding: 36px 24px 80px; }
+    .grid-2, .grid-3, .three-paths, .vs { grid-template-columns: 1fr; }
+    .nav { left: 24px; right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" style="width:0%"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. COVER -->
+  <section class="slide cover active">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Armando Inteligencia · Video Factory</div>
+      <div class="right">May 2026 · Session Resume</div>
+    </div>
+    <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+      <div class="kicker">Project 10 · Video Automation</div>
+      <h1>
+        Where this project<br/>
+        <span class="italic-serif" style="color: var(--gold);">left off</span>, and where it could go next.
+      </h1>
+      <p class="lede" style="max-width:720px; margin-top:24px;">
+        A full back-briefing on the AI Video Factory pipeline — what's working, what's stale,
+        a new open-source alternative to evaluate, and three honest paths forward.
+      </p>
+      <div class="meta">
+        <div>Last code activity<strong>2026-04-02</strong></div>
+        <div>Pipeline state<strong>Working end-to-end</strong></div>
+        <div>Branch<strong>claude/recursing-tu-dac74b</strong></div>
+      </div>
+      <div class="signature">— Prepared for @armandointeligencia</div>
+    </div>
+  </section>
+
+  <!-- 2. TL;DR -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> TL;DR</div>
+      <div class="right">02</div>
+    </div>
+    <h2>The one-page state of the union.</h2>
+    <p class="lede" style="margin-bottom:30px;">
+      You built a working Spanish-video pipeline. Then stopped for ~6 weeks while focused on
+      Instagram carousels (project 17), Movilway, and other work. The code still runs. The next
+      steps in the scratchpad are still valid. Plus there is now a new contender worth installing
+      alongside Remotion before you commit to it for the long run.
+    </p>
+
+    <div class="grid-3" style="margin-top: 14px;">
+      <div class="card">
+        <div class="lbl">Status</div>
+        <h3 style="color:var(--pos); font-family:'Inter',sans-serif; font-size:18px;">Operational</h3>
+        <p>End-to-end: text in → MP4 out. Last verified run: <strong style="color:var(--paper)">14.6 s pipeline → 11.5 s video at 1920×1080</strong>.</p>
+      </div>
+      <div class="card">
+        <div class="lbl">Pain points</div>
+        <h3 style="color:var(--warn); font-family:'Inter',sans-serif; font-size:18px;">Two known gaps</h3>
+        <p>(1) Word-timing is approximate (sentence-level), so captions drift slightly. (2) Multi-platform export runs serial, not in parallel.</p>
+      </div>
+      <div class="card">
+        <div class="lbl">Strategic question</div>
+        <h3 style="color:var(--gold); font-family:'Inter',sans-serif; font-size:18px;">Stay or compare</h3>
+        <p>HeyGen open-sourced <strong style="color:var(--paper)">Hyperframes</strong> — an Apache-2.0 Remotion alternative. Worth installing in parallel before sinking more time into either.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. WHAT THIS PROJECT DOES -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Project shape</div>
+      <div class="right">03</div>
+    </div>
+    <div class="kicker">What is this exactly</div>
+    <h2>A local, single-command Spanish video factory.</h2>
+    <p class="lede" style="margin-bottom:14px;">
+      One CLI invocation turns a Spanish script into a finished video, captioned and resized
+      for YouTube, TikTok, Reels and Shorts. No web UI. No server. No external API keys required.
+    </p>
+
+    <div class="flow">
+      <div class="step">
+        <div class="num">Step 01</div>
+        <div class="title">Script in</div>
+        <div class="sub">Plain text or JSON. Spanish (es-MX preferred).</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 02</div>
+        <div class="title">Edge-TTS</div>
+        <div class="sub">Free, 45 Spanish neural voices. Outputs <code>audio.mp3</code> + word timings.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 03</div>
+        <div class="title">Remotion Render</div>
+        <div class="sub">React composition → Chrome Headless → H.264 MP4.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 04</div>
+        <div class="title">FFmpeg post</div>
+        <div class="sub">loudnorm, multi-platform resize, thumbnail extract.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 05</div>
+        <div class="title">Multi-export</div>
+        <div class="sub">1920×1080 (YT), 1080×1920 (TT/Reels), 1080×1080.</div>
+      </div>
+    </div>
+
+    <p style="margin-top:24px; color: var(--muted); font-size:13px;">
+      Runs ONLY on macOS Apple Silicon. Not deployed anywhere. Not designed to be.
+      The VPS (2 vCPU / 8 GB RAM) is too weak for Remotion + Chrome Headless rendering.
+    </p>
+  </section>
+
+  <!-- 4. TECH STACK -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Tech stack</div>
+      <div class="right">04</div>
+    </div>
+    <h2>Pinned versions, dual runtime.</h2>
+    <p class="lede" style="margin-bottom:18px;">
+      Node.js handles Remotion + the pipeline orchestrator. Python (via <code>uv</code>) handles TTS
+      and transcription. They talk through <code>execa</code> + JSON on stdout.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Tool</th><th>Version</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rendering</td><td>Remotion (all packages)</td><td><span class="pill">4.0.443</span></td><td>React-based, <code>--save-exact</code>, free under $1M revenue</td></tr>
+        <tr><td>Captions</td><td>@remotion/captions</td><td><span class="pill">4.0.443</span></td><td>TikTok-style word-by-word — <span class="pill warn">window present, not wired in fully</span></td></tr>
+        <tr><td>TTS</td><td>edge-tts (Python)</td><td><span class="pill">7.2.8</span></td><td>45 Spanish voices, sentence-boundary only</td></tr>
+        <tr><td>Transcription</td><td>faster-whisper</td><td><span class="pill">1.2.1</span></td><td>CTranslate2 int8, <span class="pill warn">not yet integrated in pipeline</span></td></tr>
+        <tr><td>Post-processing</td><td>FFmpeg</td><td><span class="pill">8.1</span></td><td>Homebrew, VideoToolbox available</td></tr>
+        <tr><td>Node runtime</td><td>Node.js</td><td><span class="pill">24.14</span></td><td>ESM throughout</td></tr>
+        <tr><td>Python runtime</td><td>Python</td><td><span class="pill">3.14</span></td><td>Via <code>uv</code></td></tr>
+        <tr><td>CLI</td><td>Commander.js + tsx + execa</td><td><span class="pill">latest</span></td><td>Simple orchestrator, no Redis / no queues</td></tr>
+        <tr><td>Schemas</td><td>Zod</td><td><span class="pill">4.3.6</span></td><td>v4 with <code>@remotion/zod-types</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 5. DONE -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> What's working</div>
+      <div class="right">05</div>
+    </div>
+    <div class="kicker">Implemented &amp; verified</div>
+    <h2>The pipeline ships. Today. Right now.</h2>
+
+    <div class="grid-2" style="margin-top: 18px;">
+      <div>
+        <h3>Compositions (5 templates)</h3>
+        <ul class="tight">
+          <li><span class="mark done">✓</span><span><strong>ExplainerVideo</strong> — gradient bg + animated title + accent bar + word-by-word captions</span></li>
+          <li><span class="mark done">✓</span><span><strong>TalkingHead</strong> — speaker image + gradient + name tag + captions</span></li>
+          <li><span class="mark done">✓</span><span><strong>Listicle</strong> — numbered items, spring slide-in, per-item sequences</span></li>
+          <li><span class="mark done">✓</span><span><strong>QuoteCard</strong> — animated quote mark + italic text + author + decorative line</span></li>
+          <li><span class="mark done">✓</span><span><strong>ExplainerVideoVertical</strong> — 1080×1920 variant for Shorts / Reels</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Pipeline + CLI</h3>
+        <ul class="tight">
+          <li><span class="mark done">✓</span><span>Commander.js CLI: <code>generate</code>, <code>voices</code>, <code>templates</code></span></li>
+          <li><span class="mark done">✓</span><span>Python ↔ TS bridge via <code>execa</code> + JSON stdout</span></li>
+          <li><span class="mark done">✓</span><span>Edge-TTS wrapper with sentence-to-word timing approximation</span></li>
+          <li><span class="mark done">✓</span><span>faster-whisper wrapper (standalone — not wired in)</span></li>
+          <li><span class="mark done">✓</span><span>FFmpeg command builders: resize, normalize, thumbnail, multi-platform</span></li>
+          <li><span class="mark done">✓</span><span>End-to-end verified: 14.6 s pipeline → 11.5 s 1920×1080 H.264+AAC, 446 KB</span></li>
+          <li><span class="mark done">✓</span><span>Docker dev container (added 2026-04-09, after main work)</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. NOT DONE - HIGH -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Open work · High priority</div>
+      <div class="right">06</div>
+    </div>
+    <div class="kicker">From scratchpad.md — still valid</div>
+    <h2>Four things that would move the needle.</h2>
+
+    <ul class="tight" style="margin-top:18px;">
+      <li>
+        <span class="mark todo">◉</span>
+        <span>
+          <strong>Integrate faster-whisper into the pipeline.</strong>
+          Edge-TTS v7.2.8 only emits SentenceBoundary, so word timings are an even split across
+          each sentence — captions drift visibly on longer sentences. Wiring whisper as a
+          post-TTS pass gives accurate per-word timestamps from the audio itself.
+          <span class="italic-serif" style="color:var(--gold);"> The single biggest quality win.</span>
+        </span>
+      </li>
+      <li>
+        <span class="mark todo">◉</span>
+        <span>
+          <strong>Parallel multi-platform export.</strong>
+          The CLI accepts <code>--platforms youtube,tiktok,reels</code> and parses it, but currently
+          only one platform ships per run. FFmpeg jobs are independent — run them with
+          <code>Promise.all</code> instead of sequentially.
+        </span>
+      </li>
+      <li>
+        <span class="mark todo">◉</span>
+        <span>
+          <strong>Wire <code>@remotion/captions</code> in.</strong>
+          The package is installed. Native <code>createTikTokStyleCaptions()</code> would replace
+          the custom <code>Caption.tsx</code> windowed display with Remotion's first-party word animations.
+        </span>
+      </li>
+      <li>
+        <span class="mark todo">◉</span>
+        <span>
+          <strong>Apply Armando Inteligencia branding.</strong>
+          The 5 compositions use generic gradients. Your brand is locked: deep navy
+          <code>#1B3A6E</code> + gold <code>#D4AF37</code> + Inter / Fraunces. Port the brand config from
+          project 17.
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 7. NOT DONE - MEDIUM/LOW -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Open work · Backlog</div>
+      <div class="right">07</div>
+    </div>
+    <h2>Nice-to-haves, not blockers.</h2>
+
+    <div class="grid-2" style="margin-top:18px;">
+      <div>
+        <h3>Medium priority</h3>
+        <ul class="tight">
+          <li><span class="mark">·</span><span>Vertical variants for TalkingHead / Listicle / QuoteCard</span></li>
+          <li><span class="mark">·</span><span>Template-specific defaults (auto-detect listicle items, title extraction)</span></li>
+          <li><span class="mark">·</span><span>Batch generation from a CSV/JSON of scripts</span></li>
+          <li><span class="mark">·</span><span>Intro/outro concatenation with FFmpeg <code>xfade</code></span></li>
+          <li><span class="mark">·</span><span>Watermark / logo overlay (the avatar-pixar PNG is a natural fit)</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Low priority</h3>
+        <ul class="tight">
+          <li><span class="mark">·</span><span>Vitest snapshot tests for compositions</span></li>
+          <li><span class="mark">·</span><span>Pytest tests for Python wrappers</span></li>
+          <li><span class="mark">·</span><span>Background music mixing via FFmpeg</span></li>
+          <li><span class="mark">·</span><span>Evaluate <code>edge-tts-universal</code> (pure Node.js — could drop Python)</span></li>
+          <li><span class="mark">·</span><span>ElevenLabs as premium voice fallback</span></li>
+          <li><span class="mark">·</span><span>ASS subtitle burning for styled hard-burned captions</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. ENTRY POINTS -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Key files</div>
+      <div class="right">08</div>
+    </div>
+    <h2>Where to start reading.</h2>
+    <p class="lede" style="margin-bottom:16px;">
+      Three files are the brain of the project. The rest are leaves.
+    </p>
+
+    <table>
+      <thead><tr><th>File</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>src/pipeline/generate.ts</code></td><td>Commander.js CLI — entry point for <code>npm run generate</code></td></tr>
+        <tr><td><code>src/pipeline/pipeline.ts</code></td><td><strong>The orchestrator.</strong> TTS → copy audio to public/ → Remotion bundle → render → normalize → multi-export</td></tr>
+        <tr><td><code>src/Root.tsx</code></td><td>Remotion composition registry (Landscape-16x9, Vertical-9x16 folders)</td></tr>
+        <tr><td><code>src/compositions/schemas.ts</code></td><td>Zod schemas for every composition's props</td></tr>
+        <tr><td><code>src/tts/generate.py</code></td><td>Edge-TTS wrapper — outputs audio.mp3 + word_timings.json</td></tr>
+        <tr><td><code>src/transcribe/transcribe.py</code></td><td>faster-whisper wrapper — <span class="pill warn">standalone, not yet wired in</span></td></tr>
+        <tr><td><code>src/ffmpeg/commands.ts</code></td><td>resize / normalize / thumbnail / multi-platform exporters</td></tr>
+        <tr><td><code>templates/*.json</code></td><td>Template defaults for explainer, talking-head, listicle</td></tr>
+        <tr><td><code>.claude/scratchpad.md</code></td><td>Session handoff (the canonical "where we left off" doc)</td></tr>
+        <tr><td><code>.claude/memory.md</code></td><td>Decisions, gotchas, research findings, session log</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 9. COMMANDS -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Commands</div>
+      <div class="right">09</div>
+    </div>
+    <h2>The five commands you actually use.</h2>
+
+    <h3 style="margin-top:18px;">Generate a video (the main thing)</h3>
+<pre><code>npm run generate -- \
+  --script "5 claves para implementar IA en tu empresa" \
+  --voice "es-MX-JorgeNeural" \
+  --template explainer \
+  --platforms youtube,tiktok,reels</code></pre>
+
+    <div class="grid-2" style="margin-top:18px;">
+      <div>
+        <h3>Discoverability</h3>
+<pre><code>npm run voices       # list 45 Spanish voices
+npm run templates    # list 4 templates</code></pre>
+      </div>
+      <div>
+        <h3>Visual preview / debug</h3>
+<pre><code>npm run dev          # Remotion Studio
+npx remotion compositions src/index.ts</code></pre>
+      </div>
+    </div>
+
+    <h3 style="margin-top:22px;">Run Python tools standalone</h3>
+<pre><code>uv run python src/tts/generate.py generate \
+  --text "Hola mundo" --voice "es-MX-JorgeNeural" --output-dir ./output
+
+uv run python src/transcribe/transcribe.py \
+  --input ./output/audio.mp3 --model small --language es</code></pre>
+  </section>
+
+  <!-- 10. DECISIONS -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Decisions log</div>
+      <div class="right">10</div>
+    </div>
+    <h2>Why this project looks the way it does.</h2>
+    <p class="lede" style="margin-bottom:16px;">
+      Eight decisions locked the architecture. The reasoning still holds today.
+    </p>
+
+    <table>
+      <thead><tr><th>Decision</th><th>Why</th><th>What it forbids</th></tr></thead>
+      <tbody>
+        <tr><td>Local-only on Apple Silicon</td><td>VPS (2 vCPU / 8GB) can't render Remotion + Chrome</td><td>No Traefik, no systemd, no production Docker</td></tr>
+        <tr><td>Edge-TTS over ElevenLabs</td><td>Free, 45 Spanish voices, decent quality</td><td>—</td></tr>
+        <tr><td>faster-whisper over whisper.cpp</td><td>Better Python integration, word-level timestamps</td><td>—</td></tr>
+        <tr><td>TS pipeline over BullMQ + Redis</td><td>Single user, sequential is fine</td><td>No queues, no jobs</td></tr>
+        <tr><td>uv over pip</td><td>Faster, lockfile, reproducible</td><td>Don't <code>pip install</code> outside uv</td></tr>
+        <tr><td>Remotion pinned at 4.0.443</td><td>All packages must match exactly</td><td>No mixed versions, no <code>^</code> in package.json</td></tr>
+        <tr><td>Dual runtime (Node + Python)</td><td>Remotion is React; TTS/whisper are Python</td><td>—</td></tr>
+        <tr><td>Spanish-first</td><td>Content target is es-MX</td><td>English is secondary</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 11. GOTCHAS -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Sharp edges</div>
+      <div class="right">11</div>
+    </div>
+    <h2>Gotchas that will bite next session if forgotten.</h2>
+
+    <div class="grid-2" style="margin-top:18px;">
+      <div>
+        <h3>Remotion</h3>
+        <ul class="tight">
+          <li><span class="mark">!</span><span><code>staticFile()</code> rejects absolute paths. Audio must be <strong>copied to <code>public/</code></strong> before render.</span></li>
+          <li><span class="mark">!</span><span>Folder names must match <code>[a-zA-Z0-9-]</code>. Use <code>Landscape-16x9</code>, never <code>Landscape (16:9)</code>.</span></li>
+          <li><span class="mark">!</span><span>Don't write <code>.tsx</code> extensions in imports — webpack resolves them. Use <code>./Root</code> not <code>./Root.tsx</code>.</span></li>
+          <li><span class="mark">!</span><span>All Remotion packages must be exactly the same version. Use <code>npx remotion upgrade</code>.</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Edge-TTS + Pipeline</h3>
+        <ul class="tight">
+          <li><span class="mark">!</span><span>Word-level timing is <strong>approximate</strong> (sentences distributed evenly). Whisper integration fixes this.</span></li>
+          <li><span class="mark">!</span><span><code>Communicate</code> can only call <code>stream()</code> once. New instance per request.</span></li>
+          <li><span class="mark">!</span><span><code>public/audio.mp3</code> persists between runs — risk of reusing stale audio if pipeline fails mid-flight.</span></li>
+          <li><span class="mark">!</span><span>FFmpeg: <code>-ss</code> before <code>-i</code> seeks by keyframe (fast); after <code>-i</code> seeks exact (slow). Use the right one.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. HYPERFRAMES -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> New contender</div>
+      <div class="right">12</div>
+    </div>
+    <div class="kicker">github.com/heygen-com/hyperframes · Apache 2.0 · v0.6.7 (May 15, 2026)</div>
+    <h2>Remotion vs. Hyperframes — the honest comparison.</h2>
+
+    <div class="vs">
+      <div class="col">
+        <div class="stat">Incumbent · already installed</div>
+        <h3>Remotion 4.0.443</h3>
+        <ul>
+          <li><strong>Author in:</strong> React / TSX components</li>
+          <li><strong>Build step:</strong> Webpack bundler required</li>
+          <li><strong>Engine:</strong> Chrome Headless Shell + FFmpeg</li>
+          <li><strong>License:</strong> Source-available; free under $1M revenue</li>
+          <li><strong>Distributed:</strong> Lambda renderer for fleet rendering</li>
+          <li><strong>Maturity:</strong> Battle-tested, 5+ years, large catalog</li>
+          <li><strong>This project:</strong> Already wired in, 5 templates, working</li>
+        </ul>
+      </div>
+      <div class="versus">vs.</div>
+      <div class="col">
+        <div class="stat">Challenger · 18.4 k stars, active</div>
+        <h3>HeyGen Hyperframes</h3>
+        <ul>
+          <li><strong>Author in:</strong> Plain HTML + data attributes</li>
+          <li><strong>Build step:</strong> None — files run as-is</li>
+          <li><strong>Engine:</strong> Puppeteer + FFmpeg + GSAP/Anime/Lottie adapters</li>
+          <li><strong>License:</strong> Apache 2.0 — no revenue caps, no per-render fees</li>
+          <li><strong>Distributed:</strong> Single-machine only (for now)</li>
+          <li><strong>Maturity:</strong> v0.6 — young, but 124 releases, 974 commits, used at HeyGen</li>
+          <li><strong>AI-native:</strong> Built-in skills framework (<code>npx skills add heygen-com/hyperframes</code>)</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:22px; color: rgba(246,242,234,0.86); font-size:15px;">
+      <span class="italic-serif" style="color:var(--gold);">Verdict:</span>
+      Hyperframes' draw is the licensing freedom + agent-friendliness. Its weakness is youth.
+      The way to know is to render the <em>same</em> video on both and judge by your eye — installing
+      it next to Remotion costs you only disk space.
+    </p>
+  </section>
+
+  <!-- 13. PROJECT 17 BRANDING -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Brand consistency</div>
+      <div class="right">13</div>
+    </div>
+    <div class="kicker">From project 17 · Instagram Slides</div>
+    <h2>Your brand is already specified. Apply it here.</h2>
+    <p class="lede" style="margin-bottom:14px;">
+      Project 17 is Remotion-based too — but for static carousel PNGs, not video. There's
+      nothing video-specific to port. What you <strong>can</strong> port verbatim is
+      <code>brand/config.json</code> and the visual identity it encodes.
+    </p>
+
+    <div class="swatch-row">
+      <div class="swatch"><span class="chip" style="background:#1B3A6E;"></span><div class="name">Primary</div><div class="hex">#1B3A6E</div></div>
+      <div class="swatch"><span class="chip" style="background:#D4AF37;"></span><div class="name">Accent</div><div class="hex">#D4AF37</div></div>
+      <div class="swatch"><span class="chip" style="background:#0F1B2D;"></span><div class="name">Dark BG</div><div class="hex">#0F1B2D</div></div>
+      <div class="swatch"><span class="chip" style="background:#FFFFFF; border:1px solid var(--line);"></span><div class="name" style="color:var(--paper)">Light BG</div><div class="hex">#FFFFFF</div></div>
+      <div class="swatch"><span class="chip" style="background:#6B7280;"></span><div class="name">Muted</div><div class="hex">#6B7280</div></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:18px;">
+      <div>
+        <h3>Direct reuse opportunities</h3>
+        <ul class="tight">
+          <li><span class="mark done">✓</span><span>Copy <code>brand/config.json</code> wholesale — same shape works as Remotion props</span></li>
+          <li><span class="mark done">✓</span><span>Reuse 5 brand logos (lentes, letras, completo, avatar, avatar-letras) for end cards + watermarks</span></li>
+          <li><span class="mark done">✓</span><span>Port the <code>BrandLogo</code> / <code>CornerBadge</code> components as Remotion overlays</span></li>
+          <li><span class="mark done">✓</span><span>Adopt the "dark-minimal" preset look (dark navy + gold accent) as the default video style</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Tone &amp; copy rules (from project 17 CLAUDE.md)</h3>
+        <ul class="tight">
+          <li><span class="mark">·</span><span>No em-dashes. They betray AI authorship.</span></li>
+          <li><span class="mark">·</span><span><code>[brackets]</code> wrap keywords that need gold-glow highlighting.</span></li>
+          <li><span class="mark">·</span><span>Spanish: conversational, direct, slightly opinionated. No stiff formal tone.</span></li>
+          <li><span class="mark">·</span><span>Localized UI strings — "DESLIZA PARA MÁS", not English.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. THREE PATHS FORWARD -->
+  <section class="slide">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> The decision</div>
+      <div class="right">14</div>
+    </div>
+    <h2>Three honest paths from here.</h2>
+    <p class="lede" style="margin-bottom:6px;">
+      Pick one. I'll execute. None of them block you from picking another later.
+    </p>
+
+    <div class="three-paths">
+      <div class="path">
+        <div class="label">Path A · Polish what works</div>
+        <h3>Ship the captions fix and rebrand.</h3>
+        <p>
+          Wire faster-whisper into the pipeline for accurate per-word timing. Run multi-platform exports in parallel. Apply Armando Inteligencia colors + logos to all 5 compositions. Cut a first real branded video this week.
+        </p>
+        <div class="why">Lowest risk, highest near-term Instagram impact.</div>
+      </div>
+      <div class="path">
+        <div class="label">Path B · Bake-off</div>
+        <h3>Install Hyperframes side-by-side.</h3>
+        <p>
+          Spin up Hyperframes in a sibling folder, recreate the explainer template in plain HTML, render the <em>same</em> Spanish script through both pipelines, judge by output quality + author DX. Pick a primary engine before sinking another month into either.
+        </p>
+        <div class="why">Strategic, prevents lock-in. Costs ~half a day.</div>
+      </div>
+      <div class="path">
+        <div class="label">Path C · Open-ended</div>
+        <h3>Build the first branded video, learn from it.</h3>
+        <p>
+          Skip the bake-off, skip the captions fix. Take Remotion as-is, manually feed in one real Armando Inteligencia script you actually want to publish, push it to completion, see where the friction <em>actually</em> is — then plan from real data.
+        </p>
+        <div class="why">Fastest signal. Real pain points reveal real priorities.</div>
+      </div>
+    </div>
+
+    <p style="margin-top:24px; color: var(--muted); font-size:13px;">
+      My recommendation is <strong style="color:var(--gold)">Path C, then B</strong> — make one real video first to surface what's actually painful, then run the bake-off informed by what you learned. But your call.
+    </p>
+  </section>
+
+  <!-- 15. WRAP -->
+  <section class="slide cover">
+    <div class="brand-bar">
+      <div class="left"><span class="dot"></span> Fin</div>
+      <div class="right">15 · End</div>
+    </div>
+    <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+      <div class="kicker">Ready when you are</div>
+      <h1>Tell me which path,<br/><span class="italic-serif" style="color:var(--gold);">or change the brief.</span></h1>
+      <p class="lede" style="max-width:760px; margin-top:24px;">
+        Everything in this deck is sourced from <code>.claude/scratchpad.md</code>, <code>.claude/memory.md</code>,
+        the live source tree, the Hyperframes GitHub repo, and project 17's brand config. If any
+        of it looks stale, say so and I'll re-check live.
+      </p>
+      <div class="meta" style="margin-top:48px;">
+        <div>Branch<strong>claude/recursing-tu-dac74b</strong></div>
+        <div>Git state<strong>Clean</strong></div>
+        <div>Working tree<strong>worktree (worktree-safe)</strong></div>
+      </div>
+      <div class="signature">— Awaiting your call. @armandointeligencia</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <div class="counter"><strong id="curr">01</strong> / <span id="total">15</span></div>
+  <div class="controls">
+    <button class="btn" id="prev">← Prev</button>
+    <button class="btn" id="next">Next →</button>
+  </div>
+</div>
+
+<div class="hint">
+  <kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>Home</kbd> first · <kbd>End</kbd> last
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let idx = 0;
+  const currEl = document.getElementById('curr');
+  const totalEl = document.getElementById('total');
+  const progress = document.getElementById('progress');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  totalEl.textContent = String(total).padStart(2, '0');
+
+  function go(n) {
+    idx = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    currEl.textContent = String(idx + 1).padStart(2, '0');
+    progress.style.width = ((idx + 1) / total * 100) + '%';
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total - 1;
+    slides[idx].scrollTop = 0;
+  }
+
+  prevBtn.addEventListener('click', () => go(idx - 1));
+  nextBtn.addEventListener('click', () => go(idx + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { go(idx + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(idx - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { go(0); e.preventDefault(); }
+    else if (e.key === 'End') { go(total - 1); e.preventDefault(); }
+  });
+
+  go(0);
+</script>
+
+</body>
+</html>

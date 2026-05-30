@@ -1,0 +1,24 @@
+{
+  "creator": "The AI Advantage",
+  "handle": "@aiadvantage",
+  "presenter": "Igor",
+  "channel_id": "UCRJFAp0rewx8kzdhEqDHIlA",
+  "channel_url": "https://www.youtube.com/@aiadvantage",
+  "primary_format": "long-form YouTube AI tutorial & news (5-20 min) with secondary vertical Shorts",
+  "language": "English",
+  "topics": [
+    "AI tool tutorials (ChatGPT, Claude, Gemini, Nano Banana, Claude Code)",
+    "Weekly news roundups ('AI News You Can Use')",
+    "Model releases & benchmark reviews",
+    "AI productivity / business use cases"
+  ],
+  "visual_signatures": [
+    "Heavy use of tier cards, callout pills, big-number splashes",
+    "Screen-recording overlays with animated arrow callouts and highlight boxes",
+    "Title-card chaptering between segments (slate-style transitions)",
+    "Talking-head intro/outro framed in lower-right with branded ID strip",
+    "Bold sans-serif typography with strong color blocks (often dark navy + accent)"
+  ],
+  "scraped_at": "2026-05-27",
+  "wave": 7
+}

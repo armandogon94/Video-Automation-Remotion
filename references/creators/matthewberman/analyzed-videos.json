@@ -1,0 +1,139 @@
+{
+  "creator_handle": "matthewberman",
+  "analyzed_count": 12,
+  "last_updated": "2026-05-28",
+  "videos": [
+    {
+      "id": "6LwQ8RbU9as",
+      "title": "DeepSWE just changed the benchmark game...",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=6LwQ8RbU9as",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 128,
+      "clip_count": 5,
+      "has_metadata_json": false
+    },
+    {
+      "id": "BrJdGP21B5g",
+      "title": "Google just dropped Gemma 4... (WOAH)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=BrJdGP21B5g",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 118,
+      "clip_count": 5,
+      "has_metadata_json": false
+    },
+    {
+      "id": "GBISeUYMzoU",
+      "title": "Cursor just beat EVERYONE.",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=GBISeUYMzoU",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 164,
+      "clip_count": 7,
+      "has_metadata_json": false
+    },
+    {
+      "id": "I0me2uEbfuE",
+      "title": "Every AI Model Explained in 20 Minutes",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=I0me2uEbfuE",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 167,
+      "clip_count": 6,
+      "has_metadata_json": false
+    },
+    {
+      "id": "KJrqRJzSErw",
+      "title": "Anthropic is in trouble",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=KJrqRJzSErw",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 48,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "N4ZWCc_Fr3U",
+      "title": "Opus 4.7 just dropped... and I'm confused.",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=N4ZWCc_Fr3U",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 165,
+      "clip_count": 6,
+      "has_metadata_json": false
+    },
+    {
+      "id": "ROKgDeeFAnk",
+      "title": "New BEST AI Memory System",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=ROKgDeeFAnk",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 20,
+      "clip_count": 1,
+      "has_metadata_json": true
+    },
+    {
+      "id": "a-IOrLvd9B4",
+      "title": "Earth SHATTERING New AI Model",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=a-IOrLvd9B4",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 20,
+      "clip_count": 1,
+      "has_metadata_json": false
+    },
+    {
+      "id": "ak6fQ2Yjwy0",
+      "title": "We only have 2 years...",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=ak6fQ2Yjwy0",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 175,
+      "clip_count": 6,
+      "has_metadata_json": false
+    },
+    {
+      "id": "dYG8JxtSgmM",
+      "title": "Claude Code was just leaked... (WOAH)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=dYG8JxtSgmM",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 159,
+      "clip_count": 6,
+      "has_metadata_json": false
+    },
+    {
+      "id": "mR2Rh9RtyR4",
+      "title": "Turns out, HTML is King",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=mR2Rh9RtyR4",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 47,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "tNV9_I-zLO0",
+      "title": "OpenAI just dropped GPT-5.5... (WOAH)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=tNV9_I-zLO0",
+      "date_first_analyzed": "2026-05-27",
+      "wave": "wave-7",
+      "frame_count": 159,
+      "clip_count": 6,
+      "has_metadata_json": false
+    }
+  ]
+}

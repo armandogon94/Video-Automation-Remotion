@@ -1,0 +1,10 @@
+{
+  "channel": "NateBJones",
+  "channel_url": "https://www.youtube.com/@NateBJones",
+  "voter": "vote1",
+  "scraped_at": "2026-05-27",
+  "all_videos_listed": 90,
+  "longform_listed": 60,
+  "shorts_listed": 30,
+  "notes": "view_count not returned by --flat-playlist for longform; picks therefore use title heuristics. Channel exclusively AI/tech analysis, English. Long-form is the dominant format (19-52 min). Shorts run 10-60s in 9:16. All long-form is 16:9."
+}

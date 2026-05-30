@@ -1,0 +1,476 @@
+ 
+hey guys welcome to my new video in this
+video I'm going to show to make this
+animation with using After Effects let's
+get
+[Music]
+started so guys welcome back and first
+of want select this background layer and
+log then let's create new background
+solid layer add the name background one
+and click okay move to behind here and
+go to F press search f f select F let's
+use for background one and go to color
+Cube change to White click okay and also
+Lo layer then select these character
+elements for make comp session select
+Body Hit And I white I ball and I Brown
+let's see okay let's right Mouse pre
+Compass add name
+character and click okay and let's hide
+come session select is doctors let's
+hide layers and select Mouse also hide
+layer and backround shape hide layer so
+in this time let's go to shape layers
+let's hold this icon and let's create
+new ellipse tool let's let enable here
+tiation save hold shift make one ellipse
+cation tool go to F let's click F and
+select nor for close inside color click
+okay go to stroke withd change stroke
+withd
+20 and stroke color let's try change
+color blue like this or
+purple Okay click okay and for Tor Point
+center hold control double click Pan
+behind icon cation tool and in this time
+let's go to window open align click this
+icon and this icon for move the object
+to
+Center okay so change name search
+one and select this search one let's
+press P move the down make new personing
+Q frame go to T Q frames for shortcut
+you can use hold shift press page down
+in keyboard let's move up go to again 10
+Q frames move to
+down like
+this go to T frames again move up and
+again move to down and again move up and
+go to click align for move to Center
+object so select CH frames make eases
+let's
+see okay we have problem with ch frames
+let's select all chy frames right Mouse
+go to chy frame interpetation change
+Auto baser to linear click okay let's
+say
+again okay that's good so let's select
+the SE one layer go to add and let's use
+trim pads and open here let's go to
+first second change and
+0% and make in Q frame go to here change
+100 100% select Q frames make eases or
+click F9 let's
+see nice select Q frames go to graph and
+select this graph make smooth like
+this okay back to CH frames and select
+the last CH frame move to
+left okay so right now I want to make
+smooth line for this let's open contents
+one and stroke one change butt cup to
+round cup for smooth shape layer and
+let's preview
+animation okay I like it so select the S
+press p and select first s frames go to
+graph and let's Zoom to graph select
+this graph and move to left and this
+moved right for filing
+animation okay I like it
+so back to CH frames so let's go to
+again shape layers and let's create
+random rectangle tool and let's Zoom to
+here make new rectangle tool and click
+selection tool open rectangle and
+rectangle P one change redness for
+smooth and change
+size okay change roughness like
+this and click this size icon for make
+circle line and click this second for
+move to object to
+Center okay nice and right now let's go
+to here let's first select the shape
+layer change name search to and press s
+Mak get Q frame change scale zero and go
+to 10 Q frames change
+120 go to 10 Q frames change 95 go to
+again 10 Q frames change
+100% let's
+see okay so select CH frames make
+eases and let's move to
+right okay let's move right little
+bit select these Q frames hold out move
+left
+okay so right now let's open inside and
+contents rectangle one rectangle P
+one and right now let's make size Q
+frame and rodness Q frame go to here and
+change
+size and rodness like
+this select qy frames make EAS go to
+graor select this graph make
+smooth let's see
+here okay back to Q frame select last sh
+frames move to
+right okay so let's select this sege one
+select last sh frame and move to
+right okay so select this last G move to
+right
+okay let's select key frames go to
+grapher and let's make smooth
+graph select work
+area okay let's make smooth like
+this and back to Q frames select last Q
+frame and move to
+more
+okay that's good so in this time let's
+go to pen tool and let's make line like
+this clation tool and open inside
+contents shape one and stroke one change
+run cup for smooth layer and go to pain
+tool select is point moved up
+for chain
+size okay let's move to right here here
+and open path one let's go to here make
+New Path G frame go to back and select
+this P one change like
+this let's
+see okay a AQ frames make eases and
+right now let's select the shape layer
+change name
+search line move to behind search two
+and link to search
+one let's see here move to
+left okay not
+bad so select the sech one go to here
+and move to L
+bit nice and select this search
+line and go to pen behind move Anor
+Point here clation
+tool and let's Press air open Rotation
+make rotation key frame chain rotation
+like this and go to here change Zero
+let's change a little bit like this for
+bones animation go to here change again
+and
+here and zero select ke frames make
+EAS okay select these ke frames hold alt
+move to
+right okay so select this first key
+frame and let's press you for C active
+key frame select this PA layer and let's
+open inside select this P one
+change like
+this okay nice so press U again CQ
+frames and let's move to right this key
+frames okay that's good so in this time
+let's close key frame settings and go to
+text let's write here online
+doctor
+clation tool move to here and go to
+color let's select this ey dropper
+select this color click selection
+tool and go to window open animation com
+three and open here starter presets and
+text animated characters let's select
+animation
+here okay let's click in and close
+conversation let's move to WR this
+text let's see full
+animation nice not bad so in this time
+select his Mouse and enable layer move
+to up and move to
+down move to right this
+layer and press P make new person Q
+frame go to F ke frames and move the up
+here for Mouse click
+animation okay select key frames make
+easies and select last key frame move to
+right okay go to graphtor select this
+graph make
+smoo and back to Q frames go to here
+change graph like this
+and select these lines for change
+curves and let's hold shape Press air
+open Rotation make rotation Q frame and
+chain rotation like this and go to
+here change rotation and go to next sh
+frame change
+again and let's move to
+here select rotation CH frames make
+eases
+okay so go to here and let's hold Shi
+press s open scale make SK Q frame and
+go to 6 Q frame let's click time
+duration we right here plus 6 for go to
+six key frames click okay change scale
+95 or
+85 go to six key frame 1 2 3 4 5 6 for
+go to frame by frame key frames you can
+use press page down and change 100 scale
+select Q frames make
+eases let's say
+again okay select skety frames move to
+left and go to here let's make new
+rotation Q frame and go to here change
+rotation and next q frame change like
+this
+okay select last G frames hold alt move
+right for more slow
+animation nice and let's make new
+passing Q frame go to some Q
+frames
+and let's move to right like
+this select last she frame move to right
+go to graor and make graph
+smooth
+okay back to two frames and right now
+change rotation like
+this and move to down little
+bit let's make this line smooth go to to
+pen tool hold this icon go to convert
+vertic tool and go to here hold this
+point for make smooth and move it down
+like this cation tool mve it
+down okay
+nice so in this time select this search
+one and right now press s Mak skate key
+frame go to six key frames
+chain scale 8 and go to six Q frames
+again change 100% SEL Q frames make
+eases What's the
+timing okay move to WR these Q
+nice so let's see timing let's select
+this Mouse layer and move to left
+I want to Dynamic
+animation let's move to left
+more okay select the SK frames move to
+the
+left move to right little
+bit okay so select is mouse and press p
+let's move to right
+here nice so in this time let's create
+new n object and hold control double
+click P behind icon for move Tor Point
+Center cation tool let's select this
+online doctor and search tool search one
+select this n object move to
+right and after Mouse click animation
+press p and let's see let's make new
+passing qy frame go to some qy frames
+and move
+up select qy frames make
+eases okay select these CH frames go to
+graphtor let's make smooth
+graph back to Q frame select last Q
+frame move to
+okay let's move to left this n
+object okay that's good so in this time
+select These doctor layers let's enable
+let's right Mouse new n object and hold
+control double click P behind clation
+tool change name
+doctors and select is Doctor 4 3 2 1
+link to doctor layer and select the new
+object press s change
+scale and move to
+here okay and let's press P move it
+down and make new passing Q frame go to
+here move
+up select key frames make easy
+and go to graor select this graph make
+graph okay back to CH frame select last
+CH frame move to right and let's see
+timing okay nice so let's back to
+background one and unlock go to color
+change to
+White and click
+okay okay and let's select these shape
+layer colors go to stroke we and change
+color to
+Blue and also select this text go to a
+dropper select this
+color
+Okay so let's select this mouse and
+press
+U and in this time let's move to left
+for click
+here and select CH frame move to right
+let's select work area let's
+animation okay go to
+graph and select this graph move to
+right okay back to Q
+frames and right now chain
+rotation
+also select this move it
+down and go to this icon make
+smooth clation tool and move to down and
+this and go to next viy frame and chain
+rotation like this for click
+okay so again let's make mouse click
+animation select the scales copy and go
+to here contrl V for
+past and select these rotations copy and
+go to here contrl
+V okay let's move the up little bit
+up and rotation
+change select skate G frames move to
+left select these less rotation CH
+delete also can delete all rotation CH
+here and right now let's change rotation
+a little bit like this and go to next q
+back okay so let's make new personing Q
+frame and go to some Q frames move it
+down and go to
+Middle let's move to left go to again
+this tool make smooth line
+clation
+tool and let's
+see change rotation like
+this okay that's all let's
+see
+nice so in this time select this layer
+and press
+s in this time make SK qy frame go to
+six qy frames click here right plus six
+click okay and change
+80 go to again six key
+frames change
+110 and go to six CH frames again change
+95 again go to three CH frames change
+100% say Q frames make
+eases okay say Q Fram hold alt move to
+nice and in this time let's make
+doctor's null
+object and make new ping Q frame go to
+some Q frames and move to
+left say key frames go to graphtor make
+graph smooth I want to make fake camera
+animation okay and select CH frame move
+left back to CH
+frames okay so right now let's enable
+character C session enable here
+and move up and link to doctor's C
+session move to write this C
+session okay and select this C session
+Center and select this background
+shape let's
+enable also link
+to Dr
+lion
+okay not bad and let's select these
+background layer and after Mouse click
+animation press T open opacity make
+opacity key frame and go to some qy
+frames change 0% select Q frames make
+eases select last sh frame move to right
+let's see
+here
+okay select two frames go to graor and
+select this graph let's make gra like
+this okay that's
+good and select is character let's put
+Center okay let's open come session
+select this body and go to pen behind
+move tanker point
+down clation
+to and select this here link to body
+select this ey white eyeball and eyebr
+link to here select here to go to
+solo and go to pen behind move Tor Point
+down clation tool and UNS
+solo and right now select this body
+Press air and make rotation key frame
+chain
+rotation always change like
+this change 50 and go to thanq frames
+change minus
+20 or minus 10 go to 10q frames change
+five again 10q frames change minus 2.
+5 go to TQ frame change one and TQ frame
+change Zero s rotation key frames make
+eases let's see
+move to left little bit or
+right okay back to Q frames and let's
+hold Shi press P make no pressing Q
+down and go to here move to
+up and go to next ke frame move to down
+again and here moveed
+up make your frames
+EAS
+okay back to CH frames let's see here
+again nice I like
+it so back to Q frames and select this
+hit Press air and make new rotation Q
+frame chain rotation go to
+here and let's put here like this and
+rotation and go to here change
+three and next VI frame change Zero
+say Q frames make
+EAS okay so go to here and make new
+rotation key frame go to 10 key frames
+again hold shift press page down in
+keyboard chain
+rotation and go to here make new paring
+qy frame go to T qy frames change
+rotation like this and go to here make
+new rotation go to t you frame change
+Zero and four bones animation hold shift
+press P make new passing CH frame go to
+middle and move to down go to next ke
+frame say first Q frame copy pass say Q
+frames make eases and copy three passing
+Q frames go to here contrl V and here
+contrl V Let's
+nice and in this time select is eye
+white control defa duplicate select
+eyeball move the inside to White layers
+and click too switch mode go to non
+select Alpha m iy 2 and right now I can
+move eyeball inside ey white layers so
+in this time go to here press P make new
+passing key frame go to two CH frames
+one two and let's move to
+left select CH frames move to
+here nice and make new personing CH
+frame go to two CH frame frames move it
+down and go to next CH frame make new
+passing CH frame go to two CH frames
+move to right these eyeballs for look
+right and here make new passing CH frame
+go to two CH frames move
+up and here make new passing Q frame go
+to two Q frames and save for G frame
+copy pass so let's add I blink animation
+set this I I White 2 Link to I white
+select I white press s and click this
+icon make skate frame go to 3 frames 1 2
+3 change scale five go to three Q frames
+again 1 2 3 change 100% say Q frames
+make eases and move to here this is very
+Dynamic and realistic ey blink for when
+I white blinking and Eyeball CH frames
+and made together let's see
+nice this very realistic so select the
+SK frames copy go to here contrl
+V and here contrl V and here and here
+see nice so let's delete these G
+frames let's say
+again okay this more realistic
+right so let's back to main compation
+here nice and let's change time duration
+of this composition go to composition
+and composition settings or contrl K and
+duration 20 second click okay and select
+is on let's unlock background and change
+duration and background shape change
+duration
+this okay nice and let's press in for
+select work area select this full cation
+and right Mouse select work
+area Okay Noto
+bad so guys thank you for watching my
+video and don't forget to subscribe
+Channel like video and please follow me
+on Instagram good luck
+back

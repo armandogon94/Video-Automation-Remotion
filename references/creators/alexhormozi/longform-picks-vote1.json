@@ -1,0 +1,43 @@
+{
+  "voter": "vote1",
+  "date": "2026-05-27",
+  "selection_methodology": "Filtered Hormozi's @AlexHormozi/videos feed for duration 10–60 min (long-form, not Shorts). View counts not available via yt-dlp flat-playlist on this run, so picks driven by title heuristics that predict heavy motion-graphics usage: explicit numbered listicles, business case studies (likely whiteboard / chart work), 'Levels' titles (ranked-hierarchy candidate per Tella claim), AI-themed (likely tweet cards + product UI screenshots).",
+  "selected_videos": [
+    {
+      "id": "OQf2Ba-Lp_4",
+      "title": "Building a $2,500,000 Business for a Stranger in 36 Minutes",
+      "duration": 2179,
+      "reason": "Acquisition.com case study format — the canonical Hormozi long-form template. Almost certainly contains whiteboard diagrams, revenue projections, animated charts and screen-shares of the stranger's business. 36 min runtime = lots of motion-graphics surface area."
+    },
+    {
+      "id": "3fsJFUvA6Ts",
+      "title": "What Makes The Perfect Business (5 Things)",
+      "duration": 1240,
+      "reason": "Explicit 5-item listicle in title. Will show whether Hormozi's long-form uses ranked-hierarchy / numbered-card animations (the central Tella claim that Shorts evidence refuted)."
+    },
+    {
+      "id": "hHkdbr6_JJs",
+      "title": "How Acquisition.com Makes Money",
+      "duration": 972,
+      "reason": "Direct business-breakdown title. Likely heavy on revenue-stream diagrams, org charts, money-flow animations. Short enough (16 min) to scan exhaustively."
+    },
+    {
+      "id": "rMJIOK_FgJk",
+      "title": "The 6 Levels of Making Money",
+      "duration": 1049,
+      "reason": "Title explicitly says 'Levels' — the canonical ranked-hierarchy structure Tella claimed Hormozi uses. If any video has rising-tier listicle graphics, this is it. Critical for verifying/refuting Tella's #2 claim."
+    },
+    {
+      "id": "9q5ojtkqsBs",
+      "title": "How to Win With AI in 2026",
+      "duration": 1459,
+      "reason": "AI-themed = likely contains animated tweet cards (Tella's #1 claim), product-UI screenshots (ChatGPT, Claude, etc.), and tool comparison graphics. Modern (2026) timestamp = recent motion-graphics tooling."
+    },
+    {
+      "id": "XGm2ERU9qtA",
+      "title": "15 Brutal Truths I Know at 36 That I Wish I Knew at 20",
+      "duration": 1685,
+      "reason": "15-item enumerated structure — the densest listicle in the recent sample. If Hormozi has any 'animated quote-card per truth' template, it will be in this video. Tests whether numbered listicles get distinct visual treatment in long-form vs Shorts."
+    }
+  ]
+}

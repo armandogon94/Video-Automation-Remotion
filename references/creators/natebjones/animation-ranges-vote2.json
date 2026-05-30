@@ -1,0 +1,83 @@
+[
+  {
+    "videoId": "DVS-cTSVKv4",
+    "videoTitle": "How to build a 10-cent AI brain",
+    "rangeSeconds": [53, 59],
+    "guessedKind": "DisconnectedCardsDiagram",
+    "confidence": 0.92,
+    "orientation": "9:16",
+    "notes": "Four cards (Claude, ChatGPT, Cursor, Grok) each with a small 'Memory' label and padlock icon, arranged in an irregular constellation. Yellow X marks sit between adjacent cards to mean 'cannot share memory'. Cards reveal one at a time. Title 'The Memory Silo Problem' in muted gold sits centered. There's a duplicate title at the top edge — looks like a thin top-banner echo. Karaoke caption pinned to bottom. Outro of the short."
+  },
+  {
+    "videoId": "iUSdS-6uwr4",
+    "videoTitle": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+    "rangeSeconds": [132, 144],
+    "guessedKind": "TitleCardKineticTwoLine",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "notes": "Section header 'Cloud Or Local' (large white sans serif) with subtitle 'not a binary' (muted gray). Dark slate background with a soft radial vignette/glow. Large translucent helmet+glasses watermark in lower-left corner of the frame area. Fades in, holds ~6-8s, fades out."
+  },
+  {
+    "videoId": "iUSdS-6uwr4",
+    "videoTitle": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+    "rangeSeconds": [577, 596],
+    "guessedKind": "FourStageHorizontalFlowDiagram",
+    "confidence": 0.96,
+    "orientation": "16:9",
+    "notes": "Sequence: (a) prior 'Runtime Layer / local becomes usable' title card fades out, (b) cards appear one-at-a-time horizontally: 'MODEL / Weights / raw model' (gray accent), 'SERVE / Runtime / loads model' (blue accent), 'API / Endpoint / shared shape' (green accent), 'USE / Tools / talk to it' (orange accent), (c) right-pointing chevron-arrows draw between each card in matching colors, (d) caption pill 'Runtime makes local AI feel normal' fades in below — 'Runtime' highlighted orange. The whole sequence is the pedagogical payoff of the section."
+  },
+  {
+    "videoId": "iUSdS-6uwr4",
+    "videoTitle": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+    "rangeSeconds": [653, 668],
+    "guessedKind": "TitleCardKineticTwoLine",
+    "confidence": 0.92,
+    "orientation": "16:9",
+    "notes": "Title card 'Runtime Defaults' with subtitle 'simple starting path'. Identical visual treatment to 'Cloud Or Local'. The end of the window catches the card during its fade-out (text noticeably dimmed)."
+  },
+  {
+    "videoId": "iUSdS-6uwr4",
+    "videoTitle": "RTX 5090, Mac Studio, or DGX Spark? I tried all three.",
+    "rangeSeconds": [1779, 1796],
+    "guessedKind": "BeforeAfterContrastCards",
+    "confidence": 0.94,
+    "orientation": "16:9",
+    "notes": "Two-column 'Default vs Better' contrast: LEFT column has a short orange/red horizontal underline + uppercase tracked label 'DEFAULT' + headline 'Cloud Home' + muted orange subtitle 'rented memory'. RIGHT column has a blue underline + 'BETTER' label + 'Cloud Guest' + blue subtitle 'specialist'. Centered above the two columns is the word 'TO' in gray. Looks like both columns slide in from their respective sides; 'TO' fades in last as the bridge."
+  },
+  {
+    "videoId": "9aIYhjeYxzM",
+    "videoTitle": "GPT-5.5 vs Claude vs Gemini: The Real Difference Nobody's Talking About",
+    "rangeSeconds": [132, 144],
+    "guessedKind": "TitleCardKineticTwoLine",
+    "confidence": 0.93,
+    "orientation": "16:9",
+    "notes": "Title card 'Moving Frontier' / 'ambition follows'. Dark slate slab, white sans serif headline, muted gray subtitle, helmet watermark lower-left, soft radial glow. SAME template as iUSdS-6uwr4 cards — confirms reuse."
+  },
+  {
+    "videoId": "9aIYhjeYxzM",
+    "videoTitle": "GPT-5.5 vs Claude vs Gemini: The Real Difference Nobody's Talking About",
+    "rangeSeconds": [1182, 1198],
+    "guessedKind": "TitleCardKineticTwoLine",
+    "confidence": 0.93,
+    "orientation": "16:9",
+    "notes": "Title card 'Reference Workflow' / 'taste into build'. Identical visual treatment. Two instances of this template in one video plus the iUSdS-6uwr4 video = at least 4 confirmed instances across the corpus = clearly a reusable section divider."
+  },
+  {
+    "videoId": "z3pbrFKVyQE",
+    "videoTitle": "The Infrastructure Nightmare Nobody Is Talking About",
+    "rangeSeconds": [580, 595],
+    "guessedKind": "SplitScreenInterviewLayout",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "notes": "Two-presenter podcast frame: exact 50/50 vertical split, Nate on left (his usual book-lined room), guest (Asian woman in purple hoodie, different room with shelves of decor) on right. Each half retains its own lighting and ambient room. Persistent throughout the entire 46-minute video — not an episodic animation but the structural visual mode. Worth documenting because we don't currently have a podcast/interview composition."
+  },
+  {
+    "videoId": "woGB2vr5wTg",
+    "videoTitle": "These 5 Infrastructure Giants Secretly Rule AI",
+    "rangeSeconds": [0, 1219],
+    "guessedKind": "TalkingHeadOnlyNoOverlays",
+    "confidence": 0.95,
+    "orientation": "16:9",
+    "notes": "Negative finding: despite the 'listicle' framing in the title, the entire video is talking head with no item-reveal motion graphics. The only persistent overlay is a lower-right 'read more on substack' chip. Documented here as a calibration point: Nate frequently does NOT animate listicles — counter-evidence to anyone expecting a NumberedListReveal."
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "wave": "wave-7",
+  "selectionStrategy": "Mix of AI News flagship series, tool roundups (high motion-graphics density), tutorials, and 2 shorts. Bias toward videos shorter than 30 minutes to keep download/extract cycles tractable while still covering Matt's full motion-graphics vocabulary.",
+  "longForm": [
+    { "id": "PKKN5be_my0", "title": "OpenAI Just Killed Sora", "duration": 707, "reason": "Short long-form (12min) — commentary + animated reaction overlays" },
+    { "id": "slX_lDDobEs", "title": "This Datacenter Problem Nobody's Talking About", "duration": 814, "reason": "Single-topic explainer with motion graphics overlays" },
+    { "id": "JyWdgDcsmbk", "title": "The REAL Story from NVIDIA GTC This Week!", "duration": 612, "reason": "Tech event roundup — comparison cards, chart overlays" },
+    { "id": "iMDibaO4dXw", "title": "Google Upgraded Nano Banana (Free and Super Fast)!", "duration": 1345, "reason": "Tool review — product showcase + demo overlays" },
+    { "id": "SlRzTFx8Qtg", "title": "The Most Useful AI Tools Right Now in 2026", "duration": 1441, "reason": "Tool roundup listicle — heavy motion graphics, brand cards" },
+    { "id": "YHpiTd4_wac", "title": "The Clawdbot Story Just Took a WILD Turn", "duration": 772, "reason": "Story-driven commentary — text reveal animations" },
+    { "id": "2u_T68P9H_U", "title": "40+ USEFUL Ways To Use The ChatGPT Image Feature", "duration": 2012, "reason": "Listicle marathon — numbered chapter cards, before/after reveals" },
+    { "id": "p7SRuKWZMvQ", "title": "11 FREE AI Tools That WILL Replace Your Paid Apps", "duration": 1048, "reason": "Numbered tool listicle — chapter cards, logo grids" },
+    { "id": "8Jw5Wa_8K0Y", "title": "35+ INSANE Ways To Use NotebookLM (For FREE)", "duration": 1651, "reason": "Massive numbered listicle — chapter title cards" },
+    { "id": "FXgOgAJrhis", "title": "ChatGPT Launched a New Browser You'll Actually Use", "duration": 1777, "reason": "Product launch reaction — screen recording with annotation overlays" },
+    { "id": "8RLUaov5eLk", "title": "Gemini 3 Rumors Are CONFIRMED, It's VERY GOOD", "duration": 1851, "reason": "AI News flagship — benchmark charts, model comparison cards" },
+    { "id": "2jkpEGk6hDE", "title": "Nano Banana Pro is Here - New Features Unlocked!", "duration": 1196, "reason": "Image-model showcase — before/after grids, prompt overlays" }
+  ],
+  "shorts": [
+    { "id": "bQN-D8qeAgg", "title": "Viral Post Embarrassingly Exposes AI Haters", "views": 110000, "reason": "Highest-view short — text-driven hook patterns" },
+    { "id": "b6Ek6-E5V88", "title": "ChatGPT Finance Is Freaking People Out", "views": 21000, "reason": "Vertical news short — recent + medium views" }
+  ]
+}

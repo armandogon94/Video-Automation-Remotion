@@ -1,0 +1,137 @@
+[00:00:00] I don't know who needs to hear this, but if you don't hook people within three seconds of your
+[00:00:03] video, I already know it's going to do badly. Luckily for us, there's tons of examples of
+[00:00:08] amazing hooks that you can use in your short form or long form videos. So I'm going to show you
+[00:00:13] how you can save hooks on any platform you'd like. We're going to be showing this with TikTok
+[00:00:17] and then show you how to use cloud code to turn those hooks into more hook ideas for your
+[00:00:22] own content or create a database of great hooks to try and imitate. The steps we'll be
+[00:00:27] covering today is going from a collection on a platform like TikTok where you basically scroll
+[00:00:33] and save any hook that you like. We're then going to use cloud code to write a script to
+[00:00:37] download all of these videos and analyze things like the transcript to find the first
+[00:00:42] spoken sentence, as well as the visual hook that's on screen. And we're going to save that
+[00:00:49] to Obsidian in our hook database. And as a last step, we're going to ask cloud code to come up
+[00:00:54] with hook ideas for our own content. So I'm going to show you how you can update cloud's
+[00:00:58] context to know what your job is, your product, your messaging, etc. that you use in your content.
+[00:01:04] So let's dive in. For this tutorial, there's a few things that you need to have set up.
+[00:01:08] Number one is cloud code running on your machine that you can access through your
+[00:01:12] terminal, as well as the Obsidian MCP, basically allowing cloud to connect to Obsidian or
+[00:01:20] any other tool. We can also create a file in Google Sheets if you'd prefer, but anywhere that
+[00:01:25] you'd like to save this database is what you're going to have to connect to cloud. So this can
+[00:01:30] be Notion, Obsidian, Google Sheets, whatever you'd like. I'm going to go with Obsidian because it
+[00:01:34] uses markdown files, which makes everything a bit easier to work in through cloud. And the
+[00:01:39] last thing you're going to need is the cloud for Chrome extension. So make sure that you set
+[00:01:44] up the cloud extension on Chrome so that it can actually visit your TikTok account and go to
+[00:01:50] your collections. Okay, so let's call cloud in our terminal and we're going to go ahead and get started.
+[00:01:57] Our first step is we're going to open Chrome and we're going to go to TikTok and find our
+[00:02:01] collection. So your collections are in here and I'm just going to go ahead and take the
+[00:02:07] hooks collection. Let me grab that link so we can tell cloud where to go. So go to it and then
+[00:02:27] we're going to tell it where to store those videos. So we're going to say, so we're saying
+[00:02:35] create a folder called TikTok hooks, vids or videos in our home directory. So let's go ahead
+[00:02:41] and do that. So here we can see it's actually opening up Chrome and it's going to this page
+[00:02:47] so it's kind of impersonating our browser behavior and going to start downloading these videos.
+[00:02:54] All right, so it's basically saying what the script is going to do. It's going to download
+[00:02:57] five videos and it's going to save this to this folder that we created in our home directory
+[00:03:02] and we can just say run, run it's the script. So it says that it downloaded five
+[00:03:06] TikTok videos successfully and we're actually going to go see in our home directory if that's
+[00:03:11] true. Okay, so let's open our home directory in Finder basically and open that here. So here
+[00:03:16] we go. We have five of these videos that we saved as hooks. Okay, for some reason it decided to
+[00:03:24] download the wrong videos. So we're going to give it the link again and see if it does a better
+[00:03:28] job. Okay, so recap the script did a good job but actually downloaded videos from TikTok
+[00:03:33] in seconds, but it didn't go to my specific hooks collection for some reason. If this happens
+[00:03:39] just give it the link to your collection again and tell it to only download videos there.
+[00:03:44] Do you like my little mic on scarf setup? I hope this does okay. Cool, so it's actually
+[00:03:48] deleting the wrongly downloaded videos which is cool. Okay, and we're just going to give it
+[00:03:53] permission again. You can switch between these commands using your up and down arrow by the way.
+[00:03:58] Cool, so let's see if it did a better job. Let's go to my home there and let's open these videos.
+[00:04:04] As you can tell here from these little thumbnails you can see this one matches that,
+[00:04:07] this one matches that, this one matches that, etc. So this is kind of crazy that
+[00:04:12] within a matter of seconds we can just download videos from TikTok that we'd like to analyze
+[00:04:18] using Claude Claude. So that's what we're going to do now. I'll just show you and prove that
+[00:04:22] this is the first video. This is the first video that corresponds to this one. So let's add
+[00:04:29] back to Claude and we're going to tell it to create our database. So you can personalize your
+[00:04:33] database to whatever you'd like to extract from this video, but just know that the
+[00:04:38] possibilities are using whisper to analyze the transcript. So what's being said and using a tool
+[00:04:44] called ffmpeg to look at the actual frames and describe what's being done in the video.
+[00:04:49] Start. I'm going to create a database with three columns. Number one is going to be the spoken
+[00:04:54] hook. So it's the first one or two sentences that Claude is going to extract from the transcript. So
+[00:05:01] whatever they're saying in the video. The second thing I want is the text hook. So whatever
+[00:05:06] showing on screen. And then the third thing is that I want the link to the original
+[00:05:13] video. So I can always go and watch it back for inspiration. So let's head over to Claude
+[00:05:18] Claude and we're going to say create a database in Obsidian. That's where I keep my
+[00:05:24] files. You can do this in Notion as long as you've set up Claude code to connect to
+[00:05:29] Notion's msp. I'm going to say call it hooks database tutorial because I'm doing a tutorial
+[00:05:42] and I think I already have the database called that there. Create three columns. Okay so I've
+[00:05:51] described this very quickly now but my three columns are the spoken hook. I'm going to say
+[00:05:55] two sentences, one or two sentences because otherwise it keeps it too short. The text hook
+[00:05:59] and then the link to the original TikTok for inspiration. So let's go ahead and say
+[00:06:06] which tools it needs to use to actually extract this information. Use whisper to extract
+[00:06:13] analyze the transcripts and use FFM bag to analyze the first few frames of the video.
+[00:06:25] So here we're just saying use these two tools that I've described. Let's see how good of a job
+[00:06:29] it does. Cool so it's saying that it's running whisper and FFM bag in parallel. So these are
+[00:06:35] tools that you do need to set up once before this tutorial but that's pretty easy to do
+[00:06:40] directly in Claude code. So just say that you want to install FFM bag and whisper.
+[00:06:45] Whisper which is basically the transcription tool by OpenAI that looks at the transcript
+[00:06:50] and sees what's being said is having a hard time doing this quickly so we're going to
+[00:06:56] tell it to do this using a smaller model. So here if it's being slow which it wasn't for me
+[00:07:01] yesterday we can run all videos in parallel, excuse my misspelling, use a smaller model
+[00:07:08] and then only analyze the first 10 seconds right because we don't want the entire video.
+[00:07:12] Okay so here we can see that it has worked and it has really quickly created this database
+[00:07:17] and obsidian. So my intention is to build this into an agent maybe an open claw agent
+[00:07:23] and it just runs in the background kind of checks all of the videos that I've saved
+[00:07:27] and then extracts all the hooks so I don't need to sit here and wait for it to happen.
+[00:07:31] I'll show you my old database just because that's the one I'm happiest with so if you did it in
+[00:07:36] these steps you should have three columns not four but I'm going to show you the fourth one
+[00:07:40] that we're going to work on now. So we have our spoken hook, our visual hooked and then
+[00:07:45] I've added a concept as well as well as the link to the video. So the first one is
+[00:07:49] you want to know the truth. The second one is I know this is controversial but respectfully.
+[00:07:54] So here's another one here's five things that magnetic secure women do differently in early
+[00:07:58] stages of dating. Well there you have it that's my TikTok algorithm for me but I do think that
+[00:08:03] this is a great hook. I think it speaks to what someone would want to become and then
+[00:08:08] five things that they do that make them become that or make them different so I think that
+[00:08:13] content wise this is a great hook. Right and as I promised I also created a fourth column
+[00:08:18] I think this is really fun if you give Claude enough context about what you do for work what
+[00:08:24] your content is about then it can actually apply these hooks for video ideas. So in my case
+[00:08:30] it took that here's five things that magnetic secure women do and then it says here are five
+[00:08:34] things founders grow using video do differently from those who don't. I can already see a piece
+[00:08:40] of content that I would use for tele for instance to say well these are founders that are growing
+[00:08:44] with video and here are five things that they're doing correctly. I think that is a pretty good
+[00:08:50] hook. Another one is I know this is controversial but respectfully and then I would say I know this
+[00:08:55] controversial but respectfully spending three hours editing one video is not a content strategy
+[00:09:00] it's a hobby. I think that's pretty spicy take when it comes to video. Now what's good to
+[00:09:05] know is that you need to give your Claude.md so your markdown file where all of your Claude
+[00:09:10] memory lives you do need to give it enough context as to your way of messaging as well as your job
+[00:09:18] your worldview. So here are a few things that I gave Claude.md to know what I talk about at Tela
+[00:09:24] and what my convictions are when it comes to marketing AI using video and marketing. The
+[00:09:29] first thing I gave it is this messaging guideline document that we actually share with our
+[00:09:33] partners as well. It contains our worldview it contains Tela's benefits main features etc
+[00:09:40] you can also give it your actual product's website you can give it a collection of all of your written
+[00:09:47] sub tag posts your video youtube video transcript maybe even transcripts of sessions. I recommend
+[00:09:54] creating a folder in your home directory where you can save whatever you want like transcripts
+[00:09:58] etc and then you can actually feed that to Claude whenever you'd like so here we see my Claude.md
+[00:10:04] has a bunch of context I also told it how to speak to me it actually contains as you can see
+[00:10:10] who Tela is for our customer pains etc so that's something you want to do before you add the fourth
+[00:10:16] column add this context I'm going to grab the link to this doc and then here and then you
+[00:10:24] can actually tell it to add that so it's already added it for me so this is a great way to make
+[00:10:30] sure that the hook ideas apply to your work or your topic of choice are actually pertinent
+[00:10:37] I did a few tries and when I didn't update my my Claude.md I noticed that the hooks were like
+[00:10:43] not really applicable to um to Tela in a in a meaningful way just as we created the database
+[00:10:49] you would just say create a new column that contains ideas for how to use cool so it says
+[00:10:59] that it actually came up with a bunch of these concepts let's see if it did all right so let's
+[00:11:03] take an example here and it came up with a similar hook based on the worldview that I have at Tela which
+[00:11:10] is that you as a marketer don't want to be spending hours editing videos and that's why we came up with
+[00:11:16] Tela is that you don't need to spend hours so it says here I know this is controversial but
+[00:11:21] respectfully one of the least marketing things you can do is spend six hours editing a video
+[00:11:26] that gets 30 views so here I would probably do a variation of this but I like the hook of saying
+[00:11:32] I know this is controversial um and it kind of reminds people that there's nothing productive
+[00:11:39] about editing a video for six hours if it's only going to get 30 views I think in conclusion we've
+[00:11:44] gone over how to actually go from saving videos that you like and that inspire you in your
+[00:11:50] TikTok collections and then using Claude's Chrome extension to extract those videos
+[00:11:55] download them to your home there and then use two tools to analyze either the frames the
+[00:12:00] first few second frames as well as the transcripts for the first few seconds and then extract those
+[00:12:06] hook ideas so if you were to build this into an agent you could actually run this in a background
+[00:12:11] and do this um as a like a chronological job just once a day and it would just constantly update
+[00:12:17] your database with new hook ideas so you wouldn't even have to go through the trouble of
+[00:12:23] making it come up with ideas for your content if you were to do that the important thing is
+[00:12:27] just to make sure that you give it enough of your worldview perspective etc because
+[00:12:33] it is going to use that to apply the hook and if your take is kind of mid then the hook's not
+[00:12:38] going to hit either be sure to subscribe if you want more videos on how I automate why work
+[00:12:43] as a video marketer content marketer I'm on here I'm on LinkedIn and I'll see you very soon for more videos

@@ -1,0 +1,144 @@
+{
+  "wave": "wave7",
+  "channel": "@NateBJones",
+  "channelUrl": "https://www.youtube.com/@NateBJones",
+  "analyzedAt": "2026-05-27",
+  "excludedAlreadyAnalyzed": [
+    "iUSdS-6uwr4",
+    "woGB2vr5wTg",
+    "FtCdYhspm7w",
+    "5RCsb9XMuIU",
+    "oWIXee9h3nU",
+    "eszYRrsIdHg",
+    "z3pbrFKVyQE",
+    "9aIYhjeYxzM",
+    "DVS-cTSVKv4",
+    "xkC_WDLmfS8",
+    "x8Y404We8O8"
+  ],
+  "selectionStrategy": "15 NEW picks: 8 long-form + 7 Shorts. Mix of likely-graphic-dense (numbered titles, comparisons, leaks, infrastructure) and likely-restraint (essays, opinions). Shorts span all view-count tiers to surface format-specific patterns missed in Wave-6.",
+  "longForm": [
+    {
+      "id": "ro5jpbi5uYc",
+      "title": "I Analyzed 512,000 Lines of Leaked Code. It Shows What's Coming for Your AI Tools.",
+      "durationSec": 1474,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "Big-number title (512,000) — strong signal of count-up / BigNumber animation. 'Leaked code' likely surfaces terminal/code-diff inserts vote1 said Nate doesn't use — calibration test."
+    },
+    {
+      "id": "XGvDbeoSN3E",
+      "title": "Stripe, Visa, Mastercard, Microsoft, Meta. All Building The Same Thing.",
+      "durationSec": 1879,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "5-brand listicle — direct retest of TalkingHeadOnlyNoOverlays vs NumberedListReveal hypothesis from woGB2 finding (F1). If logos appear, we have a new LogoGridReveal pattern."
+    },
+    {
+      "id": "W79FW7iUkro",
+      "title": "271 Vulnerabilities: What Mozilla's AI Found Changes Everything",
+      "durationSec": 1841,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "Number-led security topic. Likely triggers BigNumberHorizontalBars (M3) — chance to deepen MED confidence."
+    },
+    {
+      "id": "dxq7WtWxi44",
+      "title": "Karpathy's Wiki vs. Open Brain. One Fails When You Need It Most.",
+      "durationSec": 2469,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "Long deep-dive (41 min), explicit 'vs' framing — strong BeforeAfterTextComparison (H2) deepening + length suggests multiple title cards."
+    },
+    {
+      "id": "MFzxIT88zfg",
+      "title": "I Built a Deck With AI, Then Made a Second AI Attack It.",
+      "durationSec": 1169,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "Builder / demo video — likely screen-recording inserts + adversarial framing. Novel territory: chance to spot DemoScreenRecording or AdversarialSplitScreen patterns."
+    },
+    {
+      "id": "SX1myuPEDFg",
+      "title": "LLM Agents: The Security Breach Pattern Nobody's Talking About",
+      "durationSec": 1157,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "Pattern-naming title — Nate often illustrates 'patterns' with diagram cards. Test of PipelineFlow / TreeOfChildCards (H7/M2)."
+    },
+    {
+      "id": "2PWJu6uAaoU",
+      "title": "The Real Problem With AI Agents Nobody's Talking About",
+      "durationSec": 2259,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "37-min essay — calibration of restraint-cohort hypothesis. May confirm F1 finding (talking-head only for opinion content)."
+    },
+    {
+      "id": "RHV8DWAmjAs",
+      "title": "Claude's AI Town Voted Yes On Everything. That's Not A Good Sign.",
+      "durationSec": 676,
+      "format": "longform",
+      "orientation": "16:9",
+      "why": "Shorter long-form (11 min) about a specific experiment — likely has demo/screenshot inserts of AI Town, unique vs prior corpus."
+    }
+  ],
+  "shorts": [
+    {
+      "id": "diXrk5gp4XI",
+      "title": "OpenAI Just Gave Agents the Ability to Do Everything",
+      "viewCount": 18000,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Top-viewed Short not yet analyzed (18k) — capability-claim hook. Will test karaoke + emphasis-pill density."
+    },
+    {
+      "id": "OhtcvogXtok",
+      "title": "While Execs Panic, This Skill Gets Rare",
+      "viewCount": 16000,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Career-essay Short — different content vertical than tech-tutorial Shorts already analyzed. Tests cross-vertical visual consistency."
+    },
+    {
+      "id": "8n4OV0jotDs",
+      "title": "Professors Notice Something's Drastically Wrong",
+      "viewCount": 39000,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Highest-view Short overall in Nate's recent feed (39k). Education vertical — must analyze for outlier patterns."
+    },
+    {
+      "id": "tpmCddboe74",
+      "title": "GPT-5.5 vs 1000 Piece Lego Set",
+      "viewCount": 14000,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Physical-comparison Short (vs Lego). Likely B-roll insert pattern — would be NOVEL vs Wave-6 corpus which was all talking-head Shorts."
+    },
+    {
+      "id": "fsFxiXzwvp8",
+      "title": "I Built 2 AI Agents. One Had This. Total Game Changer",
+      "viewCount": 13000,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Builder Short — strong chance of UI screen-capture insert pattern."
+    },
+    {
+      "id": "OQlf4UwugBg",
+      "title": "How ChatGPT Became Teenagers' Best Friend",
+      "viewCount": 2100,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Low-view Short (2.1k) — possibly older / different template era. Variance check on KaraokeWordCaptions consistency."
+    },
+    {
+      "id": "Dd-471nYilU",
+      "title": "Why Gemini 3.1 Pro Broke Every Benchmark",
+      "viewCount": 8700,
+      "format": "shorts",
+      "orientation": "9:16",
+      "why": "Benchmark Short — likely chart/percent insert in 9:16. Tests whether BenchmarkBars exists in Shorts lane."
+    }
+  ]
+}

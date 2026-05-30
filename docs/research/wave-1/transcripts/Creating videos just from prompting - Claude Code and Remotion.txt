@@ -1,0 +1,205 @@
+ 
+I want to show you three videos that I
+prompted into existence using remotion
+and claude code. First, how I made a
+clean screenshot of our tweet while
+keeping the video playing. Second,
+turning a flat SVG logo into a 3D one
+that spins and has cool glitch effects.
+And finally, cutting together some raw
+footage, removing the silences, and
+adding burntin captions to it. For those
+who are new to the channel, I started
+Remotion back in 2021 before Chat GPT
+was out as a way to make videos
+programmatically.
+This week we released agent skills
+allowing you to add reotion domain
+knowledge to claude code and other
+coding agents so that you can create
+videos just by prompting. The post went
+viral on X which made me extremely
+happy. I wanted to post the announcement
+also on LinkedIn, but at the same time
+also show how much reaction it got. So I
+figured the best thing would be to post
+a screenshot of the tweet, but also play
+the announcement video in it so that you
+get the full picture. And this is how I
+prompted it together. For all of the
+examples that I am about to show you,
+here is a quick guide on how to do the
+setup. My first prompt to Claude was to
+import the screenshot into the project
+and make a new composition with the
+width and height matching the image
+dimensions.
+Make sure to always explicitly say that
+you want to use the reotion best
+practices skill as claude will not
+always automatically pick that up. Then
+I provided it with the file path to the
+announcement video and asked it to
+overlay it on top of the screenshot. It
+did that and it also automatically
+adjusted the duration of the composition
+which was nice. However, the position of
+the video was not quite right and it
+rendered too high on the canvas. So what
+now? I could have fixed this with some
+more prompts by asking Claude to shift
+the video down until it is perfect or I
+could have gone into the code and fixed
+it myself.
+Here is another way to do it and this is
+a Remotion Pro tip. We have a thing
+called visual controls. You can ask
+Claude to add a visual control to the Y
+position of an element. Now in the
+studio, I got a slider where I can
+manually adjust the Y position and I am
+able to save this back to the code. With
+the next couple of prompts, I cleaned up
+some details, added a border and a
+border radius. And I placed the tweet as
+a card in the middle of a gray
+background, some more padding, some more
+shadows, and the video is ready to
+render. And of course, you also don't
+have to leave Cloud for that. The next
+example is honestly so cool. It starts
+off with a flat logo I designed in
+Figma. I exported it as an SVG and asked
+Clo to make a new composition and bring
+the logo into the third dimension. That
+worked right away even though I did not
+like the design of it that much. After a
+few correction prompts, I found the
+style that I liked. Also, you could see
+the logo from behind when it rotates. So
+I asked Clo to only rotate it from minus
+90 to 90°. This animation is based on
+React 3 fiber, meaning that we can add
+cool effects to it. So I asked it to add
+a glitch effect from React
+post-processing.
+And as you can see, it works, but there
+is a problem. The effect uses randomness
+and is not synchronized with Remotion's
+clock. This leads to flickering during
+render and we can also see the problem
+in preview where the glitch effect is
+playing even though the video itself is
+paused. Fortunately, because of the
+skill, Cloud is aware of the problem and
+suggests a fix. All you have to do is
+accept the help that you are being
+offered. I want to show you that
+professionals can make use of Remotion
+without having to leave their tools
+behind. So, we're going to export this
+as a transparent video so that you can
+use it in After Effects. I asked Claude
+exactly that, and it almost worked,
+although it made a tiny mistake in the
+command line flags. The fix for this was
+to search in the Reotion documentation
+for transparent videos and give Claude
+the link and ask it to fix the problem.
+We probably can fix this from our side.
+So maybe if you see this video in the
+future, it will not be a problem
+anymore. But nonetheless, I want to be
+honest of what your experience might be
+like and also give you some ideas on how
+you can troubleshoot if you run into
+issues. Now I can drag in the video as a
+layer in After Effects. As a background,
+I chose some white noise. Looks pretty
+cool, right? For the last example, we're
+just going to give Cloud Code some raw
+footage from the iPhone and ask it to
+cut it together for us. I gave it a list
+of videos from my download folder and
+asked it to play them in sequence.
+Again, we hit a road bump. Cloud left us
+with some code that did not compile at
+all and it referenced the download
+folder instead of copying the files into
+the project. So I just prompted it to
+fix the errors and import the files into
+the project. Fortunately, that did the
+job. With the next prompt, I asked it to
+do silence detection and remove the
+silence at the start and end of each
+clip. It did that perfectly. It was
+almost too good because now there was no
+gap between my sentences at all. So with
+the next prompt, I added back 0.15
+seconds of padding for each clip. And
+also I noticed that I provided the clips
+in the wrong order. So I asked it to
+sort the clips by their file name. Are
+you ready for one crazy ass prompt? I
+asked it to add burntin subtitles to the
+video.
+This led it to download the remotion
+installed whisper CPP module, clone the
+whisper CPP source from git, compile it,
+download a whisper model, run the
+transcription for each clip,
+convert them to JSON, and display them
+on top of our remotion timeline. There
+were two mistakes made alongside the
+way. All of the words are glued together
+and the timing was also off. Mr. Claude,
+could you fix that for us?
+Thank you. You're the absolute best. I
+could have done more fun things with
+Claude, like asking it to fix the
+mistakes in the transcript or to animate
+the captions. But I just asked it to
+export the video and also generate an
+SRT file that I could upload to YouTube
+for subtitles. and that all worked out
+perfectly. I hope you're taking the
+right things away from this video. This
+workflow is not perfect. Things will go
+wrong and knowing how to intervene and
+having technical knowledge is still a
+useful skill to have. I hope that as you
+play around more with this, you will get
+a deeper understanding of how things
+work under the hood and get better
+results over time. Also, I think you
+will get the best results if you combine
+Remotion with other tools. I
+intentionally showed Figma and After
+Effects in this video to get this point
+across. Remember that Remotion is not an
+AI tool per se. I started it way back in
+2021 and been improving it almost every
+day since then. How we enable the AI
+magic is just through some markdown
+files that we call skills. And if some
+prompts does not go the way you imagined
+then you can report it to us and we can
+take a look and you can even contribute
+to improve the skills andor the
+framework itself. I will stay here and
+continue to improve freeotion as my
+full-time job together with my awesome
+team. Some people wonder how we sustain
+ourselves through this and the answer is
+licensing. We make Remotion completely
+free for individuals and teams of up to
+three people. But for bigger companies
+that build something serious with
+Remotion, we require licensing.
+So please keep that in mind and thank
+you for your support that allows us to
+do our awesome jobs. It's an exciting
+time and I am in awe that because of AI
+more people are now enjoying our tool. I
+hope to catch you in another video.
+Thank you for watching.
