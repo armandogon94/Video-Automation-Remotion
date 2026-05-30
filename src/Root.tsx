@@ -78,6 +78,8 @@ import { LiveEventAudienceMicSplitScreen16x9, liveEventAudienceMicSplitScreenSch
 import { StudioDeskTalkingHead16x9, studioDeskTalkingHeadSchema } from "./compositions/StudioDeskTalkingHead16x9";
 import { FlipChartLiveDrawing16x9, flipChartLiveDrawingSchema } from "./compositions/FlipChartLiveDrawing16x9";
 import { KaraokeWithBlueChipPullout9x16, karaokeWithBlueChipPulloutSchema } from "./compositions/KaraokeWithBlueChipPullout9x16";
+import { ThreeStageRisingBars16x9, threeStageRisingBarsSchema } from "./compositions/ThreeStageRisingBars16x9";
+import { TopHeroBottomTrioCards16x9, topHeroBottomTrioCardsSchema } from "./compositions/TopHeroBottomTrioCards16x9";
 import {
   explainerSchema,
   talkingHeadSchema,
@@ -3521,6 +3523,69 @@ export const RemotionRoot: React.FC = () => {
             durationFrames: 180,
             transitionVerb:
               "Hold the green-current-word karaoke baseline running underneath; for each beat, slide a blue rounded-pill keyword chip in from the right edge of the lower-third, hold while the keyword is spoken, then slide it back out before the next chip pulls in.",
+          }}
+        />
+
+        {/*
+          ThreeStageRisingBars16x9 — Nate N2. Three uppercase-labeled NARRATIVE
+          bar towers (Then/Now/Next) rising L-to-R on the slate chassis; heights
+          are categorical small/medium/large, not data. Distinct from
+          BigNumberHorizontalBars16x9 (quantitative).
+        */}
+        <Composition
+          id="ThreeStageRisingBars16x9"
+          component={ThreeStageRisingBars16x9}
+          schema={threeStageRisingBarsSchema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: Math.max(30, Math.round(props.durationFrames)),
+          })}
+          defaultProps={{
+            bars: [
+              { label: "THEN", heightLevel: "small" },
+              { label: "NOW", heightLevel: "medium" },
+              { label: "NEXT", heightLevel: "large" },
+            ],
+            caption: { text: "Each wave compounds the last", keyword: "compounds" },
+            handle: "@armandointeligencia",
+            durationFrames: 150,
+            transitionVerb:
+              "Reveal three uppercase-labeled bar towers left-to-right, each rising from baseline to its target height with a soft ease-out while its accent border draws around it; once all three are placed, the caption pill fades in below with one orange keyword.",
+          }}
+        />
+
+        {/*
+          TopHeroBottomTrioCards16x9 — Nate N4. Hero card drops from above; once
+          settled, three supporting cards rise from below L-to-R (label tab leads
+          headline by ~50ms); caption pill fades in last. Hierarchy via vertical
+          position, not type weight.
+        */}
+        <Composition
+          id="TopHeroBottomTrioCards16x9"
+          component={TopHeroBottomTrioCards16x9}
+          schema={topHeroBottomTrioCardsSchema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: Math.max(30, Math.round(props.durationFrames)),
+          })}
+          defaultProps={{
+            hero: { label: "THE SHIFT", title: "Prompting as we knew it is obsolete" },
+            supporting: [
+              { label: "MODEL", title: "Reasons over instructions" },
+              { label: "CONTEXT", title: "Goals beat step-by-steps" },
+              { label: "WORKFLOW", title: "Verify, don't hand-hold" },
+            ],
+            caption: { text: "The new skill is framing the problem", keyword: "framing" },
+            handle: "@armandointeligencia",
+            durationFrames: 150,
+            transitionVerb:
+              "Land the hero card from above with a soft drop; once it settles, the three supporting cards rise from below in left-to-right sequence, each with its label tab fading in 50ms before its headline; finally the caption pill fades in below.",
           }}
         />
       </Folder>
