@@ -1,0 +1,10 @@
+{
+  "title": "QUÉ HACER HOY",
+  "items": [
+    { "text": "Lista features apagadas por costo", "emphasis": true },
+    { "text": "Reactiva soporte con chatbot" },
+    { "text": "Agentes para usuarios free" }
+  ],
+  "markerColor": "#D4AF37",
+  "handle": "@armandointeligencia"
+}

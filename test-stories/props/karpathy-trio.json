@@ -1,0 +1,10 @@
+{
+  "hero": { "label": "FICHAJE", "title": "Karpathy se mudó a Anthropic" },
+  "supporting": [
+    { "label": "SUTSKEVER", "title": "Dejó OpenAI" },
+    { "label": "MURATI", "title": "Dejó OpenAI" },
+    { "label": "SCHULMAN", "title": "Dejó OpenAI" }
+  ],
+  "caption": { "text": "El patrón importa más que el nombre", "keyword": "patrón" },
+  "handle": "@armandointeligencia"
+}

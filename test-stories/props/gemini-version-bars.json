@@ -1,0 +1,9 @@
+{
+  "bars": [
+    { "label": "v3.2 LEAK", "heightLevel": "small" },
+    { "label": "v3.5 FLASH", "heightLevel": "large" },
+    { "label": "TU PRODUCTO", "heightLevel": "medium" }
+  ],
+  "caption": { "text": "El leak salió mal, la apuesta no", "keyword": "apuesta" },
+  "handle": "@armandointeligencia"
+}
