@@ -90,7 +90,6 @@ export async function exportMultiPlatform(
   opts: MultiPlatformOptions,
 ): Promise<Record<string, string>> {
   const { input, outputDir, baseName, platforms } = opts;
-  const outputs: Record<string, string> = {};
 
   const platformConfigs: Record<string, { w: number; h: number; mode: "pad" | "crop" }> = {
     youtube: { w: 1920, h: 1080, mode: "pad" },
@@ -99,25 +98,26 @@ export async function exportMultiPlatform(
     square: { w: 1080, h: 1080, mode: "crop" },
   };
 
-  for (const platform of platforms) {
-    const config = platformConfigs[platform];
-    if (!config) continue;
-
-    const outputPath = path.join(outputDir, `${baseName}_${platform}.mp4`);
-    await resize({
-      input,
-      output: outputPath,
-      width: config.w,
-      height: config.h,
-      mode: config.mode,
+  const platformJobs = platforms
+    .filter((platform) => platformConfigs[platform])
+    .map(async (platform) => {
+      const config = platformConfigs[platform];
+      const outputPath = path.join(outputDir, `${baseName}_${platform}.mp4`);
+      await resize({
+        input,
+        output: outputPath,
+        width: config.w,
+        height: config.h,
+        mode: config.mode,
+      });
+      return [platform, outputPath] as const;
     });
-    outputs[platform] = outputPath;
-  }
 
-  // Thumbnail
   const thumbPath = path.join(outputDir, `${baseName}_thumbnail.jpg`);
-  await extractThumbnail(input, thumbPath);
-  outputs.thumbnail = thumbPath;
+  const thumbJob = extractThumbnail(input, thumbPath).then(
+    () => ["thumbnail", thumbPath] as const,
+  );
 
-  return outputs;
+  const results = await Promise.all([...platformJobs, thumbJob]);
+  return Object.fromEntries(results);
 }

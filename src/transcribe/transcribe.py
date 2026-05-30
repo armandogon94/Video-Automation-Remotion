@@ -24,6 +24,7 @@ def transcribe(
     language: str = "es",
     fps: int = 30,
     output_srt: str | None = None,
+    initial_prompt: str | None = None,
 ) -> dict:
     """Transcribe audio with word-level timestamps."""
     from faster_whisper import WhisperModel
@@ -36,6 +37,7 @@ def transcribe(
     )
 
     print(f"Transcribing '{input_path}'...", file=sys.stderr)
+    prompt = initial_prompt or "Transcripción en español con puntuación correcta."
     segments, info = model.transcribe(
         input_path,
         language=language,
@@ -43,7 +45,7 @@ def transcribe(
         word_timestamps=True,
         vad_filter=True,
         vad_parameters=dict(min_silence_duration_ms=500),
-        initial_prompt="Transcripción en español con puntuación correcta.",
+        initial_prompt=prompt,
         condition_on_previous_text=True,
     )
 
@@ -109,6 +111,11 @@ def main():
     parser.add_argument("--language", default="es", help="Language code")
     parser.add_argument("--fps", type=int, default=30, help="Video FPS")
     parser.add_argument("--output-srt", default=None, help="Optional SRT output path")
+    parser.add_argument(
+        "--initial-prompt",
+        default=None,
+        help="Bias whisper toward specific vocabulary (brand names, jargon, etc.)",
+    )
 
     args = parser.parse_args()
 
@@ -118,6 +125,7 @@ def main():
         language=args.language,
         fps=args.fps,
         output_srt=args.output_srt,
+        initial_prompt=args.initial_prompt,
     )
 
     json.dump(result, sys.stdout, ensure_ascii=False)
