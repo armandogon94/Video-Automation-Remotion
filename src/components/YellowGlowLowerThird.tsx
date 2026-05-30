@@ -16,6 +16,8 @@
  *
  * Pure React FC. Reads `useCurrentFrame()` so a single mount handles the full
  * enter → hold → exit envelope. Mount inside an `<AbsoluteFill>` at any depth.
+ *
+ * @dualAspect true — renders in both 9:16 and 16:9; parent positions/sizes the slot (Tier-B per ADR-001 §2.3). Source pattern: H4.
  */
 import React from "react";
 import { interpolate, useCurrentFrame } from "remotion";

@@ -27,6 +27,8 @@
  * <DarkSlateChassis16x9>{children}</DarkSlateChassis16x9>) alongside the
  * composition's primary content. Stateless — all timing math is computed
  * inline per frame (no useMemo needed).
+ *
+ * @dualAspect true — renders in both 9:16 and 16:9; parent positions/sizes the slot (Tier-B per ADR-001 §2.3). Source pattern: H12 (reshapes to 2-line in 9:16 per ANALYSIS §4).
  */
 import React from "react";
 import { useCurrentFrame, interpolate, Easing } from "remotion";
