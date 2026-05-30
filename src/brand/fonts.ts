@@ -2,6 +2,7 @@ import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 import { loadFont as loadJetBrainsMono } from "@remotion/google-fonts/JetBrainsMono";
 import { loadFont as loadFiraCode } from "@remotion/google-fonts/FiraCode";
 import { loadFont as loadPlayfairDisplay } from "@remotion/google-fonts/PlayfairDisplay";
+import { loadFont as loadOswald } from "@remotion/google-fonts/Oswald";
 
 loadInter("normal", {
   weights: ["300", "400", "500", "600", "700", "800", "900"],
@@ -30,6 +31,11 @@ loadFiraCode("normal", {
 loadPlayfairDisplay("normal", { weights: ["400", "700", "900"] });
 loadPlayfairDisplay("italic", { weights: ["400", "700", "900"] });
 
+// Oswald = the true condensed-sans display face (#168). Replaces the prior
+// Inter-800 + letter-spacing approximation used for stage-bug / chyron / dossier
+// lockups. Pin the three display weights the lockups actually use.
+loadOswald("normal", { weights: ["500", "600", "700"] });
+
 /**
  * Brand-wide font stacks. Import these instead of inlining font-family strings
  * in compositions — keeps both monospace usages aligned (per A3 audit) and lets
@@ -51,4 +57,9 @@ export const FONT_STACKS = {
    *  arrow + bold-comparator look (`=>`, `!==`, `→`). Falls back to JetBrains
    *  Mono if FiraCode isn't loaded yet. */
   monoCode: "'Fira Code', 'JetBrains Mono', ui-monospace, monospace",
+  /** Oswald — the condensed-sans DISPLAY face for stage-bug / chyron / dossier
+   *  lockups (#168). Replaces the prior Inter-800 + tracking approximation with
+   *  a real condensed face. Falls back to Arial Narrow then a generic sans if
+   *  the loader hasn't run yet (e.g. SSR snapshot). */
+  condensed: "'Oswald', 'Arial Narrow', sans-serif",
 } as const;

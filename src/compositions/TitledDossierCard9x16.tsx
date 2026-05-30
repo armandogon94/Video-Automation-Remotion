@@ -168,8 +168,11 @@ const HeroTitle: React.FC<{
     >
       <div
         style={{
-          fontFamily: FONT_STACKS.sans,
-          fontWeight: 900,
+          // #168: real condensed-sans display face (Oswald) for the hero
+          // lockup — replaces the prior Inter-900 approximation. Oswald tops
+          // out at 700, which is the intended heavy display weight here.
+          fontFamily: FONT_STACKS.condensed,
+          fontWeight: 700,
           fontSize,
           color: accentColor,
           lineHeight: 0.95,

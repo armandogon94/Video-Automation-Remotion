@@ -18,10 +18,11 @@
  * child by 16:9 templates (e.g. the upcoming `KeynoteSlidePIP16x9`).
  *
  * Stylistic notes:
- *   - No condensed-sans face is loaded in `src/brand/fonts.ts`. We approximate
- *     the All-In condensed look with Inter weight 800 + 0.05em letter-spacing
- *     + uppercase + tight line-height. If a true condensed face is added later,
- *     swap `FONT_STACKS.sans` for it.
+ *   - Uses `FONT_STACKS.condensed` (Oswald — a true condensed-sans display face
+ *     loaded in `src/brand/fonts.ts`, #168) for the All-In condensed look. Kept
+ *     the light 0.05em letter-spacing + uppercase + tight line-height, which
+ *     still read correctly on a real condensed face. (Previously this faked
+ *     condensed via Inter weight 800 + tracking before a true face existed.)
  *   - `pointerEvents: 'none'` so the chyron never intercepts clicks in Studio.
  *   - The fade-in is OPT-IN via `fadeInOnFrame`. Default behavior is opacity 1
  *     from frame 0 (matches allin grammar exactly).
@@ -120,8 +121,8 @@ export const PersistentEventLockupChyron16x9: React.FC<
     >
       <span
         style={{
-          fontFamily: FONT_STACKS.sans,
-          fontWeight: 800,
+          fontFamily: FONT_STACKS.condensed,
+          fontWeight: 700,
           fontSize,
           lineHeight: 1.0,
           letterSpacing: "0.05em",
@@ -134,8 +135,8 @@ export const PersistentEventLockupChyron16x9: React.FC<
       </span>
       <span
         style={{
-          fontFamily: FONT_STACKS.sans,
-          fontWeight: 800,
+          fontFamily: FONT_STACKS.condensed,
+          fontWeight: 700,
           fontSize: Math.round(fontSize * 0.7),
           lineHeight: 1.0,
           letterSpacing: "0.05em",
