@@ -87,7 +87,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { FONT_STACKS } from "../brand";
+import { BRAND, FONT_STACKS } from "../brand";
 import { DarkSlateChassis16x9 } from "../components/chassis/DarkSlateChassis16x9";
 import { CaptionPillWithKeyword } from "../components/captions/CaptionPillWithKeyword";
 
@@ -95,12 +95,10 @@ import { CaptionPillWithKeyword } from "../components/captions/CaptionPillWithKe
 
 /**
  * Nate B Jones's signature accent — "TNF orange" sampled from his fullscreen-
- * card scenes. Mirrors the local `TNF_ORANGE` in
- * `components/captions/CaptionPillWithKeyword.tsx` to keep the result-card
- * accent in family with the caption highlight. Kept local (not promoted to
- * brand/config.ts) because it's still scoped to the Nate 16:9 lane.
+ * card scenes. Keeps the result-card accent in family with the caption
+ * highlight. Now graduated to the brand palette as `BRAND.colors.keywordOrange`.
  */
-const TNF_ORANGE = "#E07B3C";
+const TNF_ORANGE = BRAND.colors.keywordOrange;
 
 /**
  * Default per-card accent palette, cycled through operand cards when no

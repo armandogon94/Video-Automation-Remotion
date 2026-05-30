@@ -37,19 +37,18 @@
 
 import React from "react";
 import { useCurrentFrame, interpolate, Easing } from "remotion";
-import { FONT_STACKS } from "../../brand";
+import { BRAND, FONT_STACKS } from "../../brand";
 
 /**
  * Nate B Jones's signature accent — sampled from his fullscreen-card scenes
  * (e.g. the `Runtime` highlight and the `5+` count badges). Internally
  * nicknamed "TNF orange" after the recurring tint band identified during R4B
- * scoring. Not yet promoted to brand/config.ts because it is specific to the
- * 16:9 Nate-style lane; can graduate later if reused outside this molecule.
+ * scoring. Now graduated to the brand palette as `BRAND.colors.keywordOrange`.
  *
  * Source: references/creators/natebjones/ANALYSIS-VOTE1.md §Visual motifs
  * ("a tight 5-color accent palette (orange `#E07B3C`, cyan ...)").
  */
-const TNF_ORANGE = "#E07B3C";
+const TNF_ORANGE = BRAND.colors.keywordOrange;
 
 export interface CaptionPillWithKeywordProps {
   /** Full caption text. */

@@ -38,7 +38,7 @@ import {
 import { z } from "zod";
 import { DarkSlateChassis16x9 } from "../components/chassis/DarkSlateChassis16x9";
 import { CaptionPillWithKeyword } from "../components/captions/CaptionPillWithKeyword";
-import { FONT_STACKS } from "../brand";
+import { BRAND, FONT_STACKS } from "../brand";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Schema
@@ -92,7 +92,11 @@ const TITLE_FONT_SIZE_PX = 44; // mid-point of spec range 36–48
 /** Per-row accent palette — used when row.accentColor isn't supplied. Mirrors
  *  the Nate accent set documented in CaptionPillWithKeyword (TNF orange + a
  *  warm gold + a cyan). Index modulo 3 in row order. */
-const DEFAULT_ACCENTS = ["#E07B3C", "#D4AF37", "#5BC0E8"] as const;
+const DEFAULT_ACCENTS = [
+  BRAND.colors.keywordOrange, // "TNF orange"
+  "#D4AF37",
+  "#5BC0E8",
+] as const;
 
 /** Per-row timing windows (frames). Mirrors the brief exactly:
  *  row 1: fade 0→10, rule 10→14

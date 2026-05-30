@@ -8,6 +8,10 @@ export interface BrandColors {
   text: string;
   textLight: string;
   muted: string;
+  /** "TNF orange" — the one-keyword caption-pill accent from Nate B Jones's
+   *  editorial 5-color accent palette (orange + cyan + mint + indigo + gold).
+   *  Used to tint the single highlighted keyword in 16:9 caption pills. */
+  keywordOrange: string;
 }
 
 export interface BrandFonts {
@@ -32,7 +36,18 @@ export interface Brand {
   logoPosition: "bottom-right" | "bottom-left" | "top-right" | "top-left";
 }
 
-export const BRAND: Brand = brandJson as Brand;
+const brandBase = brandJson as Omit<Brand, "colors"> & {
+  colors: Omit<BrandColors, "keywordOrange">;
+};
+
+export const BRAND: Brand = {
+  ...brandBase,
+  colors: {
+    ...brandBase.colors,
+    // "TNF orange" — one-keyword caption-pill accent (see BrandColors.keywordOrange).
+    keywordOrange: "#E07B3C",
+  },
+};
 
 export const BRAND_GRADIENT = {
   from: BRAND.colors.primary,
