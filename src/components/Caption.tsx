@@ -75,13 +75,14 @@ export const Caption: React.FC<CaptionProps> = ({
       <div
         style={{
           backgroundColor: style.backgroundColor,
-          borderRadius: 12,
-          padding: "12px 24px",
+          borderRadius: 4,
+          padding: "14px 28px",
           maxWidth: containerWidth * 0.85,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: "6px 8px",
+          gap: "6px 10px",
+          borderLeft: `3px solid ${style.highlightColor}`,
         }}
       >
         {visibleWords.map((word, i) => {
