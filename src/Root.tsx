@@ -86,6 +86,18 @@ import { BigNumberHero16x9, bigNumberHero16x9Schema } from "./compositions/BigNu
 import { TweetCardHero16x9, tweetCardHero16x9Schema } from "./compositions/TweetCardHero16x9";
 import { BarChartList16x9, barChartList16x9Schema } from "./compositions/BarChartList16x9";
 import { AnimatedTable16x9, animatedTable16x9Schema } from "./compositions/AnimatedTable16x9";
+import { DecisionTree16x9, decisionTree16x9Schema } from "./compositions/DecisionTree16x9";
+import { LineChartAnnotated16x9, lineChartAnnotated16x9Schema } from "./compositions/LineChartAnnotated16x9";
+import { Sparkline16x9, sparkline16x9Schema } from "./compositions/Sparkline16x9";
+import { BenchmarkBars16x9, benchmarkBars16x9Schema } from "./compositions/BenchmarkBars16x9";
+import { LayerCardStack16x9, layerCardStack16x9Schema } from "./compositions/LayerCardStack16x9";
+import { DiagramExplainer16x9, diagramExplainer16x9Schema } from "./compositions/DiagramExplainer16x9";
+import { KineticEssay16x9, kineticEssay16x9Schema } from "./compositions/KineticEssay16x9";
+import { VennDiagram16x9, vennDiagram16x9Schema } from "./compositions/VennDiagram16x9";
+import { ForceGraph16x9, forceGraph16x9Schema } from "./compositions/ForceGraph16x9";
+import { NeuralNetwork16x9, neuralNetwork16x9Schema } from "./compositions/NeuralNetwork16x9";
+import { RankedTierList16x9, rankedTierList16x9Schema } from "./compositions/RankedTierList16x9";
+import { TestimonialCard16x9, testimonialCard16x9Schema } from "./compositions/TestimonialCard16x9";
 import {
   explainerSchema,
   talkingHeadSchema,
@@ -3776,6 +3788,320 @@ export const RemotionRoot: React.FC = () => {
             paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
             titleFontSize: 72, subtitleFontSize: 40, headerFontSize: 32, rowFontSize: 40, captionFontSize: 36,
             showCaptions: false,
+          }}
+        />
+
+        {/* Wave-8 16:9 siblings (ADR-001 §4 adaptation, batch 2) */}
+        <Composition
+          id="DecisionTree16x9"
+          component={DecisionTree16x9}
+          schema={decisionTree16x9Schema}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "Decide when to use AI",
+            subtitle: "",
+            sectionLabel: "",
+            rootNode: { label: "AI for this task?", sub: "", color: "" },
+            children: [
+              { label: "Delegate to AI", sub: "Routine tasks", color: "#7CE49A" },
+              { label: "Collaborate", sub: "Hard decisions", color: "#5BC0E8" },
+              { label: "Avoid AI", sub: "Personal stuff", color: "#E89B7A" },
+            ],
+            layout: "radial-fan",
+            edgeTipMarker: "dot",
+            rootEnterSeconds: 0.4,
+            edgeDrawStartSeconds: 1.2,
+            edgeDrawFrames: 18,
+            edgeStaggerFrames: 6,
+            labelRevealAfterEdgeFrames: 4,
+            palette: "dark",
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 120, opacity: 0.9 },
+            breadcrumb: null,
+            subjectTool: null,
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            titleFontSize: 56,
+            audioUrl: "", wordTimings: [],
+            captionFontSize: 36, showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="LineChartAnnotated16x9"
+          component={LineChartAnnotated16x9}
+          schema={lineChartAnnotated16x9Schema}
+          durationInFrames={90}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            sectionLabel: "MODEL ACCURACY",
+            xLabels: ["Jan 2024", "Jul 2024", "Jan 2025", "Jul 2025", "Jan 2026"],
+            series: [
+              {
+                name: "Accuracy",
+                color: "",
+                values: [62, 71, 80, 88, 94],
+                annotations: [
+                  { atIndex: 2, text: "GPT-4o" },
+                  { atIndex: 4, text: "94%" },
+                ],
+              },
+            ],
+            showAxes: true,
+            showValueReadout: true,
+            drawDurationSeconds: 1.2,
+            enterSeconds: 0.5,
+            palette: "dark",
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 120, opacity: 0.9 },
+            breadcrumb: null,
+            subjectTool: null,
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            audioUrl: "", wordTimings: [],
+            captionFontSize: 36, showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="Sparkline16x9"
+          component={Sparkline16x9}
+          schema={sparkline16x9Schema}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            kicker: "ADOPTION",
+            title: "AI tool weekly actives",
+            data: [12, 18, 24, 31, 40, 55, 68, 80, 92],
+            valueFormat: "{v}%",
+            decimals: 0,
+            showAreaFill: true,
+            showTrendBadge: true,
+            drawDurationSeconds: 1.2,
+            sourceCaption: "Source: internal telemetry",
+            palette: "dark",
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 120, opacity: 0.9 },
+            breadcrumb: null,
+            subjectTool: null,
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            audioUrl: "", wordTimings: [],
+            captionFontSize: 36, showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="BenchmarkBars16x9"
+          component={BenchmarkBars16x9}
+          schema={benchmarkBars16x9Schema}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "Precio por millón de tokens",
+            subtitle: "Input tokens — Mayo 2026",
+            bars: [
+              { label: "Gemini Flash", value: "$0.10", widthPct: 0.08, color: "#5BC0E8" },
+              { label: "Claude Haiku", value: "$0.25", widthPct: 0.2, color: "#7CE49A" },
+              { label: "GPT-4o mini", value: "$0.60", widthPct: 0.48, color: "" },
+              { label: "GPT-4o", value: "$1.25", widthPct: 1.0, color: "" },
+            ],
+            sourceCaption: "Precios públicos — openai.com, anthropic.com, google.com",
+            barStaggerSeconds: 0.3,
+            barAnimSeconds: 0.8,
+            palette: "dark",
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 120, opacity: 0.9 },
+            breadcrumb: null,
+            subjectTool: null,
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            titleFontSize: 72, subtitleFontSize: 38, labelFontSize: 40, valueFontSize: 44,
+            audioUrl: "", wordTimings: [],
+            captionFontSize: 36, showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="LayerCardStack16x9"
+          component={LayerCardStack16x9}
+          schema={layerCardStack16x9Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "Las 3 capas de la IA",
+            palette: "dark",
+            cardStaggerSeconds: 0.35,
+            showCaptions: false,
+            watermarkHandle: "@armandointeligencia",
+            cards: [
+              { badge: "LAYER 1", headline: "Foundation", body: "The base layer that everything is built on.", icon: "⬛" },
+              { badge: "LAYER 2", headline: "Reasoning", body: "Where models learn to think step-by-step.", icon: "🧩" },
+              { badge: "LAYER 3", headline: "Agency", body: "Autonomous action with memory and tools.", icon: "🚀" },
+            ],
+          }}
+        />
+
+        <Composition
+          id="DiagramExplainer16x9"
+          component={DiagramExplainer16x9}
+          schema={diagramExplainer16x9Schema}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            sectionLabel: "EL FLUJO",
+            palette: "dark",
+            sequenceStepSeconds: 1.2,
+            firstNodeDelaySeconds: 0.4,
+            showCaptions: false,
+            nodes: [
+              { title: "Input", sublabel: "prompt" },
+              { title: "Reasoning", sublabel: "chain-of-thought" },
+              { title: "Output", sublabel: "completion" },
+            ],
+          }}
+        />
+
+        <Composition
+          id="KineticEssay16x9"
+          component={KineticEssay16x9}
+          schema={kineticEssay16x9Schema}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            palette: "dark",
+            firstLineDelaySeconds: 0.6,
+            sequenceStepSeconds: 1.2,
+            showCaptions: false,
+            lines: [
+              { text: "El modelo", style: "sans-bold", align: "center" },
+              { text: "no es el foso", style: "serif-italic", emphasizeWords: ["foso"], align: "center" },
+            ],
+          }}
+        />
+
+        <Composition
+          id="VennDiagram16x9"
+          component={VennDiagram16x9}
+          schema={vennDiagram16x9Schema}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "AI · Brand · Voice",
+            mode: "3-circle-stacked",
+            palette: "dark",
+            intersectionLabel: "Sweet spot",
+            circleEnterSeconds: 0.5,
+            circleStaggerSeconds: 0.6,
+            intersectionLabelStartSeconds: 3.5,
+            showCaptions: false,
+            circles: [
+              { label: "AI", sub: "Tools", color: "#5BC0E8", fillOpacity: 0.35 },
+              { label: "BRAND", sub: "Identity", color: "#E89B7A", fillOpacity: 0.35 },
+              { label: "VOICE", sub: "Tone", color: "#7CE49A", fillOpacity: 0.35 },
+            ],
+          }}
+        />
+
+        <Composition
+          id="ForceGraph16x9"
+          component={ForceGraph16x9}
+          schema={forceGraph16x9Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "", wordTimings: [], title: "Knowledge Graph",
+            nodes: [
+              { id: "a", label: "Claude", group: "LLM", weight: 1.5 },
+              { id: "b", label: "GPT-4", group: "LLM", weight: 1 },
+              { id: "c", label: "Gemini", group: "LLM", weight: 1 },
+              { id: "d", label: "RAG", group: "Arch", weight: 1 },
+              { id: "e", label: "Agent", group: "Arch", weight: 1.2 },
+            ],
+            edges: [
+              { source: "a", target: "d" }, { source: "b", target: "d" },
+              { source: "d", target: "e" }, { source: "c", target: "e" },
+            ],
+            focusNodeId: "a", showNodeLabels: true, rotateSlowly: false,
+            breadcrumb: null, watermark: null, watermarkHandle: "@armandointeligencia",
+            subjectTool: null, palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            captionFontSize: 36, showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="NeuralNetwork16x9"
+          component={NeuralNetwork16x9}
+          schema={neuralNetwork16x9Schema}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "", wordTimings: [], title: "Red Neuronal", subtitle: "Propagación de activaciones",
+            layers: [4, 6, 6, 4], layerLabels: ["INPUT", "HIDDEN 1", "HIDDEN 2", "OUTPUT"],
+            firstWaveDelaySeconds: 0.5, waveIntervalSeconds: 0.9, pulsePropagateSeconds: 0.4,
+            showLayerLabels: true, breadcrumb: null, watermark: null,
+            watermarkHandle: "@armandointeligencia", subjectTool: null, palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            captionFontSize: 36, showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="RankedTierList16x9"
+          component={RankedTierList16x9}
+          schema={rankedTierList16x9Schema}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "", wordTimings: [], title: "Top 5", subtitle: "", sectionLabel: "RANKING",
+            items: [
+              { rank: "5", label: "Automatización", sub: "Edge-TTS + Whisper", color: "" },
+              { rank: "4", label: "Contexto largo", sub: "1M tokens", color: "" },
+              { rank: "3", label: "Multi-agente", sub: "Orquestación", color: "" },
+              { rank: "2", label: "Razonamiento", sub: "Chain-of-thought", color: "" },
+              { rank: "1", label: "Agentes autónomos", sub: "El futuro es ahora", color: "" },
+            ],
+            revealDirection: "left-to-right", revealFrames: 10, holdFrames: 14,
+            firstItemEnterSeconds: 1.0, breadcrumb: null, watermark: null,
+            watermarkHandle: "@armandointeligencia", subjectTool: null, palette: "cream",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            captionFontSize: 36, showCaptions: true,
+          }}
+        />
+
+        <Composition
+          id="TestimonialCard16x9"
+          component={TestimonialCard16x9}
+          schema={testimonialCard16x9Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "", wordTimings: [],
+            quote: "Esta herramienta transformó cómo producimos contenido — resultados en días, no semanas.",
+            attribution: { name: "Armando González", title: "Fundador", brand: "Armando Inteligencia" },
+            brandLogo: "", sectionLabel: "TESTIMONIO",
+            breadcrumb: null, watermark: null, watermarkHandle: "@armandointeligencia",
+            subjectTool: null, palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            enterSeconds: 0.5, captionFontSize: 36, showCaptions: false,
           }}
         />
       </Folder>
