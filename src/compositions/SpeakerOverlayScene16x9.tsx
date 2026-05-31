@@ -33,6 +33,7 @@ import { AbsoluteFill, OffthreadVideo, staticFile } from "remotion";
 import { z } from "zod";
 import { BRAND, FONT_STACKS } from "../brand";
 import { FloatingCaption, floatingCaptionSchema } from "../components/FloatingCaption";
+import { OVERLAY_REGISTRY } from "../components/overlays/registry";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Schema (inline zod, all fields .default()ed → renders standalone in Studio)
@@ -49,6 +50,17 @@ export const speakerOverlayScene16x9Schema = z.object({
   handle: z.string().default("@armandointeligencia"),
   /** Composition length in frames. Default 150 = 5.0s @ 30fps. */
   durationFrames: z.number().default(150),
+  /** Over-speaker overlay molecules (OV1–OV12), mounted between the base video
+   *  and the caption layer. Each entry names a registry overlay + its props.
+   *  This is the EditPlan `overlayTrack` render target (ADR-003). */
+  overlays: z
+    .array(
+      z.object({
+        type: z.string(),
+        props: z.record(z.string(), z.unknown()).default({}),
+      }),
+    )
+    .optional(),
 });
 
 export type SpeakerOverlayScene16x9Props = z.infer<
@@ -71,7 +83,7 @@ function resolveVideoSrc(src: string): string {
 
 export const SpeakerOverlayScene16x9: React.FC<
   SpeakerOverlayScene16x9Props
-> = ({ videoSrc, caption, handle = "@armandointeligencia" }) => {
+> = ({ videoSrc, caption, overlays = [], handle = "@armandointeligencia" }) => {
   const hasVideo = typeof videoSrc === "string" && videoSrc.length > 0;
 
   return (
@@ -114,12 +126,17 @@ export const SpeakerOverlayScene16x9: React.FC<
         </AbsoluteFill>
       )}
 
-      {/* ── Layer 2: FUTURE OVERLAY SLOT ──────────────────────────────────────
-          Future overlay molecules (big-number pops, B-roll cards, kinetic
-          type, lower-third chips) mount HERE, between the base video and the
-          caption layer. Render them as absolutely-positioned siblings so they
-          composite over the footage but UNDER the captions. Intentionally empty
-          for the W1b foundation. */}
+      {/* ── Layer 2: over-speaker overlay molecules (OV1–OV12) ────────────────
+          Mounted from the data-driven `overlays` array via the registry, so an
+          EditPlan (ADR-003) can place graphics over the footage by name. Each
+          molecule owns its own enter/hold/exit timing + anchor and composites
+          over the footage but UNDER the captions. */}
+      {overlays.map((o, i) => {
+        const Overlay = OVERLAY_REGISTRY[o.type];
+        return Overlay ? (
+          <Overlay key={`${o.type}-${i}`} {...(o.props as Record<string, unknown>)} />
+        ) : null;
+      })}
 
       {/* ── Layer 3: FloatingCaption (the one concrete overlay for now) ─────── */}
       <FloatingCaption {...caption} />

@@ -8,6 +8,7 @@
     "build": "remotion bundle",
     "render": "tsx src/pipeline/render.ts",
     "generate": "tsx src/pipeline/generate.ts",
+    "autoedit": "tsx src/autoedit/cli.ts",
     "voices": "tsx src/pipeline/voices.ts",
     "templates": "tsx src/pipeline/templates.ts",
     "scrape:reels": "scripts/scrape-reels.py",

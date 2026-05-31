@@ -3634,6 +3634,28 @@ export const RemotionRoot: React.FC = () => {
             },
             handle: "@armandointeligencia",
             durationFrames: 150,
+            overlays: [
+              {
+                type: "BuildingBulletListOverSpeaker",
+                props: {
+                  heading: "EDICIÓN AUTOMÁTICA",
+                  items: [
+                    { text: "Transcribe" },
+                    { text: "Subtítulos flotantes" },
+                    { text: "Gráficos sobre ti" },
+                    { text: "Corta silencios" },
+                  ],
+                  anchor: "left",
+                  enterFrame: 6,
+                  beatFrames: 22,
+                  holdFrames: 100,
+                },
+              },
+              {
+                type: "IconPopOverSpeaker",
+                props: { icon: "🎬", anchor: "top-right", enterFrame: 10, holdFrames: 110, sizePx: 150 },
+              },
+            ],
           }}
         />
 

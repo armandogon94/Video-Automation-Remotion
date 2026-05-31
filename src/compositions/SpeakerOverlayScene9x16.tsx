@@ -20,6 +20,7 @@ import { AbsoluteFill, OffthreadVideo, staticFile } from "remotion";
 import { z } from "zod";
 import { BRAND, FONT_STACKS } from "../brand";
 import { FloatingCaption, floatingCaptionSchema } from "../components/FloatingCaption";
+import { OVERLAY_REGISTRY } from "../components/overlays/registry";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Schema (inline zod, all fields .default()ed → renders standalone in Studio)
@@ -38,6 +39,16 @@ export const speakerOverlayScene9x16Schema = z.object({
   handle: z.string().default("@armandointeligencia"),
   /** Composition length in frames. Default 150 = 5.0s @ 30fps. */
   durationFrames: z.number().default(150),
+  /** Over-speaker overlay molecules (OV1–OV12), mounted between the base video
+   *  and the caption layer (EditPlan `overlayTrack` render target, ADR-003). */
+  overlays: z
+    .array(
+      z.object({
+        type: z.string(),
+        props: z.record(z.string(), z.unknown()).default({}),
+      }),
+    )
+    .optional(),
 });
 
 export type SpeakerOverlayScene9x16Props = z.infer<
@@ -59,7 +70,7 @@ function resolveVideoSrc(src: string): string {
 
 export const SpeakerOverlayScene9x16: React.FC<
   SpeakerOverlayScene9x16Props
-> = ({ videoSrc, caption, handle = "@armandointeligencia" }) => {
+> = ({ videoSrc, caption, overlays = [], handle = "@armandointeligencia" }) => {
   const hasVideo = typeof videoSrc === "string" && videoSrc.length > 0;
 
   return (
@@ -100,10 +111,15 @@ export const SpeakerOverlayScene9x16: React.FC<
         </AbsoluteFill>
       )}
 
-      {/* ── Layer 2: FUTURE OVERLAY SLOT ──────────────────────────────────────
-          Future overlay molecules mount HERE — between the base video and the
-          caption layer — so they composite over the footage but UNDER the
-          captions. Intentionally empty for the W1b foundation. */}
+      {/* ── Layer 2: over-speaker overlay molecules (OV1–OV12) ────────────────
+          Data-driven from the `overlays` array via the registry (EditPlan
+          render target). Each molecule owns its enter/hold/exit + anchor. */}
+      {overlays.map((o, i) => {
+        const Overlay = OVERLAY_REGISTRY[o.type];
+        return Overlay ? (
+          <Overlay key={`${o.type}-${i}`} {...(o.props as Record<string, unknown>)} />
+        ) : null;
+      })}
 
       {/* ── Layer 3: FloatingCaption (the one concrete overlay for now) ─────── */}
       <FloatingCaption {...caption} />
