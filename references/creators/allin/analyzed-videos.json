@@ -1,8 +1,41 @@
 {
   "creator_handle": "allin",
-  "analyzed_count": 12,
-  "last_updated": "2026-05-29",
+  "analyzed_count": 20,
+  "last_updated": "2026-05-30",
   "videos": [
+    {
+      "id": "10MdOvK-aG4",
+      "title": "Elon's Anthropic Deal, The Next AI Monopoly?",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=10MdOvK-aG4",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "1bCXCxrDsCs",
+      "title": "SpaceX-Cursor Deal, SaaS Debt Bomb, New Apple CEO",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=1bCXCxrDsCs",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
+      "id": "4oq91rzQcO8",
+      "title": "Anthropic's Digital God, Pope vs AI, Job Loss",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=4oq91rzQcO8",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 27,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
     {
       "id": "5bSGrQou4Lo",
       "title": "YouTube CEO Neal Mohan on AI, Censorship & Creators",
@@ -23,6 +56,17 @@
       "wave": "wave-7",
       "frame_count": 152,
       "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "DVBJQQCjgXU",
+      "title": "Anthropic's $30B Ramp, Mythos Doomsday",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=DVBJQQCjgXU",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
       "has_metadata_json": false
     },
     {
@@ -48,6 +92,17 @@
       "has_metadata_json": false
     },
     {
+      "id": "HGbA6ze0_3M",
+      "title": "SpaceX's $2T Case, Nvidia's Shock Selloff",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=HGbA6ze0_3M",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
       "id": "KG_nHmHUZLw",
       "title": "Ari Emanuel: AI, Attention, and Ownership",
       "platform": "youtube",
@@ -67,6 +122,17 @@
       "wave": "wave-7",
       "frame_count": 140,
       "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "SFdqX7IY7RY",
+      "title": "OpenAI's Identity Crisis, Datacenter Wars",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=SFdqX7IY7RY",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
       "has_metadata_json": false
     },
     {
@@ -114,6 +180,17 @@
       "has_metadata_json": false
     },
     {
+      "id": "fpC4sbawSzQ",
+      "title": "OpenAI Misses Targets, Codex vs Claude, Elon vs Sam",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=fpC4sbawSzQ",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
+      "has_metadata_json": false
+    },
+    {
       "id": "ijbLOWFmVe8",
       "title": "Multicoin Capital's Kyle Samani on Internet Capital Markets",
       "platform": "youtube",
@@ -122,6 +199,17 @@
       "wave": "wave-7",
       "frame_count": 78,
       "clip_count": 3,
+      "has_metadata_json": false
+    },
+    {
+      "id": "jJRAvZNGUvI",
+      "title": "Trump-Xi Summit, Benioff, OpenAI vs Apple",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=jJRAvZNGUvI",
+      "date_first_analyzed": "2026-05-30",
+      "wave": "wave-7",
+      "frame_count": 36,
+      "clip_count": 2,
       "has_metadata_json": false
     },
     {

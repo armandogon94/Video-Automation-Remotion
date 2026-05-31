@@ -1,0 +1,15 @@
+{
+  "wave": "wave-8",
+  "creator_handle": "allin",
+  "selectionStrategy": "Re-pick targeting the actual WEEKLY PODCAST format (remote distributed roundtable of the four besties), correcting the Wave-7 sample bias where 11/12 picks were All-In Summit stage footage. Sampled ~4 min mid-episode windows (+ one cold-open) across 8 recent episodes.",
+  "picks": [
+    { "id": "4oq91rzQcO8", "title": "Anthropic's Digital God, Pope vs AI, Job Loss", "platform": "youtube" },
+    { "id": "HGbA6ze0_3M", "title": "SpaceX's $2T Case, Nvidia's Shock Selloff", "platform": "youtube" },
+    { "id": "jJRAvZNGUvI", "title": "Trump-Xi Summit, Benioff, OpenAI vs Apple", "platform": "youtube" },
+    { "id": "10MdOvK-aG4", "title": "Elon's Anthropic Deal, The Next AI Monopoly?", "platform": "youtube" },
+    { "id": "1bCXCxrDsCs", "title": "SpaceX-Cursor Deal, SaaS Debt Bomb, New Apple CEO", "platform": "youtube" },
+    { "id": "SFdqX7IY7RY", "title": "OpenAI's Identity Crisis, Datacenter Wars", "platform": "youtube" },
+    { "id": "DVBJQQCjgXU", "title": "Anthropic's $30B Ramp, Mythos Doomsday", "platform": "youtube" },
+    { "id": "fpC4sbawSzQ", "title": "OpenAI Misses Targets, Codex vs Claude, Elon vs Sam", "platform": "youtube" }
+  ]
+}

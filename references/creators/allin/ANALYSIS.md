@@ -296,3 +296,121 @@ Live-event vision-mixing console (likely a Tricaster or Blackmagic ATEM at the S
 ---
 
 **Wave-5 contract closure:** All 12 patterns above have a single-sentence imperative-present-tense `transitionVerb` per `docs/prompts/animation-replication-runbook.md §2.1`. None violate the "don't say 'cool'" rule. Patterns P1, P2, P3, P5, P10, P12 are template-ready; P6, P7, P9 are out-of-scope (diegetic).
+
+---
+---
+
+# Podcast format (Wave-8 re-pick)
+
+**Wave:** 8
+**Analyzed:** 2026-05-30
+**Why this section exists — sample-bias correction:** The Wave-7 analysis above (§1–§10) was drawn from a pick set that was **11/12 All-In SUMMIT footage** (live on-stage conference keynotes + panel interviews) and 1/12 a solo home-study monologue. As §10 caveat 1 admitted, **the channel's most-watched and signature content — the weekly four-besties roundtable PODCAST — was entirely absent from that sample.** Everything in §1–§10 about "the show IS the graphic / live-event vision-mixing / honeycomb LED stage props / earth-at-night backplate / keynote-slide-PIP" describes the SUMMIT product, **NOT the weekly podcast.** This Wave-8 section re-picks real weekly episodes to document the actual podcast visual grammar. **Read §1–§10 as "All-In Summit" and this section as "the All-In Podcast."** Where the two conflict (e.g. the chyron lockup), the podcast findings below supersede for podcast-format work.
+
+## PF-0. What a "real weekly episode" looks like (selection method)
+
+Real weekly episodes on the `@allin` channel are the **60–135-minute** uploads whose titles are a **comma-separated list of 3–6 news topics** (e.g. "Anthropic's Digital God, Pope vs AI, Job Loss Narrative Flips, Open Source Crackdown Coming?") or a guest-interview title that still cuts back to the besties (e.g. "Trump-Xi Summit, Benioff: 'Not My First SaaSpocalypse,' OpenAI vs Apple…"). They are distinguished from Summit/clip uploads by: (a) duration > ~60 min, (b) multi-topic comma-list titles, (c) **the four hosts each in their own remote home studio** (verified from frames, not titles). The Summit uploads in §2 are 11–32 min single-guest single-setting clips — a different product.
+
+**Episodes processed this wave (host-desk/remote-roundtable format confirmed from frames):**
+
+| ID | Title (abbrev.) | Window sampled | Format confirmed in frames |
+|----|-----------------|----------------|----------------------------|
+| `4oq91rzQcO8` | Anthropic's Digital God, Pope vs AI, Job Loss… | cold-open 0–2:30 | Cold-open poker-card title card → multi-up host grid; per-host home studios; name lower-third ("David Friedberg") |
+| `HGbA6ze0_3M` | SpaceX's $2T Case, Nvidia's Shock Selloff… | mid 20:00–24:00 | Solo-full-frame host (Calacanis, custom WALL-E zoom background) ↔ 2×2 quad grid of all four besties |
+| `jJRAvZNGUvI` | Trump-Xi Summit, Benioff, OpenAI vs Apple… | mid 18:00–22:00 | Remote guest interview (Benioff) cut full-frame ↔ 2×2 quad grid (guest + 3 hosts); persistent ALL/IN bug on every feed |
+| `10MdOvK-aG4` | Elon's Anthropic Deal, The Next AI Monopoly?… | mid 16:00–20:00 | Friedberg + Chamath solo-full-frame remote feeds, hard-cut switching; ALL/IN bug bottom-left |
+| `1bCXCxrDsCs` | SpaceX-Cursor Deal, SaaS Debt Bomb, New Apple CEO… | mid 15:00–19:00 | **Richest insert sample.** Solo-full-frame ↔ multi-up grid; **PP7 screenshot inserts**: Polymarket prediction-market card, an X/Twitter (Elon) post card, and a "Thoma Bravo/Medallia" news-headline card — each a hero panel with host feeds reflowed to a right-edge PIP column |
+| `SFdqX7IY7RY` | OpenAI's Identity Crisis, Datacenter Wars… | mid 30:00–34:00 | Remote roundtable confirmed (solo-switch + grid, PP1 bug, PP7-style inserts) |
+| `DVBJQQCjgXU` | Anthropic's $30B Ramp, Mythos Doomsday… | mid 25:00–29:00 | Remote roundtable confirmed (solo-switch + grid, PP1 bug) |
+| `fpC4sbawSzQ` | OpenAI Misses Targets, Codex vs Claude, Elon vs Sam… | mid 22:00–26:00 | Remote roundtable confirmed (solo-switch + grid, PP1 bug) |
+
+## PF-1. The single biggest correction: it is a REMOTE, distributed roundtable — not a shared physical desk
+
+The task brief anticipated "the 4-host desk." The actual current weekly format (post-COVID, persisting through these 2025–26 episodes) is **NOT a shared physical desk**: each of the four besties (Chamath, Sacks, Friedberg, Calacanis) appears from **his own home studio** via individual video feeds. Recognizable per-host backdrops: **Chamath** = pale-wood bookshelf with plants; **Friedberg** = grey couch + textured wall (and sometimes a custom plant-wall); **Sacks** = dark study with a desk mic + framed art; **Calacanis** = frequently a **custom virtual/zoom background** (WALL-E + moonrise; autumn foliage) and a logo cap (Cisco, "Ohalo") + AirPods. The vision-mixer composites these feeds into either **solo-full-frame** (active speaker) or a **multi-box grid**. This is the load-bearing difference from the Summit's diegetic shared stage.
+
+## PF-2. Named patterns (podcast format)
+
+### PP1 — `PersistentStackedWordmarkBug16x9` ★ DOMINANT — confidence **HIGH** (all frames, all episodes)
+
+The single most-reused graphic on the **podcast** (mirrors P1 on the Summit, but a DIFFERENT lockup). A **two-line stacked `ALL` / `IN`** wordmark in plain white sans, **bottom-left safe-area corner**, **no event suffix, no gradient panel** (contrast P1's `ALL-IN / SUMMIT` with a blue gradient backplate). It sits directly on the video with no container. **Persistent for the entire episode**, on **every** feed — solo shots, grid cells, guest feeds, and over B-roll. It is a flat overlay, never animated.
+
+**transitionVerb:** Hold a two-line stacked "ALL" over "IN" wordmark in plain white sans, anchored to the bottom-left safe-area corner, composited flat over every shot for the entire duration; never animate, reveal, or dismiss.
+
+### PP2 — `RemoteSpeakerFullFrameSwitch16x9` ★ DOMINANT — confidence **HIGH** (all episodes)
+
+The base layout: the **active speaker fills the whole 16:9 frame** from his own remote feed, and the mixer **hard-cuts** (no dissolve, no animated wipe) to the next person when the speaker changes. Each feed carries the host's own background. This is the podcast analog of the Summit's `KeynoteSoloOnDarkBackdrop` (P10) but with home-studio backdrops and webcam framing instead of a stage.
+
+**transitionVerb:** Frame a single remote speaker filling the 16:9 frame from a webcam-height medium shot against their own home-studio backdrop; hard-cut (no dissolve) to the next speaker's full-frame feed when the active speaker changes; hold the bottom-left stacked wordmark throughout.
+
+### PP3 — `MultiBoxRosterGrid16x9` ★ DOMINANT — confidence **HIGH** (5/8 episodes)
+
+The "everybody on screen" layout. The four feeds (or guest + 3 hosts) are composited into a **2×2 quad grid** (sometimes asymmetric — one cell enlarged, others stacked; e.g. `HGbA6ze0_3M` shows a 1-big + 3-small variant). Each cell shows a host in his own studio, hard-edged rectangular cells, thin/no gutter, on a black mat. The bottom-left stacked wordmark sits on the composite, not per-cell. Switched to for cross-talk, intros, and reactions, then back to PP2 solo when one person takes the floor.
+
+**transitionVerb:** Composite four remote speaker feeds into a hard-edged 2×2 rectangular grid on a black mat (optionally enlarge one cell and stack the other three), hold the stacked wordmark on the composite bottom-left; hard-cut between this grid and any single-speaker full-frame; never animate the cells.
+
+### PP4 — `SpeakerNameLowerThird16x9` — confidence **MEDIUM-HIGH** (≥1 confirmed, `4oq91rzQcO8`)
+
+A **two-weight name card**: first name in **bold** above the last name in a **lighter weight**, right-aligned, lower-right area, over a clean background/B-roll (observed as "**David** / Friedberg" over a wine-bottle insert). Identifies the current speaker/guest. No backing panel; type sits directly on frame. Appears briefly on a speaker's first turn, then dismisses.
+
+**transitionVerb:** Reveal a two-line name card with the first name in bold above the last name in a lighter weight, right-aligned in the lower-right third, held statically for ~2–3 s over the speaker's shot, then cut away; no backing panel.
+
+### PP5 — `ColdOpenPokerCardTitle16x9` — confidence **MEDIUM** (1/8, `4oq91rzQcO8` — only episode where the cold-open was in the sampled window)
+
+The episode cold-open: **playing cards scatter/toss onto a green-felt poker table** (the besties' poker motif) and the **"THE ALL·IN PODCAST" wordmark** resolves over the felt. A literal-asset title sequence, not procedural type animation, but a recognizable channel signature distinct from the Summit's lockup.
+
+**transitionVerb:** Open on a top-down green-felt poker table; toss a spray of playing cards into frame; settle the "THE ALL·IN PODCAST" wordmark centered over the felt; hold ~2 s, then cut to the first speaker.
+
+### PP6 — `CustomVirtualBackground16x9` — confidence **MEDIUM** (2/8, Calacanis)
+
+A diegetic-but-distinctive element: **Calacanis routinely runs a custom virtual/zoom background** behind his webcam feed (WALL-E + moonrise in `HGbA6ze0_3M`; autumn foliage in `jJRAvZNGUvI`), often paired with a sponsor/brand **logo cap** and AirPods. Not a post-production overlay — it's set at the source — but it functions as a recurring visual quirk of the host roster.
+
+**transitionVerb:** N/A as a graphics primitive (it is a source-side webcam background) — but note that a host feed may carry an arbitrary full-bleed image background behind a chroma/segmentation matte; if replicating, treat as a `<BackdropFill>` behind a segmented presenter.
+
+### PP7 — `ScreenshotInsertHeroPanel16x9` ★ — confidence **HIGH** (richly confirmed in `1bCXCxrDsCs`; same insert grammar visible in `SFdqX7IY7RY`)
+
+**This is the podcast's primary "graphic insert" grammar** and the answer to the brief's "PIP chart inserts / science-corner graphics" question. When a host references a source, the mixer composites a **screenshot of that source as a large hero panel** (left/center, ~two-thirds width) while **shrinking the host feeds into a vertical column of small PIP cells down the right edge**. Source types observed in a single 4-min window:
+- a **Polymarket prediction-market card** (dark UI: "Will SpaceX acquire Cursor?" / "SpaceX IPO by …?" with a line chart + Yes/No price ladder),
+- an **X/Twitter post card** (Elon Musk tweet rendered with avatar, handle, body, timestamp, "50.8M Views"),
+- a **news-headline card** (white card: "Exclusive: Thoma Bravo nears agreement to turn software firm Medallia over to creditors…").
+
+The host feeds never disappear — they stack as 3–4 small rounded/rect cells on the right. The bottom-left stacked wordmark persists. The screenshot is a flat exported image (not a live embed); it grows/slides in from the side, then the layout holds while discussed.
+
+**transitionVerb:** Slide a large flat screenshot (tweet card / prediction-market card / news-headline card) into the left two-thirds of frame while simultaneously reflowing the active speaker feeds into a stacked column of small PIP cells down the right edge; hold the composite with the bottom-left wordmark; cut back to full-frame solo when discussion moves on.
+
+### PP8 — `BurnedInCaptionsAbsent16x9` — confidence **HIGH** (all episodes, ANTI-FINDING)
+
+Same anti-finding as the Summit (P11): **no burned-in karaoke/editorial captions** were observed across any sampled podcast frame. The podcast also defers to YouTube auto-CC. **DO NOT copy** — our sound-off audience needs captions ON. (Note: long-form-clip uploads cut for Shorts/TikTok elsewhere may add captions, but the source weekly episode does not.)
+
+**transitionVerb:** None — DO NOT copy. Keep burned-in karaoke captions on any of our long-form output.
+
+## PF-3. Patterns the brief asked about — confirmation status
+
+| Brief-asked element | Found? | Notes |
+|---|---|---|
+| 4-host desk (Chamath/Sacks/Friedberg/Calacanis) | **Partially — REMOTE, not a shared desk** | Four besties confirmed, but each in his own home studio via individual feeds composited into PP3 grid / PP2 solo. No shared physical table in these episodes. |
+| Laptop screens | Not observed in sampled windows | Hosts are webcam head-and-shoulders; no laptop-screen inserts captured. Low confidence it's absent (coarse sampling). |
+| Picture-in-picture chart inserts | **YES → PP7** | Confirmed in `1bCXCxrDsCs`: a Polymarket prediction-market chart card composited as a hero panel with host feeds reflowed to a right-edge PIP column. |
+| Sponsor-read lower-thirds | Not confirmed as a graphic; PP4 name lower-third + PP7 news-headline cards are the lower-thirds seen | Sponsor reads on All-In are spoken host-reads; no branded-sponsor lower-third captured, but news-headline cards (PP7) play the "lower-third over a read" role. |
+| Persistent corner stage-bug/chyron | **YES → PP1** | But it is the **plain stacked `ALL`/`IN` wordmark** (no event suffix, no gradient panel), NOT the Summit's `ALL-IN / SUMMIT` gradient-panel lockup. |
+| "Science corner" graphics | **Partially → PP7** | The general "screenshot/chart hero panel + host PIP" grammar (PP7) is exactly the container a science-corner chart would use; a literal Friedberg science-corner chart was not in-window, but the insert mechanism is confirmed. |
+
+## PF-4. Replicability delta vs. the Summit findings (§6)
+
+The podcast format is **even lower-procedural** than the Summit and maps to fewer new primitives:
+
+- **PP1** `PersistentStackedWordmarkBug16x9` → simpler than the Summit `<EventLockupChyron>`: it's just a 2-line text bug, **no gradient panel**. A trivial `<CornerWordmarkBug>` molecule (XS, ~1 h) covers it; the Summit `<EventLockupChyron>` is the richer superset.
+- **PP2** `RemoteSpeakerFullFrameSwitch16x9` → a **full-frame presenter** composition with a swappable backdrop slot + the corner bug. Reuses `<BackdropFill>` (proposed §6). S, ~2 h. This is the highest-value podcast template because it maps directly onto our own "Armando talking-head full-frame" content mode.
+- **PP3** `MultiBoxRosterGrid16x9` → NEW composition: an N-up rectangular grid of presenter feeds on a black mat, optional asymmetric hero cell. M, ~4–5 h. No analog in the Summit set. Useful for any "panel / multi-guest" content we make.
+- **PP4** `SpeakerNameLowerThird16x9` → a two-weight name card; close to our `TitleCardKineticTwoLine` but right-aligned, panel-less, lower-third anchored. S, ~2 h.
+- **PP5** `ColdOpenPokerCardTitle16x9` → bespoke literal-asset intro; SKIP as a primitive (one-off branded sequence), but note the "scatter literal assets then resolve wordmark" pattern is reusable if we ever build a branded cold-open.
+- **PP6** `CustomVirtualBackground16x9` → not replicable as graphics (source-side webcam background).
+- **PP7** `ScreenshotInsertHeroPanel16x9` → **NEW high-value composition**: a flat screenshot/chart image as a left/center hero panel + the active feeds reflowed into a right-edge PIP column. M, ~4–5 h. Directly maps to our own "react to a tweet / show a chart / cite a headline" content mode and is the most reusable single discovery of this wave. Reuses `<WhiteBorderedPIP>` (§6) for the side cells and a `<ScreenshotCard>` slot for the hero image.
+- **PP8** `BurnedInCaptionsAbsent16x9` → anti-pattern, DO NOT copy.
+
+**Build-priority addition to §8 queue:** insert **`RemoteSpeakerFullFrameSwitch16x9`** (S, ~2 h, HIGH — maps to our own talking-head mode), **`ScreenshotInsertHeroPanel16x9`** (M, ~4–5 h, HIGH — react-to-tweet / show-a-chart / cite-a-headline; the most reusable discovery this wave), and **`MultiBoxRosterGrid16x9`** (M, ~4–5 h, MED-HIGH — multi-speaker/panel, no existing analog) ahead of the Summit-only `KeynoteSlidePIP16x9` if podcast-style content is the nearer-term goal. The plain `<CornerWordmarkBug>` is a cheap subset of the already-queued `<EventLockupChyron>`.
+
+## PF-5. Honest caveats (Wave-8)
+
+1. **Sampling windows are ~4 min mid-episode (+ one cold-open), 1 f/15 s coarse + 1 f/1.5 s dense.** Chart inserts, sponsor lower-thirds, laptop screens, and Friedberg "science corner" graphics — if they exist — likely occur at other timestamps and were NOT captured. Their **absence here is a sampling gap, not a confirmed anti-finding.** Confidence that the podcast is "mostly solo-switch + grid" is MEDIUM-HIGH for the talk segments sampled, LOW for the full-episode graphic inventory.
+2. **Resolution 854×480** (low-res per disk-hygiene rule) — fine for layout/pattern ID, insufficient for small on-screen text.
+3. **`--download-sections` multi-window quirk:** multi-section downloads only reliably retained the first window, so most windows are a single contiguous ~4 min slice rather than spread across the episode — further concentrating the sampling gap above.
+4. Episode `fpC4sbawSzQ` initially failed (ID truncation in the batch run) and was re-fetched separately — see manifest for final frame/clip counts.
