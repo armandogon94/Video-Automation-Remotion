@@ -1,7 +1,7 @@
 {
   "creator_handle": "alexhormozi",
   "analyzed_count": 25,
-  "last_updated": "2026-05-29",
+  "last_updated": "2026-05-31",
   "videos": [
     {
       "id": "-j8_YCWZ05Q",
@@ -146,8 +146,8 @@
       "url": "https://www.youtube.com/watch?v=fr78adfAnuA",
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
-      "frame_count": 184,
-      "clip_count": 2,
+      "frame_count": 187,
+      "clip_count": 4,
       "has_metadata_json": true
     },
     {
@@ -181,8 +181,8 @@
       "url": "https://www.youtube.com/watch?v=jfW6gL6hKhk",
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
-      "frame_count": 183,
-      "clip_count": 2,
+      "frame_count": 187,
+      "clip_count": 4,
       "has_metadata_json": true
     },
     {
@@ -226,8 +226,8 @@
       "url": "https://www.youtube.com/watch?v=sGakuNs9mT4",
       "date_first_analyzed": "2026-05-28",
       "wave": "wave-7",
-      "frame_count": 206,
-      "clip_count": 2,
+      "frame_count": 210,
+      "clip_count": 4,
       "has_metadata_json": true
     },
     {
