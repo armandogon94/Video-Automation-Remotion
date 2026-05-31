@@ -80,6 +80,12 @@ import { FlipChartLiveDrawing16x9, flipChartLiveDrawingSchema } from "./composit
 import { KaraokeWithBlueChipPullout9x16, karaokeWithBlueChipPulloutSchema } from "./compositions/KaraokeWithBlueChipPullout9x16";
 import { ThreeStageRisingBars16x9, threeStageRisingBarsSchema } from "./compositions/ThreeStageRisingBars16x9";
 import { TopHeroBottomTrioCards16x9, topHeroBottomTrioCardsSchema } from "./compositions/TopHeroBottomTrioCards16x9";
+import { SpeakerOverlayScene16x9, speakerOverlayScene16x9Schema } from "./compositions/SpeakerOverlayScene16x9";
+import { SpeakerOverlayScene9x16, speakerOverlayScene9x16Schema } from "./compositions/SpeakerOverlayScene9x16";
+import { BigNumberHero16x9, bigNumberHero16x9Schema } from "./compositions/BigNumberHero16x9";
+import { TweetCardHero16x9, tweetCardHero16x9Schema } from "./compositions/TweetCardHero16x9";
+import { BarChartList16x9, barChartList16x9Schema } from "./compositions/BarChartList16x9";
+import { AnimatedTable16x9, animatedTable16x9Schema } from "./compositions/AnimatedTable16x9";
 import {
   explainerSchema,
   talkingHeadSchema,
@@ -3586,6 +3592,190 @@ export const RemotionRoot: React.FC = () => {
             durationFrames: 150,
             transitionVerb:
               "Land the hero card from above with a soft drop; once it settles, the three supporting cards rise from below in left-to-right sequence, each with its label tab fading in 50ms before its headline; finally the caption pill fades in below.",
+          }}
+        />
+
+        {/*
+          SpeakerOverlayScene16x9 / 9x16 — Wave-8 foundation. Full-bleed base
+          talking-head footage (videoSrc) + configurable FloatingCaption + a
+          slot for over-speaker overlay molecules. The enabler for "edit my
+          talking-head video": subtitles + motion graphics composited onto real
+          footage. videoSrc omitted here → renders a "BASE VIDEO" placeholder.
+        */}
+        <Composition
+          id="SpeakerOverlayScene16x9"
+          component={SpeakerOverlayScene16x9}
+          schema={speakerOverlayScene16x9Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            caption: {
+              wordTimings: [],
+              position: "bottom-center",
+              mode: "karaoke",
+              register: "editorial",
+              widthPct: 70,
+              windowSize: 6,
+              windowGapMs: 60,
+            },
+            handle: "@armandointeligencia",
+            durationFrames: 150,
+          }}
+        />
+
+        <Composition
+          id="SpeakerOverlayScene9x16"
+          component={SpeakerOverlayScene9x16}
+          schema={speakerOverlayScene9x16Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            caption: {
+              wordTimings: [],
+              position: "center",
+              mode: "karaoke",
+              register: "editorial",
+              widthPct: 70,
+              fontSize: 64,
+              windowSize: 6,
+              windowGapMs: 60,
+            },
+            handle: "@armandointeligencia",
+            durationFrames: 150,
+          }}
+        />
+
+        {/* Wave-8 16:9 siblings (ADR-001 §4 adaptation, batch 1) */}
+        <Composition
+          id="BigNumberHero16x9"
+          component={BigNumberHero16x9}
+          schema={bigNumberHero16x9Schema}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "",
+            wordTimings: [],
+            number: "15×",
+            kicker: "GEMINI 3.2 FLASH",
+            subtitle: "más barato que GPT-5",
+            countUp: false,
+            typography: { numberFontSize: 160, subtitleFontSize: 36, captionTextFontSize: 26, kickerFontSize: 28 },
+            breadcrumb: { text: "Google", date: "Filtración" },
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 96, opacity: 0.9 },
+            watermarkHandle: "@armandointeligencia",
+            subjectTool: null,
+            palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            captionFontSize: 36,
+            showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="TweetCardHero16x9"
+          component={TweetCardHero16x9}
+          schema={tweetCardHero16x9Schema}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "",
+            wordTimings: [],
+            tweet: {
+              name: "Armando Inteligencia",
+              handle: "armandointeligencia",
+              avatarUrl: "",
+              body: "Gemini 3.2 Flash filtra benchmarks: 15× más barato que GPT-5 con casi el mismo score. Esto cambia el cálculo para todos los que están construyendo con LLMs.",
+              timestamp: "May 18",
+              verified: true,
+              replies: 142, retweets: 980, likes: 4500,
+            },
+            artifactImageUrl: "",
+            faceCamImageUrl: "",
+            cardWidthPx: 760,
+            bodyFontSize: 34,
+            breadcrumb: { text: "Google", date: "Filtración" },
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 96, opacity: 0.9 },
+            watermarkHandle: "@armandointeligencia",
+            subjectTool: null,
+            palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            captionFontSize: 34,
+            showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="BarChartList16x9"
+          component={BarChartList16x9}
+          schema={barChartList16x9Schema}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "",
+            wordTimings: [],
+            sectionLabel: "LLM ADOPTION BY TEAM",
+            bars: [
+              { label: "Engineering", value: 82, suffix: "%", color: "#5BC0E8", decimals: 0 },
+              { label: "Data Science", value: 67, suffix: "%", color: "#7CE49A", decimals: 0 },
+              { label: "Product", value: 54, suffix: "%", color: "#9A8FFF", decimals: 0 },
+              { label: "Design", value: 38, suffix: "%", color: "#F2A555", decimals: 0 },
+              { label: "Operations", value: 21, suffix: "%", color: "#8B847A", decimals: 0 },
+            ],
+            direction: "ltr",
+            staggerFrames: 4,
+            fillDurationSeconds: 0.8,
+            firstBarEnterSeconds: 0.5,
+            breadcrumb: { text: "ANTHROPIC", date: "MAY 31, 2026" },
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 120, opacity: 0.9 },
+            subjectTool: null,
+            palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            sectionLabelFontSize: 30, labelFontSize: 40, valueFontSize: 48, captionFontSize: 36,
+            showCaptions: false,
+          }}
+        />
+
+        <Composition
+          id="AnimatedTable16x9"
+          component={AnimatedTable16x9}
+          schema={animatedTable16x9Schema}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            audioUrl: "",
+            wordTimings: [],
+            title: "Frontier Model Comparison",
+            subtitle: "Across context, price, and speed (May 2026)",
+            headers: ["Model", "Context", "$ / 1M in", "Tokens/s", "MMLU"],
+            rows: [
+              ["Claude Opus 4.8", "1M", "$5.00", "92", "89.1"],
+              ["GPT-5.2", "400K", "$6.50", "78", "88.4"],
+              ["Gemini 3.2 Pro", "2M", "$4.20", "104", "87.9"],
+              ["Llama 4 405B", "256K", "$0.90", "61", "85.2"],
+            ],
+            highlightRowIndex: 0,
+            rowStaggerSeconds: 0.2,
+            headerDelaySeconds: 0.4,
+            sourceCaption: "Source: vendor docs + internal benchmarks, May 2026",
+            breadcrumb: { text: "ANTHROPIC", date: "MAY 31, 2026" },
+            watermark: { enabled: true, logo: "avatar", position: "bottom-right", size: 120, opacity: 0.9 },
+            subjectTool: null,
+            palette: "dark",
+            paperColor: "", inkColor: "", accentColor: "", mutedColor: "",
+            titleFontSize: 72, subtitleFontSize: 40, headerFontSize: 32, rowFontSize: 40, captionFontSize: 36,
+            showCaptions: false,
           }}
         />
       </Folder>
