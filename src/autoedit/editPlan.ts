@@ -251,6 +251,25 @@ export const regionSchema = z.object({
   cornerRadiusPx: z.number().optional(),
   /** Border treatment for this layer. Defaults to `rounded` at render time. */
   shape: regionShapeSchema.optional(),
+  /**
+   * Content zoom (Ken Burns) for THIS layer — scales the video *inside* its
+   * region, NOT the region box itself (so the framed window stays put while the
+   * footage pushes in on the subject's face). `1` = no zoom (default). Values
+   * >1 push in; the layer's `overflow:hidden` clips the magnified content. Used
+   * for the "zoom on his face" beat. The renderer tweens this between segment
+   * endpoints alongside the box geometry, so a smooth transition can grow the
+   * zoom in/out. `.optional()` (NEW field) — Remotion `<Composition
+   * defaultProps>` types as `z.input & z.infer`, so it MUST be `.optional()`.
+   */
+  camScale: z.number().optional(),
+  /**
+   * Focal point for `camScale`, as a fraction `[0..1]` of the layer box (the
+   * point that stays fixed while zooming — e.g. `{x:0.5,y:0.38}` to push in on
+   * a face sitting in the upper-middle of the frame). Defaults to centre
+   * `{0.5,0.5}` when omitted. Tweened with `camScale`.
+   */
+  camFocusXPct: z.number().optional(),
+  camFocusYPct: z.number().optional(),
 });
 export type Region = z.infer<typeof regionSchema>;
 

@@ -79,13 +79,20 @@ function resolveVideoSrc(src: string): string {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** A region resolved to concrete pixel CSS for a given canvas size, plus the
- *  border-radius treatment (px). */
+ *  border-radius treatment (px) and the content zoom (Ken Burns). `scale`/`focus`
+ *  scale the VIDEO inside the box (not the box itself), so the framed window stays
+ *  put while the footage pushes in on a focal point. */
 interface ResolvedBox {
   leftPx: number;
   topPx: number;
   widthPx: number;
   heightPx: number;
   radiusPx: number;
+  /** Content zoom factor (1 = no zoom). */
+  scale: number;
+  /** Focal point as a fraction [0..1] of the box (kept fixed while zooming). */
+  focusXPct: number;
+  focusYPct: number;
 }
 
 /** Compute the effective corner radius (px) for a region at a canvas size. */
@@ -116,10 +123,15 @@ function regionToBox(region: Region, canvasW: number, canvasH: number): Resolved
     widthPx: region.wPct * canvasW,
     heightPx: region.hPct * canvasH,
     radiusPx: regionRadiusPx(region, canvasW, canvasH),
+    scale: region.camScale ?? 1,
+    focusXPct: region.camFocusXPct ?? 0.5,
+    focusYPct: region.camFocusYPct ?? 0.5,
   };
 }
 
-/** Linear-blend two boxes by `t` in [0..1] (the smooth-transition tween). */
+/** Linear-blend two boxes by `t` in [0..1] (the smooth-transition tween). Also
+ *  blends the content zoom + focal point so a transition can grow/shrink the
+ *  Ken-Burns push alongside the box geometry. */
 function lerpBox(a: ResolvedBox, b: ResolvedBox, t: number): ResolvedBox {
   const mix = (x: number, y: number): number => x + (y - x) * t;
   return {
@@ -128,6 +140,9 @@ function lerpBox(a: ResolvedBox, b: ResolvedBox, t: number): ResolvedBox {
     widthPx: mix(a.widthPx, b.widthPx),
     heightPx: mix(a.heightPx, b.heightPx),
     radiusPx: mix(a.radiusPx, b.radiusPx),
+    scale: mix(a.scale, b.scale),
+    focusXPct: mix(a.focusXPct, b.focusXPct),
+    focusYPct: mix(a.focusYPct, b.focusYPct),
   };
 }
 
@@ -277,19 +292,31 @@ const VideoLayer: React.FC<VideoLayerProps> = ({ box, src, label, shadow, muted 
     overflow: "hidden",
     boxShadow: shadow ? "0 8px 38px rgba(0,0,0,0.32)" : undefined,
   };
+  // Content zoom (Ken Burns): scale the inner video about its focal point. With
+  // `transform-origin` at the focus fraction and a scale >1, the magnified video
+  // is clipped by the wrapper's overflow:hidden, so the framed window is fixed
+  // while the footage pushes in on the focal point (e.g. the face).
+  const zoomed = box.scale !== 1;
+  const innerStyle: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center center",
+    display: "block",
+    ...(zoomed
+      ? {
+          transform: `scale(${box.scale})`,
+          transformOrigin: `${box.focusXPct * 100}% ${box.focusYPct * 100}%`,
+        }
+      : {}),
+  };
   return (
     <div style={wrapperStyle}>
       {hasSrc ? (
         <OffthreadVideo
           src={resolveVideoSrc(src)}
           muted={muted}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center center",
-            display: "block",
-          }}
+          style={innerStyle}
         />
       ) : (
         <div

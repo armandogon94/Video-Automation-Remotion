@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Video Factory — Showcase</title>
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#141821; --ink:#eef2f8; --muted:#8b94a6;
+    --cyan:#5BC0E8; --gold:#D4AF37; --orange:#E8743B; --line:#222836;
+    --ok:#3ddc84;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+    overflow:hidden;
+  }
+  /* deck */
+  .deck{height:100vh;width:100vw;position:relative}
+  .slide{
+    position:absolute;inset:0;display:none;flex-direction:column;
+    padding:48px 64px;overflow:auto;
+  }
+  .slide.active{display:flex;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h1{font-size:42px;margin:0 0 8px;letter-spacing:-.02em}
+  h2{font-size:30px;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:18px;margin:0 0 28px;max-width:980px}
+  .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .kbd{color:var(--muted);font-size:13px}
+  /* nav */
+  .nav{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    display:flex;gap:10px;align-items:center;z-index:20;
+    background:rgba(20,24,33,.85);backdrop-filter:blur(8px);
+    padding:10px 16px;border-radius:999px;border:1px solid var(--line)}
+  .dot{width:9px;height:9px;border-radius:50%;background:#39414f;cursor:pointer;border:0;padding:0}
+  .dot.on{background:var(--cyan);transform:scale(1.25)}
+  .arrow{background:none;border:0;color:var(--ink);font-size:20px;cursor:pointer;opacity:.8}
+  .arrow:hover{opacity:1}
+  .count{position:fixed;top:20px;right:28px;color:var(--muted);font-size:13px;z-index:20}
+  /* media */
+  video{background:#000;border-radius:14px;border:1px solid var(--line);display:block}
+  .hero-row{display:flex;gap:40px;align-items:center;flex:1;min-height:0}
+  .hero-row video{height:72vh;max-height:760px}
+  .hero-copy{flex:1;max-width:520px}
+  ul.feat{list-style:none;padding:0;margin:18px 0 0}
+  ul.feat li{padding:8px 0 8px 28px;position:relative;font-size:17px;border-bottom:1px solid var(--line)}
+  ul.feat li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+  /* compare */
+  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1;min-height:0}
+  .cmp figure{margin:0;display:flex;flex-direction:column;min-height:0}
+  .cmp img{width:100%;height:62vh;max-height:680px;object-fit:contain;border-radius:14px;
+    border:1px solid var(--line);background:#000}
+  .cmp figcaption{margin-top:12px;color:var(--muted);font-size:15px}
+  .cmp .lbl{font-weight:800;color:var(--ink);display:block;font-size:17px;margin-bottom:2px}
+  .bad{color:#ff7b7b}.good{color:var(--ok)}.ref{color:var(--gold)}
+  /* caption grid */
+  .capgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;flex:1;min-height:0;align-content:start}
+  .capgrid figure{margin:0}
+  .capgrid video{width:100%;aspect-ratio:9/16;object-fit:cover}
+  .capgrid figcaption{margin-top:8px;font-size:14px}
+  .capgrid .nm{font-weight:800;color:var(--cyan)}
+  .pill{display:inline-block;background:var(--panel);border:1px solid var(--line);
+    color:var(--muted);border-radius:8px;padding:3px 10px;font-size:13px;margin:2px 6px 2px 0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1;min-height:0;align-items:center}
+  .two video{width:100%;max-height:74vh}
+  .note{color:var(--muted);font-size:14px;margin-top:14px;max-width:560px}
+  .grad{background:linear-gradient(120deg,var(--cyan),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+<body>
+<div class="count" id="count"></div>
+<div class="deck" id="deck">
+
+  <!-- 1 — Title -->
+  <section class="slide active">
+    <div class="tag">Armando Inteligencia · AI Video Factory</div>
+    <h1>De clip crudo a Reel terminado, <span class="grad">automáticamente</span>.</h1>
+    <p class="sub">Una sola toma de iPhone → corte, color HDR→SDR correcto, captions animados,
+      gráficos pop-up de lo que digo, efecto Tella (esquina/lado/full + zoom + transiciones)
+      y texto detrás de mí con máscara de IA. Todo local, en español.</p>
+    <ul class="feat" style="max-width:760px">
+      <li><b>Color HDR→SDR</b> — LUT de tonemapeo HLG igualado a tu referencia real</li>
+      <li><b>Reel multi-fuente</b> — 10 beats de 9 clips ensamblados en 86.7s</li>
+      <li><b>Efecto Tella 16:9</b> — full → zoom a la cara → esquina → split → full</li>
+      <li><b>Texto detrás de mí</b> — máscara de persona (RVM) + “NETFLIX” legible arriba</li>
+      <li><b>8 estilos de caption</b> — comparados lado a lado</li>
+    </ul>
+    <p class="kbd" style="margin-top:26px">← / → o clic en los puntos para navegar</p>
+  </section>
+
+  <!-- 2 — Color fix -->
+  <section class="slide">
+    <div class="tag">Corrección de color · lo que pediste arreglar</div>
+    <h2>HDR (HLG) → SDR igualado a tu referencia</h2>
+    <p class="sub">El iPhone graba en HLG/bt2020 10-bit. La aproximación anterior (solo gamut)
+      se veía saturada/“rara”. Ahora invierto la curva HLG completa con un LUT 3D y lo igualé
+      numéricamente a tu captura real (polo, piel y fondo neutro).</p>
+    <div class="cmp">
+      <figure>
+        <img src="output/showcase-assets/color-before.png" alt="antes" />
+        <figcaption><span class="lbl bad">ANTES — aproximación colorspace</span>
+          Saturado / piel rojiza. El transfer HLG quedaba sin invertir.</figcaption>
+      </figure>
+      <figure>
+        <img src="output/showcase-assets/color-after.png" alt="después" />
+        <figcaption><span class="lbl good">AHORA — LUT HLG→SDR</span>
+          Tonemap correcto: gain 2.0 · sysg 1.2 · sat 0.65.</figcaption>
+      </figure>
+      <figure>
+        <img src="output/showcase-assets/color-reference.png" alt="referencia" />
+        <figcaption><span class="lbl ref">TU REFERENCIA</span>
+          “HDR to SDR real colors”. El AHORA iguala este grade.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3 — The Reel (hero) -->
+  <section class="slide">
+    <div class="tag">El entregable · Reel ensamblado</div>
+    <div class="hero-row">
+      <video src="output/autoedit/claude-cowork-reel.mp4" controls loop playsinline preload="metadata"></video>
+      <div class="hero-copy">
+        <h2>“Claude Cowork” — 86.7s, 10 beats</h2>
+        <p class="sub" style="margin-bottom:14px">Ensamblado de 9 clips crudos por orden de guion
+          (hook → setup → features → cómo funciona → beneficio → disponibilidad → CTA → seguir).</p>
+        <ul class="feat">
+          <li>Color corregido y consistente en TODAS las fuentes</li>
+          <li>Captions karaoke re-sincronizados al timeline editado</li>
+          <li>Handle <b>@armandointeligencia</b> persistente</li>
+          <li>Transcripción corregida (PlanMax→Plan Max, Cowork, etc.)</li>
+        </ul>
+        <p class="note">2602 frames @ 30fps · pipeline multi-fuente <code>runAssembleReel.ts</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — Tella -->
+  <section class="slide">
+    <div class="tag">Efecto Tella · 16:9</div>
+    <div class="hero-row">
+      <video src="output/autoedit/tella-16x9-demo.mp4" controls loop playsinline preload="metadata"></video>
+      <div class="hero-copy">
+        <h2>Esquina / lado / full + zoom + transiciones suaves</h2>
+        <ul class="feat">
+          <li><b>FULL</b> → <b>zoom a la cara</b> (1.45×, Ken-Burns)</li>
+          <li>→ <b>burbuja en esquina</b> mientras aparecen los gráficos</li>
+          <li>→ <b>split 50/50</b> (yo + motion-graphics de lo que digo)</li>
+          <li>→ <b>FULL</b> — todas las transiciones con grow/shrink suave</li>
+        </ul>
+        <p class="note">Gráficos ORGANIZA / CREA / RESUME sincronizados al discurso.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — Depth -->
+  <section class="slide">
+    <div class="tag">Texto detrás de mí · máscara de IA</div>
+    <div class="two">
+      <video src="output/autoedit/IMG_3618-depth.mp4" controls loop playsinline preload="metadata" style="max-height:78vh"></video>
+      <div>
+        <h2>“NETFLIX” detrás del hombro, ahora legible</h2>
+        <p class="sub">Máscara de persona local (RobustVideoMatting) → la palabra se renderiza
+          ENTRE el fondo y mi recorte. Lo subí al tercio superior para que se lea aunque mi
+          cabeza tape el centro — justo lo que pediste.</p>
+        <ul class="feat">
+          <li>Recorte RGBA por frame, re-generado con el color ya corregido</li>
+          <li>Posición <code>upper-third</code> · legible a ambos lados</li>
+          <li>Keyword en rojo Netflix dentro del caption</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — Overlays -->
+  <section class="slide">
+    <div class="tag">Gráficos pop-up · animados sobre mí</div>
+    <div class="two">
+      <video src="output/autoedit/overlay-anim-demo.mp4" controls loop playsinline preload="metadata" style="max-height:78vh"></video>
+      <div>
+        <h2>Pop-ups con spring, no íconos pegados</h2>
+        <p class="sub">Antes salía un cerebro estático en la esquina. Ahora cada overlay
+          entra con animación spring (escala 0.6→1.0) como en los creadores de referencia.</p>
+        <ul class="feat">
+          <li>Bullets que se construyen, chips numerados, callouts</li>
+          <li>Entrada/salida animada anclada al discurso</li>
+          <li>Suprimidos los íconos genéricos sin sentido</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 — Caption styles -->
+  <section class="slide">
+    <div class="tag">8 estilos de caption · misma toma</div>
+    <h2>“…que aún no has podido terminar en Netflix.”</h2>
+    <p class="sub">El mismo clip (color corregido) renderizado con cada preset tipográfico.
+      Solo cambia el estilo — registro, posición y modo karaoke son idénticos.</p>
+    <div class="capgrid" id="capgrid">
+      <!-- filled by JS so missing renders degrade gracefully -->
+    </div>
+  </section>
+
+</div>
+
+<div class="nav" id="nav">
+  <button class="arrow" id="prev">‹</button>
+  <span id="dots" style="display:flex;gap:8px"></span>
+  <button class="arrow" id="next">›</button>
+</div>
+
+<script>
+  // Caption styles grid (graceful — a tile still shows its label if the file is absent).
+  const STYLES = [
+    ["classic","Clásico"],["hormozi-pop","Hormozi pop"],["box-highlight","Caja resaltada"],
+    ["editorial-cyan","Editorial cian"],["condensed-hype","Condensado hype"],["slide-clean","Slide limpio"],
+    ["blur-premium","Blur premium"],["type-terminal","Terminal"]
+  ];
+  const grid = document.getElementById("capgrid");
+  grid.innerHTML = STYLES.map(([id,label]) => `
+    <figure>
+      <video src="output/autoedit/cap-${id}-edit.mp4" muted loop autoplay playsinline preload="metadata"></video>
+      <figcaption><span class="nm">${label}</span><br><span class="pill">${id}</span></figcaption>
+    </figure>`).join("");
+
+  // Deck navigation
+  const slides = [...document.querySelectorAll(".slide")];
+  const dotsWrap = document.getElementById("dots");
+  let i = 0;
+  slides.forEach((_,n)=>{
+    const b=document.createElement("button"); b.className="dot"+(n===0?" on":"");
+    b.onclick=()=>go(n); dotsWrap.appendChild(b);
+  });
+  const dots=[...dotsWrap.children];
+  const count=document.getElementById("count");
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle("active",k===i));
+    dots.forEach((d,k)=>d.classList.toggle("on",k===i));
+    count.textContent=`${i+1} / ${slides.length}`;
+    // pause videos not on the active slide
+    slides.forEach((s,k)=>s.querySelectorAll("video").forEach(v=>{
+      if(k!==i){try{v.pause()}catch(e){}}
+    }));
+  }
+  document.getElementById("next").onclick=()=>go(i+1);
+  document.getElementById("prev").onclick=()=>go(i-1);
+  addEventListener("keydown",e=>{
+    if(e.key==="ArrowRight"||e.key==="PageDown") go(i+1);
+    if(e.key==="ArrowLeft"||e.key==="PageUp") go(i-1);
+  });
+  go(0);
+</script>
+</body>
+</html>

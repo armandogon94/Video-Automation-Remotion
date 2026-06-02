@@ -82,6 +82,12 @@ async function main(): Promise<void> {
     segments,
     sourceWords,
     caption: { register: "editorial", position: "bottom-center", mode: "karaoke" },
+    // v1 is a CLEAN caption-only edit. The rule-based suggester would otherwise
+    // fire R4 (brand beat) on "Netflix" and dump a default 🧠 IconPopOverSpeaker
+    // in the top-right — a meaningless static icon, NOT a real animated pop-up.
+    // We do NOT dump random icons in v1; suppress overlays entirely here.
+    // (Animated over-speaker pop-ups are demoed via runOverlayAnimDemo.ts.)
+    overlayOptions: { maxOverlays: 0 },
   });
 
   console.log(

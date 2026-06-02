@@ -132,11 +132,16 @@ async function main(): Promise<void> {
         behindSpeaker: true, // ← renders BELOW the speaker matte (the depth beat)
         props: {
           text: "NETFLIX",
-          anchor: "left", // vertically centered at the left; extends across his torso
+          // Upper-third hero anchor: pinned HIGH (~20% from top), horizontally
+          // centered, so the word reads ABOVE his head/shoulders. Only its lower
+          // edge is occluded by the matte → clearly behind him yet legible.
+          anchor: "upper-third",
           enterFrame: 0,
           holdFrames: durationInFrames, // hold the whole clip
           yellow: "#E50914", // Netflix red, big + color-isolated
-          fontSize: 260, // huge hero word so it overlaps his silhouette
+          // Large enough to read as a hero word, but small enough that the top
+          // sits above his head rather than being swallowed by his torso.
+          fontSize: 180,
           glowRadiusPx: 24,
           uppercase: true,
         },

@@ -27,11 +27,21 @@
  * frame (Tier-B per ADR-001 §2.3). Source pattern: OV1.
  */
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { z } from "zod";
 import { FONT_STACKS } from "../../brand";
 
-/** Anchor vocabulary shared across all over-speaker molecules. NEVER center. */
+/** Anchor vocabulary shared across all over-speaker molecules. NEVER center.
+ *  `upper-third` is the behind-speaker hero anchor: a large word pinned HIGH
+ *  (above head/shoulders) so it still reads when the speaker matte occludes its
+ *  lower portion. Horizontally centered (the only centered case) but offset
+ *  toward the TOP, not the dead-center cutaway zone. */
 const anchorEnum = z.enum([
   "top-left",
   "top-right",
@@ -40,12 +50,14 @@ const anchorEnum = z.enum([
   "left",
   "right",
   "lower-third",
+  "upper-third",
 ]);
 
 export const yellowGlowWordCalloutSchema = z.object({
   /** The 1–3 word phrase to call out. */
   text: z.string().default("RIGHT WORDS"),
-  /** Side/corner anchor. NEVER center. Default 'bottom-left' (OV1 default). */
+  /** Side/corner anchor. NEVER dead-center. Default 'bottom-left' (OV1 default).
+   *  Use 'upper-third' for behind-speaker hero words. */
   anchor: anchorEnum.default("bottom-left"),
   /** Frame the callout enters. Default 0. */
   enterFrame: z.number().default(0),
@@ -98,6 +110,17 @@ function anchorStyle(anchor: Anchor): React.CSSProperties {
       };
     case "lower-third":
       return { ...base, bottom: "20%", left: inset };
+    case "upper-third":
+      // Behind-speaker hero anchor: pinned HIGH (top ~20%), horizontally
+      // centered so a big word reads over the head/shoulders. The matte
+      // occludes only its lower edge, keeping the top legible.
+      return {
+        ...base,
+        top: "20%",
+        left: 0,
+        right: 0,
+        justifyContent: "center",
+      };
   }
 }
 
@@ -117,25 +140,26 @@ export const YellowGlowWordCallout: React.FC<
   } = yellowGlowWordCalloutSchema.parse(props);
 
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const local = frame - enterFrame;
 
-  const POP_IN = 5; // 0.85 → 1.0 over 5 frames
-  const OVERSHOOT = 2; // 2-frame overshoot tail
-  const popEnd = POP_IN + OVERSHOOT;
-  const derivedExit = enterFrame + popEnd + holdFrames; // OV1 cuts out (no fade)
+  const POP_IN = 8; // spring settle window
+  const derivedExit = enterFrame + POP_IN + holdFrames; // OV1 cuts out (no fade)
   const effectiveExit = exitFrame ?? derivedExit;
 
   if (frame < enterFrame || frame >= effectiveExit) return null;
 
-  // Scale-pop 0.85 → 1.0 with a small overshoot bump, then settle.
-  const scale = interpolate(
-    local,
-    [0, POP_IN, popEnd],
-    [0.85, 1.04, 1.0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-  // Glow + opacity fade in over the pop window.
-  const opacity = interpolate(local, [0, POP_IN], [0, 1], {
+  // Genuine spring pop: scale 0.6 → 1.0 with overshoot (damping low enough to
+  // visibly bump past 1.0 before settling), so the word "snaps in" like Hormozi.
+  const pop = spring({
+    frame: local,
+    fps,
+    config: { damping: 9, stiffness: 200, mass: 0.7 },
+    durationInFrames: POP_IN,
+  });
+  const scale = 0.6 + 0.4 * pop;
+  // Glow + opacity fade in fast over the first few frames of the pop.
+  const opacity = interpolate(local, [0, 4], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -153,8 +177,11 @@ export const YellowGlowWordCallout: React.FC<
           style={{
             opacity,
             transform: `scale(${scale})`,
-            transformOrigin:
-              anchor.includes("right") ? "right center" : "left center",
+            transformOrigin: anchor.includes("right")
+              ? "right center"
+              : anchor === "upper-third"
+                ? "center center"
+                : "left center",
             fontFamily: FONT_STACKS.sans,
             fontWeight: 900,
             fontSize,
@@ -162,7 +189,10 @@ export const YellowGlowWordCallout: React.FC<
             letterSpacing: "0.01em",
             textTransform: uppercase ? "uppercase" : "none",
             lineHeight: 1.02,
-            maxWidth: "46%",
+            textAlign: anchor === "upper-third" ? "center" : "left",
+            // Upper-third hero words may span most of the width; side anchors stay
+            // narrow so the speaker isn't covered.
+            maxWidth: anchor === "upper-third" ? "92%" : "46%",
             textShadow: `${glow}, ${outline}`,
           }}
         >

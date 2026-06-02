@@ -31,7 +31,13 @@
  * frame (Tier-B per ADR-001 §2.3). Source pattern: OV3.
  */
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { z } from "zod";
 import { FONT_STACKS } from "../../brand";
 
@@ -157,6 +163,7 @@ export const BuildingBulletListOverSpeaker: React.FC<
   } = buildingBulletListOverSpeakerSchema.parse(props);
 
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const local = frame - enterFrame;
 
   // Heading enters first; each item enters on its own beat after the heading.
@@ -179,16 +186,21 @@ export const BuildingBulletListOverSpeaker: React.FC<
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
 
-  // Heading fade+slide from the side edge.
+  // Heading fade+slide from the side edge, with a spring pop so it snaps in
+  // (overshoots slightly past its resting scale before settling).
   const slideFromRight = anchor === "right" || anchor === "top-right" || anchor === "bottom-right";
-  const headingOpacity = interpolate(local, [0, HEADING_IN], [0, 1], {
+  const headingPop = spring({
+    frame: local,
+    fps,
+    config: { damping: 10, stiffness: 190, mass: 0.7 },
+    durationInFrames: HEADING_IN,
+  });
+  const headingOpacity = interpolate(local, [0, 4], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const headingShift = interpolate(local, [0, HEADING_IN], [slideFromRight ? 24 : -24, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const headingShift = (slideFromRight ? 24 : -24) * (1 - headingPop);
+  const headingScale = 0.72 + 0.28 * headingPop;
 
   // Index of the newest revealed item (for dim-prior logic).
   const newestIndex = items.reduce((acc, _item, i) => {
@@ -213,7 +225,8 @@ export const BuildingBulletListOverSpeaker: React.FC<
               lineHeight: 1.05,
               marginBottom: 6,
               opacity: headingOpacity,
-              transform: `translateX(${headingShift}px)`,
+              transform: `translateX(${headingShift}px) scale(${headingScale})`,
+              transformOrigin: slideFromRight ? "right center" : "left center",
               textShadow: `0 0 14px ${accentColor}66, ${dropShadow}`,
             }}
           >
@@ -224,16 +237,22 @@ export const BuildingBulletListOverSpeaker: React.FC<
           const itemAt = firstItemAt + i * beatFrames;
           const itemLocal = local - itemAt;
           if (itemLocal < 0) return null;
-          const opacity = interpolate(itemLocal, [0, ITEM_IN], [0, 1], {
+          // Each item pops in on its beat: spring rise + small scale overshoot.
+          const itemPop = spring({
+            frame: itemLocal,
+            fps,
+            config: { damping: 11, stiffness: 200, mass: 0.6 },
+            durationInFrames: ITEM_IN,
+          });
+          const opacity = interpolate(itemLocal, [0, 3], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           });
-          const rise = interpolate(itemLocal, [0, ITEM_IN], [10, 0], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          });
+          const rise = 14 * (1 - itemPop);
+          const itemScale = 0.82 + 0.18 * itemPop;
           // Prior items dim to 0.6 so the newest reads brightest.
           const dim = i < newestIndex ? 0.6 : 1;
+          const fromRight = anchor.includes("right");
           return (
             <div
               key={i}
@@ -243,7 +262,8 @@ export const BuildingBulletListOverSpeaker: React.FC<
                 alignItems: "flex-start",
                 gap: 16,
                 opacity: opacity * dim,
-                transform: `translateY(${rise}px)`,
+                transform: `translateY(${rise}px) scale(${itemScale})`,
+                transformOrigin: fromRight ? "right center" : "left center",
               }}
             >
               <span
