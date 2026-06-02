@@ -30,6 +30,12 @@ LUT_SIZE = 33
 GAIN = 2.0  # exposure scale after OOTF
 SYSG = 1.2  # HLG OOTF system gamma
 SAT = 0.65  # final saturation multiplier (gamma-domain, luma-preserving)
+# Highlight shoulder (extended-Reinhard white point, in display-linear). A single
+# global gain that matched the polo/neutral pushed bright skin into a hard clip
+# ("blown out"). LW rolls highlights off smoothly so lit skin keeps detail instead
+# of clamping to white; LW≈1.5 drops lit-cheek clipping ~5.8%→~0.2% while leaving
+# mids/darks (neutral bg, polo) essentially unchanged. Set very large to disable.
+SHOULDER_LW = 1.5
 
 # HLG (ARIB STD-B67) inverse-OETF constants.
 _A, _B, _C = 0.17883277, 0.28466892, 0.55991073
@@ -50,7 +56,11 @@ def hlg_to_sdr(e: np.ndarray) -> np.ndarray:
     lin = np.where(e <= 0.5, e * e / 3.0, (np.exp((e - _C) / _A) + _B) / 12.0)
     y = lin @ _LUMA_2020
     lin = lin * np.power(np.clip(y, 1e-6, None), SYSG - 1)[..., None] * GAIN
-    lc = np.clip(lin @ _M_2020_TO_709.T, 0, 1)
+    lc = np.clip(lin @ _M_2020_TO_709.T, 0, None)
+    # Extended-Reinhard highlight shoulder (white point SHOULDER_LW): ~linear for
+    # mids/darks, asymptotic toward 1.0 for highlights → no hard clip on lit skin.
+    lc = lc * (1 + lc / (SHOULDER_LW * SHOULDER_LW)) / (1 + lc)
+    lc = np.clip(lc, 0, 1)
     v = np.where(lc < 0.018, 4.5 * lc, 1.099 * np.power(lc, 0.45) - 0.099)
     v = np.clip(v, 0, 1)
     lum = (v @ _LUMA_709)[..., None]
