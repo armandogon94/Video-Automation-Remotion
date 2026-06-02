@@ -259,3 +259,31 @@ not nested subdirs.
    renderFromPlan (SETPARAMS_BT709, single+multi-source) and runTella16x9Demo.
    Verify with: ffprobe -show_entries stream=color_space,color_transfer,color_primaries
    → all must read bt709 on every staged public/autoedit/*.mp4.
+
+## 2026-06-02 — Color PROVEN + reel/tella/netflix iteration (user pushback)
+
+**Color (numerical proof, no eyeballing):** The reference screenshot = FIRST FRAME of
+IMG_3618.MOV (grayscale NCC 0.957 vs all clips). Compared LUT output to it per-region:
+analytic tonemap was too contrasty (forehead/sky too bright, polo/hair too dark) AND
+the earlier render looked red because of a SECOND bug (bt709 tag) — see prior entries.
+Fit a quadratic cross-channel regression (1,R,G,B,R²,G²,B²,RG,RB,GB → RGB) on 1564 flat
+patches, baked into gen_hlg_lut.py (_FIT_COEF). Per-region error 14-24 → 1-4 levels;
+full MAE R/G/B 8.5/7.7/9.1 (residual = edge misalign, ref is half-res screenshot).
+End-to-end proof: rendered-edit skin [152,122,109] ≈ LUT-on-raw [150,119,109] → Remotion
+preserves the grade. Re-derive: /tmp/fit_poly pattern (pair lut3d-output vs reference).
+
+**Reel bloopers:** user flagged off-camera takes. Frame-inspected all beats:
+  • features IMG_3627 15-31s → reading off PAPER, looking down. DROPPED.
+  • how-1 IMG_3617 6-10s → looking down at PHONE. DROPPED.
+  • avail IMG_3629 42-54s → entire beat is a camera-PAN to the building/marina, voiceover
+    only, no face. Currently KEPT as B-roll — FLAG for user (keep B-roll vs find on-cam take).
+Reel now 8 beats / 65.6s (was 10 / 86.7s).
+
+**Tella face-zoom:** focus was frame-center (0.5,0.4). His face sits LEFT-of-center
+(skin-tone YCbCr centroid: x≈0.255 y≈0.41 mouth → use x0.29 y0.34 eyes). Verified zoom
+now lands on the face.
+
+**Netflix depth word:** topPct prop added to YellowGlowWordCallout upper-third anchor;
+runDepthDemo now topPct 9 (was 20%) + fontSize 230 (was 180). Bigger + over the head.
+Still partly occluded by head (the "behind" effect) — if user wants fully readable, drop
+topPct to ~3-4 (clears head) at cost of the depth read.
