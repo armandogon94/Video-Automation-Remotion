@@ -1,0 +1,51 @@
+{
+  "creator_handle": "itsjack",
+  "analyzed_count": 4,
+  "last_updated": "2026-06-01",
+  "videos": [
+    {
+      "id": "34VoezbEvLw",
+      "title": "Claude Code just Destroyed Video Editing...",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=34VoezbEvLw",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 2,
+      "has_metadata_json": true
+    },
+    {
+      "id": "4socWznMV74",
+      "title": "Claude Video is Here… Automate Anything",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=4socWznMV74",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 2,
+      "has_metadata_json": true
+    },
+    {
+      "id": "nAfbaZysFuk",
+      "title": "I Replaced PowerPoint With Claude Code",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=nAfbaZysFuk",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 2,
+      "has_metadata_json": true
+    },
+    {
+      "id": "o1u_mEELKOQ",
+      "title": "Build your first AI agent (Claude Code)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=o1u_mEELKOQ",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 2,
+      "has_metadata_json": true
+    }
+  ]
+}

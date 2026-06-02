@@ -1,0 +1,73 @@
+{
+  "creator_handle": "nateherk",
+  "analyzed_count": 6,
+  "last_updated": "2026-06-01",
+  "videos": [
+    {
+      "id": "Aw3BkmhYu4I",
+      "title": "Claude Video Editing Just Became Unrecognizable",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=Aw3BkmhYu4I",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 2,
+      "has_metadata_json": true
+    },
+    {
+      "id": "ZNbgOhxhzXg",
+      "title": "Claude Just Destroyed Every Video Editing Tool",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=ZNbgOhxhzXg",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 2,
+      "has_metadata_json": true
+    },
+    {
+      "id": "eRS3CmvrOvA",
+      "title": "I Tried 100+ Claude Code Skills. These 6 Are The Best",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=eRS3CmvrOvA",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 1,
+      "has_metadata_json": true
+    },
+    {
+      "id": "jZgcWCzxh1I",
+      "title": "Claude Code Dynamic Workflows Clearly Explained",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=jZgcWCzxh1I",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 1,
+      "has_metadata_json": true
+    },
+    {
+      "id": "q5lg3npxjAc",
+      "title": "Opus 4.8 Just Dropped. Here's How To Actually Use It.",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=q5lg3npxjAc",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 1,
+      "has_metadata_json": true
+    },
+    {
+      "id": "tDGiWn0flK8",
+      "title": "From Zero to Your First Agentic AI Workflow in 26 Minutes (Claude Code)",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=tDGiWn0flK8",
+      "date_first_analyzed": "2026-06-01",
+      "wave": "wave-7",
+      "frame_count": 0,
+      "clip_count": 1,
+      "has_metadata_json": true
+    }
+  ]
+}
