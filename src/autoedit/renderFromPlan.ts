@@ -121,6 +121,7 @@ export function buildTrimConcatFilter(
   width: number,
   height: number,
   fps: number,
+  isHdr = false,
 ): { filter: string; hasAudio: boolean } {
   const vParts: string[] = [];
   const aParts: string[] = [];
@@ -146,13 +147,46 @@ export function buildTrimConcatFilter(
   const vConcat = `${vLabels.join("")}concat=n=${n}:v=1:a=0[vcat]`;
   const aConcat = `${aLabels.join("")}concat=n=${n}:v=0:a=1[aout]`;
 
+  // HDR fix: iPhone .MOV is HLG/bt2020 10-bit; rendered as-is it looks
+  // oversaturated/wrong. This ffmpeg has no zscale/libplacebo, so we use the
+  // `colorspace` filter for the bt2020→bt709 gamut+matrix conversion (transfer
+  // treated as ~709 — a good approximation for HLG daylight talking-head footage).
+  const colorFix = isHdr
+    ? "colorspace=ispace=bt2020ncl:iprimaries=bt2020:itrc=bt709:" +
+      "space=bt709:primaries=bt709:trc=bt709:range=tv:format=yuv420p,"
+    : "";
   // Downscale + center-crop to fill the canvas, then normalize fps.
   const scale =
-    `[vcat]scale=${width}:${height}:force_original_aspect_ratio=increase,` +
-    `crop=${width}:${height},fps=${fps}[vout]`;
+    `[vcat]${colorFix}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
+    `crop=${width}:${height},fps=${fps},format=yuv420p[vout]`;
 
   const filter = [...vParts, ...aParts, vConcat, scale, aConcat].join(";");
   return { filter, hasAudio: true };
+}
+
+/**
+ * Detect an HDR source (bt2020 primaries or HLG/PQ transfer) via ffprobe, so the
+ * staging step can convert it to bt709 SDR. iPhone recordings are HLG
+ * (`color_transfer=arib-std-b67`, `color_primaries=bt2020`). Returns false on any
+ * probe error (SDR-safe default).
+ */
+async function detectHdr(sourcePath: string): Promise<boolean> {
+  try {
+    const { stdout } = await execa("ffprobe", [
+      "-v",
+      "error",
+      "-select_streams",
+      "v:0",
+      "-show_entries",
+      "stream=color_transfer,color_primaries,color_space",
+      "-of",
+      "default=noprint_wrappers=1:nokey=1",
+      sourcePath,
+    ]);
+    return /b67|arib|smpte2084|bt2020/i.test(stdout);
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -192,10 +226,12 @@ export async function trimAndStageBaseClip(
   const absPath = path.join(publicDir, `${slug}.mp4`);
   const staticRef = path.posix.join("autoedit", `${slug}.mp4`);
 
-  const { filter } = buildTrimConcatFilter(segments, width, height, plan.fps);
+  const isHdr = await detectHdr(plan.sourceVideo);
+  const { filter } = buildTrimConcatFilter(segments, width, height, plan.fps, isHdr);
 
   log(
-    `ffmpeg: trim ${segments.length} segment(s) → ${width}×${height}@${plan.fps}fps → ${absPath}`,
+    `ffmpeg: trim ${segments.length} segment(s) → ${width}×${height}@${plan.fps}fps` +
+      `${isHdr ? " (HDR bt2020/HLG → bt709 SDR)" : ""} → ${absPath}`,
   );
 
   await execa("ffmpeg", [
