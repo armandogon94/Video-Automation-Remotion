@@ -239,3 +239,23 @@ tella-16x9-demo.mp4, IMG_3618-depth.mp4 (NETFLIX→upper-third, legible, behind 
 IMG_3618-edit.mp4, cap-<8 styles>-edit.mp4. Gallery: SHOWCASE.html (slideshow).
 Gotcha: renderEditedVideo slug must be FLAT (no `/`) — staging only mkdirs public/autoedit,
 not nested subdirs.
+
+## 2026-06-01 — Color GOTCHAS (two real bugs found after the LUT)
+
+1. **Highlight clip ("blown out")** — a single global gain that matched polo/neutral
+   pushed lit skin into a hard clip (~5.8% of cheek at 255). Fix: extended-Reinhard
+   highlight shoulder (white point 1.5) in gen_hlg_lut.py before the OETF → lit-cheek
+   clip ~0.3%, skin keeps detail. Mids/darks (bg, polo) ~unchanged.
+
+2. **Mislabeled color tags ("sunburn"/red skin)** — THE BIG ONE. After `lut3d` makes
+   pixels bt709, ffmpeg COPIES the source's HLG/bt2020 frame metadata onto the staged
+   mp4 (color_transfer=arib-std-b67, color_primaries=bt2020). Remotion OffthreadVideo →
+   Chromium honors those tags and RE-TONEMAPS the already-correct frames → skin red
+   (rendered cheek R/G 1.76 vs ref 1.29). PNG/ffprobe spot-checks DON'T catch it (PNGs
+   are untagged). Fix: append `setparams=range=tv:colorspace=bt709:color_primaries=bt709:
+   color_trc=bt709` to the END of the staging filter chain. NOTE: the `-color_trc` /
+   `-color_primaries` OUTPUT OPTIONS are IGNORED when a filtergraph is present (only
+   `-colorspace` partially took) — must use the setparams FILTER. Applied in
+   renderFromPlan (SETPARAMS_BT709, single+multi-source) and runTella16x9Demo.
+   Verify with: ffprobe -show_entries stream=color_space,color_transfer,color_primaries
+   → all must read bt709 on every staged public/autoedit/*.mp4.
