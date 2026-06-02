@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Motion graphics over footage — validate</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--ok:#3ddc84;--line:#222836}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;padding:30px 40px}
+  h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+  h2{font-size:19px;margin:34px 0 14px;color:var(--cyan);letter-spacing:.01em}
+  .sub{color:var(--muted);max-width:980px;margin:0 0 8px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+  figure.pick{border-color:var(--gold)}
+  video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#000;display:block}
+  .nm{font-weight:800;margin-top:10px}
+  .nm .mol{color:var(--cyan);font-weight:600;font-size:12px;display:block;margin-top:2px}
+  .blurb{color:var(--muted);font-size:13px;margin-top:4px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#1a1f2a;color:var(--gold);border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-top:8px}
+  code{background:#1a1f2a;padding:1px 6px;border-radius:5px;font-size:13px}
+</style>
+</head>
+<body>
+  <h1>Motion graphics composited over your real footage</h1>
+  <p class="sub">Each clip = a slice of your footage (color-corrected) with a different overlay component on top.
+    All muted + looping. The goal: tell me which components look good and which to use where. Built from
+    <code>runMotionGraphicsShowcase.ts</code> — easy to add more.</p>
+
+  <h2>① Availability beat — pick one to bake into the Reel (over the B-roll pan)</h2>
+  <p class="sub">You said keep the B-roll and put graphics on top to carry the “beta / Plan Max / future” message. Three takes:</p>
+  <div class="grid">
+    <figure class="pick"><video src="output/autoedit/mg/avail-bullets.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Building bullet list<span class="mol">BuildingBulletListOverSpeaker</span></div>
+      <div class="blurb">DISPONIBILIDAD → Versión beta · Solo Plan Max · El futuro del trabajo con IA. Items animate in one by one.</div><span class="tag">avail option A</span></figure>
+    <figure class="pick"><video src="output/autoedit/mg/avail-chips.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Icon stat chips<span class="mol">IconStatChipStack</span></div>
+      <div class="blurb">🧪 Versión beta · 👑 Solo Plan Max · 🚀 El futuro. Chips pop in stacked.</div><span class="tag">avail option B</span></figure>
+    <figure class="pick"><video src="output/autoedit/mg/avail-callout.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Diagnostic callout card<span class="mol">DiagnosticCalloutCard</span></div>
+      <div class="blurb">DISPONIBILIDAD: → “Beta · Solo Plan Max”. One bold card.</div><span class="tag">avail option C</span></figure>
+  </div>
+
+  <h2>② Across the other beats — components in context (go ham)</h2>
+  <div class="grid">
+    <figure><video src="output/autoedit/mg/hook-stat.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Hook · stat chip<span class="mol">IconStatChipStack</span></div>
+      <div class="blurb">“8 h → min” — the time-saving hook as a number.</div></figure>
+    <figure><video src="output/autoedit/mg/setup-brand.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Setup · brand wordmark<span class="mol">BrandLogoPopOverSpeaker</span></div>
+      <div class="blurb">“Claude Cowork” letter-reveal as you announce it.</div></figure>
+    <figure><video src="output/autoedit/mg/features-bullets.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Features (repurposed B-roll) · bullets<span class="mol">BuildingBulletListOverSpeaker</span></div>
+      <div class="blurb">The off-camera “reading” clip you didn’t like — reused as B-roll with QUÉ HACE bullets on top.</div><span class="tag">reuses dropped clip</span></figure>
+    <figure><video src="output/autoedit/mg/features-chips.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Features · numbered chips<span class="mol">FloatingNumberedChipRow</span></div>
+      <div class="blurb">Organiza · Crea · Resume as a step row.</div></figure>
+    <figure><video src="output/autoedit/mg/how2-auto.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">How-it-works · icon + glow word<span class="mol">IconPop + YellowGlowWordCallout</span></div>
+      <div class="blurb">🤖 pop + “EN AUTOMÁTICO” glow.</div></figure>
+    <figure><video src="output/autoedit/mg/cta-callout.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">CTA · callout card<span class="mol">DiagnosticCalloutCard</span></div>
+      <div class="blurb">PARA TU EMPRESA: → “¿Es la decisión correcta?”</div></figure>
+    <figure><video src="output/autoedit/mg/cta-comment.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">CTA · comment prompt<span class="mol">IconPop 💬 + YellowGlowWordCallout</span></div>
+      <div class="blurb">“herramientas” glow + chat icon — the comment trigger.</div></figure>
+    <figure><video src="output/autoedit/mg/follow-outro.mp4" muted loop autoplay playsinline></video>
+      <div class="nm">Follow · outro title + badge<span class="mol">AnimatedOpenerTitle + PersistentCornerBadge</span></div>
+      <div class="blurb">“ARMANDO INTELIGENCIA / SÍGUEME” outro card + persistent handle.</div></figure>
+  </div>
+
+  <p class="sub" style="margin-top:30px">Tell me: which <b>availability</b> option (A/B/C) to bake into the Reel, and which of the
+    others you want kept / changed / dropped. I can recolor, reposition, swap components, or add more — just say the word.</p>
+<script>
+  // ensure muted tiles actually play (autoplay policy)
+  addEventListener("DOMContentLoaded",()=>document.querySelectorAll("video").forEach(v=>{v.play().catch(()=>{})}));
+</script>
+</body>
+</html>

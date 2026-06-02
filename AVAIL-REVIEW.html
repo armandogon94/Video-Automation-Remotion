@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Availability beat — pick the take</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--ok:#3ddc84;--line:#222836}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;padding:32px 40px}
+  h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+  .sub{color:var(--muted);max-width:900px;margin:0 0 28px}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+  @media(max-width:1300px){.grid{grid-template-columns:repeat(3,1fr)}}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+  video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#000;display:block}
+  .nm{font-weight:800;margin-top:10px;font-size:15px}
+  .nm .src{color:var(--muted);font-weight:500;font-size:12px}
+  .verdict{margin-top:6px;font-size:13px;padding:4px 8px;border-radius:7px;display:inline-block}
+  .v-broll{background:#173a2a;color:var(--ok)}
+  .v-weak{background:#3a2a17;color:#e8a23b}
+  .note{color:var(--muted);font-size:13px;margin-top:6px}
+  .legend{margin-top:26px;color:var(--muted);font-size:14px;max-width:900px}
+  code{background:#1a1f2a;padding:1px 6px;border-radius:5px}
+  b.ok{color:var(--ok)}b.warn{color:#e8a23b}
+</style>
+</head>
+<body>
+  <h1>“Availability” beat — every take in <code>IMG_3629</code> (2:54 long)</h1>
+  <p class="sub">You record the Plan-Max line ~6 times in this one clip. Here is each take, color-corrected,
+    so you can judge. The line is: <i>“Por ahora solo está en versión de prueba y disponible para usuarios del Plan Max,
+    pero claramente marca hacia dónde va el futuro…”</i>. None is a tight piece-to-camera —
+    they’re all walk-around B-roll or you standing distant. <b>Watch and tell me which to use (by name), or “keep B-roll”, or “drop it”.</b></p>
+
+  <div class="grid">
+    <figure>
+      <video src="output/showcase-assets/avail/take2-broll-pan.mp4" controls loop muted playsinline></video>
+      <div class="nm">B-roll pan <span class="src">· 42–55s (currently in the reel)</span></div>
+      <span class="verdict v-broll">✓ cleanest — intentional B-roll</span>
+      <div class="note">Slow pan across the building/marina, voiceover only. No face, but looks deliberate.</div>
+    </figure>
+    <figure>
+      <video src="output/showcase-assets/avail/take3-distant.mp4" controls loop muted playsinline></video>
+      <div class="nm">Take 3 <span class="src">· 74–90s</span></div>
+      <span class="verdict v-weak">~ distant / phone-in-hand</span>
+      <div class="note">You’re in frame but far, holding the phone, not to-camera.</div>
+    </figure>
+    <figure>
+      <video src="output/showcase-assets/avail/take5-standing.mp4" controls loop muted playsinline></video>
+      <div class="nm">Take 5 <span class="src">· 108–116s</span></div>
+      <span class="verdict v-weak">~ standing, distant</span>
+      <div class="note">Visible standing, but small in frame and looking around.</div>
+    </figure>
+    <figure>
+      <video src="output/showcase-assets/avail/take6-last.mp4" controls loop muted playsinline></video>
+      <div class="nm">Take 6 — last <span class="src">· 125–140s</span></div>
+      <span class="verdict v-weak">~ your “final” take</span>
+      <div class="note">The latest full take (you said good ones come last). Still distant / not close-up.</div>
+    </figure>
+    <figure>
+      <video src="output/showcase-assets/avail/tail-standing-left.mp4" controls loop muted playsinline></video>
+      <div class="nm">Tail <span class="src">· 143–153s</span></div>
+      <span class="verdict v-weak">~ standing left edge</span>
+      <div class="note">Closest you get to “in shot” — standing on the left, but not to-camera.</div>
+    </figure>
+  </div>
+
+  <p class="legend">
+    My read: <b class="ok">B-roll pan</b> is the only one that looks finished; the others have you
+    distant/holding the phone. But you know the footage — if one of these reads as a usable on-camera moment to you,
+    name it and I’ll swap it in (tightened to the spoken line). Clips are muted; unmute with the player controls if you want audio.
+  </p>
+</body>
+</html>
