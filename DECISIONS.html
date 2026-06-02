@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Video Factory — Wave-9 synthesis & decisions</title>
+<style>
+  :root{
+    --navy:#1B3A6E; --gold:#D4AF37; --deep:#0F1B2D; --deep2:#0b1422;
+    --ink:#E7EDF6; --mut:#93A3BD; --card:#16243d; --line:#27374f;
+    --green:#7CE49A; --cyan:#5BC0E8; --orange:#E07B3C; --violet:#A88BEA;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--deep);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+  .deck{height:100vh;width:100vw;position:relative}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:5.5vh clamp(28px,7vw,130px);animation:fade .35s ease}
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .kicker{color:var(--gold);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:clamp(32px,4.6vw,62px);line-height:1.05;font-weight:800;letter-spacing:-.02em}
+  h1 .g{color:var(--gold)}
+  h2{font-size:clamp(24px,3.1vw,42px);line-height:1.12;font-weight:800;margin-bottom:6px}
+  .lede{color:var(--mut);font-size:clamp(15px,1.45vw,20px);line-height:1.6;max-width:64ch;margin-top:12px}
+  .grid{display:grid;gap:16px;margin-top:22px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:17px 19px}
+  .card h3{font-size:17px;margin-bottom:5px}.card p{color:var(--mut);font-size:14px;line-height:1.5}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;text-transform:uppercase;margin-bottom:8px}
+  .rec{background:rgba(124,228,154,.13);color:var(--green);border:1px solid rgba(124,228,154,.3)}
+  .new{background:rgba(168,139,234,.14);color:var(--violet);border:1px solid rgba(168,139,234,.3)}
+  .key{background:rgba(212,175,55,.14);color:var(--gold);border:1px solid rgba(212,175,55,.32)}
+  ul{margin-top:12px;padding-left:0;list-style:none}
+  li{font-size:clamp(14px,1.45vw,19px);line-height:1.65;padding-left:28px;position:relative}
+  li::before{content:"";position:absolute;left:6px;top:.65em;width:8px;height:8px;border-radius:2px;background:var(--gold)}
+  li .m{color:var(--mut)}
+  .dec{display:flex;align-items:baseline;gap:15px;margin-bottom:4px}
+  .num{font-size:clamp(36px,4.6vw,64px);font-weight:800;color:var(--navy);-webkit-text-stroke:2px var(--gold);line-height:1}
+  .reccard{margin-top:18px;background:linear-gradient(135deg,rgba(212,175,55,.16),rgba(27,58,110,.16));border:1px solid var(--gold);border-radius:12px;padding:14px 18px;font-size:15px;line-height:1.55}
+  .reccard b{color:var(--gold)}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px}
+  .opt{background:var(--deep2);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+  .opt .h{font-weight:700;font-size:15px;margin-bottom:4px}.opt .e{color:var(--mut);font-size:13px;line-height:1.45}
+  .eff{font-size:12.5px;color:var(--gold);font-weight:700;margin-top:8px}
+  .statrow{display:flex;gap:34px;margin-top:22px;flex-wrap:wrap}
+  .stat .n{font-size:clamp(30px,3.6vw,50px);font-weight:800;color:var(--gold);line-height:1}.stat .l{color:var(--mut);font-size:13px;margin-top:5px}
+  code{font-family:'JetBrains Mono',ui-monospace,monospace;color:var(--gold);background:rgba(212,175,55,.1);padding:1px 6px;border-radius:4px;font-size:.88em}
+  .nav{position:fixed;bottom:20px;right:28px;display:flex;gap:12px;z-index:10}
+  .nav button{background:var(--card);border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:10px;font-size:19px;cursor:pointer}
+  .nav button:hover{border-color:var(--gold)}
+  .count{position:fixed;bottom:28px;left:28px;color:var(--mut);font-size:13px;z-index:10}
+  .brandchip{position:fixed;top:24px;right:32px;color:var(--gold);font-weight:700;font-size:12.5px;letter-spacing:.04em;z-index:10}
+  table.cmp{margin-top:18px;border-collapse:collapse;width:100%;font-size:14px}
+  table.cmp td,table.cmp th{border:1px solid var(--line);padding:9px 13px;text-align:left}
+  table.cmp th{color:var(--gold);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+  table.cmp td .m{color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="brandchip">@armandointeligencia · Wave-9 synthesis</div>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="kicker">Wave-9 · 7 research agents landed</div>
+    <h1>We now know how to build<br><span class="g">"give me my talking-head + b-roll, get an edited video."</span></h1>
+    <p class="lede">I analyzed 3 new creators (Nate Herk, Alex Ziskind, @Itssssss_Jack), deep-researched Tella, found a local model for text-behind-you, surveyed 11 creators on the engine question, and re-judged Hyperframes fairly. Here's the synthesis and the decisions. (← → to move.)</p>
+    <div class="statrow">
+      <div class="stat"><div class="n">3</div><div class="l">new creators analyzed</div></div>
+      <div class="stat"><div class="n">Tella</div><div class="l">layout system reverse-engineered</div></div>
+      <div class="stat"><div class="n">RVM</div><div class="l">local model for text-behind-you (verified)</div></div>
+      <div class="stat"><div class="n">11</div><div class="l">creators surveyed on engine</div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker">The unifying idea</div>
+    <h2>A video = a timeline of <span style="color:var(--gold)">scenes</span></h2>
+    <p class="lede">Every creator you sent + Tella point to the same model. Each scene has a <b>layout</b> (where your cam + screen sit), <b>captions</b>, <b>overlays</b> (pop-ups), and optionally <b>segmentation</b> (text behind you / object emphasis). The good news: we already built the foundation (<code>SpeakerOverlayScene</code> + the <code>EditPlan</code> + 12 overlay molecules) — Wave-9 tells us exactly what to add.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Layout track</h3><p>Cam + screen positions that switch over time (Tella-style). NEW.</p></div>
+      <div class="card"><h3>Caption track</h3><p>Subtitles, placement + style you choose. Have it — add style presets.</p></div>
+      <div class="card"><h3>Overlay track</h3><p>Pop-ups over you. Have 12 molecules — add the new creators' patterns.</p></div>
+      <div class="card"><h3>Foreground matte</h3><p>You, segmented, so text sits BEHIND you. NEW (local model).</p></div>
+      <div class="card"><h3>Object emphasis</h3><p>Glow/box around a thing. Mostly cheap boxes; SAM2 only if needed.</p></div>
+      <div class="card"><h3>Silence trim + cut</h3><p>Already scaffolded in the autoedit CLI.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">Finding · Tella + Nate Herk + Jack</div>
+    <h2>The layout-switching system, decoded</h2>
+    <p class="lede">Tella models a video as a <b>base layout + timed layout segments</b> on a timeline, with <b>Smooth</b> (animated move+resize) or <b>Hard cut</b> transitions. The creators confirm the real-world grammar:</p>
+    <ul>
+      <li><b>Cam-as-corner-PIP over full-screen content</b> <span class="m">(Nate Herk ~60–70%): rounded-rect, ~18–32% wide, corner opposite the active UI.</span></li>
+      <li><b>Framed scene</b> <span class="m">(Jack): screen + bottom-left squircle cam floated on a colored gradient backdrop, ~6–8% inset, soft shadows — he gave a full JSON schema.</span></li>
+      <li><b>Layout presets</b> <span class="m">(Tella): cam-only, screen-only, corner-bubble (9-point grid + S/M/L), 50/50 split, TV-presenter, camera-backdrop, squircle borders.</span></li>
+    </ul>
+    <div class="reccard">Maps directly onto what we built: add a <code>layoutTrack</code> to the <code>EditPlan</code> and a <code>&lt;LayoutTrack&gt;</code> layer to <code>SpeakerOverlayScene</code> that positions <b>two synced video layers (your cam + your screen)</b> and tweens their <code>{x,y,w,h}</code> between segments.</div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker">Finding · subtitles + depth</div>
+    <h2>Text behind you — solved locally</h2>
+    <div class="grid g2">
+      <div class="card"><span class="pill rec">verified on your machine</span><h3>RobustVideoMatting (RVM)</h3><p>The recommended LOCAL model for the "text behind me" depth effect — built for video, soft alpha (catches hair), runs offline on Apple Silicon (MPS confirmed), just like whisper. Install trap flagged: it's NOT the PyPI package named <code>rvm</code>; load via <code>torch.hub</code>.</p></div>
+      <div class="card"><span class="pill new">8 presets</span><h3>Caption styles</h3><p>A <code>style</code> enum to add to <code>FloatingCaption</code>: classic, hormozi-pop, box-highlight, editorial-cyan, condensed-hype, slide-clean, blur-premium, type-terminal. Only one needs a new font.</p></div>
+    </div>
+    <p class="lede"><b>Compositing</b>: <code>[background] → [captions/graphics] → [you, via alpha matte]</code>. AZisk confirmed it's a great "hero word" device (the word "MEMORY" passing behind his torso), used selectively — not every caption.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker">Finding · object emphasis (AZisk)</div>
+    <h2>Glow/spotlight on objects — cheaper than expected</h2>
+    <p class="lede">You worried this needs heavy AI segmentation (SAM2). AZisk's actual effects say otherwise — <b>3 tiers</b>:</p>
+    <table class="cmp">
+      <tr><th>Tier</th><th>How</th><th>Coverage</th></tr>
+      <tr><td><b>1 · Region box / luma</b></td><td>Plain colored boxes, highlight bars, dim-surroundings on screen-recordings. <span class="m">No AI.</span></td><td><b>6 of 8</b> of his effects</td></tr>
+      <tr><td><b>2 · Person-matte</b></td><td>RVM (the same model as text-behind-you).</td><td>1 of 8</td></tr>
+      <tr><td><b>3 · Arbitrary object (SAM2)</b></td><td>Click-to-segment any object → glow/recolor.</td><td><b>0</b> required — upgrade only</td></tr>
+    </table>
+    <div class="reccard">Translation: we get ~90% of the look with <b>cheap boxes + RVM</b>. SAM2 is a "nice later," not a blocker. Big de-risk.</div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">Finding · the engine question (you were right)</div>
+    <h2>Hyperframes is NOT getting retired</h2>
+    <p class="lede">Across 11 creators + your two, the field is a genuine <b>split</b> decided on taste, not capability. The two practitioners doing *exactly* your use case (Nate Herk, Jack) both prefer Hyperframes. But the broader survey + Nate himself flag one thing:</p>
+    <table class="cmp">
+      <tr><th>Hyperframes wins</th><th>Remotion wins</th></tr>
+      <tr><td>LLMs write HTML more reliably; zero setup (~7s); Apache-2.0; GSAP/3D/Lottie via frame-adapter; WebM-with-alpha; single-file hand-edit; <b>"video as code"</b></td><td><b>Reliability</b> (Nate: flaky HF localhost previews he's "never" had in Remotion); our 122-template library + overlay registry + autoedit; determinism; <code>@remotion/captions</code>; runs on our Node 22</td></tr>
+    </table>
+    <div class="reccard"><b>Recommendation (not a kill):</b> keep Remotion as the reliable default, <b>harvest the Hyperframes aesthetic</b> (liquid-glass/HUD overlays, the motion-design "laws", the <code>DESIGN.md</code>-driven Claude-Code loop) as Remotion components, AND run a small <b>apples-to-apples spike</b> in Hyperframes so the choice is evidence-based, not a hunch. Hyperframes stays installed.</div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="dec"><div class="num">1</div><h2>Build the layout-switching system (Tella core)</h2></div>
+    <p class="lede">The thing you most want: composite <b>your cam + your screen/b-roll</b> and switch layouts over time (corner-PIP → split → full-cam → framed-backdrop), with smooth or hard transitions. Add a <code>layoutTrack</code> to the EditPlan + a two-video <code>&lt;LayoutTrack&gt;</code> layer + the framed-scene backdrop preset (Jack's schema).</p>
+    <div class="reccard"><b>My #1 recommendation.</b> This is the heart of "edit my talking-head video like Tella," and it sits right on the foundation we already built.</div>
+    <div class="eff">Effort: ~1–2 sessions · unlocks the core capability</div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="dec"><div class="num">2</div><h2>Text-behind-you (RVM matte pipeline)</h2></div>
+    <p class="lede">Wire RVM as a local pre-render step (like whisper): your clip → per-frame alpha matte → Remotion layers your captions/graphics, then <i>you</i> on top. Add a <code>foregroundMatte</code> layer + a <code>behindSpeaker</code> flag on captions/overlays. The depth effect you and AZisk both want.</p>
+    <div class="opts">
+      <div class="opt"><div class="h">Now (after #1)</div><div class="e">High wow-factor, model is verified-installable, slots into SpeakerOverlayScene cleanly.</div></div>
+      <div class="opt"><div class="h">Spike first</div><div class="e">Do a 30-min RVM run on one of your real clips to confirm matte quality before wiring it in.</div></div>
+    </div>
+    <div class="eff">Effort: ~1 session + a one-time RVM install</div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="dec"><div class="num">3</div><h2>Caption styles + object emphasis</h2></div>
+    <div class="grid g2">
+      <div class="card"><h3>8 caption-style presets</h3><p>Add the <code>style</code> enum to <code>FloatingCaption</code> (hormozi-pop, box-highlight, editorial-cyan, condensed-hype…). Mostly reuse fonts we already load.</p></div>
+      <div class="card"><h3>Region-box object emphasis</h3><p>Tier-1 (no AI): colored box / highlight bar / dim-surroundings molecules for "look at this" moments on screen-recordings.</p></div>
+    </div>
+    <p class="lede">Both are quick, additive, and high-frequency in the references. Good "fill-in" work to batch alongside #1/#2.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="dec"><div class="num">4</div><h2>Engine: run the Hyperframes spike + adopt its look</h2></div>
+    <p class="lede">Settle the engine question with evidence, not vibes. Three sub-moves:</p>
+    <ul>
+      <li><b>Spike</b> <span class="m">— replicate one piece (an over-speaker caption + logo-pop) in Hyperframes, render the Remotion twin from the same whisper timings, compare authoring feel + reliability.</span></li>
+      <li><b>Harvest</b> <span class="m">— port the liquid-glass/HUD aesthetic + the <code>DESIGN.md</code> design-system workflow into our Remotion components regardless of the winner.</span></li>
+      <li><b>Decide</b> <span class="m">— Remotion-primary (recommended) / hybrid-by-scenario / keep both as-is.</span></li>
+    </ul>
+    <div class="reccard">Recommendation: <b>Remotion-primary + harvest HF</b>, keep Hyperframes installed for the spike + as an escape hatch. No migration of the 122 templates.</div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="dec"><div class="num">5</div><h2>Render-from-EditPlan (make it output a video)</h2></div>
+    <p class="lede">Still the piece that turns the autoedit scaffold into a real tool: ffmpeg-concat the kept (non-silent) segments, then drive the scene composition (now with the <code>layoutTrack</code> from #1) to emit an actual MP4. Carried over from last week's plan — now bigger, because it renders the layout system too.</p>
+    <div class="reccard">Pairs with #1: build the layout system, then make the plan render it. Then <b>give me one of your real clips</b> and we produce your first auto-edited video.</div>
+    <div class="eff">Effort: ~1 session (after #1)</div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="kicker">What I need from you</div>
+    <h2>Pick the path</h2>
+    <ul>
+      <li><b>Recommended order:</b> <span class="m">1 (layout system) → 5 (render-from-plan) → give me a real clip → 2 (text-behind-you) → 3 (styles/emphasis), with 4 (HF spike) running in parallel.</span></li>
+      <li>Or reply with the <b>numbers</b> you want, any order.</li>
+      <li>Or <b>"keep improving"</b> and I run the recommended order autonomously.</li>
+      <li>To make it real fastest: <b>drop a real talking-head clip + a screen-recording/b-roll</b> in the project — that's all I need to produce the first end-to-end edit once #1+#5 land.</li>
+    </ul>
+    <div class="reccard"><b>Default if you say nothing:</b> I start Decision 1 (the Tella-style layout system) on the foundation we already have, and kick the Hyperframes spike in parallel.</div>
+  </section>
+
+</div>
+
+<div class="count" id="count">1 / 12</div>
+<div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];let i=0;
+  const count=document.getElementById('count');
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('active',k===i));count.textContent=(i+1)+' / '+slides.length;}
+  document.getElementById('next').onclick=()=>show(i+1);document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);});
+</script>
+</body>
+</html>
