@@ -13,9 +13,11 @@
  *   4. buildEditPlan(...)                            → validated EditPlan
  *   5. write <out> JSON
  *
- * DEFERRED (documented stub, NOT run here — see ADR-003 §5 / §6):
- *   6. render-from-plan: feed the EditPlan to SpeakerOverlayScene{16x9,9x16}
- *      + an overlay registry. `--render` only prints the intended next step.
+ * RENDER (Part 2 — now REAL, see ADR-003 §6):
+ *   6. render-from-plan: ffmpeg-trim the KEEP segments into a downscaled base clip
+ *      staged under public/autoedit/, then render SpeakerOverlayScene{16x9,9x16}
+ *      over it with caption/overlay/layout props built from the EditPlan, writing
+ *      output/autoedit/<slug>-edit.mp4. Triggered by `--render`.
  *
  * No edits to src/pipeline/generate.ts — wiring point documented in ADR-003 §6.
  */
@@ -27,6 +29,12 @@ import path from "path";
 import { detectSilences, keepSegmentsFromSilences, toEditSegments } from "./silenceTrim.js";
 import { buildEditPlan } from "./buildEditPlan.js";
 import { editPlanWordSchema, type EditPlanWord, type EditPlanAspect } from "./editPlan.js";
+import { renderEditedVideo, type CaptionStyle } from "./renderFromPlan.js";
+
+const CAPTION_STYLES: readonly CaptionStyle[] = [
+  "classic", "hormozi-pop", "box-highlight", "editorial-cyan",
+  "condensed-hype", "slide-clean", "blur-premium", "type-terminal",
+];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Small helpers
@@ -112,7 +120,10 @@ program
   .option("--silence-db <db>", "silencedetect noise floor (dB, negative)", "-30")
   .option("--min-silence <sec>", "Minimum silence to trim (seconds)", "0.5")
   .option("--no-trim", "Skip silence-trim (keep the whole clip as one segment)")
-  .option("--render", "(stub) Print the deferred render-from-plan next step and exit")
+  .option("--render", "Render the EditPlan to a finished MP4 (ffmpeg-trim + SpeakerOverlayScene)")
+  .option("--caption-style <style>", "FloatingCaption preset: editorial-cyan|hormozi-pop|classic|… (with --render)", "editorial-cyan")
+  .option("--handle <handle>", "Brand handle chip ('' hides it) (with --render)")
+  .option("--slug <slug>", "Output slug for staged clip + final MP4 (with --render); defaults to the source filename")
   .parse();
 
 async function main(): Promise<void> {
@@ -204,15 +215,28 @@ async function main(): Promise<void> {
   fs.writeFileSync(outPath, JSON.stringify(plan, null, 2));
   log("write", `EditPlan → ${outPath}`);
 
-  // ── 6. render-from-plan (DEFERRED stub) ────────────────────────────────────
+  // ── 6. render-from-plan (REAL — Part 2) ────────────────────────────────────
   if (opts.render) {
-    console.log("\n[render] DEFERRED (ADR-003 §5/§6). The render step will:");
-    console.log("  · ffmpeg-concat the kept segments into a trimmed base video,");
-    console.log("  · feed EditPlan.captionTrack to FloatingCaption (already built),");
-    console.log("  · resolve EditPlan.overlayTrack[].type through an overlay registry");
-    console.log("    (src/autoedit/overlayRegistry — TODO) into the SpeakerOverlayScene overlay slot,");
-    console.log("  · render via @remotion/renderer (see src/pipeline/render.ts).");
-    console.log("  Not executed in this scaffold.\n");
+    const captionStyle: CaptionStyle = CAPTION_STYLES.includes(opts.captionStyle)
+      ? (opts.captionStyle as CaptionStyle)
+      : "editorial-cyan";
+    const slug =
+      typeof opts.slug === "string" && opts.slug.length > 0
+        ? opts.slug
+        : path.basename(video).replace(/\.[^.]+$/, "");
+
+    log("render", `ffmpeg-trim + SpeakerOverlayScene render (style=${captionStyle}, slug=${slug})...`);
+    const result = await renderEditedVideo({
+      plan,
+      projectRoot,
+      slug,
+      captionStyle,
+      handle: opts.handle,
+      log: (m) => log("render", m),
+    });
+    log("render", `staged clip  → ${result.stagedClipPath}`);
+    log("render", `final video  → ${result.outputPath}`);
+    log("render", `composition=${result.compositionId} frames=${result.durationInFrames} time=${result.elapsedSeconds.toFixed(1)}s`);
   }
 
   console.log("\n✓ autoedit complete.\n");

@@ -83,3 +83,7 @@ docs/**/*.webp
 
 # Generated TTS voiceover samples (regenerable from scripts)
 public/voiceover-*.mp3
+
+# Auto-edit staged base clips + matte PNG sequences (regenerable)
+public/autoedit/
+public/matte/
