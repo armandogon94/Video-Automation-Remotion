@@ -128,6 +128,35 @@ export function hlgLutPath(projectRoot: string): string {
 }
 
 /**
+ * ffmpeg OUTPUT flags that TAG the staged clip as bt709 SDR (they relabel the
+ * stream; they do NOT convert pixels). After `lut3d` the pixels are already bt709
+ * SDR, but ffmpeg otherwise copies the source's HLG/bt2020 tags onto the output —
+ * so a player/Remotion (OffthreadVideo → Chromium) would see HLG tags and re-tonemap
+ * the already-converted frames, shifting skin red/oversaturated. Tagging bt709 makes
+ * downstream decoders interpret the SDR pixels correctly. Safe for genuinely-SDR
+ * sources too (the staged clip is always meant to be bt709 for the Remotion stage).
+ */
+const SDR_TAG_ARGS = [
+  "-colorspace",
+  "bt709",
+  "-color_primaries",
+  "bt709",
+  "-color_trc",
+  "bt709",
+] as const;
+
+/**
+ * filtergraph tail that stamps bt709 SDR onto the OUTPUT FRAMES. The `-color_trc` /
+ * `-color_primaries` OUTPUT options are ignored when a filtergraph is present (the
+ * encoder reads frame-side color metadata, which the filters inherit from the HLG
+ * source) — so without this the staged clip stays tagged `arib-std-b67`/`bt2020`
+ * and Remotion re-tonemaps it (skin shifts red). `setparams` is the canonical way to
+ * relabel frames after the LUT has already made the pixels bt709. Pixels unchanged.
+ */
+const SETPARAMS_BT709 =
+  "setparams=range=tv:colorspace=bt709:color_primaries=bt709:color_trc=bt709";
+
+/**
  * Escape a filesystem path for use inside an ffmpeg filtergraph option value
  * wrapped in single quotes (`lut3d=file='...'`). Only `\` and `'` are special
  * inside single quotes; spaces and `/` pass through untouched.
@@ -190,7 +219,7 @@ export function buildTrimConcatFilter(
   // Downscale + center-crop to fill the canvas, then normalize fps.
   const scale =
     `[vcat]${colorFix}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
-    `crop=${width}:${height},fps=${fps},format=yuv420p[vout]`;
+    `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[vout]`;
 
   const filter = [...vParts, ...aParts, vConcat, scale, aConcat].join(";");
   return { filter, hasAudio: true };
@@ -291,6 +320,7 @@ export async function trimAndStageBaseClip(
     "medium",
     "-pix_fmt",
     "yuv420p",
+    ...SDR_TAG_ARGS,
     "-c:a",
     "aac",
     "-b:a",
@@ -562,7 +592,7 @@ export function buildMultiSourceConcatFilter(
     parts.push(
       `[${i}:v]trim=start=${b.startSec}:end=${b.endSec},setpts=PTS-STARTPTS,` +
         `${colorFix}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
-        `crop=${width}:${height},fps=${fps},format=yuv420p[v${i}]`,
+        `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
     // Audio: same trim window; resample to a uniform rate so concat accepts them.
@@ -640,6 +670,7 @@ async function stageMultiSourceClip(
     "medium",
     "-pix_fmt",
     "yuv420p",
+    ...SDR_TAG_ARGS,
     "-c:a",
     "aac",
     "-b:a",

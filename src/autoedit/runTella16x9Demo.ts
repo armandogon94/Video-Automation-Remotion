@@ -81,7 +81,8 @@ async function stageCamClip(absOut: string): Promise<void> {
   const colorFix = hdrColorFixFilter(true, hlgLutPath(PROJECT_ROOT));
   const vf =
     `${colorFix}scale=${w}:${h}:force_original_aspect_ratio=increase,` +
-    `crop=${w}:${h},fps=${FPS},format=yuv420p`;
+    `crop=${w}:${h},fps=${FPS},format=yuv420p,` +
+    `setparams=range=tv:colorspace=bt709:color_primaries=bt709:color_trc=bt709`;
   console.log(`[tella] staging cam clip (HDR→bt709, ${w}×${h}) → ${absOut}`);
   await execa("ffmpeg", [
     "-y",
@@ -101,6 +102,15 @@ async function stageCamClip(absOut: string): Promise<void> {
     "medium",
     "-pix_fmt",
     "yuv420p",
+    // Tag the staged clip bt709 SDR — pixels are already bt709 after the LUT, but
+    // ffmpeg would otherwise keep the source HLG/bt2020 tags and Remotion would
+    // re-tonemap (skin shifts red). Relabel, do not convert.
+    "-colorspace",
+    "bt709",
+    "-color_primaries",
+    "bt709",
+    "-color_trc",
+    "bt709",
     "-c:a",
     "aac",
     "-b:a",
