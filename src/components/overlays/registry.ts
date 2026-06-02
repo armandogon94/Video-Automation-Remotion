@@ -25,6 +25,8 @@ import { AnimatedOpenerTitleOverDarkSet } from "./AnimatedOpenerTitleOverDarkSet
 import { RegionBoxAnnotation } from "./RegionBoxAnnotation";
 import { LumaHighlightBar } from "./LumaHighlightBar";
 import { DimSurroundingsSpotlight } from "./DimSurroundingsSpotlight";
+// Versatile multi-mode text reveal (behind-speaker depth OR on-screen).
+import { RevealText } from "./RevealText";
 
 type LooseOverlay = React.FC<Record<string, unknown>>;
 
@@ -44,6 +46,7 @@ export const OVERLAY_REGISTRY = {
   RegionBoxAnnotation,
   LumaHighlightBar,
   DimSurroundingsSpotlight,
+  RevealText,
 } as unknown as Record<string, LooseOverlay>;
 
 export type OverlayType = keyof typeof OVERLAY_REGISTRY;

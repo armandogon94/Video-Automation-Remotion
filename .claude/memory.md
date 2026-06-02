@@ -287,3 +287,29 @@ now lands on the face.
 runDepthDemo now topPct 9 (was 20%) + fontSize 230 (was 180). Bigger + over the head.
 Still partly occluded by head (the "behind" effect) — if user wants fully readable, drop
 topPct to ~3-4 (clears head) at cost of the depth read.
+
+## 2026-06-02 — Overnight autonomous batch (depth/text/transitions)
+
+User: "didn't like the 3 avail options, keep trying, use dynamic workflows in parallel,
+keep making text-behind-me / text-reveal / transition variations, do as much as possible
+overnight." Delivered:
+- **RevealText** component (src/components/overlays/RevealText.tsx, registered) — ONE
+  versatile text overlay, reveal modes: pop, fade-up, slide-left, slide-up, scale-in,
+  blur-in, typewriter, word-by-word, mask-wipe, rise-line. Props: opacityMax (ghosted
+  behind-text), noWrap (macro overflow), accent word highlight, brand fonts. Works behind
+  the matte (behindSpeaker) OR foreground.
+  ⚠️ GOTCHA: adding an overlay requires BOTH the import AND an entry in the
+  OVERLAY_REGISTRY object literal — I forgot the object entry → scene silently rendered
+  nothing (OVERLAY_REGISTRY[type] undefined → null, no error). Always verify a frame.
+- **runVariationsShowcase.ts**: 22 demos (10 depth behind-speaker + 12 text-reveal modes)
+  over 3 matted plates (IMG_3618 + new depth-follow/depth-hook mattes). bundle-once.
+- **Transitions**: 12 ffmpeg xfade demos (output/autoedit/trans/) between hook+benefit —
+  fade/fadeblack/dissolve/wipeleft/slideup/smoothright/circleopen/radial/zoomin/pixelize/
+  diagtl/squeezev. No Remotion needed.
+- **Workflow** (mine-creator-techniques): 5 agents mined 12 creators → 49 buildable ideas
+  digest at docs/research/wave-10/CREATOR-MINED-IDEAS.md (grounded the RevealText modes).
+- Galleries: VARIATIONS.html (depth/text/transitions) + INDEX.html master + reuse
+  SHOWCASE/MOTION-GRAPHICS/AVAIL-REVIEW.
+- New mattes: public/matte/depth-follow, depth-hook (RVM, from color-correct plates).
+STILL OPEN (user decisions): which depth styles / text-reveals / transitions to keep,
+avail-beat graphic, Reel default caption style. Then wire winners into the Reel.

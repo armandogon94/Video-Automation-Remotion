@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Variations — depth · text reveals · transitions</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--navy:#1B3A6E;--line:#222836}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;padding:30px 40px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:-.02em}
+  h2{font-size:20px;margin:36px 0 6px;color:var(--cyan)}
+  .sub{color:var(--muted);max-width:1000px;margin:0 0 12px}
+  .links a{color:var(--gold);margin-right:18px;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  @media(max-width:1300px){.grid{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px}
+  video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:9px;background:#000;display:block}
+  .nm{font-weight:800;margin-top:8px;font-size:14px}
+  .blurb{color:var(--muted);font-size:12.5px;margin-top:3px}
+</style>
+</head>
+<body>
+  <h1>Variations — overnight batch</h1>
+  <p class="sub">New <code>RevealText</code> component + FFmpeg transitions, fanned out across your clips. Tell me which depth styles, which text-reveal modes, and which transitions you like — I'll wire the winners into the Reel.</p>
+  <p class="links">Other galleries: <a href="SHOWCASE.html">SHOWCASE</a> <a href="MOTION-GRAPHICS.html">MOTION-GRAPHICS</a> <a href="AVAIL-REVIEW.html">AVAIL-REVIEW</a></p>
+
+  <h2>① Text BEHIND you (depth) — 10 ways</h2>
+  <p class="sub">Rendered behind the AI person-matte so you occlude it. Different words, positions, scales, opacities, reveals.</p>
+  <div class="grid" id="depth"></div>
+
+  <h2>② Text ON screen — 12 reveal modes</h2>
+  <p class="sub">Same component, foreground. One demo per entrance animation so you can compare how text appears.</p>
+  <div class="grid" id="text"></div>
+
+  <h2>③ Transitions — 12 ways (between two beats)</h2>
+  <p class="sub">FFmpeg xfade between the hook clip and the benefit clip. Watch the cut at ~2.3s.</p>
+  <div class="grid" id="trans"></div>
+
+<script>
+  const DEPTH = [
+    ["d01-ghost-macro","Ghosted macro INTELIGENCIA (28%, scale-in)"],
+    ["d02-chapter-numeral","Giant gold 01 numeral (pop)"],
+    ["d03-keyword-top","NETFLIX hero top, behind head (red)"],
+    ["d04-typewriter","Typewriter ARMANDO INTELIGENCIA (caret)"],
+    ["d05-rise-stat","8 HORAS → MINUTOS rises line-by-line"],
+    ["d06-side-mask","FUTURO wipes in at the side"],
+    ["d07-word-by-word","EL FUTURO DEL TRABAJO words pop in"],
+    ["d08-blur-brand","COWORK de-blurs in (navy, 55%)"],
+    ["d09-slide-up","AUTOMÁTICO slides up (gold)"],
+    ["d10-macro-overflow","IA macro overflowing frame (ghosted)"],
+  ];
+  const TEXT = [
+    ["t01-pop","pop — spring scale + fade"],
+    ["t02-fade-up","fade-up — opacity + rise"],
+    ["t03-slide-left","slide-left — enters from right"],
+    ["t04-slide-up","slide-up — rises from below"],
+    ["t05-scale-in","scale-in — settles from 1.35×"],
+    ["t06-blur-in","blur-in — de-blurs"],
+    ["t07-typewriter","typewriter — chars + caret"],
+    ["t08-word-by-word","word-by-word — staggered pops"],
+    ["t09-mask-wipe","mask-wipe — left→right reveal"],
+    ["t10-rise-line","rise-line — multi-line stagger"],
+    ["t11-serif-quote","serif elegant fade (editorial)"],
+    ["t12-mono-terminal","mono terminal typewriter (gold)"],
+  ];
+  const TRANS = ["fade","fadeblack","dissolve","wipeleft","slideup","smoothright","circleopen","radial","zoomin","pixelize","diagtl","squeezev"]
+    .map(t=>["trans-"+t, t]);
+  const tile = (dir,[file,blurb]) => `<figure><video src="output/autoedit/${dir}/${file}.mp4" muted loop autoplay playsinline controls></video><div class="nm">${file.replace(/^(d|t|trans)[0-9-]*/,'')||file}</div><div class="blurb">${blurb}</div></figure>`;
+  document.getElementById("depth").innerHTML = DEPTH.map(d=>tile("var",d)).join("");
+  document.getElementById("text").innerHTML  = TEXT.map(d=>tile("var",d)).join("");
+  document.getElementById("trans").innerHTML = TRANS.map(d=>tile("trans",d)).join("");
+  addEventListener("DOMContentLoaded",()=>document.querySelectorAll("video").forEach(v=>v.play().catch(()=>{})));
+</script>
+</body>
+</html>
