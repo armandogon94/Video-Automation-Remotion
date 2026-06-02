@@ -3,6 +3,7 @@ import { loadFont as loadJetBrainsMono } from "@remotion/google-fonts/JetBrainsM
 import { loadFont as loadFiraCode } from "@remotion/google-fonts/FiraCode";
 import { loadFont as loadPlayfairDisplay } from "@remotion/google-fonts/PlayfairDisplay";
 import { loadFont as loadOswald } from "@remotion/google-fonts/Oswald";
+import { loadFont as loadMontserrat } from "@remotion/google-fonts/Montserrat";
 
 loadInter("normal", {
   weights: ["300", "400", "500", "600", "700", "800", "900"],
@@ -36,6 +37,13 @@ loadPlayfairDisplay("italic", { weights: ["400", "700", "900"] });
 // lockups. Pin the three display weights the lockups actually use.
 loadOswald("normal", { weights: ["500", "600", "700"] });
 
+// Montserrat (Black 900) = the canonical "Hormozi pop" caption face — the most
+// common free substitute for TheBoldFont in CapCut/Submagic "Hormozi" presets
+// (Wave-9 SUBTITLES-AND-DEPTH-MATTING §1.1). Loaded only for the `hormozi-pop`
+// FloatingCaption style preset; everything else reuses Inter/Oswald. Pin the two
+// weights the preset uses (800 fallback emphasis + 900 black headline).
+loadMontserrat("normal", { weights: ["800", "900"] });
+
 /**
  * Brand-wide font stacks. Import these instead of inlining font-family strings
  * in compositions — keeps both monospace usages aligned (per A3 audit) and lets
@@ -62,4 +70,8 @@ export const FONT_STACKS = {
    *  a real condensed face. Falls back to Arial Narrow then a generic sans if
    *  the loader hasn't run yet (e.g. SSR snapshot). */
   condensed: "'Oswald', 'Arial Narrow', sans-serif",
+  /** Montserrat — the geometric BLACK display face for the `hormozi-pop`
+   *  caption preset (Wave-9 §1.1). Falls back to Inter (our geometric-ish sans)
+   *  if the loader hasn't run yet, then a generic sans. */
+  display: "'Montserrat', Inter, sans-serif",
 } as const;

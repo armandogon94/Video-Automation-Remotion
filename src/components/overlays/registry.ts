@@ -21,6 +21,10 @@ import { FloatingProductCard } from "./FloatingProductCard";
 import { PersistentCornerBadge } from "./PersistentCornerBadge";
 import { BrandLogoPopOverSpeaker } from "./BrandLogoPopOverSpeaker";
 import { AnimatedOpenerTitleOverDarkSet } from "./AnimatedOpenerTitleOverDarkSet";
+// Region-box object-emphasis molecules (Tier-1, NO AI — AZisk §2 OE1–OE4).
+import { RegionBoxAnnotation } from "./RegionBoxAnnotation";
+import { LumaHighlightBar } from "./LumaHighlightBar";
+import { DimSurroundingsSpotlight } from "./DimSurroundingsSpotlight";
 
 type LooseOverlay = React.FC<Record<string, unknown>>;
 
@@ -37,6 +41,9 @@ export const OVERLAY_REGISTRY = {
   PersistentCornerBadge,
   BrandLogoPopOverSpeaker,
   AnimatedOpenerTitleOverDarkSet,
+  RegionBoxAnnotation,
+  LumaHighlightBar,
+  DimSurroundingsSpotlight,
 } as unknown as Record<string, LooseOverlay>;
 
 export type OverlayType = keyof typeof OVERLAY_REGISTRY;

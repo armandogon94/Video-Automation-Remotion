@@ -28,6 +28,26 @@
  *  - 'sentence' : the whole active window renders in one flat color (active
  *                 color), no per-word phasing — reads as a plain subtitle line.
  *
+ * STYLE PRESETS (orthogonal axis — Wave-9 §1.2)
+ * ---------------------------------------------
+ * `style` is a NAMED BUNDLE OF DEFAULTS for the *typographic / animation* axis
+ * (font, weight, case, per-word animation, and a recommended default register +
+ * position). It is ORTHOGONAL to `register` (the COLOR axis — ADR-002 §7 #3) and
+ * to `mode` (karaoke vs sentence). A preset only supplies DEFAULTS: any explicit
+ * prop the caller passes (`register`, `mode`, `position`, `fontSize`, …) always
+ * wins over the preset. Omitting `style` → `'classic'` → byte-identical to the
+ * pre-preset behavior, so every existing call site is unchanged.
+ *
+ *  - 'classic'       : today's look (Inter 800, karaoke recolor + scale 1.06).
+ *  - 'hormozi-pop'   : Montserrat Black 900 ALL-CAPS, spring word-pop, punchy.
+ *  - 'box-highlight' : Inter 800 ALL-CAPS, active word gets a filled accent pill
+ *                      behind it + dark ink (the "marker" look). LAYOUT change.
+ *  - 'editorial-cyan': Inter 700 sentence-case, color-flip (no scale), editorial.
+ *  - 'condensed-hype': Oswald 700 ALL-CAPS, vertical bounce spring, punchy.
+ *  - 'slide-clean'   : Inter 600 sentence-case, slide-up per word, technical.
+ *  - 'blur-premium'  : Inter 600 sentence-case, blur-in per word, editorial.
+ *  - 'type-terminal' : JetBrains/Fira mono 500 as-typed, technical.
+ *
  * POSITIONING
  * -----------
  * `position` resolves to an absolute placement on a transparent AbsoluteFill:
@@ -48,6 +68,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
   interpolate,
+  spring,
 } from "remotion";
 import { z } from "zod";
 import { FONT_STACKS } from "../brand";
@@ -85,6 +106,129 @@ const REGISTER_PALETTES: Record<"punchy" | "editorial" | "technical", RegisterPa
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Style presets — the TYPOGRAPHIC / ANIMATION axis (Wave-9 §1.2). ORTHOGONAL to
+// `register` (color) and `mode` (karaoke/sentence). Each preset is a bundle of
+// DEFAULTS only; an explicit caller prop always overrides the preset's default.
+//
+// `animation` drives the active-word transform:
+//  - 'recolor'   : tiny scale(1.06) on the active word (classic).
+//  - 'pop'       : spring scale 0.7→1.0 with overshoot (Hormozi bounce).
+//  - 'box'       : filled accent pill behind the active word + dark ink.
+//  - 'flip'      : color-flip only, no scale (calm editorial).
+//  - 'bounce'    : vertical spring (translateY overshoot) per active word.
+//  - 'slide-up'  : active word rises a few px + fades on becoming active.
+//  - 'blur-in'   : active word fades from blurred → sharp.
+//  - 'none'      : no per-word transform (used by 'type-terminal').
+// ─────────────────────────────────────────────────────────────────────────────
+
+type CaptionStyle =
+  | "classic"
+  | "hormozi-pop"
+  | "box-highlight"
+  | "editorial-cyan"
+  | "condensed-hype"
+  | "slide-clean"
+  | "blur-premium"
+  | "type-terminal";
+
+type WordAnimation =
+  | "recolor"
+  | "pop"
+  | "box"
+  | "flip"
+  | "bounce"
+  | "slide-up"
+  | "blur-in"
+  | "none";
+
+interface StylePreset {
+  fontFamily: string;
+  fontWeight: number;
+  textTransform: React.CSSProperties["textTransform"];
+  letterSpacing: string;
+  animation: WordAnimation;
+  defaultRegister: "punchy" | "editorial" | "technical";
+  defaultPosition: FloatingCaptionProps["position"];
+}
+
+const STYLE_PRESETS: Record<CaptionStyle, StylePreset> = {
+  classic: {
+    fontFamily: FONT_STACKS.sans,
+    fontWeight: 800,
+    textTransform: "none",
+    letterSpacing: "-0.01em",
+    animation: "recolor",
+    defaultRegister: "editorial",
+    defaultPosition: "bottom-center",
+  },
+  "hormozi-pop": {
+    // Montserrat Black; FONT_STACKS.display falls back to Inter if the loader
+    // hasn't run yet (e.g. SSR snapshot), matching the graceful-fallback note.
+    fontFamily: FONT_STACKS.display,
+    fontWeight: 900,
+    textTransform: "uppercase",
+    letterSpacing: "-0.01em",
+    animation: "pop",
+    defaultRegister: "punchy",
+    defaultPosition: "bottom-center",
+  },
+  "box-highlight": {
+    fontFamily: FONT_STACKS.sans,
+    fontWeight: 800,
+    textTransform: "uppercase",
+    letterSpacing: "0em",
+    animation: "box",
+    defaultRegister: "punchy",
+    defaultPosition: "bottom-center",
+  },
+  "editorial-cyan": {
+    fontFamily: FONT_STACKS.sans,
+    fontWeight: 700,
+    textTransform: "none",
+    letterSpacing: "-0.005em",
+    animation: "flip",
+    defaultRegister: "editorial",
+    defaultPosition: "bottom-center",
+  },
+  "condensed-hype": {
+    fontFamily: FONT_STACKS.condensed,
+    fontWeight: 700,
+    textTransform: "uppercase",
+    letterSpacing: "0.01em",
+    animation: "bounce",
+    defaultRegister: "punchy",
+    defaultPosition: "center",
+  },
+  "slide-clean": {
+    fontFamily: FONT_STACKS.sans,
+    fontWeight: 600,
+    textTransform: "none",
+    letterSpacing: "0em",
+    animation: "slide-up",
+    defaultRegister: "technical",
+    defaultPosition: "bottom-center",
+  },
+  "blur-premium": {
+    fontFamily: FONT_STACKS.sans,
+    fontWeight: 600,
+    textTransform: "none",
+    letterSpacing: "0em",
+    animation: "blur-in",
+    defaultRegister: "editorial",
+    defaultPosition: "bottom-center",
+  },
+  "type-terminal": {
+    fontFamily: FONT_STACKS.monoCode,
+    fontWeight: 500,
+    textTransform: "none",
+    letterSpacing: "0em",
+    animation: "none",
+    defaultRegister: "technical",
+    defaultPosition: "bottom-center",
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Schema (inline zod, every field .default()ed so it renders standalone)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -101,19 +245,41 @@ const floatingCaptionWordTimingSchema = z.object({
 export const floatingCaptionSchema = z.object({
   /** Per-word timings. Same shape as schemas.ts `WordTiming`. */
   wordTimings: z.array(floatingCaptionWordTimingSchema).default([]),
-  /** Where the caption block sits on the frame. */
+  /**
+   * Typographic/animation preset (orthogonal to `register` + `mode`; Wave-9
+   * §1.2). Sets DEFAULT font/weight/case/animation + a recommended default
+   * register and position. Explicit props below always override the preset's
+   * defaults. Omitted → 'classic' → identical to the pre-preset behavior.
+   */
+  style: z
+    .enum([
+      "classic",
+      "hormozi-pop",
+      "box-highlight",
+      "editorial-cyan",
+      "condensed-hype",
+      "slide-clean",
+      "blur-premium",
+      "type-terminal",
+    ])
+    .optional(),
+  /** Where the caption block sits on the frame. When omitted, the active
+   *  `style` preset's default position is used (`bottom-center` for 'classic'). */
   position: z
     .enum(["bottom-center", "center", "top", "custom"])
-    .default("bottom-center"),
+    .optional(),
   /** Used only when `position === 'custom'`. Percentages (0–100) of frame
    *  width/height; the text block centers itself on this point. */
   customXY: z
     .object({ xPct: z.number(), yPct: z.number() })
     .optional(),
-  /** 'karaoke' = per-word active/past/future tint; 'sentence' = flat line. */
+  /** 'karaoke' = per-word active/past/future tint; 'sentence' = flat line.
+   *  Defaults to 'karaoke' (preserves pre-preset behavior). */
   mode: z.enum(["karaoke", "sentence"]).default("karaoke"),
-  /** ADR-002 register vocabulary (reused from EditorialCaption). */
-  register: z.enum(["punchy", "editorial", "technical"]).default("editorial"),
+  /** ADR-002 register (COLOR) vocabulary — orthogonal to `style`. When omitted,
+   *  the active `style` preset's default register is used ('editorial' for
+   *  'classic', so existing call sites are unchanged). */
+  register: z.enum(["punchy", "editorial", "technical"]).optional(),
   /** Caption block max width as a percentage of the frame width. */
   widthPct: z.number().default(70),
   /** Font size in px. When omitted, defaults to 56 (sensible for 1080-wide). */
@@ -205,10 +371,11 @@ function resolvePlacement(
 
 export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
   wordTimings,
-  position = "bottom-center",
+  style = "classic",
+  position,
   customXY,
   mode = "karaoke",
-  register = "editorial",
+  register,
   widthPct = 70,
   fontSize,
   windowSize = 6,
@@ -217,7 +384,12 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const palette = REGISTER_PALETTES[register];
+  // Resolve the style preset. Explicit `register` / `position` props always win
+  // over the preset's defaults (orthogonal-axis contract, Wave-9 §1.2).
+  const preset = STYLE_PRESETS[style];
+  const resolvedRegister = register ?? preset.defaultRegister;
+  const resolvedPosition = position ?? preset.defaultPosition;
+  const palette = REGISTER_PALETTES[resolvedRegister];
   const resolvedFontSize = fontSize ?? 56;
 
   // Chunk into non-overlapping windows in absolute frame coordinates — same
@@ -250,7 +422,12 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
     extrapolateRight: "clamp",
   });
 
-  const placement = resolvePlacement(position, customXY, widthPct);
+  const placement = resolvePlacement(resolvedPosition, customXY, widthPct);
+
+  // The active-word background pill is the ONE layout change (Wave-9 §1.2,
+  // 'box-highlight'): only this preset draws a filled rect behind the active
+  // word and flips the ink dark; all others leave the background transparent.
+  const usesBoxPill = preset.animation === "box";
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none", opacity: fadeIn }}>
@@ -267,8 +444,10 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
           {active.words.map((w, i) => {
             const isActive = frame >= w.startFrame && frame <= w.endFrame;
             const isPast = frame > w.endFrame;
+
             // 'sentence' mode: flat active color for the whole line, no phasing.
-            const color =
+            // Karaoke: active/past/future tint from the resolved register palette.
+            const phaseColor =
               mode === "sentence"
                 ? palette.activeColor
                 : isActive
@@ -276,23 +455,94 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
                   : isPast
                     ? palette.pastColor
                     : palette.futureColor;
-            const scale = mode === "karaoke" && isActive ? "scale(1.06)" : "scale(1)";
+
+            // Per-word entry progress (0→1) once a word becomes active — drives
+            // the spring/slide/blur animations. Frozen at 1 once it has fired.
+            const wordEntry = spring({
+              frame: frame - w.startFrame,
+              fps,
+              config: { damping: 12, stiffness: 180, mass: 0.6 },
+              durationInFrames: 12,
+            });
+            const animate = mode === "karaoke" && isActive;
+
+            // Compute the transform + extra style per preset animation. Defaults
+            // (recolor) keep the classic scale(1.06) so 'classic' is unchanged.
+            let transform = "scale(1)";
+            let filter: string | undefined;
+            let color = phaseColor;
+            const boxOn = usesBoxPill && isActive;
+
+            switch (preset.animation) {
+              case "pop":
+                // Spring scale 0.7→1.0 with overshoot (Hormozi bounce).
+                transform = animate
+                  ? `scale(${interpolate(wordEntry, [0, 1], [0.7, 1])})`
+                  : "scale(1)";
+                break;
+              case "bounce":
+                // Vertical spring overshoot per active word.
+                transform = animate
+                  ? `translateY(${interpolate(wordEntry, [0, 1], [14, 0])}px)`
+                  : "translateY(0px)";
+                break;
+              case "slide-up":
+                // Rise a few px + fade as the word becomes active.
+                transform = animate
+                  ? `translateY(${interpolate(wordEntry, [0, 1], [16, 0])}px)`
+                  : "translateY(0px)";
+                break;
+              case "blur-in":
+                // Fade from blurred → sharp on becoming active.
+                filter = animate
+                  ? `blur(${interpolate(wordEntry, [0, 1], [8, 0])}px)`
+                  : "blur(0px)";
+                break;
+              case "box":
+                // Active word flips to dark ink against the accent pill; inactive
+                // words keep the normal phase color.
+                color = isActive ? "#0F1B2D" : phaseColor;
+                break;
+              case "flip":
+              case "none":
+                // No transform — calm color-flip / static.
+                transform = "scale(1)";
+                break;
+              case "recolor":
+              default:
+                // Classic: tiny scale bump on the active word.
+                transform = animate ? "scale(1.06)" : "scale(1)";
+                break;
+            }
+
             return (
               <span
                 key={i}
                 style={{
-                  fontFamily: FONT_STACKS.sans,
+                  fontFamily: preset.fontFamily,
                   fontSize: resolvedFontSize,
-                  fontWeight: 800,
-                  letterSpacing: "-0.01em",
+                  fontWeight: preset.fontWeight,
+                  textTransform: preset.textTransform,
+                  letterSpacing: preset.letterSpacing,
                   lineHeight: 1.15,
                   color,
-                  transform: scale,
+                  transform,
+                  filter,
                   display: "inline-block",
+                  // box-highlight: filled accent rect behind ONLY the active word.
+                  ...(boxOn
+                    ? {
+                        background: palette.activeColor,
+                        borderRadius: 8,
+                        padding: "0 10px",
+                      }
+                    : null),
                   // Heavy text shadow so the caption stays legible over any
-                  // backdrop (bright footage, busy B-roll) without a pill.
-                  textShadow:
-                    "0 2px 8px rgba(0,0,0,0.65), 0 0 2px rgba(0,0,0,0.9)",
+                  // backdrop (bright footage, busy B-roll) without a pill. The
+                  // boxed active word drops the shadow (it has its own chip).
+                  textShadow: boxOn
+                    ? "none"
+                    : "0 2px 8px rgba(0,0,0,0.65), 0 0 2px rgba(0,0,0,0.9)",
                 }}
               >
                 {w.text}
