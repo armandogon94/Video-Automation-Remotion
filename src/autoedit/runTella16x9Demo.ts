@@ -165,8 +165,12 @@ async function renderScreenGraphics(
 // The Tella layout sequence (smooth grow/shrink/slide between positions)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Full-frame cam region with an optional Ken-Burns push on the face. The face
- *  in this portrait footage sits in the upper-middle, so we focus the zoom there. */
+/** Full-frame cam region with an optional Ken-Burns push on his FACE. The focus is
+ *  NOT the frame center — in this clip his face sits LEFT of center, looking down at
+ *  notes. Detected by skin-tone (YCbCr) centroid across the zoom window: median
+ *  x≈0.255, y≈0.41 (mouth); we raise y to ≈0.34 so the zoom centers on his eyes,
+ *  and nudge x to 0.29 (head-center, since the cheek-facing skin pulls the median
+ *  left). Re-derive with the skin-centroid probe in .claude/memory.md. */
 function fullCam(camScale: number): LayoutSegment["layout"] {
   return {
     cam: {
@@ -176,8 +180,8 @@ function fullCam(camScale: number): LayoutSegment["layout"] {
       hPct: 1,
       shape: "rect",
       camScale,
-      camFocusXPct: 0.5,
-      camFocusYPct: 0.4,
+      camFocusXPct: 0.29,
+      camFocusYPct: 0.34,
     },
   };
 }

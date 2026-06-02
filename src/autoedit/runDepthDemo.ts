@@ -139,9 +139,11 @@ async function main(): Promise<void> {
           enterFrame: 0,
           holdFrames: durationInFrames, // hold the whole clip
           yellow: "#E50914", // Netflix red, big + color-isolated
-          // Large enough to read as a hero word, but small enough that the top
-          // sits above his head rather than being swallowed by his torso.
-          fontSize: 180,
+          // Pinned HIGH (top ~9%) so the word sits over the crown of his head —
+          // readable above, only its lower edge occluded by the matte (keeps the
+          // behind-speaker depth read). Bigger than before for legibility.
+          topPct: 9,
+          fontSize: 230,
           glowRadiusPx: 24,
           uppercase: true,
         },

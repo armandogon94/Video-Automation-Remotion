@@ -241,9 +241,10 @@
     slides.forEach((s,k)=>s.classList.toggle("active",k===i));
     dots.forEach((d,k)=>d.classList.toggle("on",k===i));
     count.textContent=`${i+1} / ${slides.length}`;
-    // pause videos not on the active slide
+    // pause videos off-slide; (re)play the muted auto-loop tiles on the active slide
     slides.forEach((s,k)=>s.querySelectorAll("video").forEach(v=>{
       if(k!==i){try{v.pause()}catch(e){}}
+      else if(v.muted){try{v.currentTime=0;v.play()}catch(e){}}
     }));
   }
   document.getElementById("next").onclick=()=>go(i+1);

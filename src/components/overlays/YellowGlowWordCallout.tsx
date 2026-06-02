@@ -73,6 +73,9 @@ export const yellowGlowWordCalloutSchema = z.object({
   glowRadiusPx: z.number().default(14),
   /** Uppercase transform. Default true. */
   uppercase: z.boolean().default(true),
+  /** For `anchor:'upper-third'` only — distance of the word's TOP from the frame
+   *  top, as a percentage. Lower = higher on screen (over the head). Default 20. */
+  topPct: z.number().default(20),
 });
 
 export type YellowGlowWordCalloutProps = z.infer<
@@ -82,7 +85,7 @@ export type YellowGlowWordCalloutProps = z.infer<
 type Anchor = z.infer<typeof anchorEnum>;
 
 /** Positioning for a side/corner-anchored block. NEVER center. */
-function anchorStyle(anchor: Anchor): React.CSSProperties {
+function anchorStyle(anchor: Anchor, topPct = 20): React.CSSProperties {
   const inset = "6%";
   const base: React.CSSProperties = { position: "absolute", display: "flex" };
   switch (anchor) {
@@ -116,7 +119,7 @@ function anchorStyle(anchor: Anchor): React.CSSProperties {
       // occludes only its lower edge, keeping the top legible.
       return {
         ...base,
-        top: "20%",
+        top: `${topPct}%`,
         left: 0,
         right: 0,
         justifyContent: "center",
@@ -137,6 +140,7 @@ export const YellowGlowWordCallout: React.FC<
     fontSize,
     glowRadiusPx,
     uppercase,
+    topPct,
   } = yellowGlowWordCalloutSchema.parse(props);
 
   const frame = useCurrentFrame();
@@ -172,7 +176,7 @@ export const YellowGlowWordCallout: React.FC<
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      <div style={anchorStyle(anchor)}>
+      <div style={anchorStyle(anchor, topPct)}>
         <div
           style={{
             opacity,

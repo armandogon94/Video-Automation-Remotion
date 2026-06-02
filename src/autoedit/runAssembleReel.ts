@@ -55,17 +55,23 @@ interface BeatSpec {
   endSec: number;
 }
 
+// Beats are EYE-CONTACT takes only, tightened to speech boundaries (first word
+// −0.12s … last word +0.16s) so there's no pre-/post-speech dead air. DROPPED two
+// off-camera takes the user flagged as bloopers:
+//   • features (IMG_3627 15–31s): reading the feature list off a PAPER, looking down
+//   • how-1    (IMG_3617 6–10s):  looking down at his PHONE the whole line
+// Their content is carried elsewhere (the Tella demo shows the feature list as motion
+// graphics; how-2 covers "Claude does it while you do other things"), so the narrative
+// still flows: hook → setup → how-2 → benefit → availability → CTA → follow.
 const BEATS: BeatSpec[] = [
-  { clip: "IMG_3615", label: "hook", startSec: 35.0, endSec: 40.6 },
-  { clip: "IMG_3616", label: "setup", startSec: 40.7, endSec: 45.3 },
-  { clip: "IMG_3627", label: "features", startSec: 15.0, endSec: 31.4 },
-  { clip: "IMG_3617", label: "how-1", startSec: 6.1, endSec: 10.05 },
-  { clip: "IMG_3617", label: "how-2", startSec: 90.9, endSec: 99.4 },
-  { clip: "IMG_3618", label: "benefit", startSec: 16.0, endSec: 20.6 },
-  { clip: "IMG_3629", label: "availability", startSec: 42.6, endSec: 54.5 },
-  { clip: "IMG_3630", label: "cta-1", startSec: 16.1, endSec: 21.9 },
-  { clip: "IMG_3630", label: "cta-2", startSec: 25.4, endSec: 28.5 },
-  { clip: "IMG_3632", label: "follow", startSec: 4.2, endSec: 26.5 },
+  { clip: "IMG_3615", label: "hook", startSec: 35.08, endSec: 40.66 },
+  { clip: "IMG_3616", label: "setup", startSec: 40.78, endSec: 45.36 },
+  { clip: "IMG_3617", label: "how-2", startSec: 91.18, endSec: 99.36 },
+  { clip: "IMG_3618", label: "benefit", startSec: 16.08, endSec: 20.46 },
+  { clip: "IMG_3629", label: "availability", startSec: 42.68, endSec: 54.52 },
+  { clip: "IMG_3630", label: "cta-1", startSec: 16.08, endSec: 21.86 },
+  { clip: "IMG_3630", label: "cta-2", startSec: 25.38, endSec: 28.46 },
+  { clip: "IMG_3632", label: "follow", startSec: 4.28, endSec: 26.5 },
 ];
 
 /**
