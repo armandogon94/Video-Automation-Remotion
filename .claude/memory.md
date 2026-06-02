@@ -327,3 +327,15 @@ components in parallel from the wave-10 digest; I integrated + rendered demos:
 GOTCHA (zod v4): agent-generated SentimentKeyword used `schema.shape.x._def.defaultValue()`
 (zod v3 API) → runtime TypeError. Fixed by using an empty-string sentinel default instead
 of reflecting the schema default. Watch for this in agent-authored zod code.
+
+## 2026-06-02 — Rounds A/B/C: full remaining backlog built
+
+- Round A: 6 more components (parallel workflow) — LowerThirdNameTag, PullQuoteCard,
+  ChecklistTypeOn, ComparisonVS, StatRowTriple, GradientHeadlineCard → output/autoedit/new2.
+  (FONT_STACKS.condensed IS valid; zod-v4 guard held.) 28 overlay files total.
+- Round B: runComboDemos.ts — 6 stacked-component previews → output/autoedit/combo. Gotcha:
+  matte-combo duration must be <= matte frame count (IMG_3618=138) or Remotion EncodingError.
+- Round C: renderMultiSourcePlan gained `overlays?` pass-through; runStyledReel.ts assembles
+  TWO full 65.6s reels (editorial vs punchy) with per-beat keyword + advancing progress bar.
+- Galleries: NEW-COMPONENTS(12), COMBOS(6), STYLED-REELS(2), linked from INDEX.html.
+OPEN (needs user taste): pick winners + reel style (editorial vs punchy).

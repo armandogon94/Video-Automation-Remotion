@@ -554,6 +554,9 @@ export interface RenderMultiSourceOptions {
   captionMode?: EditPlan["captionTrack"]["mode"];
   /** Brand handle chip; "" hides it. Defaults to the scene default. */
   handle?: string;
+  /** Optional over-speaker overlays ({type, props, behindSpeaker?}) timed to
+   *  EDIT-time frames (the assembled timeline). Passed straight to the scene. */
+  overlays?: { type: string; props: Record<string, unknown>; behindSpeaker?: boolean }[];
   /** Progress callback (0..1) for the Remotion render. */
   onProgress?: (progress: number) => void;
   /** Logger; defaults to console.log with a [reel] tag. */
@@ -764,7 +767,7 @@ export async function renderMultiSourcePlan(
   const inputProps: Record<string, unknown> = {
     videoSrc: stagedClipStaticRef,
     caption,
-    overlays: [],
+    overlays: opts.overlays ?? [],
     durationFrames: durationInFrames,
   };
   if (opts.handle !== undefined) inputProps.handle = opts.handle;

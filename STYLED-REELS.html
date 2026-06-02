@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Full styled reels</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--line:#222836}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,Inter,sans-serif;padding:30px 40px}
+  h1{font-size:30px;margin:0 0 4px}.sub{color:var(--muted);max-width:1000px;margin:0 0 12px}.links a{color:var(--gold);margin-right:18px;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(2,360px);gap:30px;margin-top:18px}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#000;display:block}
+  .nm{font-weight:800;margin-top:10px;font-size:18px;color:var(--cyan)}.blurb{color:var(--muted);font-size:14px;margin-top:4px}
+</style></head><body>
+  <h1>Full styled reels — same edit, two looks</h1>
+  <p class="sub">The complete 65.6s reel (8 eye-contact beats, color-corrected) rendered two ways with per-beat keyword overlays + an advancing segmented progress bar baked in. Watch end-to-end and tell me which direction you prefer — I'll refine the winner.</p>
+  <p class="links"><a href="INDEX.html">← Index</a> <a href="NEW-COMPONENTS.html">Components</a> <a href="COMBOS.html">Combos</a></p>
+  <div class="grid">
+    <figure><video src="output/autoedit/claude-cowork-reel-editorial.mp4" controls loop playsinline preload="metadata"></video>
+      <div class="nm">Editorial</div><div class="blurb">Clean white/cyan RevealText keywords (fade/slide/mask-wipe), editorial-cyan karaoke captions. Restrained, premium.</div></figure>
+    <figure><video src="output/autoedit/claude-cowork-reel-punchy.mp4" controls loop playsinline preload="metadata"></video>
+      <div class="nm">Punchy</div><div class="blurb">Bold tone-colored SentimentKeyword pops (cyan/gold/red stroke), Hormozi-pop captions. High energy.</div></figure>
+  </div>
+</body></html>
