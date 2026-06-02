@@ -27,15 +27,21 @@
   <div class="grid" id="grid"></div>
 <script>
   const ITEMS = [
-    ["CountUpStat","Number counts up 0→target + label (navy chip)"],
-    ["SentimentKeyword","Keyword scale-pops with thick stroke, color-coded by tone"],
-    ["ChapterTocRail","Vertical 'where am I' section rail, active item gold"],
-    ["SegmentedProgressBar","Thin segmented reel-progress bar"],
-    ["GrowthCompareBars","Comparison bars grow from baseline (before/after)"],
-    ["MarkerSweepWord","Gold highlighter marker sweeps behind the phrase"],
+    ["CountUpStat","new","Number counts up 0→target + label (navy chip)"],
+    ["SentimentKeyword","new","Keyword scale-pops with thick stroke, color-coded by tone"],
+    ["ChapterTocRail","new","Vertical 'where am I' section rail, active item gold"],
+    ["SegmentedProgressBar","new","Thin segmented reel-progress bar"],
+    ["GrowthCompareBars","new","Comparison bars grow from baseline (before/after)"],
+    ["MarkerSweepWord","new","Gold highlighter marker sweeps behind the phrase"],
+    ["GradientHeadlineCard","new2","Full-frame opener: gradient wash + headline mask-wipe + kicker"],
+    ["LowerThirdNameTag","new2","Animated name/role lower-third chyron (slide-in bar)"],
+    ["StatRowTriple","new2","Row of 3 mini-stats popping in staggered"],
+    ["ComparisonVS","new2","Two panels slide in + gold VS badge pops"],
+    ["ChecklistTypeOn","new2","Checklist reveals line-by-line with ✓ badges"],
+    ["PullQuoteCard","new2","Serif pull-quote + oversized quote mark + attribution"],
   ];
-  document.getElementById("grid").innerHTML = ITEMS.map(([k,b])=>
-    `<figure><video src="output/autoedit/new/${k}.mp4" muted loop autoplay playsinline controls></video><div class="nm">${k}</div><div class="blurb">${b}</div></figure>`).join("");
+  document.getElementById("grid").innerHTML = ITEMS.map(([k,dir,b])=>
+    `<figure><video src="output/autoedit/${dir}/${k}.mp4" muted loop autoplay playsinline controls></video><div class="nm">${k}</div><div class="blurb">${b}</div></figure>`).join("");
   addEventListener("DOMContentLoaded",()=>document.querySelectorAll("video").forEach(v=>v.play().catch(()=>{})));
 </script>
 </body>

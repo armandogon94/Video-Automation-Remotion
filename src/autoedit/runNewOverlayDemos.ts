@@ -14,15 +14,17 @@ import { ensureBrowser, renderMedia, selectComposition } from "@remotion/rendere
 const FPS = 30;
 const DUR = 120;
 const PROJECT_ROOT = path.resolve(import.meta.dirname, "../..");
-const OUT_DIR = path.join(PROJECT_ROOT, "output/autoedit/new");
+// argv[2] = demoprops json path, argv[3] = output subdir name under output/autoedit
+const PROPS_FILE = process.argv[2] ?? "/tmp/new_demoprops.json";
+const OUT_DIR = path.join(PROJECT_ROOT, "output/autoedit", process.argv[3] ?? "new");
 const DEMO_PROPS: Record<string, Record<string, unknown>> = JSON.parse(
-  fs.readFileSync("/tmp/new_demoprops.json", "utf-8"),
+  fs.readFileSync(PROPS_FILE, "utf-8"),
 );
 
 // Rotate background clips for variety (all staged + color-correct + bt709).
 const CLIPS = ["autoedit/IMG_3618.mp4", "autoedit/depth-follow.mp4", "autoedit/depth-hook.mp4", "autoedit/avail-broll.mp4"];
 
-const ORDER = ["CountUpStat", "SentimentKeyword", "ChapterTocRail", "SegmentedProgressBar", "GrowthCompareBars", "MarkerSweepWord"];
+const ORDER = Object.keys(DEMO_PROPS);
 
 async function main(): Promise<void> {
   fs.mkdirSync(OUT_DIR, { recursive: true });

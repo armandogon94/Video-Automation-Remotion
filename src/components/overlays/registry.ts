@@ -34,6 +34,13 @@ import { ChapterTocRail } from "./ChapterTocRail";
 import { SegmentedProgressBar } from "./SegmentedProgressBar";
 import { GrowthCompareBars } from "./GrowthCompareBars";
 import { MarkerSweepWord } from "./MarkerSweepWord";
+// Wave-10 round A.
+import { LowerThirdNameTag } from "./LowerThirdNameTag";
+import { PullQuoteCard } from "./PullQuoteCard";
+import { ChecklistTypeOn } from "./ChecklistTypeOn";
+import { ComparisonVS } from "./ComparisonVS";
+import { StatRowTriple } from "./StatRowTriple";
+import { GradientHeadlineCard } from "./GradientHeadlineCard";
 
 type LooseOverlay = React.FC<Record<string, unknown>>;
 
@@ -60,6 +67,12 @@ export const OVERLAY_REGISTRY = {
   SegmentedProgressBar,
   GrowthCompareBars,
   MarkerSweepWord,
+  LowerThirdNameTag,
+  PullQuoteCard,
+  ChecklistTypeOn,
+  ComparisonVS,
+  StatRowTriple,
+  GradientHeadlineCard,
 } as unknown as Record<string, LooseOverlay>;
 
 export type OverlayType = keyof typeof OVERLAY_REGISTRY;
