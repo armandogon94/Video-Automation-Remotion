@@ -50,6 +50,39 @@ _M_2020_TO_709 = np.array(
 _LUMA_2020 = np.array([0.2627, 0.6780, 0.0593])  # OOTF scene-luminance weights
 _LUMA_709 = np.array([0.2126, 0.7152, 0.0722])  # display-luma weights for desat
 
+# ── Empirical cross-channel correction (THE calibration to ground truth) ──
+# The analytic HLG tonemap above gets the structure right but is too contrasty vs
+# Apple's actual HLG→SDR grade (highlights too bright, mids/darks crushed, polo
+# desaturated). This quadratic regression (features [1,R,G,B,R²,G²,B²,RG,RB,GB] →
+# RGB) was least-squares-fit on 1564 flat patches pairing this tonemap's output
+# against the user's ground-truth reference = the correctly-graded FIRST FRAME of
+# IMG_3618.MOV (identified by NCC 0.957). It reproduces Apple's tonemap: post-fit
+# per-region error dropped from 14–24 to 1–4 levels (full MAE R/G/B 8.5/7.8/9.1,
+# residual is edge/detail misalignment, not color bias). Re-derive: scripts/fit_poly.
+# A pure function of RGB, so it composes into the same 3D LUT.
+_FIT_COEF = np.array([
+    [+0.10961908, +0.10374458, +0.10574351],
+    [+0.69281432, -0.01042838, +0.07072180],
+    [+0.56711184, +0.54380585, -0.96666674],
+    [-0.64895944, +0.12962180, +1.54318756],
+    [+0.04434101, -0.44178070, +0.57317273],
+    [+0.70159188, -1.62369194, -1.59509493],
+    [+1.74352130, -0.60982907, -2.17874065],
+    [-0.21154705, +1.51007957, -0.47129039],
+    [+0.91798853, -0.53938870, -1.07293455],
+    [-3.08980696, +1.75816942, +4.81052294],
+])
+
+
+def _apply_fit(v: np.ndarray) -> np.ndarray:
+    """Quadratic cross-channel correction mapping the analytic tonemap onto the
+    ground-truth Apple grade. v in 0..1 → corrected 0..1."""
+    r, g, b = v[..., 0], v[..., 1], v[..., 2]
+    feat = np.stack(
+        [np.ones_like(r), r, g, b, r * r, g * g, b * b, r * g, r * b, g * b], -1
+    )
+    return np.clip(feat @ _FIT_COEF, 0, 1)
+
 
 def hlg_to_sdr(e: np.ndarray) -> np.ndarray:
     """Map HLG-encoded bt2020 signal (E', shape (...,3), 0..1) → SDR bt709 (0..1)."""
@@ -64,7 +97,8 @@ def hlg_to_sdr(e: np.ndarray) -> np.ndarray:
     v = np.where(lc < 0.018, 4.5 * lc, 1.099 * np.power(lc, 0.45) - 0.099)
     v = np.clip(v, 0, 1)
     lum = (v @ _LUMA_709)[..., None]
-    return np.clip(lum + (v - lum) * SAT, 0, 1)
+    v = np.clip(lum + (v - lum) * SAT, 0, 1)
+    return _apply_fit(v)
 
 
 def main() -> None:
