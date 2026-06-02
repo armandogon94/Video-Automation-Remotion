@@ -1,0 +1,16 @@
+{
+  "source": "spike-fixture",
+  "note": "Shared word-timings fixture for the apples-to-apples HF-vs-Remotion over-speaker spike. Consumed UNCHANGED by both engines (HF overspeaker-spike.html and Remotion SpeakerOverlayScene16x9) so only the render engine differs. 8 words, 30fps, ~3.8s of speech + tail. Frames are absolute (startFrame/endFrame) for Remotion's FloatingCaption; seconds for Hyperframes' GSAP seek. Logo pop is keyed to the word 'futuro' (startSeconds 2.475 → enterFrame 74) in both engines.",
+  "fps": 30,
+  "words": [
+    { "text": "La",       "startFrame": 3,  "endFrame": 15,  "startSeconds": 0.1,    "endSeconds": 0.4958 },
+    { "text": "mejor",     "startFrame": 15, "endFrame": 27,  "startSeconds": 0.4958, "endSeconds": 0.8917 },
+    { "text": "manera",    "startFrame": 27, "endFrame": 39,  "startSeconds": 0.8917, "endSeconds": 1.2875 },
+    { "text": "de",        "startFrame": 39, "endFrame": 50,  "startSeconds": 1.2875, "endSeconds": 1.6833 },
+    { "text": "predecir",  "startFrame": 50, "endFrame": 62,  "startSeconds": 1.6833, "endSeconds": 2.0792 },
+    { "text": "el",        "startFrame": 62, "endFrame": 74,  "startSeconds": 2.0792, "endSeconds": 2.475 },
+    { "text": "futuro",    "startFrame": 74, "endFrame": 86,  "startSeconds": 2.475,  "endSeconds": 2.8708 },
+    { "text": "es",        "startFrame": 86, "endFrame": 98,  "startSeconds": 2.8708, "endSeconds": 3.2667 },
+    { "text": "crearlo.",  "startFrame": 98, "endFrame": 110, "startSeconds": 3.2667, "endSeconds": 3.6625 }
+  ]
+}

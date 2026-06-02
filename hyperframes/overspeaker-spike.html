@@ -1,0 +1,219 @@
+<!doctype html>
+<!--
+  overspeaker-spike.html — THROWAWAY HF spike (Wave-9 engine bake-off).
+
+  Reproduces ONE Remotion piece in Hyperframes for an apples-to-apples compare:
+    - an over-speaker KARAOKE caption  (Remotion twin: src/components/FloatingCaption.tsx, register 'editorial')
+    - a LOGO-POP over-speaker overlay   (Remotion twin: src/components/overlays/BrandLogoPopOverSpeaker.tsx, OV11)
+  over a dark-slate placeholder backdrop (Remotion twin: SpeakerOverlayScene16x9 "BASE VIDEO" placeholder).
+
+  Driven by the SAME shared fixture both engines consume: overspeaker-spike.timings.json
+  (inlined below — the committed HF generator does string-templating and we must NOT touch it,
+   so this throwaway file carries the timings literally; values are copied verbatim from the JSON).
+
+  Idiom: per Hyperframes (see templates/talking-head.html + tech-news-flash.html) —
+  every animated element is a `.clip` with data-start/data-duration/data-track-index,
+  the GSAP timeline is built PAUSED, and registered on window.__timelines['main'] so HF
+  can seek it frame-accurately at t = frame/fps.
+
+  No audio track (the spike isolates the RENDER, not TTS); duration is fixed at 4.5s.
+-->
+<html lang="es" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Over-Speaker Spike · Armando Inteligencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        /* Brand tokens — match brand/config.json + the Remotion BRAND palette. */
+        --navy: #1B3A6E;
+        --navy-deep: #0F1B2D;
+        --gold: #D4AF37;
+        --paper: #FFFFFF;
+        /* FloatingCaption 'editorial' register palette (ADR-002), copied 1:1:
+           active = cyan #5BC0E8, past = white, future = white@0.40 */
+        --cap-active: #5BC0E8;
+        --cap-past: #FFFFFF;
+        --cap-future: rgba(255, 255, 255, 0.40);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: var(--navy-deep);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--paper);
+      }
+
+      /* ── Layer 1: dark-slate placeholder backdrop ──────────────────────────
+         Mirrors SpeakerOverlayScene16x9's no-videoSrc placeholder:
+         linear-gradient(135deg, navy → deep-navy) + a muted "BASE VIDEO" label. */
+      #backdrop {
+        position: absolute; inset: 0;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #backdrop .label {
+        font-size: 64px; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.22);
+      }
+
+      /* ── Layer 3: caption block (transparent, no pill — like FloatingCaption) ─
+         bottom-center, ~12% up from the bottom, flex-wrap, heavy text-shadow. */
+      #captions-wrap {
+        position: absolute; left: 0; right: 0; bottom: 12%;
+        display: flex; justify-content: center;
+      }
+      #captions {
+        width: 70%;
+        display: flex; flex-wrap: wrap; justify-content: center;
+        gap: 6px 14px;
+      }
+      .word {
+        font-size: 56px; font-weight: 800;
+        letter-spacing: -0.01em; line-height: 1.15;
+        color: var(--cap-future);
+        display: inline-block;
+        transform-origin: center bottom;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.65), 0 0 2px rgba(0,0,0,0.9);
+      }
+
+      /* ── Layer 2: over-speaker logo pop (OV11 BrandLogoPopOverSpeaker) ───────
+         Anchored RIGHT, vertically centered, 6% inset. Text wordmark fallback
+         (matches the molecule's no-logoSrc text path) so no asset is needed. */
+      #logo-pop {
+        position: absolute; top: 50%; right: 6%;
+        transform: translateY(-50%) scale(0.9);
+        opacity: 0;
+        display: flex;
+        font-weight: 900; font-size: 96px;
+        letter-spacing: -0.01em; line-height: 1; white-space: pre;
+        text-shadow: 0 4px 16px rgba(0,0,0,0.55);
+      }
+      #logo-pop .ch { color: var(--paper); }
+
+      /* ── Layer 4: persistent handle chip (bottom-right) ────────────────────*/
+      #handle {
+        position: absolute; right: 40px; bottom: 40px;
+        padding: 8px 18px; border-radius: 999px;
+        background: rgba(15, 27, 45, 0.65);
+        border: 1px solid var(--gold);
+        color: var(--paper);
+        font-size: 24px; font-weight: 600; letter-spacing: 0.01em;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="4.5"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Layer 1: backdrop -->
+      <div id="backdrop" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
+        <div class="label">Base Video</div>
+      </div>
+
+      <!-- Layer 3: captions (words injected by script) -->
+      <div id="captions-wrap" class="clip" data-start="0" data-duration="4.5" data-track-index="5">
+        <div id="captions"></div>
+      </div>
+
+      <!-- Layer 2: over-speaker logo pop (glyphs injected by script) -->
+      <div id="logo-pop" class="clip" data-start="2.4" data-duration="2.1" data-track-index="6"></div>
+
+      <!-- Layer 4: handle chip -->
+      <div id="handle" class="clip" data-start="0" data-duration="4.5" data-track-index="9">@armandointeligencia</div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      // ── Shared fixture (overspeaker-spike.timings.json) — copied verbatim. ──
+      // Both engines read THIS data; the throwaway spike inlines it because the
+      // committed HF generator (scripts/generate.ts) must not be modified.
+      const FPS = 30;
+      window.__wordTimings = [
+        { text: "La",       startFrame: 3,  endFrame: 15,  startSeconds: 0.1,    endSeconds: 0.4958 },
+        { text: "mejor",     startFrame: 15, endFrame: 27,  startSeconds: 0.4958, endSeconds: 0.8917 },
+        { text: "manera",    startFrame: 27, endFrame: 39,  startSeconds: 0.8917, endSeconds: 1.2875 },
+        { text: "de",        startFrame: 39, endFrame: 50,  startSeconds: 1.2875, endSeconds: 1.6833 },
+        { text: "predecir",  startFrame: 50, endFrame: 62,  startSeconds: 1.6833, endSeconds: 2.0792 },
+        { text: "el",        startFrame: 62, endFrame: 74,  startSeconds: 2.0792, endSeconds: 2.475 },
+        { text: "futuro",    startFrame: 74, endFrame: 86,  startSeconds: 2.475,  endSeconds: 2.8708 },
+        { text: "es",        startFrame: 86, endFrame: 98,  startSeconds: 2.8708, endSeconds: 3.2667 },
+        { text: "crearlo.",  startFrame: 98, endFrame: 110, startSeconds: 3.2667, endSeconds: 3.6625 }
+      ];
+
+      // ── Inject one <span class="word"> per timing (talking-head.html idiom) ──
+      const captionsEl = document.getElementById('captions');
+      window.__wordTimings.forEach((w, i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.id = 'word-' + i;
+        span.textContent = w.text;
+        captionsEl.appendChild(span);
+      });
+
+      // ── Inject the logo wordmark glyph-by-glyph (mirrors BrandLogoPopOverSpeaker
+      //    text path + its letter-by-letter reveal sweep). ──
+      const WORDMARK = 'AI Factory';
+      const logoEl = document.getElementById('logo-pop');
+      WORDMARK.split('').forEach((c, i) => {
+        const span = document.createElement('span');
+        span.className = 'ch';
+        span.id = 'ch-' + i;
+        span.textContent = c;
+        logoEl.appendChild(span);
+      });
+
+      // ── Build the PAUSED GSAP timeline ──────────────────────────────────────
+      const tl = gsap.timeline({ paused: true });
+
+      // Karaoke caption: per word, tint active (cyan) + pop scale on its start,
+      // settle to 'past' white on its end. The future state is the CSS default.
+      // This is the GSAP equivalent of FloatingCaption's per-frame active/past/
+      // future scan — but expressed as a sequence of keyed tweens.
+      window.__wordTimings.forEach((w, i) => {
+        tl.to('#word-' + i,
+          { color: 'var(--cap-active)', scale: 1.06, duration: 0.05, ease: 'power2.out' },
+          w.startSeconds);
+        tl.to('#word-' + i,
+          { color: 'var(--cap-past)', scale: 1.0, duration: 0.05, ease: 'power2.out' },
+          w.endSeconds);
+      });
+
+      // Logo pop (OV11): keyed to the word "futuro" (startSeconds 2.475).
+      // Mirror the molecule's constants: POP_IN 6 frames (0.2s), HOLD 54 frames
+      // (1.8s), FADE_OUT 8 frames (~0.27s). Fade+scale 0.9 → 1.0 with overshoot.
+      const ENTER = 2.475;             // word "futuro"
+      const POP_IN = 6 / FPS;          // 0.20s
+      const HOLD = 54 / FPS;           // 1.80s
+      const FADE_OUT = 8 / FPS;        // 0.267s
+      tl.fromTo('#logo-pop',
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1.0, duration: POP_IN, ease: 'back.out(1.6)' },
+        ENTER);
+      // Letter-by-letter color reveal sweep (gold), then settle back to white.
+      WORDMARK.split('').forEach((c, i) => {
+        if (c === ' ') return;
+        const at = ENTER + i * (2 / FPS);
+        tl.to('#ch-' + i, { color: 'var(--gold)', duration: 6 / FPS, ease: 'none' }, at);
+        tl.to('#ch-' + i, { color: 'var(--paper)', duration: 6 / FPS, ease: 'none' }, at + 6 / FPS);
+      });
+      tl.to('#logo-pop',
+        { opacity: 0, duration: FADE_OUT, ease: 'power2.in' },
+        ENTER + POP_IN + HOLD);
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>
