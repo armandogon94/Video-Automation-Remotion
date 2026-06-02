@@ -26,6 +26,10 @@
   <p class="sub">New <code>RevealText</code> component + FFmpeg transitions, fanned out across your clips. Tell me which depth styles, which text-reveal modes, and which transitions you like — I'll wire the winners into the Reel.</p>
   <p class="links">Other galleries: <a href="SHOWCASE.html">SHOWCASE</a> <a href="MOTION-GRAPHICS.html">MOTION-GRAPHICS</a> <a href="AVAIL-REVIEW.html">AVAIL-REVIEW</a></p>
 
+  <h2>⓪ Availability beat — NEW takes (first 3 were rejected)</h2>
+  <p class="sub">Kept the B-roll pan, fresh RevealText motion-graphics on top for the beta/Plan Max/future message.</p>
+  <div class="grid" id="avail"></div>
+
   <h2>① Text BEHIND you (depth) — 10 ways</h2>
   <p class="sub">Rendered behind the AI person-matte so you occlude it. Different words, positions, scales, opacities, reveals.</p>
   <div class="grid" id="depth"></div>
@@ -68,6 +72,15 @@
   const TRANS = ["fade","fadeblack","dissolve","wipeleft","slideup","smoothright","circleopen","radial","zoomin","pixelize","diagtl","squeezev"]
     .map(t=>["trans-"+t, t]);
   const tile = (dir,[file,blurb]) => `<figure><video src="output/autoedit/${dir}/${file}.mp4" muted loop autoplay playsinline controls></video><div class="nm">${file.replace(/^(d|t|trans)[0-9-]*/,'')||file}</div><div class="blurb">${blurb}</div></figure>`;
+  const AVAIL = [
+    ["av1-rise-list","Rise-line list (beta · Plan Max · futuro)"],
+    ["av2-typewriter","Mono typewriter status line"],
+    ["av3-maskwipe","Mask-wipe hero: SOLO PLAN MAX"],
+    ["av4-word-by-word","Word-by-word lower band"],
+    ["av5-ghost-macro","Ghosted BETA macro + label"],
+    ["av6-slide-statement","Serif slide-in: el futuro del trabajo con IA"],
+  ];
+  document.getElementById("avail").innerHTML = AVAIL.map(d=>tile("availv2",d)).join("");
   document.getElementById("depth").innerHTML = DEPTH.map(d=>tile("var",d)).join("");
   document.getElementById("text").innerHTML  = TEXT.map(d=>tile("var",d)).join("");
   document.getElementById("trans").innerHTML = TRANS.map(d=>tile("trans",d)).join("");
