@@ -121,6 +121,12 @@ export const captionTrackSchema = z.object({
   mode: z.enum(["karaoke", "sentence"]).default("karaoke"),
   /** EDIT-time per-word timings. Empty when register === 'none'. */
   wordTimings: z.array(editPlanWordSchema).default([]),
+  /**
+   * Depth-compositing flag (foreground-matte handoff). When `true` the caption
+   * layer renders BEHIND the speaker matte; when `false`/absent it renders in
+   * FRONT (today's behavior). `.optional()` — see OverlayInstance.behindSpeaker.
+   */
+  behindSpeaker: z.boolean().optional(),
 });
 export type CaptionTrack = z.infer<typeof captionTrackSchema>;
 
@@ -200,8 +206,137 @@ export const overlayInstanceSchema = z.object({
   confidence: z.number().min(0).max(1).default(0.5),
   /** Human-readable why-this-overlay, for review/debug. */
   reason: z.string().default(""),
+  /**
+   * Depth-compositing flag (foreground-matte handoff). When `true` this overlay
+   * renders BEHIND the speaker matte (the graphic appears to sit behind the
+   * person); when `false`/absent it renders in FRONT of the matte, as today.
+   * NOTE: `.optional()` (not `.default()`) — this is a NEW optional field and
+   * Remotion `<Composition defaultProps>` types as `z.input & z.infer`, so a
+   * `.default()`-only field breaks registrations (the Zod-v4 gotcha, ADR-003).
+   */
+  behindSpeaker: z.boolean().optional(),
 });
 export type OverlayInstance = z.infer<typeof overlayInstanceSchema>;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Layout track (Tella-style scene switching) — see docs/research/wave-9/
+// TELLA-PRODUCT-RESEARCH.md §2/§3
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * A normalized rectangular region on the canvas. All four position/size fields
+ * are fractions in `[0..1]` of the canvas width/height, so a region survives any
+ * aspect-ratio crop (Tella's "regions in 0..1" insight, §3.2). `shape`/`cornerRadiusPx`
+ * describe the layer's border treatment (Tella's per-clip camera border, §2.3):
+ *   - `rect`     — sharp corners
+ *   - `rounded`  — rounded-rect using `cornerRadiusPx`
+ *   - `squircle` — superellipse-ish (rendered as a large border-radius); Jack's cam
+ *   - `circle`   — fully circular (Tella's round PiP bubble)
+ * `cornerRadiusPx` is interpreted at the canvas's native resolution (px), so a
+ * 16:9 1920×1080 and 9:16 1080×1920 can share the same value.
+ */
+export const regionShapeSchema = z.enum(["rect", "rounded", "squircle", "circle"]);
+export type RegionShape = z.infer<typeof regionShapeSchema>;
+
+export const regionSchema = z.object({
+  /** Left edge as a fraction of canvas width, 0..1. */
+  xPct: z.number(),
+  /** Top edge as a fraction of canvas height, 0..1. */
+  yPct: z.number(),
+  /** Width as a fraction of canvas width, 0..1. */
+  wPct: z.number(),
+  /** Height as a fraction of canvas height, 0..1. */
+  hPct: z.number(),
+  /** Border radius in canvas px (used when `shape === 'rounded'`). */
+  cornerRadiusPx: z.number().optional(),
+  /** Border treatment for this layer. Defaults to `rounded` at render time. */
+  shape: regionShapeSchema.optional(),
+});
+export type Region = z.infer<typeof regionSchema>;
+
+/**
+ * A layout = where the (up to) two source layers sit. `cam` is the talking-head
+ * camera; `screen` is the screen-share / B-roll plate. Either may be omitted
+ * (omitted layer is not painted — Tella's "camera only" / "screen only"). Paint
+ * order is fixed: screen behind, cam in front (matches the LayoutTrack stack).
+ */
+export const inlineLayoutSchema = z.object({
+  cam: regionSchema.optional(),
+  screen: regionSchema.optional(),
+});
+export type InlineLayout = z.infer<typeof inlineLayoutSchema>;
+
+/**
+ * A segment's layout is EITHER a named preset (resolved by `LayoutPresets.ts`)
+ * OR an inline `{cam?, screen?}` region pair (a custom/freeform layout, Tella
+ * §2.2 "custom layouts"). Kept as an open `string | inline` union so the preset
+ * vocabulary can grow in `LayoutPresets.ts` without re-touching this model.
+ */
+export const layoutRefSchema = z.union([z.string(), inlineLayoutSchema]);
+export type LayoutRef = z.infer<typeof layoutRefSchema>;
+
+/**
+ * Per-segment transition INTO this segment (Tella §2.5). `cut` swaps instantly
+ * at `startFrame`; `smooth` tweens each layer's `{x,y,w,h,cornerRadius}` from the
+ * previous segment's (or base layout's) region to this one over `durationFrames`
+ * with an ease curve. The two options mirror Tella exactly (smooth | hard cut).
+ */
+export const layoutTransitionSchema = z.object({
+  type: z.enum(["cut", "smooth"]),
+  /** Tween length in frames (used when `type === 'smooth'`). */
+  durationFrames: z.number().optional(),
+});
+export type LayoutTransition = z.infer<typeof layoutTransitionSchema>;
+
+/**
+ * One timed layout segment on the `layoutTrack`. `startFrame`/`endFrame` are
+ * EDIT-time frames (frame-native, like everything else here). `layout` is a
+ * preset name or inline regions. Uncovered frame ranges fall back to the
+ * composition's base layout (Tella "gap → base" semantics, §3.3).
+ */
+export const layoutSegmentSchema = z.object({
+  /** Stable id, e.g. "lay-0". */
+  id: z.string().optional(),
+  /** EDIT-time frame the segment begins. */
+  startFrame: z.number(),
+  /** EDIT-time frame the segment ends (exclusive). */
+  endFrame: z.number(),
+  /** Preset name OR inline `{cam?, screen?}` regions. */
+  layout: layoutRefSchema,
+  /** Transition INTO this segment. Defaults to a hard cut when omitted. */
+  transition: layoutTransitionSchema.optional(),
+});
+export type LayoutSegment = z.infer<typeof layoutSegmentSchema>;
+
+/**
+ * Decorative backdrop behind the screen+cam composite (Jack's "framed scene",
+ * itsjack/ANALYSIS.md §2). When present, the LayoutTrack paints a gradient (or a
+ * solid) behind the layers; presets like `framed-backdrop` inset the layers so
+ * the backdrop shows as a padded frame with rounded corners + soft shadow.
+ */
+export const backdropSchema = z.object({
+  type: z.enum(["gradient", "solid"]).optional(),
+  /** Gradient angle in degrees (CSS convention). */
+  angleDeg: z.number().optional(),
+  /** Gradient color stops, in order. For `solid`, the first stop is used. */
+  stops: z.array(z.string()).optional(),
+});
+export type Backdrop = z.infer<typeof backdropSchema>;
+
+/**
+ * The speaker FOREGROUND MATTE (depth-matting handoff — a sibling agent owns
+ * `src/matting/`). An alpha-channel video (`.mov` via `OffthreadVideo`) or an
+ * RGBA PNG sequence of the speaker cut out from the background, composited ON TOP
+ * of the LayoutTrack and behind-speaker overlays so captions/graphics can sit
+ * BEHIND the speaker. `behindSpeaker`-flagged overlays/captions render below it.
+ */
+export const foregroundMatteSchema = z.object({
+  /** Alpha .mov path/URL, or a printf-style RGBA PNG-sequence pattern. */
+  src: z.string(),
+  /** How `src` should be interpreted by the matte renderer. */
+  kind: z.enum(["alpha-video", "png-sequence"]).optional(),
+});
+export type ForegroundMatte = z.infer<typeof foregroundMatteSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // EditPlan — the top-level artifact
@@ -238,6 +373,23 @@ export const editPlanSchema = z.object({
   captionTrack: captionTrackSchema.default(() => captionTrackSchema.parse({})),
   /** Timed overlay instances, in `fromFrame` order. */
   overlayTrack: z.array(overlayInstanceSchema).default([]),
+  /**
+   * Tella-style scene track: timed layout segments overriding the base layout
+   * for a frame range (TELLA-PRODUCT-RESEARCH.md §3). `.optional()` (NOT
+   * `.default()`) — NEW field; a `.default()`-only optional breaks Remotion
+   * `<Composition defaultProps>` typing (z.input & z.infer). Same for the
+   * `baseLayout`/`backdrop`/`foregroundMatte` fields below.
+   */
+  layoutTrack: z.array(layoutSegmentSchema).optional(),
+  /** Whole-duration default layout (preset name or inline regions). Used for any
+   *  frame range not covered by a `layoutTrack` segment. */
+  baseLayout: layoutRefSchema.optional(),
+  /** Decorative gradient/solid backdrop behind the screen+cam composite (Jack's
+   *  framed-scene look). */
+  backdrop: backdropSchema.optional(),
+  /** Speaker alpha matte composited on top of the layout layers, enabling
+   *  behind-speaker depth compositing of overlays/captions. */
+  foregroundMatte: foregroundMatteSchema.optional(),
   provenance: editPlanProvenanceSchema.default(() => editPlanProvenanceSchema.parse({})),
 });
 export type EditPlan = z.infer<typeof editPlanSchema>;

@@ -3659,6 +3659,57 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
 
+        {/*
+          SpeakerLayoutDemo16x9 — Wave-9 demo of the Tella-style scene-layout
+          engine (D1) + a caption STYLE preset (D3) + a region-box emphasis
+          molecule (D3). Same component, layout-mode defaultProps: cam+screen
+          placeholders glide full-cam → corner-bubble → split with smooth tweens
+          over Jack's framed gradient backdrop, hormozi-pop captions, a red
+          region box on the screen during the corner-bubble phase.
+        */}
+        <Composition
+          id="SpeakerLayoutDemo16x9"
+          component={SpeakerOverlayScene16x9}
+          schema={speakerOverlayScene16x9Schema}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            caption: {
+              style: "hormozi-pop",
+              wordTimings: [
+                { text: "Cambia", startFrame: 0, endFrame: 20, startSeconds: 0, endSeconds: 0.67 },
+                { text: "de", startFrame: 21, endFrame: 30, startSeconds: 0.7, endSeconds: 1.0 },
+                { text: "escena", startFrame: 31, endFrame: 60, startSeconds: 1.03, endSeconds: 2.0 },
+                { text: "con", startFrame: 61, endFrame: 72, startSeconds: 2.03, endSeconds: 2.4 },
+                { text: "un", startFrame: 73, endFrame: 82, startSeconds: 2.43, endSeconds: 2.73 },
+                { text: "clic", startFrame: 83, endFrame: 110, startSeconds: 2.77, endSeconds: 3.67 },
+              ],
+              position: "bottom-center",
+              mode: "karaoke",
+              widthPct: 70,
+              windowSize: 6,
+              windowGapMs: 60,
+            },
+            handle: "@armandointeligencia",
+            durationFrames: 300,
+            baseLayout: "framed-backdrop",
+            backdrop: { type: "gradient", angleDeg: 120, stops: ["#3B82F6", "#1E5FD8", "#0B3A9C"] },
+            layoutTrack: [
+              { id: "lay-0", startFrame: 0, endFrame: 90, layout: "full-cam", transition: { type: "cut" } },
+              { id: "lay-1", startFrame: 90, endFrame: 210, layout: "corner-bubble-br-md", transition: { type: "smooth", durationFrames: 14 } },
+              { id: "lay-2", startFrame: 210, endFrame: 300, layout: "split-5050", transition: { type: "smooth", durationFrames: 12 } },
+            ],
+            overlays: [
+              {
+                type: "RegionBoxAnnotation",
+                props: { region: { x: 0.06, y: 0.16, w: 0.46, h: 0.3 }, color: "#E5484D", badge: "1", enter: "pop", enterFrame: 100, exitFrame: 205 },
+              },
+            ],
+          }}
+        />
+
         <Composition
           id="SpeakerOverlayScene9x16"
           component={SpeakerOverlayScene9x16}
