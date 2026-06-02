@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>New components (Wave-10)</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--line:#222836}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;padding:30px 40px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:-.02em}
+  .sub{color:var(--muted);max-width:1000px;margin:0 0 12px}
+  .links a{color:var(--gold);margin-right:18px;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:18px}
+  @media(max-width:1300px){.grid{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px}
+  video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:9px;background:#000;display:block}
+  .nm{font-weight:800;margin-top:8px;font-size:14px;color:var(--cyan)}
+  .blurb{color:var(--muted);font-size:12.5px;margin-top:3px}
+</style>
+</head>
+<body>
+  <h1>New components — built in parallel (Wave-10)</h1>
+  <p class="sub">Six brand-new overlay components, authored concurrently by a workflow from the creator-mined idea digest, then integrated + rendered over your footage. All muted/looping with controls.</p>
+  <p class="links"><a href="INDEX.html">← Index</a> <a href="VARIATIONS.html">Variations</a> <a href="MOTION-GRAPHICS.html">Motion graphics</a></p>
+  <div class="grid" id="grid"></div>
+<script>
+  const ITEMS = [
+    ["CountUpStat","Number counts up 0→target + label (navy chip)"],
+    ["SentimentKeyword","Keyword scale-pops with thick stroke, color-coded by tone"],
+    ["ChapterTocRail","Vertical 'where am I' section rail, active item gold"],
+    ["SegmentedProgressBar","Thin segmented reel-progress bar"],
+    ["GrowthCompareBars","Comparison bars grow from baseline (before/after)"],
+    ["MarkerSweepWord","Gold highlighter marker sweeps behind the phrase"],
+  ];
+  document.getElementById("grid").innerHTML = ITEMS.map(([k,b])=>
+    `<figure><video src="output/autoedit/new/${k}.mp4" muted loop autoplay playsinline controls></video><div class="nm">${k}</div><div class="blurb">${b}</div></figure>`).join("");
+  addEventListener("DOMContentLoaded",()=>document.querySelectorAll("video").forEach(v=>v.play().catch(()=>{})));
+</script>
+</body>
+</html>

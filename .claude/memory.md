@@ -313,3 +313,17 @@ overnight." Delivered:
 - New mattes: public/matte/depth-follow, depth-hook (RVM, from color-correct plates).
 STILL OPEN (user decisions): which depth styles / text-reveals / transitions to keep,
 avail-beat graphic, Reel default caption style. Then wire winners into the Reel.
+
+## 2026-06-02 — Parallel build workflow: 6 new components
+
+Workflow (build-new-overlays, 6 sonnet agents) authored 6 self-contained overlay
+components in parallel from the wave-10 digest; I integrated + rendered demos:
+- CountUpStat (count-up numeral + label), SentimentKeyword (tone-colored stroke keyword
+  pop), ChapterTocRail (section rail, active gold), SegmentedProgressBar, GrowthCompareBars
+  (growing compare bars), MarkerSweepWord (highlighter sweep).
+- All registered (import + object entry), typecheck clean, rendered over footage →
+  output/autoedit/new/, gallery NEW-COMPONENTS.html (linked from INDEX.html).
+- Driver: runNewOverlayDemos.ts (reads /tmp/new_demoprops.json).
+GOTCHA (zod v4): agent-generated SentimentKeyword used `schema.shape.x._def.defaultValue()`
+(zod v3 API) → runtime TypeError. Fixed by using an empty-string sentinel default instead
+of reflecting the schema default. Watch for this in agent-authored zod code.

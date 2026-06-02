@@ -27,6 +27,13 @@ import { LumaHighlightBar } from "./LumaHighlightBar";
 import { DimSurroundingsSpotlight } from "./DimSurroundingsSpotlight";
 // Versatile multi-mode text reveal (behind-speaker depth OR on-screen).
 import { RevealText } from "./RevealText";
+// Wave-10 components (creator-mined, built in parallel).
+import { CountUpStat } from "./CountUpStat";
+import { SentimentKeyword } from "./SentimentKeyword";
+import { ChapterTocRail } from "./ChapterTocRail";
+import { SegmentedProgressBar } from "./SegmentedProgressBar";
+import { GrowthCompareBars } from "./GrowthCompareBars";
+import { MarkerSweepWord } from "./MarkerSweepWord";
 
 type LooseOverlay = React.FC<Record<string, unknown>>;
 
@@ -47,6 +54,12 @@ export const OVERLAY_REGISTRY = {
   LumaHighlightBar,
   DimSurroundingsSpotlight,
   RevealText,
+  CountUpStat,
+  SentimentKeyword,
+  ChapterTocRail,
+  SegmentedProgressBar,
+  GrowthCompareBars,
+  MarkerSweepWord,
 } as unknown as Record<string, LooseOverlay>;
 
 export type OverlayType = keyof typeof OVERLAY_REGISTRY;
