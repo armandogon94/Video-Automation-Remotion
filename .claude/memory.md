@@ -207,3 +207,35 @@ npm run generate -- --script "Your text" --voice "es-MX-JorgeNeural" --template 
 2. `.js` import extensions in Webpack → removed all `.js` extensions from source imports
 3. Remotion staticFile() absolute path error → copy audio to `public/` dir, reference by filename
 4. Edge-TTS WordBoundary not emitted in v7.2.8 → approximate word timing from SentenceBoundary
+
+## 2026-06-01 — HDR→SDR color fix (HLG tonemap LUT) + full assembly
+
+**Decision: bake the HLG→SDR tonemap into a 3D LUT, apply with ffmpeg `lut3d`.**
+The prior `colorspace=...itrc=bt709...` was WRONG (user-rejected): it only fixed the
+bt2020→709 gamut and left the HLG (arib-std-b67) transfer curve un-inverted →
+over-bright/over-saturated. This ffmpeg (8.1, Homebrew) has NO zscale/libplacebo and
+`colorspace` can't parse `arib-std-b67`, so a native one-filter HLG tonemap isn't
+available. The whole tonemap is a deterministic per-pixel RGB→RGB function, so it bakes
+perfectly into a 33³ .cube LUT.
+
+Pipeline (scripts/gen_hlg_lut.py → src/matting/luts/hlg_to_sdr.cube):
+HLG inverse-OETF (a=.17883277,b=.28466892,c=.55991073) → OOTF system-gamma **1.2**
+(scene-luma 2020 weights) → exposure **gain 2.0** → bt2020→709 matrix → 709 OETF →
+luma-preserving **saturation 0.65**.
+
+**Calibration** (matched to user's ground-truth `output/color-ref/HDR to SDR real colors.png`):
+gridded gain×sat against reference patches → best = polo[32,53,106]≈ref[31,58,110],
+neutral-bg matches; skin gap is the pose/lighting confound (different frame). Confirmed
+visually against the reference and in a real rendered MP4.
+
+Integration: renderFromPlan `hlgLutPath()` + `escapeFilterArg()` + lut3d-based
+`hdrColorFixFilter(isHdr,lutPath)`; threaded into single-source `buildTrimConcatFilter`
+and multi-source `buildMultiSourceConcatFilter`; runTella16x9Demo imports the same.
+RVM matte for the depth demo MUST be regenerated from the LUT-corrected plate (the fg
+PNGs are full-color RGBA cutouts, not alpha-only — old ones carried the bluish wrong color).
+
+Rendered/verified this session: claude-cowork-reel.mp4 (10 beats/2602f/86.7s),
+tella-16x9-demo.mp4, IMG_3618-depth.mp4 (NETFLIX→upper-third, legible, behind speaker),
+IMG_3618-edit.mp4, cap-<8 styles>-edit.mp4. Gallery: SHOWCASE.html (slideshow).
+Gotcha: renderEditedVideo slug must be FLAT (no `/`) — staging only mkdirs public/autoedit,
+not nested subdirs.
