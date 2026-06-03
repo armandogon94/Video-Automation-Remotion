@@ -23,17 +23,17 @@ export const abhiBackgroundSchema = z.object({
   glowXPct: z.number().default(0.5),
   glowYPct: z.number().default(0.42),
   /** Glow strength 0..1 (peak opacity of the accent wash). */
-  glowStrength: z.number().default(0.32),
-  /** Dark base color. */
-  darkBase: z.string().default("#0A0A0B"),
+  glowStrength: z.number().default(0.26),
+  /** Dark base color (warm near-black; a vertical gradient is built from it). */
+  darkBase: z.string().default("#08050B"),
   /** Show the faint square grid (dark mode). */
   showGrid: z.boolean().default(true),
   gridSpacingPx: z.number().default(72),
   /** Light-mode mesh blob colors + base. */
-  meshBase: z.string().default("#EFEDF3"),
-  meshA: z.string().default("#F8D6C2"),
-  meshB: z.string().default("#D7CBEE"),
-  meshC: z.string().default("#C9D8F2"),
+  meshBase: z.string().default("#E7E0EA"),
+  meshA: z.string().default("#F9C8BA"),
+  meshB: z.string().default("#CBC9F9"),
+  meshC: z.string().default("#E0EEE7"),
   /** Floating rounded squares (light mode). */
   showSquares: z.boolean().default(true),
   /** Subtle motion on/off. */
@@ -62,12 +62,12 @@ export const AbhiBackground: React.FC<Partial<AbhiBackgroundProps>> = (props) =>
     const gx = `${p.glowXPct * 100}%`;
     const gy = `${p.glowYPct * 100}%`;
     return (
-      <AbsoluteFill style={{ background: p.darkBase }}>
-        {/* faint square grid */}
+      <AbsoluteFill style={{ background: `linear-gradient(178deg, ${p.darkBase} 0%, #120E18 55%, #0B0710 100%)` }}>
+        {/* faint warm square grid */}
         {p.showGrid ? (
           <AbsoluteFill
             style={{
-              backgroundImage: `linear-gradient(${hexA("#FFFFFF", 0.035)} 1px, transparent 1px), linear-gradient(90deg, ${hexA("#FFFFFF", 0.035)} 1px, transparent 1px)`,
+              backgroundImage: `linear-gradient(${hexA("#FFEFE2", 0.045)} 1px, transparent 1px), linear-gradient(90deg, ${hexA("#FFEFE2", 0.045)} 1px, transparent 1px)`,
               backgroundSize: `${p.gridSpacingPx}px ${p.gridSpacingPx}px`,
               maskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 85%)",
               WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 85%)",
