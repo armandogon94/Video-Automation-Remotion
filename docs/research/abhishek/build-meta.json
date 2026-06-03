@@ -1,0 +1,272 @@
+{
+  "AbhiTitleCard": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowHue": "orange",
+      "gridCellPx": 105
+    },
+    "demoProps": {
+      "kicker": "EL ARREGLO ↓",
+      "headlinePre": "Un repo",
+      "headlineAccent": "de código abierto",
+      "headlinePost": "lo cambia todo.",
+      "subtitle": "",
+      "accentColor": "#FD9B00",
+      "mode": "dark",
+      "align": "left",
+      "headlineSizePct": 10.4
+    },
+    "durationFrames": 99
+  },
+  "AbhiBigStat": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowXPct": 0.5,
+      "glowYPct": 0.42,
+      "glowStrength": 0.28,
+      "darkBase": "#08050B",
+      "showGrid": true,
+      "gridSpacingPx": 72
+    },
+    "demoProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "digitColor": "#DE6D35",
+      "kicker": "UN SECRETO QUE CASI NADIE VE",
+      "statValue": 99,
+      "statStart": 63,
+      "statDecimals": 0,
+      "statUnit": "%",
+      "subtitleLine1": "de los usuarios de Claude",
+      "subtitleLine2": "no saben que esto existe",
+      "showDotMatrix": true,
+      "dotCols": 22,
+      "dotRows": 3
+    },
+    "durationFrames": 132
+  },
+  "AbhiCtaComment": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#8789ED",
+      "gridOpacity": 0.18,
+      "meshBlobs": [
+        "mint-top",
+        "periwinkle-right",
+        "peach-lower",
+        "amber-lower-right"
+      ]
+    },
+    "demoProps": {
+      "bgMode": "light",
+      "accentColor": "#8789ED",
+      "useGradient": true,
+      "gradientFrom": "#8789ED",
+      "gradientMid": "#9A8AF9",
+      "gradientTo": "#D99BCC",
+      "kicker": "GET THE LINK",
+      "commentLabel": "Comment",
+      "giantWord": "“AI”",
+      "subtitle": "y te envío el repo de GitHub por DM.",
+      "showInputBar": false,
+      "handle": "@armandointeligencia",
+      "footer": "FOLLOW FOR MORE"
+    },
+    "durationFrames": 115
+  },
+  "AbhiTerminalCard": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowXPct": 0.5,
+      "glowYPct": 0.36,
+      "glowStrength": 0.24,
+      "darkBase": "#08050B",
+      "showGrid": true,
+      "gridSpacingPx": 72
+    },
+    "demoProps": {
+      "accentColor": "#FD9B00",
+      "kicker": "ONE-LINE INSTALL",
+      "headline": "Type. Paste. Watch.",
+      "headlineAccentFrom": 2,
+      "pathCrumb": "~/projects · zsh",
+      "commentLine": "# una línea. las 20 skills.",
+      "command": "npx skills add alchaincyf/huashu-design",
+      "resolvingLine": "resolving alchaincyf/huashu-design...",
+      "successLine": "installed · 20 skills · 0 errors",
+      "successColor": "#34D3A0",
+      "subtitle": "Luego habla con tu agente. Sin botones. Sin paneles.",
+      "subtitleAccentFrom": 4
+    },
+    "durationFrames": 195
+  },
+  "AbhiFeatureRows": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#00A080",
+      "glowXPct": 0.5,
+      "glowYPct": 0.5,
+      "glowStrength": 0.16,
+      "showGrid": true
+    },
+    "demoProps": {
+      "mode": "dark",
+      "accentColor": "#00A080",
+      "kicker": "PARA QUÉ SIRVE",
+      "headline": "Cinco trabajos.",
+      "headlineAccent": "Un modelo.",
+      "rows": [
+        {
+          "icon": "code",
+          "title": "Escribe y depura código",
+          "caption": "abre PRs, arregla tests",
+          "valence": "neutral"
+        },
+        {
+          "icon": "globe",
+          "title": "Investiga en la web",
+          "caption": "lee, cita, decide",
+          "valence": "neutral"
+        },
+        {
+          "icon": "chart",
+          "title": "Analiza datos",
+          "caption": "tablas, gráficas, infiere",
+          "valence": "neutral"
+        },
+        {
+          "icon": "doc",
+          "title": "Documentos y hojas",
+          "caption": "redacta, edita, formatea",
+          "valence": "neutral"
+        },
+        {
+          "icon": "bolt",
+          "title": "Opera el software",
+          "caption": "clics, escribe, navega",
+          "valence": "neutral"
+        }
+      ]
+    },
+    "durationFrames": 240
+  },
+  "AbhiFeatureGrid": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowXPct": 0.5,
+      "glowYPct": 0.5,
+      "glowStrength": 0.2,
+      "darkBase": "#08050B",
+      "showGrid": true,
+      "gridSpacingPx": 84
+    },
+    "demoProps": {
+      "kicker": "AGENT-AGNOSTIC",
+      "headline": "Funciona en {cualquier}\nagente de IA.",
+      "capsuleLabel": "huashu-design",
+      "capsuleChip": "SKILL",
+      "footnote": "+ OPENCLAW · HERMES · CUALQUIER AGENTE COMPATIBLE",
+      "accentColor": "#FD9B00",
+      "mode": "dark",
+      "cards": [
+        {
+          "index": "01",
+          "title": "Claude Code",
+          "desc": "Skills nativos",
+          "glyph": "≋",
+          "accentTint": false
+        },
+        {
+          "index": "02",
+          "title": "Cursor",
+          "desc": "Suelta el agente",
+          "glyph": "▸",
+          "accentTint": false
+        },
+        {
+          "index": "03",
+          "title": "Codex",
+          "desc": "Listo de fábrica",
+          "glyph": "◎",
+          "accentTint": false
+        },
+        {
+          "index": "04",
+          "title": "OpenClaw",
+          "desc": "Mismo skill, otro host",
+          "glyph": "☺",
+          "accentTint": true
+        }
+      ]
+    },
+    "durationFrames": 120
+  },
+  "AbhiGridVsTerminal": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowXPct": 0.5,
+      "glowYPct": 0.5,
+      "glowStrength": 0.2,
+      "showGrid": true,
+      "gridSpacingPx": 90,
+      "animate": true
+    },
+    "demoProps": {
+      "accentColor": "#FD9B00",
+      "mode": "dark",
+      "kicker": "THE HONEST TAKE",
+      "headlineLead": "¿Reemplazarlo del todo?",
+      "headlineTail": "Probablemente no.",
+      "tailStyle": "muted",
+      "leftLabel": "CLAUDE DESIGN · GUI",
+      "leftChips": [
+        "click",
+        "draw",
+        "comment"
+      ],
+      "leftCaption": "gana en click · draw · comment",
+      "rightLabel": "HUASHU · TERMINAL",
+      "rightCrumb": "~/proyectos · zsh",
+      "rightCommand": "diseña una landing page",
+      "rightLogs": [
+        "[planeando] eligiendo variante…",
+        "[generando] 3 direcciones en paralelo"
+      ],
+      "rightSuccess": "entregado en 4m 18s",
+      "rightCaption": "cierra la brecha rápido.",
+      "vsBadge": "VS"
+    },
+    "durationFrames": 420
+  },
+  "AbhiBrandLockup": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowXPct": 0.32,
+      "glowYPct": 0.33,
+      "glowStrength": 0.26,
+      "showGrid": true,
+      "gridSpacingPx": 72
+    },
+    "demoProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "kicker": "NUEVO · CÓDIGO ABIERTO",
+      "kickerGlyph": "star",
+      "iconStyle": "burst",
+      "lineOne": "ARMANDO",
+      "lineTwo": "INTELIGENCIA.",
+      "subLabel": "UNA SKILL DE CLAUDE CODE · DEVINI LABS",
+      "showRepoCard": true,
+      "repoOwnerSlash": "armandogon94/armando-inteligencia",
+      "repoChipPrimary": "RECIÉN LANZADO",
+      "repoChipSecondary": "Licencia de uso personal"
+    },
+    "durationFrames": 120
+  }
+}

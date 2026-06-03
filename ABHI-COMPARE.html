@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>abhishek.devini — source vs our replica</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--ok:#3ddc84;--line:#222836;--orange:#FD9B00}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,Inter,sans-serif;padding:30px 40px}
+  h1{font-size:30px;margin:0 0 4px}.sub{color:var(--muted);max-width:1040px;margin:0 0 8px}
+  .legend{color:var(--muted);font-size:13px;margin:6px 0 22px}.legend b.s{color:var(--gold)}.legend b.r{color:var(--cyan)}
+  .row{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:22px}
+  .row h2{margin:0 0 2px;font-size:19px}.row .meta{color:var(--muted);font-size:13px;margin-bottom:12px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .cell{position:relative}.cell .tag{position:absolute;top:8px;left:8px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.08em;padding:3px 9px;border-radius:6px}
+  .tag.s{background:rgba(212,175,55,.9);color:#1a1206}.tag.r{background:rgba(91,192,232,.9);color:#04222e}
+  video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#000;display:block;border:1px solid var(--line)}
+  code{background:#1a1f2a;padding:1px 6px;border-radius:5px;font-size:12px}
+</style></head><body>
+  <h1>abhishek.devini — head-to-head: <b style="color:var(--gold)">SOURCE</b> vs <b style="color:var(--cyan)">OUR REPLICA</b></h1>
+  <p class="sub">8 templates rebuilt from a frame-by-frame analysis of 18 of his reels (palette, fonts, backgrounds, and frame-timed motion). Each row plays the original scene (left) next to our Remotion replica (right). Replicas use our own copy/brand, so judge the <b>style, layout, type, color, and motion</b> — not the words.</p>
+  <p class="legend"><b class="s">SOURCE</b> = his actual reel scene · <b class="r">REPLICA</b> = our <code>AbhiScene9x16</code> template. Both loop; click to scrub frame-by-frame.</p>
+  <div id="rows"></div>
+<script>
+  const ROWS = [
+    ["AbhiTitleCard","title-card-two-tone","DXpZf2ziBYP 2.2–5.5s — mono pill kicker + giant two-tone Inter-black headline, accent word tint-sweeps in, radial glow behind."],
+    ["AbhiBigStat","big-stat-number","DXUhthziNCS 0–4.4s — giant count-up numeral (ease-out + overshoot), accent unit, two-tone subtitle, dot strip."],
+    ["AbhiTerminalCard","terminal-mockup-card","DXpZf2ziBYP 13.5–17s — two-tone headline + glass terminal card (traffic lights, typed command, orange progress, green ✓ success)."],
+    ["AbhiFeatureGrid","feature-card-grid","DXpZf2ziBYP 17–21s — 4 cards fade+rise in Z-order stagger with accent top-border wipes."],
+    ["AbhiFeatureRows","feature-rows-list","DXhkSFiD8dL 22–30s — headline slides in, rows cascade up one-by-one with accent icons."],
+    ["AbhiGridVsTerminal","grid-vs-terminal","DXpZf2ziBYP 72–86s — light GUI card vs dark terminal card, VS badge pops between, content cross-fades in."],
+    ["AbhiCtaComment","cta-comment-outro","DYukIE0PFac 50–53.8s — light mesh, 'Comment' + giant gradient word snap-in + blinking caret + input bar."],
+    ["AbhiBrandLockup","brand-lockup","DXpZf2ziBYP 5.5–9.5s — spark icon bloom + two-line wordmark (accent period) + repo/credit card slide-up."],
+  ];
+  document.getElementById("rows").innerHTML = ROWS.map(([k,name,meta])=>`
+    <div class="row"><h2>${name}</h2><div class="meta">${meta}</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE</span><video src="output/abhi/source-scenes/${k}.mp4" muted loop autoplay playsinline controls></video></div>
+        <div class="cell"><span class="tag r">REPLICA</span><video src="output/abhi/${k}.mp4" muted loop autoplay playsinline controls></video></div>
+      </div></div>`).join("");
+  addEventListener("DOMContentLoaded",()=>document.querySelectorAll("video").forEach(v=>v.play().catch(()=>{})));
+</script></body></html>
