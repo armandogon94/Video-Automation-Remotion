@@ -80,3 +80,11 @@ Sorted by relevance per the research agent.
 > A creator's reels are NOT one style. Treat each reel as a potential distinct template;
 > only group reels under the same template if their layout + color + motion are clearly
 > shared. This is what carloscuamatzin's ANALYSIS demonstrates — 6 templates, not 1.
+
+## abhishek.devini (Instagram) — added 2026-06-02
+Typography-driven AI/tech explainer reels. TWO background modes: (1) dark near-black +
+subtle grid + radial accent glow; (2) light pastel mesh gradient + floating rounded
+squares. Signature elements: letter-spaced pill kicker (●  NN / SECTION), giant two-tone
+extra-bold grotesk headline (one word accent-colored), brand lockups, browser/grid/terminal
+mockup cards, big stat numbers, kinetic subtitles. Accent color tracks the topic's brand
+(e.g. Anthropic orange). 18 reels scraped for style replication. STYLE MATCHES our system.

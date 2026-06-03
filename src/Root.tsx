@@ -82,6 +82,7 @@ import { ThreeStageRisingBars16x9, threeStageRisingBarsSchema } from "./composit
 import { TopHeroBottomTrioCards16x9, topHeroBottomTrioCardsSchema } from "./compositions/TopHeroBottomTrioCards16x9";
 import { SpeakerOverlayScene16x9, speakerOverlayScene16x9Schema } from "./compositions/SpeakerOverlayScene16x9";
 import { SpeakerOverlayScene9x16, speakerOverlayScene9x16Schema } from "./compositions/SpeakerOverlayScene9x16";
+import { AbhiScene9x16, abhiScene9x16Schema } from "./compositions/AbhiScene9x16";
 import { BigNumberHero16x9, bigNumberHero16x9Schema } from "./compositions/BigNumberHero16x9";
 import { TweetCardHero16x9, tweetCardHero16x9Schema } from "./compositions/TweetCardHero16x9";
 import { BarChartList16x9, barChartList16x9Schema } from "./compositions/BarChartList16x9";
@@ -3707,6 +3708,21 @@ export const RemotionRoot: React.FC = () => {
                 props: { region: { x: 0.06, y: 0.16, w: 0.46, h: 0.3 }, color: "#E5484D", badge: "1", enter: "pop", enterFrame: 100, exitFrame: 205 },
               },
             ],
+          }}
+        />
+
+        <Composition
+          id="AbhiScene9x16"
+          component={AbhiScene9x16}
+          schema={abhiScene9x16Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            background: { mode: "dark" as const, accentColor: "#E8743B" },
+            template: { type: "", props: {} },
+            durationFrames: 150,
           }}
         />
 
