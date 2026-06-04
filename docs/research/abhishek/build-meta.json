@@ -268,5 +268,772 @@
       "repoChipSecondary": "Licencia de uso personal"
     },
     "durationFrames": 120
+  },
+  "AbhiBrowserMockup": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowXPct": 0.5,
+      "glowYPct": 0.4,
+      "glowStrength": 0.24,
+      "darkBase": "#08050B",
+      "showGrid": true,
+      "gridSpacingPx": 84
+    },
+    "demoProps": {
+      "accentColor": "#FD9B00",
+      "mode": "dark",
+      "statusPill": "LÍMITE ALCANZADO · CUOTA AGOTADA",
+      "urlCrumb": "claude.ai/design",
+      "innerKicker": "LÍMITE SEMANAL ALCANZADO",
+      "innerHeadline": "Llegaste al tope de tu cuota de Claude Design.",
+      "innerMeta": "Se reinicia en 6 días · 14 hrs · 22 min",
+      "uiChips": [
+        "Plan Pro",
+        "Subir de plan",
+        "Ver uso"
+      ],
+      "strikeHook": true,
+      "headlineSizePct": 3.6,
+      "chassisWidthPct": 88.5
+    },
+    "durationFrames": 96
+  },
+  "AbhiKineticSubtitle": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#47B16A",
+      "glowYPct": 0.32,
+      "glowStrength": 0.22,
+      "showGrid": true
+    },
+    "demoProps": {
+      "variant": "stacked",
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "successColor": "#47B16A",
+      "negativeColor": "#F5553A",
+      "punchWords": "SAFER.,CHEAPER.,SMOOTHER.",
+      "punchColors": "green,accent,ink",
+      "punchSizePct": 10.0,
+      "punchStagger": 17
+    },
+    "durationFrames": 120
+  },
+  "AbhiNodeGraph": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#DE7854",
+      "overrides": {
+        "glowYPct": 0.4,
+        "glowStrength": 0.3,
+        "showGrid": true
+      }
+    },
+    "demoProps": {
+      "accentColor": "#DE7854",
+      "mode": "dark",
+      "kicker": "DYNAMIC WORKFLOWS",
+      "hubLabel": "1 SESSION",
+      "hubIcon": "burst",
+      "spokeCount": 18,
+      "dotsPerSpoke": 4,
+      "accentSector": 0.16,
+      "stat": "100+",
+      "statSuffix": "+",
+      "statLabel": "SUBAGENTS · ONE SESSION"
+    },
+    "durationFrames": 150
+  },
+  "AbhiBarChart": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "glowStrength": 0.16,
+      "glowYPct": 0.55
+    },
+    "demoProps": {
+      "accentColor": "#FD9B00",
+      "mode": "dark",
+      "kicker": "ALIGNMENT",
+      "dotColor": "#42AE66",
+      "headline": "Misaligned behavior",
+      "caption": "↓ lower is better",
+      "bars": [
+        {
+          "label": "Sonnet 4.6",
+          "value": 2.5,
+          "kind": "rival"
+        },
+        {
+          "label": "Mythos",
+          "value": 1.75,
+          "kind": "accent"
+        },
+        {
+          "label": "Opus 4.7",
+          "value": 2.4,
+          "kind": "rival"
+        },
+        {
+          "label": "Opus 4.8",
+          "value": 1.85,
+          "kind": "hero"
+        }
+      ],
+      "valueDecimals": 2,
+      "valueSuffix": "",
+      "thresholdValue": 1.85
+    },
+    "durationFrames": 150
+  },
+  "AbhiPhoneMockup": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#8789ED",
+      "gridOpacity": 0.16,
+      "meshBlobs": [
+        "mint-top",
+        "periwinkle-right",
+        "peach-lower",
+        "amber-lower-right"
+      ]
+    },
+    "demoProps": {
+      "mode": "light",
+      "accentColor": "#8789ED",
+      "entrance": "rise",
+      "kicker": "ELIGE UN ESTILO",
+      "screenChip": "GLASS",
+      "appIcon": "✳",
+      "titlePre": "Multimodal",
+      "titleAccent": "sin la demo.",
+      "rows": [
+        {
+          "glyph": "◆",
+          "title": "Familia Glass",
+          "caption": "1080×1920 · GRAPHIFY"
+        },
+        {
+          "glyph": "◇",
+          "title": "Malla clara",
+          "caption": "9:16 · brillo pastel"
+        },
+        {
+          "glyph": "▦",
+          "title": "Grid oscuro",
+          "caption": "radial cálido · mono"
+        }
+      ],
+      "dotCount": 5,
+      "activeDot": 1
+    },
+    "durationFrames": 165
+  },
+  "AbhiComparisonTable": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FD9B00",
+      "showGrid": true,
+      "glowXPct": 0.5,
+      "glowYPct": 0.34,
+      "glowStrength": 0.2,
+      "darkBase": "#08050B"
+    },
+    "demoProps": {
+      "accentColor": "#FD9B00",
+      "mode": "dark",
+      "kicker": "BENCHMARKS",
+      "columns": [
+        {
+          "name": "Opus 4.8",
+          "icon": "anthropic"
+        },
+        {
+          "name": "Opus 4.7",
+          "icon": "anthropic"
+        },
+        {
+          "name": "GPT-5.5",
+          "icon": "openai"
+        },
+        {
+          "name": "Gemini 3.1",
+          "icon": "gemini"
+        }
+      ],
+      "rows": [
+        {
+          "label": "Agentic coding",
+          "sub": "SWE-Bench Pro",
+          "values": [
+            "69.2",
+            "64.3",
+            "58.6",
+            "54.2"
+          ],
+          "winnerCol": -1
+        },
+        {
+          "label": "Terminal coding",
+          "sub": "Terminal-Bench",
+          "values": [
+            "74.6",
+            "66.1",
+            "78.2",
+            "70.3"
+          ],
+          "winnerCol": 2
+        },
+        {
+          "label": "Reasoning",
+          "sub": "Humanity's Last Exam",
+          "values": [
+            "57.9",
+            "54.7",
+            "52.2",
+            "51.4"
+          ],
+          "winnerCol": -1
+        },
+        {
+          "label": "Computer use",
+          "sub": "OSWorld",
+          "values": [
+            "83.4",
+            "82.8",
+            "78.7",
+            "76.2"
+          ],
+          "winnerCol": -1
+        }
+      ]
+    },
+    "durationFrames": 255
+  },
+  "AbhiChecklist": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#B490FC",
+      "meshBase": "#E7E0EA",
+      "meshA": "#F6CDB8",
+      "meshB": "#CBC9F9",
+      "meshC": "#E0EEE7",
+      "showSquares": true,
+      "animate": true
+    },
+    "demoProps": {
+      "mode": "light",
+      "accentColor": "#B490FC",
+      "kicker": "LINT",
+      "headline": "Catches breaks before",
+      "headlineTail": "you ever hit",
+      "headlineAccent": "post.",
+      "cardCrumb": "/reelstack-lint src/launch.tsx",
+      "statusText": "ALL CLEAN",
+      "statusValence": "good",
+      "goodColor": "#11C295",
+      "badColor": "#F5553A",
+      "items": [
+        {
+          "text": "Safe zones (top 290 / bottom 422)",
+          "valence": "good"
+        },
+        {
+          "text": "Motion floor ≥ 4 layers",
+          "valence": "good"
+        },
+        {
+          "text": "Hero counter ≤ 256px font",
+          "valence": "good"
+        },
+        {
+          "text": "BEATS sourced from whisper SRT",
+          "valence": "good"
+        },
+        {
+          "text": "Audio duration matches durationInFrames",
+          "valence": "good"
+        }
+      ]
+    },
+    "durationFrames": 150
+  },
+  "AbhiTwoColumn": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#DE6D37",
+      "glowXPct": 0.5,
+      "glowYPct": 0.42,
+      "glowStrength": 0.22,
+      "darkBase": "#08050B",
+      "showGrid": true,
+      "gridSpacingPx": 72
+    },
+    "demoProps": {
+      "accentColor": "#DE6D37",
+      "mode": "dark",
+      "kicker": "HERE'S THE IDEA",
+      "headline": "Text it. Walk away.",
+      "headlineAccentFrom": -1,
+      "leftTitle": "Claude Dispatch",
+      "leftStatus": "ACTIVE",
+      "leftAvatar": "C",
+      "leftBubbles": [
+        "arregla el bug",
+        "y corre los tests"
+      ],
+      "leftLabel": "TÚ ESCRIBES",
+      "rightCrumb": "dispatch --run",
+      "rightRows": [
+        "Analizando el código…",
+        "Localizando el bug en auth.ts",
+        "Escribiendo el fix + tests"
+      ],
+      "rightGreen": true,
+      "rightLabel": "CLAUDE EJECUTA",
+      "showConnector": true
+    },
+    "durationFrames": 270
+  },
+  "AbhiScrambleOpener": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#DC5867",
+      "meshBase": "#EFE9EE",
+      "meshA": "#F6CDB8",
+      "meshB": "#CBC9F9",
+      "meshC": "#E0EEE7",
+      "showSquares": true,
+      "animate": true
+    },
+    "demoProps": {
+      "mode": "light",
+      "accentColor": "#DC5867",
+      "kicker": "01 — HERETIC",
+      "preLine": "Strip the",
+      "heroWord": "CENSORSHIP.",
+      "subLine": "right out of any open-source AI.",
+      "showLock": true,
+      "heroSizePct": 11,
+      "resolveFrames": 54,
+      "scrambleStart": 6
+    },
+    "durationFrames": 130
+  },
+  "AbhiQuoteCard": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#009080",
+      "glowXPct": 0.5,
+      "glowYPct": 0.42,
+      "glowStrength": 0.24,
+      "showGrid": true,
+      "gridSpacingPx": 72
+    },
+    "demoProps": {
+      "mode": "dark",
+      "surface": "cream",
+      "accentColor": "#009080",
+      "kicker": "EN DIRECTO · CITA",
+      "quote": "La IA no te reemplaza. Te reemplaza *quien sí la usa.*",
+      "attributionName": "Armando Inteligencia",
+      "attributionRole": "FUNDADOR · @ARMANDOINTELIGENCIA",
+      "quoteSizePct": 5.0,
+      "inkColor": "",
+      "mutedColor": ""
+    },
+    "durationFrames": 165
+  },
+  "AbhiTweetCard": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#FAB400",
+      "glowXPct": 0.5,
+      "glowYPct": 0.34,
+      "glowStrength": 0.22,
+      "darkBase": "#0B080B",
+      "showGrid": true,
+      "gridSpacingPx": 72
+    },
+    "demoProps": {
+      "mode": "dark",
+      "accentColor": "#FAB400",
+      "kicker": "BACKBONE",
+      "headline": "It won't just nod along to keep you happy.",
+      "headlineAccentWord": 3,
+      "headlineSizePct": 7.4,
+      "userMessage": "“Let’s just skip the migration and ship.”",
+      "replyAuthor": "OPUS 4.8",
+      "replyGlyph": "⚠",
+      "replyBody": "That’ll drop user data. Bad plan — here’s a safer path."
+    },
+    "durationFrames": 180
+  },
+  "AbhiWaveform": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#7076FD",
+      "meshBase": "#ECE7F1",
+      "meshA": "#F6CDB8",
+      "meshB": "#C9C9F5",
+      "meshC": "#E0EEE7",
+      "showSquares": true
+    },
+    "demoProps": {
+      "mode": "light",
+      "accentColor": "#7076FD",
+      "secondaryColor": "",
+      "kicker": "11 / TRANSCRIBE",
+      "headlinePre": "Transcribe",
+      "headlineAccent": "everything.",
+      "label": "AUDIO STREAM",
+      "showMic": true,
+      "barCount": 42,
+      "headlineSizePct": 8.2
+    },
+    "durationFrames": 150
+  },
+  "AbhiAppCard": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#8789ED",
+      "meshBase": "#E5DFE8",
+      "meshA": "#F9C8BA",
+      "meshB": "#CBC9F9",
+      "meshC": "#E0EEE7",
+      "showSquares": true,
+      "animate": true
+    },
+    "demoProps": {
+      "mode": "light",
+      "accentColor": "#8789ED",
+      "kicker": "07 · UX CON ALMA",
+      "kickerGlyph": "dot",
+      "align": "center",
+      "headlinePre": "mientras piensa,",
+      "headlineAccent": "te responde.",
+      "appName": "Aura",
+      "appDesc": "Un compañero de IA diminuto que vive en tu dock.",
+      "ctaText": "Descárgala gratis",
+      "ctaStyle": "solid",
+      "iconFace": "smile",
+      "iconColorA": "#FFAC7C",
+      "iconColorB": "#C9A9E6",
+      "iconColorC": "#8FB0DA",
+      "notifications": [
+        {
+          "text": "pensando…",
+          "side": "above",
+          "offsetXPct": 18,
+          "delay": 0
+        },
+        {
+          "text": "cocinando ideas",
+          "side": "below",
+          "offsetXPct": -16,
+          "delay": 8
+        }
+      ],
+      "inkColor": "",
+      "mutedColor": ""
+    },
+    "durationFrames": 200
+  },
+  "AbhiLineChart": {
+    "bgProps": {
+      "mode": "dark",
+      "accentColor": "#00A080",
+      "showGrid": true,
+      "glowXPct": 0.5,
+      "glowYPct": 0.46,
+      "glowStrength": 0.16,
+      "darkBase": "#07040A"
+    },
+    "demoProps": {
+      "accentColor": "#00A080",
+      "mode": "dark",
+      "kicker": "ARTIFICIAL ANALYSIS · INTELLIGENCE INDEX",
+      "headlinePre": "GPT-5.5 leads.",
+      "headlineAccent": "Across the board.",
+      "cardTitle": "Intelligence Index",
+      "yAxisLabel": "Intelligence Index",
+      "xAxisLabel": "Output tokens total (M, log scale)",
+      "xTicks": [
+        "0",
+        "4M",
+        "8M",
+        "16M",
+        "32M",
+        "64M",
+        "128M"
+      ],
+      "yTicks": [
+        35,
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "series": [
+        {
+          "label": "Claude Opus 4.6",
+          "color": "#E08A5A",
+          "kind": "rival",
+          "values": [
+            null,
+            null,
+            46.5,
+            49,
+            51,
+            52.5,
+            53
+          ]
+        },
+        {
+          "label": "GPT-5.4",
+          "color": "#6E8BE0",
+          "kind": "rival",
+          "values": [
+            null,
+            36,
+            47.5,
+            51,
+            53,
+            55.5,
+            56.5
+          ]
+        },
+        {
+          "label": "Claude Opus 4.7",
+          "color": "#C8C8CE",
+          "kind": "rival",
+          "values": [
+            null,
+            null,
+            48,
+            52.5,
+            54.5,
+            56,
+            56.5
+          ]
+        },
+        {
+          "label": "GPT-5.5",
+          "color": "#F2F2F4",
+          "kind": "hero",
+          "values": [
+            41,
+            null,
+            52,
+            56.5,
+            57.5,
+            59.5,
+            60.5
+          ]
+        }
+      ]
+    },
+    "durationFrames": 150
+  },
+  "AbhiCodeDiff": {
+    "bgProps": {
+      "mode": "light",
+      "accentColor": "#6E78F0",
+      "meshBase": "#E7E0EA",
+      "meshA": "#F9C8BA",
+      "meshB": "#CBC9F9",
+      "meshC": "#E0EEE7",
+      "showSquares": true,
+      "glowStrength": 0.22,
+      "glowYPct": 0.46
+    },
+    "demoProps": {
+      "accentColor": "#6E78F0",
+      "mode": "light",
+      "kicker": "FOUNDATION",
+      "fileName": "src/ReelStack.tsx",
+      "langBadge": "REACT · TS",
+      "rows": [
+        {
+          "indent": 0,
+          "diff": "",
+          "tokens": [
+            {
+              "t": "import",
+              "k": "keyword"
+            },
+            {
+              "t": " { ",
+              "k": "punct"
+            },
+            {
+              "t": "Audio, Sequence",
+              "k": "plain"
+            },
+            {
+              "t": " } ",
+              "k": "punct"
+            },
+            {
+              "t": "from",
+              "k": "keyword"
+            },
+            {
+              "t": " ",
+              "k": "plain"
+            },
+            {
+              "t": "\"remotion\"",
+              "k": "string"
+            },
+            {
+              "t": ";",
+              "k": "punct"
+            }
+          ]
+        },
+        {
+          "indent": 0,
+          "diff": "",
+          "tokens": []
+        },
+        {
+          "indent": 0,
+          "diff": "",
+          "tokens": [
+            {
+              "t": "// whisper-locked beats · 1080×1920 · 30fps",
+              "k": "comment"
+            }
+          ]
+        },
+        {
+          "indent": 0,
+          "diff": "",
+          "tokens": [
+            {
+              "t": "export const",
+              "k": "keyword"
+            },
+            {
+              "t": " ReelStack ",
+              "k": "plain"
+            },
+            {
+              "t": "= () => (",
+              "k": "punct"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "diff": "del",
+          "tokens": [
+            {
+              "t": "<Sequence",
+              "k": "tag"
+            },
+            {
+              "t": " durationInFrames",
+              "k": "type"
+            },
+            {
+              "t": "={",
+              "k": "punct"
+            },
+            {
+              "t": "900",
+              "k": "number"
+            },
+            {
+              "t": "}>",
+              "k": "punct"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "diff": "add",
+          "tokens": [
+            {
+              "t": "<Sequence",
+              "k": "tag"
+            },
+            {
+              "t": " durationInFrames",
+              "k": "type"
+            },
+            {
+              "t": "={",
+              "k": "punct"
+            },
+            {
+              "t": "1740",
+              "k": "number"
+            },
+            {
+              "t": "}>",
+              "k": "punct"
+            }
+          ]
+        },
+        {
+          "indent": 2,
+          "diff": "add",
+          "tokens": [
+            {
+              "t": "<Hook ",
+              "k": "tag"
+            },
+            {
+              "t": "/> ",
+              "k": "punct"
+            },
+            {
+              "t": "<Reveal ",
+              "k": "tag"
+            },
+            {
+              "t": "/> ",
+              "k": "punct"
+            },
+            {
+              "t": "<Proof ",
+              "k": "tag"
+            },
+            {
+              "t": "/>",
+              "k": "punct"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "diff": "",
+          "tokens": [
+            {
+              "t": "</Sequence>",
+              "k": "tag"
+            }
+          ]
+        },
+        {
+          "indent": 0,
+          "diff": "",
+          "tokens": [
+            {
+              "t": ");",
+              "k": "punct"
+            }
+          ]
+        }
+      ],
+      "captionPre": "Built on",
+      "captionAccent": "Remotion",
+      "subLabel": "REACT · TYPESCRIPT · 30 FPS"
+    },
+    "durationFrames": 120
   }
 }
