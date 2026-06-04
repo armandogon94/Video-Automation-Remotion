@@ -416,9 +416,11 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
               transform: `translateY(${dotMatrixY}px)`,
               marginTop: 40 * U,
               display: "grid",
-              gridTemplateColumns: `repeat(${p.dotCols}, ${11 * U}px)`,
-              gridAutoRows: `${11 * U}px`,
-              gap: `${8 * U}px ${8 * U}px`,
+              // Source strip is compact + dense — small dots, tight pitch — so the
+              // 22-col matrix reads as a narrow centered band, not a full-width bar.
+              gridTemplateColumns: `repeat(${p.dotCols}, ${7 * U}px)`,
+              gridAutoRows: `${7 * U}px`,
+              gap: `${6 * U}px ${6 * U}px`,
               justifyContent: "center",
             }}
           >
@@ -442,8 +444,8 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
                 <span
                   key={i}
                   style={{
-                    width: 11 * U,
-                    height: 11 * U,
+                    width: 7 * U,
+                    height: 7 * U,
                     borderRadius: "50%",
                     background: isAccent
                       ? p.accentColor
@@ -451,7 +453,7 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
                         ? rgba("#FFFFFF", 0.12)
                         : rgba("#0C0C12", 0.14),
                     boxShadow: isAccent
-                      ? `0 0 ${14 * U}px ${rgba(p.accentColor, 0.7)}`
+                      ? `0 0 ${12 * U}px ${rgba(p.accentColor, 0.7)}`
                       : "none",
                   }}
                 />

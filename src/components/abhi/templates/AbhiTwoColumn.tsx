@@ -137,10 +137,10 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
   // TIMING (frames @30fps), scene-relative from frame 0, then HOLD.
   // ============================================================
 
-  // ── Headline: word-by-word pop ~1 word / 4f, starts ~f6 ──
+  // ── Headline: word-by-word pop ~1 word / 3f, starts ~f4 (source resolves fast) ──
   const headWords = p.headline.split(" ");
-  const HEAD_START = 6;
-  const HEAD_STEP = 4;
+  const HEAD_START = 4;
+  const HEAD_STEP = 3;
 
   // ── Panels slide ±40px (×1.5 → ±60px) from their own edges over ~10f ──
   const LEFT_START = 14;
@@ -217,10 +217,10 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
           textAlign: "center",
           fontFamily: FONT_STACKS.sans,
           fontWeight: 900,
-          fontSize: px(58),
+          fontSize: px(54),
           lineHeight: 0.98,
-          letterSpacing: "-0.02em",
-          padding: `0 ${px(40)}px`,
+          letterSpacing: "-0.03em",
+          padding: `0 ${px(44)}px`,
         }}
       >
         {headWords.map((w, i) => {

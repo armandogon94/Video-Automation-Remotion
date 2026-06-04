@@ -237,8 +237,10 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
   const colGap = 2.0;
   const colW = (gridRight - gridLeft - colGap) / 2; // ≈ 43.5
   const rowTop = 46.0;
-  const rowH = 7.4;
-  const rowGap = 1.4;
+  // Source cards are single-line (icon + title), so the rows are shorter/tighter
+  // than a 2-line card would need.
+  const rowH = 5.7;
+  const rowGap = 1.5;
   const cardX = (col: number) => gridLeft + col * (colW + colGap);
   const cardY = (row: number) => rowTop + row * (rowH + rowGap);
   const positions = [
@@ -300,7 +302,8 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
           right: "6%",
           fontFamily: FONT_STACKS.sans,
           fontWeight: 900,
-          fontSize: PX(50),
+          // Source headline runs ~58px@720 — larger/bolder than the prior 50.
+          fontSize: PX(58),
           lineHeight: 0.98,
           letterSpacing: "-0.02em",
           color: ink,

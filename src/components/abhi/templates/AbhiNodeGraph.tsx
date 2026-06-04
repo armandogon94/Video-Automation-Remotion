@@ -103,10 +103,15 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
   // ---- Constellation geometry (canvas-relative; hub above the stat) ----
   const CX = PX / 2; // 540
   const CY = 0.40 * 1920; // 768 — hub vertical center
-  const hubR = 0.095 * PX; // ring node radius ≈ 102px
-  const spokeInner = hubR + 0.012 * PX; // spokes start just outside the ring
+  // Source hub is a small ringed node (≈70px radius), not a big disc.
+  const hubR = 0.066 * PX; // ring node radius ≈ 71px
+  const spokeInner = hubR + 0.018 * PX; // spokes start just outside the ring
   const spokeOuterMin = 0.30 * PX; // shortest spoke reach
   const spokeOuterMax = 0.42 * PX; // longest spoke reach
+  // Source's node trails curve into a slight galaxy swirl rather than firing as
+  // perfectly straight radial lines: each dot is rotated a little further around
+  // the hub as it gets further out (tangential drift ∝ radius).
+  const SWIRL = 0.55; // radians of total swirl from inner→outer reach
 
   const spokes = clamp(Math.round(p.spokeCount), 6, 28);
   const dotsPer = clamp(Math.round(p.dotsPerSpoke), 2, 6);
@@ -248,16 +253,22 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
     const reach =
       spokeOuterMin + rand(i * 3 + 7) * (spokeOuterMax - spokeOuterMin);
 
+    // Swirl: rotate the spoke direction a touch as it leaves the hub so the
+    // trail arcs (galaxy look). Edge endpoint already carries part of the swirl.
+    const swirlAt = (r: number): number =>
+      SWIRL * ((r - spokeInner) / Math.max(1, reach - spokeInner));
+    const angAt = (r: number): number => ang + swirlAt(r);
     const x1 = CX + Math.cos(ang) * spokeInner;
     const y1 = CY + Math.sin(ang) * spokeInner;
-    const x2 = CX + Math.cos(ang) * reach;
-    const y2 = CY + Math.sin(ang) * reach;
+    const aOut = angAt(reach);
+    const x2 = CX + Math.cos(aOut) * reach;
+    const y2 = CY + Math.sin(aOut) * reach;
     const start = SPOKE_START + i * EDGE_STEP;
 
-    // Accent sector: a contiguous wedge of the UPPER arc gets accent dots.
-    // angle near -90° (straight up) is the sector center; width = accentFrac of 2π.
-    const upRef = -Math.PI / 2;
-    let da = Math.abs(((ang - upRef + Math.PI) % (Math.PI * 2)) - Math.PI);
+    // Accent sector: a contiguous wedge gets accent dots. Source's amber cluster
+    // sits in the UPPER-RIGHT, not straight up — center the wedge there.
+    const accentRef = -Math.PI / 4; // upper-right
+    const da = Math.abs(((ang - accentRef + Math.PI) % (Math.PI * 2)) - Math.PI);
     const isAccentSpoke = accentFrac > 0 && da <= accentFrac * Math.PI;
 
     const dots: DotInfo[] = [];
@@ -265,10 +276,11 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
       // Dots distributed from ~55% out to the tip, with small radial jitter.
       const t = 0.5 + (d / Math.max(1, dotsPer - 1)) * 0.55;
       const rr = spokeInner + (reach - spokeInner) * Math.min(1, t);
+      const aDot = angAt(rr); // dot rides the swirling trail
       const perp = (rand(i * 9 + d * 3 + 2) - 0.5) * 0.024 * PX; // tiny perpendicular spread
-      const px2 = CX + Math.cos(ang) * rr - Math.sin(ang) * perp;
-      const py2 = CY + Math.sin(ang) * rr + Math.cos(ang) * perp;
-      const dr = (0.006 + rand(i * 5 + d) * 0.006) * PX; // 6.5–13px dots
+      const px2 = CX + Math.cos(aDot) * rr - Math.sin(aDot) * perp;
+      const py2 = CY + Math.sin(aDot) * rr + Math.cos(aDot) * perp;
+      const dr = (0.005 + rand(i * 5 + d) * 0.006) * PX; // 5.4–11.9px dots
       dots.push({
         x: px2,
         y: py2,
@@ -289,7 +301,7 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
   const pillBorder = isDark
     ? `1px solid ${hexA(accent, 0.45)}`
     : "1px solid rgba(12,12,18,0.08)";
-  const kickerPx = Math.round(0.02 * PX); // ~21.6px
+  const kickerPx = Math.round(0.016 * PX); // ~17px — source kicker is small
 
   // Hub disc surface.
   const hubFill = isDark ? "#14111A" : "#FBF8FB";
@@ -303,7 +315,7 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
       >
         <div
           style={{
-            marginTop: 0.165 * 1920,
+            marginTop: 0.125 * 1920,
             transform: `translateY(${kickerY}px)`,
             opacity: kickerOpacity,
             display: "inline-flex",
@@ -444,10 +456,10 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
             borderRadius: "50%",
             background: `radial-gradient(circle at center, ${hexA(
               accent,
-              0.45,
-            )} 0%, ${hexA(accent, 0.12)} 45%, rgba(0,0,0,0) 70%)`,
-            opacity: hubBloom * 0.9,
-            filter: "blur(18px)",
+              0.28,
+            )} 0%, ${hexA(accent, 0.08)} 45%, rgba(0,0,0,0) 70%)`,
+            opacity: hubBloom * 0.7,
+            filter: "blur(16px)",
             transform: `scale(${hubPulse})`,
           }}
         />
@@ -556,7 +568,7 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
             style={{
               fontFamily: FONT_STACKS.sans,
               fontWeight: 900,
-              fontSize: 0.155 * PX,
+              fontSize: 0.13 * PX,
               letterSpacing: "-0.02em",
               lineHeight: 0.95,
               color: ink,

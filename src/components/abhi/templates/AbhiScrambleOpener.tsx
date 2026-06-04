@@ -54,6 +54,8 @@ export const abhiScrambleOpenerSchema = z.object({
   heroWord: z.string().default("CENSORSHIP."),
   /** Optional sub-line that types on after the word resolves. "" hides it. */
   subLine: z.string().default("right out of any open-source AI."),
+  /** Optional mono terminal pill ("$ …") that pops in below the sub-line. "" hides it. */
+  terminalLine: z.string().default("with one command."),
   /** Show the central padlock that holds over the word during the scramble. */
   showLock: z.boolean().default(true),
   /** Hero-word cap-height as % of 720w (spec 7–12). px@1080 = pct/100*1080. */
@@ -97,7 +99,7 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
 ) => {
   const p = abhiScrambleOpenerSchema.parse(props);
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
+  const { fps, width, height, durationInFrames } = useVideoConfig();
 
   const isDark = p.mode === "dark";
   const ink = isDark ? "#F2F2F4" : "#1A1A1A"; // pre-line / near-black ink
@@ -190,10 +192,17 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
     easing: Easing.out(Easing.cubic),
   });
 
-  // ── Sub-line: types on ~1 char / 2.5f after the word resolves ──
+  // ── Sub-line: types on after the word resolves. RATE auto-fits so the whole
+  //    line finishes typing within the scene (source completes well before end),
+  //    capped to a snappy floor so short lines still read as "typed". ──
   const hasSub = p.subLine.trim() !== S;
   const SUB_START = finishFrame + 4;
-  const SUB_RATE = 2.5; // frames per character
+  // Reserve ~16f tail after typing so a trailing terminal pill can pop + hold.
+  const subBudget = Math.max(8, durationInFrames - SUB_START - 16);
+  const SUB_RATE = Math.max(
+    1.4,
+    Math.min(2.2, subBudget / Math.max(1, p.subLine.length)),
+  );
   const subChars = Math.max(
     0,
     Math.min(p.subLine.length, Math.floor((frame - SUB_START) / SUB_RATE)),
@@ -201,6 +210,17 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
   const subTyped = p.subLine.slice(0, subChars);
   const subTypingDone = subChars >= p.subLine.length;
   const subVisible = frame >= SUB_START && hasSub;
+
+  // ── Terminal pill ("$ …"): pops in once the sub-line finishes typing ──
+  const hasTerm = p.terminalLine.trim() !== S;
+  const TERM_START = SUB_START + p.subLine.length * SUB_RATE + 3;
+  const termProg = spring({
+    frame: frame - TERM_START,
+    fps,
+    config: { damping: 16, mass: 0.5, stiffness: 150 },
+    durationInFrames: 10,
+  });
+  const termVisible = hasTerm && frame >= TERM_START;
   // block caret blinks ~15f cycle while typing/holding
   const caretOn = Math.floor(frame / 8) % 2 === 0;
   const showCaret = subVisible && (!subTypingDone || caretOn);
@@ -422,6 +442,60 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
                 }}
               />
             )}
+          </div>
+        )}
+
+        {/* terminal command pill — pops in below the sub-line ("$ …") */}
+        {hasTerm && (
+          <div
+            style={{
+              marginTop: px(14),
+              opacity: termVisible ? termProg : 0,
+              transform: `scale(${termVisible ? interpolate(termProg, [0, 1], [0.86, 1]) : 0.86})`,
+              transformOrigin: "0% 50%",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: px(8),
+              padding: `${px(8)}px ${px(14)}px`,
+              borderRadius: px(9),
+              background: isDark ? hexA("#0C0C12", 0.7) : hexA("#FFFFFF", 0.78),
+              border: `1px solid ${isDark ? hexA("#FFFFFF", 0.12) : hexA("#1A1A1A", 0.1)}`,
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              boxShadow: `0 ${px(6)}px ${px(20)}px ${hexA("#1A1A1A", isDark ? 0.4 : 0.1)}`,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: FONT_STACKS.mono,
+                fontWeight: 700,
+                fontSize: subPx * 0.92,
+                color: accent,
+              }}
+            >
+              $
+            </span>
+            <span
+              style={{
+                fontFamily: FONT_STACKS.mono,
+                fontWeight: 600,
+                fontSize: subPx * 0.92,
+                color: ink,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {p.terminalLine}
+            </span>
+            <span
+              style={{
+                display: "inline-block",
+                width: px(8),
+                height: subPx * 0.86,
+                marginLeft: px(2),
+                background: accent,
+                opacity: caretOn ? 1 : 0.25,
+              }}
+            />
           </div>
         )}
       </div>

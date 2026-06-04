@@ -57,6 +57,8 @@ export const abhiTweetCardSchema = z.object({
   replyGlyph: z.string().default("⚠"),
   /** Reply-card body text (the model's pushback). "" hides the whole reply card. */
   replyBody: z.string().default("That’ll drop user data. Bad plan — here’s a safer path."),
+  /** Bottom mono caption that fades in last (accent dot prefix, UPPERCASE). "" hides it. */
+  footerNote: z.string().default("IF YOUR PLAN'S BAD · IT'LL CALL IT OUT"),
 });
 export type AbhiTweetCardProps = z.infer<typeof abhiTweetCardSchema>;
 
@@ -180,6 +182,19 @@ export const AbhiTweetCard: React.FC<Partial<AbhiTweetCardProps>> = (props) => {
   });
   const hasReply = p.replyBody.trim() !== S;
 
+  // --- Footer mono caption: fades + rises in last (after the reply card lands) ---
+  const FOOTER_START = REPLY_START + 18;
+  const footerOp = interpolate(frame, [FOOTER_START, FOOTER_START + 8], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const footerY = interpolate(frame, [FOOTER_START, FOOTER_START + 8], [k(10), 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.out(Easing.cubic),
+  });
+  const hasFooter = p.footerNote.trim() !== S;
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       {/* ── Centered content column: kicker + headline ── */}
@@ -271,6 +286,13 @@ export const AbhiTweetCard: React.FC<Partial<AbhiTweetCardProps>> = (props) => {
                 easing: Easing.out(Easing.quad),
               },
             );
+            // Per-word BLUR-IN (the source's signature reveal): each word arrives
+            // out-of-focus and sharpens over ~7f as it springs up.
+            const blurPx = interpolate(frame, [start, start + 7], [k(10), 0], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+              easing: Easing.out(Easing.cubic),
+            });
             return (
               <span
                 key={i}
@@ -279,6 +301,7 @@ export const AbhiTweetCard: React.FC<Partial<AbhiTweetCardProps>> = (props) => {
                   marginRight: k(13),
                   opacity: sp,
                   transform: `translateY(${interpolate(sp, [0, 1], [k(14), 0])}px)`,
+                  filter: blurPx > 0.15 ? `blur(${blurPx}px)` : "none",
                   position: "relative",
                 }}
               >
@@ -399,6 +422,48 @@ export const AbhiTweetCard: React.FC<Partial<AbhiTweetCardProps>> = (props) => {
             ) : null}
             {p.replyBody}
           </div>
+        </div>
+      ) : null}
+
+      {/* ── Footer mono caption (centered, accent dot prefix) ── */}
+      {hasFooter ? (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: k(1010),
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: k(8),
+            opacity: footerOp,
+            transform: `translateY(${footerY}px)`,
+          }}
+        >
+          <span
+            style={{
+              width: k(6),
+              height: k(6),
+              borderRadius: "50%",
+              background: accent,
+              boxShadow: `0 0 ${k(6)}px ${hexA(accent, 0.7)}`,
+              flexShrink: 0,
+            }}
+          />
+          <span
+            style={{
+              fontFamily: FONT_STACKS.mono,
+              fontWeight: 600,
+              fontSize: k(12),
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: isDark ? "#6E6E76" : "#7A7A86",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {p.footerNote}
+          </span>
         </div>
       ) : null}
     </AbsoluteFill>

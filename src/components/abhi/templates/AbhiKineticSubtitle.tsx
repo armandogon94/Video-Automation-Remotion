@@ -75,6 +75,11 @@ export const abhiKineticSubtitleSchema = z.object({
   punchSizePct: z.number().default(10.0),
   /** Frames between successive punch words landing. */
   punchStagger: z.number().default(17),
+  /**
+   * Vertical center of the stacked punch block as % of frame height. The source
+   * anchors the stack in the UPPER third (~29%), not dead-center.
+   */
+  punchYPct: z.number().default(29),
 
   // ── Shared overrides ─────────────────────────────────────────────────
   /** Success green (stacked "green" token + landing bloom on positive words). */
@@ -285,15 +290,23 @@ const StackedPunch: React.FC<{
   const sizePx = (p.punchSizePct / 100) * PX;
 
   return (
-    <AbsoluteFill
-      style={{
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: px(2),
-      }}
-    >
-      {wordList.map((w, i) => {
+    <AbsoluteFill>
+      {/* Stack whose CENTER is anchored at punchYPct (upper third in the source),
+          not dead-center: pin top at punchYPct% then translate up by half itself. */}
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: `${p.punchYPct}%`,
+          transform: "translateY(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: px(2),
+        }}
+      >
+        {wordList.map((w, i) => {
         const start = FIRST_START + i * p.punchStagger;
 
         // Snap-in with scale-overshoot 1.18→0.97→1 over ~9f.
@@ -346,8 +359,9 @@ const StackedPunch: React.FC<{
           >
             {w}
           </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </AbsoluteFill>
   );
 };

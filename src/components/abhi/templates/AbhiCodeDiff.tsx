@@ -232,21 +232,22 @@ export const AbhiCodeDiff: React.FC<Partial<AbhiCodeDiffProps>> = (props) => {
   const cardLeft = (width - cardW) / 2;
   const cardTop = px(360);
 
-  // ── Card entrance: scale 0.96→1 + fade up, ~10f from f8 ──
-  const CARD_START = 8;
+  // ── Card entrance: scale 0.96→1 + fade up, ~8f from f3 (lands fast, like
+  //    the source where the editor is already present + typing by ~0.08 of the clip) ──
+  const CARD_START = 3;
   const cardSpring = spring({
     frame: frame - CARD_START,
     fps,
-    config: { damping: 200, mass: 0.7, stiffness: 120 },
-    durationInFrames: 11,
+    config: { damping: 200, mass: 0.7, stiffness: 140 },
+    durationInFrames: 8,
   });
   const cardScale = interpolate(cardSpring, [0, 1], [0.96, 1]);
   const cardOpacity = interpolate(cardSpring, [0, 1], [0, 1]);
   const cardRise = interpolate(cardSpring, [0, 1], [px(28), 0]);
 
-  // ── Code rows reveal top-down ~4f/row after the card lands ──
-  const ROWS_START = CARD_START + 10; // ~f18
-  const ROW_STEP = 4;
+  // ── Code rows reveal top-down ~3f/row right after the card lands ──
+  const ROWS_START = CARD_START + 6; // ~f9 (line 1 typing by ~0.08 of a 4s clip)
+  const ROW_STEP = 3;
   const rows = p.rows;
   // Index of the most-recently revealed row (for the block caret).
   const lastRevealed = Math.max(
@@ -376,10 +377,12 @@ export const AbhiCodeDiff: React.FC<Partial<AbhiCodeDiffProps>> = (props) => {
           </span>
         </div>
 
-        {/* Code body */}
+        {/* Code body — fixed min-height so the dark editor panel is always a
+            solid near-black block (like the source), even before rows reveal. */}
         <div
           style={{
             padding: `${px(16)}px 0 ${px(22)}px 0`,
+            minHeight: rowH * rows.length + px(38),
             fontFamily: FONT_STACKS.monoCode,
             fontSize: codeSize,
             lineHeight: 1,

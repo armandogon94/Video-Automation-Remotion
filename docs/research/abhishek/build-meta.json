@@ -51,13 +51,11 @@
     "bgProps": {
       "mode": "light",
       "accentColor": "#8789ED",
-      "gridOpacity": 0.18,
-      "meshBlobs": [
-        "mint-top",
-        "periwinkle-right",
-        "peach-lower",
-        "amber-lower-right"
-      ]
+      "showSquares": false,
+      "meshBase": "#E9E4EF",
+      "meshA": "#E7D7F2",
+      "meshB": "#CFD2F6",
+      "meshC": "#DCEDE7"
     },
     "demoProps": {
       "bgMode": "light",
@@ -101,7 +99,7 @@
       "subtitle": "Luego habla con tu agente. Sin botones. Sin paneles.",
       "subtitleAccentFrom": 4
     },
-    "durationFrames": 195
+    "durationFrames": 180
   },
   "AbhiFeatureRows": {
     "bgProps": {
@@ -149,7 +147,8 @@
           "caption": "clics, escribe, navega",
           "valence": "neutral"
         }
-      ]
+      ],
+      "footerPill": "hasta terminar la tarea"
     },
     "durationFrames": 240
   },
@@ -176,30 +175,30 @@
         {
           "index": "01",
           "title": "Claude Code",
-          "desc": "Skills nativos",
-          "glyph": "≋",
-          "accentTint": false
+          "desc": "",
+          "logo": "anthropic",
+          "cardColor": "#E8743B"
         },
         {
           "index": "02",
           "title": "Cursor",
-          "desc": "Suelta el agente",
-          "glyph": "▸",
-          "accentTint": false
+          "desc": "",
+          "logo": "cursor",
+          "cardColor": "#AEB4C2"
         },
         {
           "index": "03",
           "title": "Codex",
-          "desc": "Listo de fábrica",
-          "glyph": "◎",
-          "accentTint": false
+          "desc": "",
+          "logo": "openai",
+          "cardColor": "#00A080"
         },
         {
           "index": "04",
           "title": "OpenClaw",
-          "desc": "Mismo skill, otro host",
-          "glyph": "☺",
-          "accentTint": true
+          "desc": "",
+          "logo": "smiley",
+          "cardColor": "#E8A22B"
         }
       ]
     },
@@ -239,7 +238,9 @@
       ],
       "rightSuccess": "entregado en 4m 18s",
       "rightCaption": "cierra la brecha rápido.",
-      "vsBadge": "VS"
+      "vsBadge": "VS",
+      "bottomLead": "Pero si vives en tu terminal —",
+      "bottomTail": "esto cierra la brecha rápido."
     },
     "durationFrames": 420
   },
@@ -258,7 +259,7 @@
       "accentColor": "#FD9B00",
       "kicker": "NUEVO · CÓDIGO ABIERTO",
       "kickerGlyph": "star",
-      "iconStyle": "burst",
+      "iconStyle": "none",
       "lineOne": "ARMANDO",
       "lineTwo": "INTELIGENCIA.",
       "subLabel": "UNA SKILL DE CLAUDE CODE · DEVINI LABS",
@@ -272,27 +273,23 @@
   "AbhiBrowserMockup": {
     "bgProps": {
       "mode": "dark",
-      "accentColor": "#FD9B00",
+      "accentColor": "#F5553A",
       "glowXPct": 0.5,
-      "glowYPct": 0.4,
-      "glowStrength": 0.24,
+      "glowYPct": 0.5,
+      "glowStrength": 0.12,
       "darkBase": "#08050B",
       "showGrid": true,
       "gridSpacingPx": 84
     },
     "demoProps": {
-      "accentColor": "#FD9B00",
+      "accentColor": "#F5553A",
       "mode": "dark",
       "statusPill": "LÍMITE ALCANZADO · CUOTA AGOTADA",
       "urlCrumb": "claude.ai/design",
       "innerKicker": "LÍMITE SEMANAL ALCANZADO",
       "innerHeadline": "Llegaste al tope de tu cuota de Claude Design.",
       "innerMeta": "Se reinicia en 6 días · 14 hrs · 22 min",
-      "uiChips": [
-        "Plan Pro",
-        "Subir de plan",
-        "Ver uso"
-      ],
+      "uiChips": [],
       "strikeHook": true,
       "headlineSizePct": 3.6,
       "chassisWidthPct": 88.5
@@ -315,8 +312,9 @@
       "negativeColor": "#F5553A",
       "punchWords": "SAFER.,CHEAPER.,SMOOTHER.",
       "punchColors": "green,accent,ink",
-      "punchSizePct": 10.0,
-      "punchStagger": 17
+      "punchSizePct": 10,
+      "punchStagger": 9,
+      "punchYPct": 29
     },
     "durationFrames": 120
   },
@@ -383,7 +381,8 @@
       ],
       "valueDecimals": 2,
       "valueSuffix": "",
-      "thresholdValue": 1.85
+      "thresholdValue": 1.85,
+      "footnote": "You can actually trust what it's doing."
     },
     "durationFrames": 150
   },
@@ -404,29 +403,32 @@
       "accentColor": "#8789ED",
       "entrance": "rise",
       "kicker": "ELIGE UN ESTILO",
-      "screenChip": "GLASS",
+      "screenChip": "PAPERCLIP",
       "appIcon": "✳",
       "titlePre": "Multimodal",
       "titleAccent": "sin la demo.",
       "rows": [
         {
           "glyph": "◆",
-          "title": "Familia Glass",
-          "caption": "1080×1920 · GRAPHIFY"
+          "title": "CEO",
+          "caption": "orchestrating · live"
         },
         {
           "glyph": "◇",
-          "title": "Malla clara",
-          "caption": "9:16 · brillo pastel"
+          "title": "Engineer",
+          "caption": "shipping src/launch.tsx"
         },
         {
           "glyph": "▦",
-          "title": "Grid oscuro",
-          "caption": "radial cálido · mono"
+          "title": "Marketing",
+          "caption": "drafting the reel"
         }
       ],
       "dotCount": 5,
-      "activeDot": 1
+      "activeDot": 1,
+      "screenMode": "dark",
+      "headline": "Run a whole company from your phone.",
+      "headlineAccentWords": "company phone."
     },
     "durationFrames": 165
   },
@@ -506,6 +508,17 @@
             "76.2"
           ],
           "winnerCol": -1
+        },
+        {
+          "label": "Knowledge",
+          "sub": "GPQA",
+          "values": [
+            "1890",
+            "1753",
+            "1769",
+            "1314"
+          ],
+          "winnerCol": -1
         }
       ]
     },
@@ -513,49 +526,46 @@
   },
   "AbhiChecklist": {
     "bgProps": {
-      "mode": "light",
-      "accentColor": "#B490FC",
-      "meshBase": "#E7E0EA",
-      "meshA": "#F6CDB8",
-      "meshB": "#CBC9F9",
-      "meshC": "#E0EEE7",
-      "showSquares": true,
-      "animate": true
+      "mode": "dark",
+      "accentColor": "#16B79C",
+      "glowHue": "teal",
+      "showGrid": true,
+      "glowStrength": 0.22,
+      "glowYPct": 0.42
     },
     "demoProps": {
-      "mode": "light",
-      "accentColor": "#B490FC",
-      "kicker": "LINT",
-      "headline": "Catches breaks before",
-      "headlineTail": "you ever hit",
-      "headlineAccent": "post.",
-      "cardCrumb": "/reelstack-lint src/launch.tsx",
-      "statusText": "ALL CLEAN",
+      "mode": "dark",
+      "accentColor": "#16B79C",
+      "kicker": "HAND IT A MESSY, MULTI-PART TASK",
+      "headline": "Trust the loop.",
+      "headlineTail": "",
+      "headlineAccent": "",
+      "surface": "bare",
+      "cardCrumb": "",
+      "statusText": "",
       "statusValence": "good",
-      "goodColor": "#11C295",
+      "goodColor": "#16B79C",
       "badColor": "#F5553A",
       "items": [
         {
-          "text": "Safe zones (top 290 / bottom 422)",
+          "text": "Plan",
           "valence": "good"
         },
         {
-          "text": "Motion floor ≥ 4 layers",
+          "text": "Use tools",
           "valence": "good"
         },
         {
-          "text": "Hero counter ≤ 256px font",
+          "text": "Check its work",
           "valence": "good"
         },
         {
-          "text": "BEATS sourced from whisper SRT",
-          "valence": "good"
-        },
-        {
-          "text": "Audio duration matches durationInFrames",
+          "text": "Keep going",
           "valence": "good"
         }
-      ]
+      ],
+      "align": "left",
+      "badgeStyle": "number"
     },
     "durationFrames": 150
   },
@@ -566,7 +576,7 @@
       "glowXPct": 0.5,
       "glowYPct": 0.42,
       "glowStrength": 0.22,
-      "darkBase": "#08050B",
+      "darkBase": "#0A090C",
       "showGrid": true,
       "gridSpacingPx": 72
     },
@@ -616,10 +626,11 @@
       "subLine": "right out of any open-source AI.",
       "showLock": true,
       "heroSizePct": 11,
-      "resolveFrames": 54,
-      "scrambleStart": 6
+      "resolveFrames": 36,
+      "scrambleStart": 6,
+      "terminalLine": "with one command."
     },
-    "durationFrames": 130
+    "durationFrames": 120
   },
   "AbhiQuoteCard": {
     "bgProps": {
@@ -639,11 +650,11 @@
       "quote": "La IA no te reemplaza. Te reemplaza *quien sí la usa.*",
       "attributionName": "Armando Inteligencia",
       "attributionRole": "FUNDADOR · @ARMANDOINTELIGENCIA",
-      "quoteSizePct": 5.0,
+      "quoteSizePct": 5,
       "inkColor": "",
       "mutedColor": ""
     },
-    "durationFrames": 165
+    "durationFrames": 210
   },
   "AbhiTweetCard": {
     "bgProps": {
@@ -652,7 +663,7 @@
       "glowXPct": 0.5,
       "glowYPct": 0.34,
       "glowStrength": 0.22,
-      "darkBase": "#0B080B",
+      "darkBase": "#0A090B",
       "showGrid": true,
       "gridSpacingPx": 72
     },
@@ -666,7 +677,8 @@
       "userMessage": "“Let’s just skip the migration and ship.”",
       "replyAuthor": "OPUS 4.8",
       "replyGlyph": "⚠",
-      "replyBody": "That’ll drop user data. Bad plan — here’s a safer path."
+      "replyBody": "That’ll drop user data. Bad plan — here’s a safer path.",
+      "footerNote": "IF YOUR PLAN'S BAD · IT'LL CALL IT OUT"
     },
     "durationFrames": 180
   },
@@ -682,15 +694,15 @@
     },
     "demoProps": {
       "mode": "light",
-      "accentColor": "#7076FD",
-      "secondaryColor": "",
-      "kicker": "11 / TRANSCRIBE",
-      "headlinePre": "Transcribe",
-      "headlineAccent": "everything.",
-      "label": "AUDIO STREAM",
+      "accentColor": "#FD824B",
+      "secondaryColor": "#B792FF",
+      "align": "center",
+      "kicker": "YOUR VOICE",
+      "headlinePre": "",
+      "headlineAccent": "",
+      "label": "VOICEOVER.WAV",
       "showMic": true,
-      "barCount": 42,
-      "headlineSizePct": 8.2
+      "barCount": 11
     },
     "durationFrames": 150
   },
@@ -708,14 +720,14 @@
     "demoProps": {
       "mode": "light",
       "accentColor": "#8789ED",
-      "kicker": "07 · UX CON ALMA",
+      "kicker": "07 — PLAYFUL UX",
       "kickerGlyph": "dot",
       "align": "center",
-      "headlinePre": "mientras piensa,",
-      "headlineAccent": "te responde.",
-      "appName": "Aura",
-      "appDesc": "Un compañero de IA diminuto que vive en tu dock.",
-      "ctaText": "Descárgala gratis",
+      "headlinePre": "while it thinks,",
+      "headlineAccent": "it talks back.",
+      "appName": "",
+      "appDesc": "",
+      "ctaText": "",
       "ctaStyle": "solid",
       "iconFace": "smile",
       "iconColorA": "#FFAC7C",
@@ -723,16 +735,16 @@
       "iconColorC": "#8FB0DA",
       "notifications": [
         {
-          "text": "pensando…",
-          "side": "above",
-          "offsetXPct": 18,
+          "text": "cooking up vibes",
+          "side": "below",
+          "offsetXPct": -20,
           "delay": 0
         },
         {
-          "text": "cocinando ideas",
+          "text": "almost there",
           "side": "below",
-          "offsetXPct": -16,
-          "delay": 8
+          "offsetXPct": 22,
+          "delay": 10
         }
       ],
       "inkColor": "",
@@ -756,7 +768,7 @@
       "kicker": "ARTIFICIAL ANALYSIS · INTELLIGENCE INDEX",
       "headlinePre": "GPT-5.5 leads.",
       "headlineAccent": "Across the board.",
-      "cardTitle": "Intelligence Index",
+      "cardTitle": "Artificial Analysis Intelligence Index",
       "yAxisLabel": "Intelligence Index",
       "xAxisLabel": "Output tokens total (M, log scale)",
       "xTicks": [
@@ -833,7 +845,9 @@
             60.5
           ]
         }
-      ]
+      ],
+      "badgeText": "STATE OF\nTHE ART",
+      "footnotePill": "½ the cost of frontier rivals"
     },
     "durationFrames": 150
   },

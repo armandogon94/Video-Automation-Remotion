@@ -180,7 +180,8 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
   });
   const breathe = Math.sin((frame / 30) * Math.PI * 2) * 0.04;
   const glowScale = (0.96 + 0.04 * bloomIn) * (1 + breathe * bloomIn);
-  const glowOpacity = (isDark ? 0.5 : 0.34) * bloomIn;
+  // Source glow is a DIM maroon wash, barely above the base — keep it subtle.
+  const glowOpacity = (isDark ? 0.2 : 0.34) * bloomIn;
 
   // ── Chrome dots overshoot-pop ~2f after the chassis lands ──
   const DOTS_START = CHASSIS_START + 12;
@@ -252,8 +253,8 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
             transform: `translate(-50%, -50%) scale(${glowScale})`,
             background: `radial-gradient(ellipse at center, ${hexA(
               accent,
-              0.85,
-            )} 0%, ${hexA(accent, 0.3)} 38%, rgba(0,0,0,0) 70%)`,
+              0.55,
+            )} 0%, ${hexA(accent, 0.18)} 38%, rgba(0,0,0,0) 70%)`,
             opacity: glowOpacity,
             filter: "blur(70px)",
           }}
@@ -449,12 +450,12 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
                   style={{
                     position: "absolute",
                     left: 0,
-                    top: "52%",
-                    height: px(0.42),
+                    top: "50%",
+                    height: px(0.26),
                     width: `${strikeProg * 100}%`,
                     background: STRIKE_RED,
-                    borderRadius: px(0.4),
-                    boxShadow: `0 0 ${px(1.4)}px ${hexA(STRIKE_RED, 0.9)}`,
+                    borderRadius: px(0.3),
+                    boxShadow: `0 0 ${px(0.7)}px ${hexA(STRIKE_RED, 0.7)}`,
                   }}
                 />
               )}

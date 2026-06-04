@@ -82,6 +82,8 @@ export const abhiBarChartSchema = z.object({
    * (in the same units as the bars). NaN / ≤0 hides it. Tinted with dotColor.
    */
   thresholdValue: z.number().default(1.85),
+  /** Optional takeaway pill below the chart (green-tinted, leading glyph). "" hides it. */
+  footnote: z.string().default(""),
 });
 export type AbhiBarChartProps = z.infer<typeof abhiBarChartSchema>;
 
@@ -117,12 +119,13 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
   const kickerPx = Math.round(0.0205 * PX); // ~2.05% → 22px
   const headlinePx = Math.round(0.058 * PX); // ~5.8% → 63px
 
-  // Plot box (the bar field). Spec: bars span x≈17%–87%, baseline y≈63%.
+  // Plot box (the bar field). Measured from source: baseline y≈70%, tallest
+  // bar top y≈37% → tallest bar ≈ 33% of 1920h ≈ 637px (much taller than before).
   const plotLeft = Math.round(0.155 * PX);
   const plotRight = Math.round(0.875 * PX);
   const plotWidth = plotRight - plotLeft;
-  const baselineTop = Math.round(0.625 * 1920); // y≈62.5% of 1920h → ~1200px
-  const maxBarH = Math.round(0.16 * 1920); // tallest bar ≈ 16% of 1920 → ~307px
+  const baselineTop = Math.round(0.699 * 1920); // y≈70% of 1920h → ~1342px
+  const maxBarH = Math.round(0.332 * 1920); // tallest bar ≈ 33% of 1920 → ~637px
   const barW = Math.round(0.083 * PX); // bar width ≈ 8.3% of 720w → ~90px
 
   const bars = p.bars.length > 0 ? p.bars : [{ label: "", value: 0, kind: "rival" as const }];
@@ -187,6 +190,21 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
   const hasCaption = p.caption.trim() !== S;
   const showThreshold = p.thresholdValue > 0 && p.thresholdValue <= maxVal;
   const threshY = baselineTop - (p.thresholdValue / maxVal) * maxBarH;
+
+  // --- Footnote takeaway pill: fades up under the chart after bars settle ---
+  const hasFootnote = p.footnote.trim() !== S;
+  const FOOT_START = lastBarEnd + 4;
+  const footProg = spring({
+    frame: frame - FOOT_START,
+    fps,
+    config: { damping: 200, mass: 0.7, stiffness: 160 },
+    durationInFrames: 8,
+  });
+  const footY = interpolate(footProg, [0, 1], [px(14), 0]);
+  const footOpacity = interpolate(frame, [FOOT_START, FOOT_START + 6], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   // ---- Kicker pill surface ----
   const pillBg = isDark ? "rgba(36,36,40,0.66)" : "rgba(244,244,250,0.85)";
@@ -452,6 +470,46 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
           );
         })}
       </AbsoluteFill>
+
+      {/* ── Footnote takeaway pill (green-tinted, centered under the chart) ── */}
+      {hasFootnote && (
+        <div
+          style={{
+            position: "absolute",
+            top: baselineTop + px(58),
+            left: "50%",
+            maxWidth: PX - 2 * marginX,
+            transform: `translateX(-50%) translateY(${footY}px)`,
+            opacity: footOpacity,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: px(10),
+            padding: `${px(11)}px ${px(20)}px`,
+            borderRadius: 999,
+            background: hexA(p.dotColor, isDark ? 0.1 : 0.14),
+            border: `1px solid ${hexA(p.dotColor, 0.4)}`,
+            boxShadow: `0 0 ${px(26)}px ${hexA(p.dotColor, 0.18)}`,
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <span style={{ fontSize: Math.round(0.026 * PX), lineHeight: 1, flexShrink: 0 }}>
+            🤝
+          </span>
+          <span
+            style={{
+              fontFamily: FONT_STACKS.sans,
+              fontWeight: 700,
+              fontSize: Math.round(0.029 * PX),
+              letterSpacing: "-0.01em",
+              color: ink,
+            }}
+          >
+            {p.footnote}
+          </span>
+        </div>
+      )}
     </AbsoluteFill>
   );
 };

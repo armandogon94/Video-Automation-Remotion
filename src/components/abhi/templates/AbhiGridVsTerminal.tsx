@@ -68,6 +68,14 @@ export const abhiGridVsTerminalSchema = z.object({
 
   /** Circular VS badge text. Empty "" hides it. */
   vsBadge: z.string().default("VS"),
+
+  /**
+   * Global two-tone caption that fades in BELOW both cards (the source's
+   * "But if you live in your terminal — / this thing closes the gap fast."
+   * line). First clause = primary ink, second clause = accent. "" hides it.
+   */
+  bottomLead: z.string().default(""),
+  bottomTail: z.string().default(""),
 });
 
 export type AbhiGridVsTerminalProps = z.infer<typeof abhiGridVsTerminalSchema>;
@@ -201,6 +209,12 @@ export const AbhiGridVsTerminal: React.FC<Partial<AbhiGridVsTerminalProps>> = (
     extrapolateRight: "clamp",
   });
   const rightCapFade = interpolate(frame, [successStart + 4, successStart + 12], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // global bottom two-tone caption fades up after both cards have settled
+  const bottomCapFade = interpolate(frame, [successStart + 10, successStart + 22], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -577,6 +591,33 @@ export const AbhiGridVsTerminal: React.FC<Partial<AbhiGridVsTerminalProps>> = (
           >
             {p.vsBadge}
           </span>
+        </div>
+      ) : null}
+
+      {/* ── GLOBAL BOTTOM CAPTION (two-tone) — below both cards, fades + rises ── */}
+      {p.bottomLead !== "" || p.bottomTail !== "" ? (
+        <div
+          style={{
+            position: "absolute",
+            left: leftX,
+            top: cardTop + cardH + Math.round(42 * PX),
+            width: Math.round(640 * PX),
+            fontFamily: FONT_STACKS.sans,
+            fontWeight: 800,
+            fontSize: 30 * PX,
+            lineHeight: 1.18,
+            letterSpacing: "-0.01em",
+            opacity: bottomCapFade,
+            transform: `translateY(${(1 - bottomCapFade) * 14 * PX}px)`,
+          }}
+        >
+          {p.bottomLead !== "" ? (
+            <span style={{ color: ink }}>{p.bottomLead}</span>
+          ) : null}
+          {p.bottomLead !== "" && p.bottomTail !== "" ? <br /> : null}
+          {p.bottomTail !== "" ? (
+            <span style={{ color: p.accentColor }}>{p.bottomTail}</span>
+          ) : null}
         </div>
       ) : null}
     </AbsoluteFill>

@@ -138,7 +138,8 @@ export const AbhiComparisonTable: React.FC<
 
   // ── Palette (DARK warm-slate glass / LIGHT frosted) ──
   const ink = isDark ? "#F2F2F4" : "#0C0C12";
-  const greyVal = isDark ? "#7E7B86" : "#6E6976"; // non-hero cell values
+  // Non-hero values in the source read clearly bright (near-white grey), not dim.
+  const greyVal = isDark ? "#BBB9C2" : "#6E6976"; // non-hero cell values
   const labelGrey = isDark ? "#9A9AA0" : "#5A5A66"; // sub-captions / kicker
   const cardFill = isDark ? "#181620" : "rgba(255,255,255,0.86)";
   const cardEdge = isDark ? "rgba(255,255,255,0.09)" : "rgba(12,12,18,0.08)";

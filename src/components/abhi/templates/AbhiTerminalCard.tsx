@@ -174,7 +174,7 @@ export const AbhiTerminalCard: React.FC<Partial<AbhiTerminalCardProps>> = (props
           right: px(40),
           fontFamily: FONT_STACKS.sans,
           fontWeight: 900,
-          fontSize: px(60),
+          fontSize: px(52),
           lineHeight: 0.98,
           letterSpacing: "-0.02em",
           color: INK,
@@ -211,7 +211,9 @@ export const AbhiTerminalCard: React.FC<Partial<AbhiTerminalCardProps>> = (props
         style={{
           position: "absolute",
           left: cardLeft,
-          top: px(420),
+          // Source seats the terminal high (~25% down), right under the kicker/
+          // headline, with the breathing room below it for the bottom subtitle.
+          top: px(372),
           width: cardW,
           opacity: cardOpacity,
           transform: `translateY(${cardRise}px) scale(${cardScale})`,

@@ -63,6 +63,21 @@ export const abhiPhoneMockupSchema = z.object({
   /** Mono kicker pill above the phone, UPPERCASE. "" hides it. */
   kicker: z.string().default("PICK A STYLE"),
 
+  /**
+   * Optional kinetic headline ABOVE the phone (source's dominant element). Words
+   * reveal one-by-one — pending words are greyed, landed words go solid ink with
+   * the accent words tinted. "" hides the headline (kicker-only layout).
+   */
+  headline: z.string().default(""),
+  /** Space-separated words within `headline` to recolor with the accent. */
+  headlineAccentWords: z.string().default(""),
+
+  /**
+   * Phone screen tone. "auto" follows `mode`; "dark"/"light" force the screen
+   * UI tone independent of the background (source uses a DARK app over LIGHT bg).
+   */
+  screenMode: z.enum(["auto", "dark", "light"]).default("auto"),
+
   /** Small chip at the top of the screen (mono caps, accent dot). "" hides it. */
   screenChip: z.string().default("GLASS"),
   /** Letter for the circular app icon (rendered as the Anthropic burst if "✳"). */
@@ -140,11 +155,28 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
   const C = isDark ? DARK : LIGHT;
   const accent = p.accentColor;
 
+  // Screen tone can be forced independent of bg (source: dark app over light bg).
+  const screenDark =
+    p.screenMode === "dark" ? true : p.screenMode === "light" ? false : isDark;
+  const SC = screenDark ? DARK : LIGHT;
+
+  // ── Optional kinetic headline above the phone ──
+  const headlineWords = p.headline.trim() === S ? [] : p.headline.trim().split(/\s+/);
+  const hasHeadline = headlineWords.length > 0;
+  const accentSet = new Set(
+    p.headlineAccentWords
+      .toLowerCase()
+      .split(/\s+/)
+      .filter((w) => w.length > 0),
+  );
+
   // ── Phone geometry: tall portrait frame, centered, ~52% of width wide. ──
   const phoneW = px(248); // ≈ 372px @1080 (≈ 34% of canvas — leaves mesh margins)
   const phoneH = phoneW * 2.05; // tall 9:18-ish device
   const phoneLeft = (width - phoneW) / 2;
-  const phoneTop = (height - phoneH) / 2 + px(28); // slightly low-center
+  // When a headline is present the phone drops lower to clear it (source layout:
+  // headline upper third, phone lower two-thirds).
+  const phoneTop = (height - phoneH) / 2 + px(hasHeadline ? 86 : 28);
 
   // ============================================================
   // TIMING (frames @30fps), scene-relative from frame 0, then HOLD.
@@ -164,6 +196,19 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
+
+  // ── Kinetic headline: words land one-by-one (pending greyed, landed solid) ──
+  const HEAD_START = 4;
+  const HEAD_WORD_STEP = 4; // ~4f per word
+  const wordState = (i: number): { t: number } => {
+    const ws = HEAD_START + i * HEAD_WORD_STEP;
+    const t = interpolate(frame, [ws, ws + 5], [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.cubic),
+    });
+    return { t };
+  };
 
   // ── Phone frame: rise/slide + scale 0.94→1 + fade over ~12f from f6 ──
   const PHONE_START = 6;
@@ -323,6 +368,52 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
         </div>
       )}
 
+      {/* ── Kinetic headline above the phone (word-by-word reveal) ── */}
+      {hasHeadline && (
+        <div
+          style={{
+            position: "absolute",
+            left: px(48),
+            right: px(48),
+            top: px(hasKicker ? 286 : 250),
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: `${px(4)}px ${px(14)}px`,
+            fontFamily: FONT_STACKS.sans,
+            fontWeight: 900,
+            fontSize: px(46),
+            lineHeight: 1.08,
+            letterSpacing: "-0.025em",
+            textAlign: "center",
+          }}
+        >
+          {headlineWords.map((w, i) => {
+            const { t } = wordState(i);
+            const isAccentWord = accentSet.has(
+              w.toLowerCase().replace(/[.,!?;:]+$/, ""),
+            );
+            const landed = isAccentWord ? accent : C.ink;
+            // pending = faded grey; lands to ink/accent as t→1
+            const color = t >= 1 ? landed : C.grey;
+            return (
+              <span
+                key={i}
+                style={{
+                  color,
+                  opacity: interpolate(t, [0, 1], [0.35, 1]),
+                  transform: `translateY(${interpolate(t, [0, 1], [px(6), 0])}px)`,
+                  display: "inline-block",
+                  transition: "none",
+                }}
+              >
+                {w}
+              </span>
+            );
+          })}
+        </div>
+      )}
+
       {/* ── Phone device ── */}
       <div
         style={{
@@ -352,7 +443,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
             width: "100%",
             height: "100%",
             borderRadius: screenRadius,
-            background: C.phoneChrome,
+            background: SC.phoneChrome,
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
@@ -370,7 +461,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
               width: px(70),
               height: px(20),
               borderRadius: px(999),
-              background: C.notch,
+              background: SC.notch,
             }}
           />
 
@@ -392,7 +483,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                   gap: px(7),
                   padding: `${px(5)}px ${px(11)}px`,
                   borderRadius: px(999),
-                  background: hexA(accent, isDark ? 0.16 : 0.12),
+                  background: hexA(accent, screenDark ? 0.16 : 0.12),
                   border: `1px solid ${hexA(accent, 0.32)}`,
                 }}
               >
@@ -411,7 +502,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                     fontSize: px(11),
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    color: isDark ? accent : C.ink,
+                    color: screenDark ? accent : SC.ink,
                   }}
                 >
                   {p.screenChip}
@@ -435,14 +526,14 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                 width: px(48),
                 height: px(48),
                 borderRadius: "50%",
-                background: isDark
+                background: screenDark
                   ? "rgba(255,255,255,0.06)"
                   : "rgba(255,255,255,0.9)",
-                border: `1px solid ${C.rowEdge}`,
+                border: `1px solid ${SC.rowEdge}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: `0 ${px(6)}px ${px(18)}px ${hexA("#000000", isDark ? 0.4 : 0.1)}`,
+                boxShadow: `0 ${px(6)}px ${px(18)}px ${hexA("#000000", screenDark ? 0.4 : 0.1)}`,
               }}
             >
               {p.appIcon === "✳" ? (
@@ -479,13 +570,13 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
             }}
           >
             {p.titlePre.trim() !== S && (
-              <span style={{ color: C.ink }}>{p.titlePre}</span>
+              <span style={{ color: SC.ink }}>{p.titlePre}</span>
             )}
             {p.titleAccent.trim() !== S && (
               <>
                 <br />
                 <span style={{ position: "relative", display: "inline-block" }}>
-                  <span style={{ color: C.ink }}>{p.titleAccent}</span>
+                  <span style={{ color: SC.ink }}>{p.titleAccent}</span>
                   <span
                     aria-hidden
                     style={{
@@ -523,8 +614,8 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                     gap: px(10),
                     padding: `${px(9)}px ${px(11)}px`,
                     borderRadius: px(12),
-                    background: C.rowFill,
-                    border: `1px solid ${C.rowEdge}`,
+                    background: SC.rowFill,
+                    border: `1px solid ${SC.rowEdge}`,
                     opacity: rr.opacity,
                     transform: `translateY(${rr.ty}px)`,
                   }}
@@ -536,7 +627,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                         width: px(24),
                         height: px(24),
                         borderRadius: px(7),
-                        background: hexA(accent, isDark ? 0.18 : 0.14),
+                        background: hexA(accent, screenDark ? 0.18 : 0.14),
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -556,7 +647,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                         fontFamily: FONT_STACKS.sans,
                         fontWeight: 700,
                         fontSize: px(13.5),
-                        color: C.ink,
+                        color: SC.ink,
                         letterSpacing: "-0.01em",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -573,7 +664,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                           fontWeight: 500,
                           fontSize: px(9.5),
                           letterSpacing: "0.04em",
-                          color: C.grey,
+                          color: SC.grey,
                           marginTop: px(1),
                           whiteSpace: "nowrap",
                           overflow: "hidden",
@@ -614,7 +705,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                       borderRadius: px(999),
                       background: active
                         ? accent
-                        : isDark
+                        : screenDark
                           ? "rgba(255,255,255,0.22)"
                           : "rgba(12,12,18,0.18)",
                     }}

@@ -81,6 +81,10 @@ export const abhiLineChartSchema = z.object({
   yAxisLabel: z.string().default("Intelligence Index"),
   /** X-axis caption (under the plot, grey). "" hides it. */
   xAxisLabel: z.string().default("Output tokens total (M, log scale)"),
+  /** Rotated accent "sticker" badge overlapping the card's top-right. "" hides. */
+  badgeText: z.string().default("STATE OF\nTHE ART"),
+  /** Accent-outline pill below the card (e.g. "½ the cost of frontier rivals"). */
+  footnotePill: z.string().default("½ the cost of frontier rivals"),
   /** X-axis tick labels, left→right. Determines the horizontal grid. */
   xTicks: z.array(z.string()).default(["0", "4M", "8M", "16M", "32M", "64M", "128M"]),
   /** Y-axis numeric ticks, BOTTOM→TOP (ascending). First = plot floor. */
@@ -129,14 +133,14 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
 
   // ---- Outer geometry (spec % of 720w/1280h → px on 1080/1920) ----
   const marginX = Math.round(0.078 * PX); // left text margin x≈7.8%
-  const kickerPx = Math.round(0.0205 * PX); // ~2.05% → 22px
-  const headlinePx = Math.round(0.072 * PX); // ~7.2% → 78px
+  const kickerPx = Math.round(0.0185 * PX); // ~1.85% → 20px (source kicker is small)
+  const headlinePx = Math.round(0.058 * PX); // ~5.8% → 63px (source headline is modest)
 
-  // ---- Card geometry (centered; ~88% wide, top ~34%). ----
-  const cardW = Math.round(0.886 * PX); // ≈ 957px
+  // ---- Card geometry (centered, slightly narrower than full-bleed; top ~33%). ----
+  const cardW = Math.round(0.84 * PX); // ≈ 907px (source card is inset, not full-bleed)
   const cardLeft = Math.round((PX - cardW) / 2);
-  const cardTop = Math.round(0.345 * CANVAS_H); // y≈34.5% → ~662px
-  const cardH = Math.round(0.23 * CANVAS_H); // ≈ 442px
+  const cardTop = Math.round(0.33 * CANVAS_H); // y≈33% → ~634px
+  const cardH = Math.round(0.215 * CANVAS_H); // ≈ 413px
 
   // ============================================================
   // TIMING (frames @30fps), scene-relative from frame 0, then HOLD.
@@ -268,6 +272,38 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
   const hasAccentLine = p.headlineAccent.trim() !== S;
   const hasYLabel = p.yAxisLabel.trim() !== S;
   const hasXLabel = p.xAxisLabel.trim() !== S;
+  const hasBadge = p.badgeText.trim() !== S;
+  const hasFootnote = p.footnotePill.trim() !== S;
+
+  // Badge (rotated accent sticker) pops in just after the card lands.
+  const BADGE_START = CARD_START + 6;
+  const badgeSp = spring({
+    frame: frame - BADGE_START,
+    fps,
+    config: { damping: 12, mass: 0.5, stiffness: 150 },
+    durationInFrames: 14,
+  });
+  const badgeScale = interpolate(badgeSp, [0, 1], [0.5, 1], {
+    extrapolateLeft: "clamp",
+  });
+  const badgeOp = interpolate(frame, [BADGE_START, BADGE_START + 5], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Footnote pill rises in last (after the chart finishes drawing).
+  const FOOT_START = DRAW_START + DRAW_DUR + 2;
+  const footSp = spring({
+    frame: frame - FOOT_START,
+    fps,
+    config: { damping: 200, mass: 0.6, stiffness: 130 },
+    durationInFrames: 10,
+  });
+  const footY = interpolate(footSp, [0, 1], [px(18), 0]);
+  const footOp = interpolate(frame, [FOOT_START, FOOT_START + 6], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -410,9 +446,12 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
             style={{
               fontFamily: FONT_STACKS.sans,
               fontWeight: 800,
-              fontSize: px(20),
+              fontSize: px(15),
               letterSpacing: "-0.01em",
               color: ink,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
           >
             {p.cardTitle}
@@ -682,6 +721,83 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
           </div>
         )}
       </div>
+
+      {/* ── Rotated accent "sticker" badge overlapping the card top-right ── */}
+      {hasBadge && (
+        <div
+          style={{
+            position: "absolute",
+            left: cardLeft + cardW - px(118),
+            top: cardTop - px(34),
+            transform: `rotate(-7deg) scale(${badgeScale})`,
+            transformOrigin: "50% 50%",
+            opacity: badgeOp,
+            padding: `${px(11)}px ${px(16)}px`,
+            borderRadius: px(12),
+            background: accent,
+            boxShadow: `0 ${px(8)}px ${px(22)}px ${hexA(accent, 0.4)}`,
+            border: `1px solid ${hexA("#FFFFFF", 0.25)}`,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: FONT_STACKS.mono,
+              fontWeight: 800,
+              fontSize: px(15),
+              lineHeight: 1.12,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              color: "#06120F",
+              textAlign: "center",
+              whiteSpace: "pre-line",
+            }}
+          >
+            {p.badgeText}
+          </div>
+        </div>
+      )}
+
+      {/* ── Accent-outline footnote pill below the card ── */}
+      {hasFootnote && (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: cardTop + cardH + px(30),
+            display: "flex",
+            justifyContent: "center",
+            opacity: footOp,
+            transform: `translateY(${footY}px)`,
+          }}
+        >
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: px(10),
+              padding: `${px(13)}px ${px(26)}px`,
+              borderRadius: px(999),
+              background: hexA(accent, isDark ? 0.08 : 0.1),
+              border: `1.5px solid ${hexA(accent, 0.55)}`,
+              boxShadow: `0 0 ${px(26)}px ${hexA(accent, 0.18)}`,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: FONT_STACKS.sans,
+                fontWeight: 700,
+                fontSize: px(20),
+                letterSpacing: "0.01em",
+                color: ink,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {p.footnotePill}
+            </span>
+          </div>
+        </div>
+      )}
     </AbsoluteFill>
   );
 };

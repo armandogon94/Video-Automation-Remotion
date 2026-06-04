@@ -189,7 +189,9 @@ export const AbhiTitleCard: React.FC<Partial<AbhiTitleCardProps>> = (props) => {
         <div
           style={{
             position: "absolute",
-            top: "62%",
+            // Centered hero cards bloom mid-frame; numbered/left cards sit in the
+            // lower third (matches abhishek.devini's bottom-anchored headlines).
+            top: centered ? "62%" : "72%",
             left: centered ? "50%" : "34%",
             width: "78%",
             height: "44%",
@@ -204,13 +206,18 @@ export const AbhiTitleCard: React.FC<Partial<AbhiTitleCardProps>> = (props) => {
         />
       </AbsoluteFill>
 
-      {/* Foreground content column */}
+      {/* Foreground content column.
+          Centered hero cards are vertically centered; numbered/left cards are
+          anchored low (kicker ~57%, headline baseline ~67%) to match the source's
+          bottom-third headline placement. */}
       <AbsoluteFill
         style={{
           flexDirection: "column",
           alignItems: centered ? "center" : "flex-start",
-          justifyContent: "center",
-          padding: centered ? "0 8%" : `0 8% 0 ${marginX}px`,
+          justifyContent: centered ? "center" : "flex-end",
+          padding: centered
+            ? "0 8%"
+            : `0 8% ${Math.round(0.30 * 1920)}px ${marginX}px`,
           gap: Math.round(0.026 * PX),
         }}
       >

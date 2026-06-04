@@ -170,34 +170,21 @@ export const AbhiCtaComment: React.FC<Partial<AbhiCtaCommentProps>> = (
   const footer = fadeUp(36, 8, 10 * M);
 
   // ---- Giant-word fill --------------------------------------------------
-  const giantFill: React.CSSProperties = p.useGradient
-    ? {
-        backgroundImage: `linear-gradient(90deg, ${p.gradientFrom} 0%, ${p.gradientMid} 50%, ${p.gradientTo} 100%)`,
-        WebkitBackgroundClip: "text",
-        backgroundClip: "text",
-        color: "transparent",
-        // The sweep reveals saturation L->R; before the sweep the un-revealed
-        // portion stays faint (washed toward the ink), matching the source.
-        WebkitMaskImage: `linear-gradient(90deg, #000 ${sweep}%, rgba(0,0,0,0.18) ${Math.min(
-          sweep + 18,
-          100,
-        )}%)`,
-        maskImage: `linear-gradient(90deg, #000 ${sweep}%, rgba(0,0,0,0.18) ${Math.min(
-          sweep + 18,
-          100,
-        )}%)`,
-      }
-    : {
-        color: p.accentColor,
-        WebkitMaskImage: `linear-gradient(90deg, #000 ${sweep}%, rgba(0,0,0,0.18) ${Math.min(
-          sweep + 18,
-          100,
-        )}%)`,
-        maskImage: `linear-gradient(90deg, #000 ${sweep}%, rgba(0,0,0,0.18) ${Math.min(
-          sweep + 18,
-          100,
-        )}%)`,
-      };
+  // NOTE: background-clip:text on ANIMATED text renders OPAQUE in Remotion's
+  // Chromium, so the giant word uses a SOLID color (the source word reads as a
+  // near-uniform periwinkle). The L->R reveal is done purely with a mask wipe.
+  const giantSolid = p.useGradient ? p.gradientMid : p.accentColor;
+  const giantFill: React.CSSProperties = {
+    color: giantSolid,
+    WebkitMaskImage: `linear-gradient(90deg, #000 ${sweep}%, rgba(0,0,0,0.18) ${Math.min(
+      sweep + 18,
+      100,
+    )}%)`,
+    maskImage: `linear-gradient(90deg, #000 ${sweep}%, rgba(0,0,0,0.18) ${Math.min(
+      sweep + 18,
+      100,
+    )}%)`,
+  };
 
   const bloomColor = p.useGradient ? p.gradientMid : p.accentColor;
 
@@ -327,19 +314,6 @@ export const AbhiCtaComment: React.FC<Partial<AbhiCtaCommentProps>> = (
             >
               {p.giantWord}
             </span>
-            {/* Blinking caret bar */}
-            <span
-              style={{
-                position: "relative",
-                zIndex: 1,
-                marginLeft: 8 * M,
-                width: 10 * M,
-                height: 110 * M,
-                borderRadius: 3 * M,
-                background: p.accentColor,
-                opacity: caretOn ? 0.9 : 0,
-              }}
-            />
           </div>
 
           {/* Subtitle */}

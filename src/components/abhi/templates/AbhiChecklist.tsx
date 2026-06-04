@@ -58,6 +58,24 @@ export const abhiChecklistSchema = z.object({
   headlineTail: z.string().default("you ever hit"),
   /** The ONE accent-recolored word that ends the headline (tint-sweeps in). */
   headlineAccent: z.string().default("post."),
+  /**
+   * "bare" drops the frosted card chrome (border/fill/shadow + header bar) so the
+   * rows sit directly on the background — matches the source's card-less variant
+   * (dark teal "Trust the loop." checklist). "card" keeps the lint-card chrome.
+   */
+  surface: z.enum(["card", "bare"]).default("card"),
+  /**
+   * Header/row alignment: "center" (lint-card variant) or "left" (the source's
+   * numbered-steps "Trust the loop." variant — kicker + headline hug the left).
+   */
+  align: z.enum(["center", "left"]).default("center"),
+  /**
+   * Row badge style: "check" = ✓/✗ disc (lint variant); "number" = thin-ring
+   * step circle with an index (01,02…) joined by a vertical connector — the
+   * source's staged-steps look. In "number" mode only the FIRST row is fully lit;
+   * later rows dim (the "you are here" highlight).
+   */
+  badgeStyle: z.enum(["check", "number"]).default("check"),
   /** Mono crumb shown in the card header (filename / path). */
   cardCrumb: z.string().default("/reelstack-lint src/launch.tsx"),
   /** Mono status chip text on the right of the header (e.g. "ALL CLEAN"). */
@@ -124,6 +142,39 @@ const CrossBadge: React.FC<{ size: number; color: string }> = ({ size, color }) 
       strokeLinejoin="round"
     />
   </svg>
+);
+
+/** Thin-ring step badge with a 2-digit index (01, 02…). */
+const NumberBadge: React.FC<{
+  size: number;
+  index: number;
+  ringColor: string;
+  textColor: string;
+}> = ({ size, index, ringColor, textColor }) => (
+  <div
+    style={{
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      border: `${Math.max(1.5, size * 0.045)}px solid ${ringColor}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      boxSizing: "border-box",
+    }}
+  >
+    <span
+      style={{
+        fontFamily: FONT_STACKS.mono,
+        fontWeight: 600,
+        fontSize: size * 0.3,
+        letterSpacing: "0.04em",
+        color: textColor,
+      }}
+    >
+      {String(index + 1).padStart(2, "0")}
+    </span>
+  </div>
 );
 
 export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
@@ -206,54 +257,90 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
   const ROW_STAGGER = 5; // ~5f/row (a touch slower than the ~3f data-table spec)
   const BADGE_DELAY = 3; // ✓/✗ pops 3f after its row text lands
 
-  // ── Geometry: card centered x50%, occupying the lower-middle band ──
-  const cardW = PX(85); // ≈ 84–86% wide → ~918px @1080
-  const cardLeft = (width - cardW) / 2;
+  // ── Geometry: card centered x50% (lint variant) OR hugging the left (steps) ──
+  const leftVariant = p.align === "left";
+  const cardW = leftVariant ? width - 2 * PX(6) : PX(85); // full-ish width for steps
+  const cardLeft = leftVariant ? PX(6) : (width - cardW) / 2;
   const headerH = PX(7);
-  const rowGap = PX(0.6);
-  const rowPadX = PX(3.2);
-  const rowH = PX(8.4);
-  const cardBodyPadTop = PX(2.2);
-  const cardBodyPadBottom = PX(2.6);
-  const cardH = headerH + cardBodyPadTop + cardBodyPadBottom + n * rowH + (n - 1) * rowGap;
-  // Anchor the card so the whole block sits in the lower 55% (headline above it).
-  const cardTop = Math.min(height * 0.46, height - cardH - height * 0.12);
+  // Steps variant: taller rows, no side padding (rows hug the left), tighter gap.
+  const rowGap = leftVariant ? PX(1.6) : PX(0.6);
+  const rowPadX = leftVariant ? 0 : PX(3.2);
+  const rowH = leftVariant ? PX(9.6) : PX(8.4);
+  const cardBodyPadTop = leftVariant ? 0 : PX(2.2);
+  const cardBodyPadBottom = leftVariant ? 0 : PX(2.6);
+  // Header band only contributes height when it is actually shown.
+  const headerBand = p.surface === "bare" ? 0 : headerH;
+  const cardH = headerBand + cardBodyPadTop + cardBodyPadBottom + n * rowH + (n - 1) * rowGap;
+  // Lint variant anchors the card lower-middle; steps variant starts higher so the
+  // numbered list begins just under the headline (source ≈ 28% height).
+  const cardTop = leftVariant
+    ? height * 0.285
+    : Math.min(height * 0.46, height - cardH - height * 0.12);
 
   // ── Type sizes ──
   const kickerSize = PX(2.0);
   const headlineSize = PX(6.2);
   const crumbSize = PX(1.85);
   const statusSize = PX(1.85);
-  const rowTextSize = PX(2.5);
-  const badgeSize = PX(3.6);
+  const rowTextSize = leftVariant ? PX(4.4) : PX(2.5);
+  const badgeSize = leftVariant ? PX(5.6) : PX(3.6);
 
   // ── Card surface (DARK slate-glass / LIGHT frosted white) ──
-  const cardFill = dark
-    ? "linear-gradient(180deg, rgba(22,24,30,0.78), rgba(14,15,20,0.72))"
-    : "linear-gradient(180deg, rgba(255,255,255,0.86), rgba(247,244,250,0.80))";
-  const cardBorder = dark ? hexA("#FFFFFF", 0.08) : hexA("#0C0C12", 0.06);
+  const bare = p.surface === "bare";
+  const showHeader = !bare && (p.cardCrumb.trim() !== S || p.statusText.trim() !== S);
+  const cardFill = bare
+    ? "transparent"
+    : dark
+      ? "linear-gradient(180deg, rgba(22,24,30,0.78), rgba(14,15,20,0.72))"
+      : "linear-gradient(180deg, rgba(255,255,255,0.86), rgba(247,244,250,0.80))";
+  const cardBorder = bare
+    ? "transparent"
+    : dark
+      ? hexA("#FFFFFF", 0.08)
+      : hexA("#0C0C12", 0.06);
   const headerBorder = dark ? hexA("#FFFFFF", 0.07) : hexA("#0C0C12", 0.07);
-  const cardShadow = dark
-    ? `inset 0 1px 0 rgba(255,255,255,0.05), 0 ${PX(2.6)}px ${PX(7)}px rgba(0,0,0,0.5)`
-    : `inset 0 1px 0 rgba(255,255,255,0.7), 0 ${PX(2.4)}px ${PX(6.5)}px rgba(40,30,60,0.14)`;
+  const cardShadow = bare
+    ? "none"
+    : dark
+      ? `inset 0 1px 0 rgba(255,255,255,0.05), 0 ${PX(2.6)}px ${PX(7)}px rgba(0,0,0,0.5)`
+      : `inset 0 1px 0 rgba(255,255,255,0.7), 0 ${PX(2.4)}px ${PX(6.5)}px rgba(40,30,60,0.14)`;
 
   const statusColor = p.statusValence === "bad" ? p.badColor : p.goodColor;
 
+  const leftAlign = p.align === "left";
+  const numberMode = p.badgeStyle === "number";
+  const sideMargin = PX(6); // left/right text margin for the left-aligned variant
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none", overflow: "hidden" }}>
-      {/* ── Kicker pill (centered x50%, y≈17%) ── */}
+      {/* ── Kicker (pill when centered; plain mono caps when left-aligned) ── */}
       <div
         style={{
           position: "absolute",
-          top: height * 0.165,
-          left: 0,
-          right: 0,
+          top: leftAlign ? height * 0.135 : height * 0.165,
+          left: leftAlign ? sideMargin : 0,
+          right: leftAlign ? sideMargin : 0,
           display: "flex",
-          justifyContent: "center",
+          justifyContent: leftAlign ? "flex-start" : "center",
           opacity: kIn,
           transform: `translateY(${kY}px)`,
         }}
       >
+        {leftAlign ? (
+          <span
+            style={{
+              fontFamily: FONT_STACKS.mono,
+              fontWeight: 600,
+              fontSize: kickerSize,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: accent,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {p.kicker}
+          </span>
+        ) : (
         <div
           style={{
             display: "inline-flex",
@@ -296,16 +383,17 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
             {p.kicker}
           </span>
         </div>
+        )}
       </div>
 
-      {/* ── Two-tone headline (centered, y≈22%) ── */}
+      {/* ── Two-tone headline (centered, or left-aligned for the steps variant) ── */}
       <div
         style={{
           position: "absolute",
-          top: height * 0.215,
-          left: PX(6),
-          right: PX(6),
-          textAlign: "center",
+          top: leftAlign ? height * 0.175 : height * 0.215,
+          left: leftAlign ? sideMargin : PX(6),
+          right: leftAlign ? sideMargin : PX(6),
+          textAlign: leftAlign ? "left" : "center",
           opacity: hIn,
           transform: `translateY(${hY}px)`,
           fontFamily: FONT_STACKS.sans,
@@ -359,12 +447,13 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
           background: cardFill,
           border: `1px solid ${cardBorder}`,
           boxShadow: cardShadow,
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
+          backdropFilter: bare ? "none" : "blur(14px)",
+          WebkitBackdropFilter: bare ? "none" : "blur(14px)",
           overflow: "hidden",
         }}
       >
         {/* Header: crumb (left) + status chip (right) */}
+        {showHeader && (
         <div
           style={{
             display: "flex",
@@ -412,6 +501,7 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
             </span>
           ) : null}
         </div>
+        )}
 
         {/* Body: checklist rows */}
         <div
@@ -455,19 +545,38 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
             const isBad = it.valence === "bad";
             const badgeColor = isBad ? p.badColor : p.goodColor;
 
+            // Number-steps variant: only the FIRST step is "active" (full ink +
+            // teal ring); later steps dim (the "you are here" highlight).
+            const isActiveStep = i === 0;
+            const stepRing = numberMode
+              ? isActiveStep
+                ? accent
+                : hexA(ink, 0.22)
+              : badgeColor;
+            const stepNumColor = numberMode
+              ? isActiveStep
+                ? accent
+                : hexA(ink, 0.4)
+              : ink;
+            const labelColor = numberMode
+              ? isActiveStep
+                ? ink
+                : hexA(ink, 0.34)
+              : ink;
+
             return (
               <div
                 key={i}
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: PX(2),
+                  gap: leftVariant ? PX(2.6) : PX(2),
                   height: rowH,
                   opacity: rowOpacity,
                   transform: `translateX(${rowX}px)`,
                 }}
               >
-                {/* ✓/✗ badge */}
+                {/* Badge: ✓/✗ disc (lint) OR thin-ring numbered step (steps) */}
                 <div
                   style={{
                     width: badgeSize,
@@ -479,27 +588,34 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
                     borderRadius: "50%",
                     transform: `scale(${badgeScale})`,
                     boxShadow:
-                      badgeGlow > 0
-                        ? `0 0 ${badgeSize * 0.55 * badgeGlow}px ${hexA(badgeColor, 0.55 * badgeGlow)}`
+                      badgeGlow > 0 && (!numberMode || isActiveStep)
+                        ? `0 0 ${badgeSize * 0.55 * badgeGlow}px ${hexA(stepRing, 0.5 * badgeGlow)}`
                         : "none",
                   }}
                 >
-                  {isBad ? (
+                  {numberMode ? (
+                    <NumberBadge
+                      size={badgeSize}
+                      index={i}
+                      ringColor={stepRing}
+                      textColor={stepNumColor}
+                    />
+                  ) : isBad ? (
                     <CrossBadge size={badgeSize} color={badgeColor} />
                   ) : (
                     <CheckBadge size={badgeSize} color={badgeColor} />
                   )}
                 </div>
 
-                {/* Row label — mono, auto-fits via wrap (won't clip the edge). */}
+                {/* Row label — mono (lint) OR bold grotesk (steps). Auto-wraps. */}
                 <span
                   style={{
-                    fontFamily: FONT_STACKS.mono,
-                    fontWeight: 500,
+                    fontFamily: numberMode ? FONT_STACKS.sans : FONT_STACKS.mono,
+                    fontWeight: numberMode ? 800 : 500,
                     fontSize: rowTextSize,
-                    letterSpacing: "0.01em",
-                    lineHeight: 1.15,
-                    color: ink,
+                    letterSpacing: numberMode ? "-0.02em" : "0.01em",
+                    lineHeight: 1.1,
+                    color: labelColor,
                     minWidth: 0,
                     overflowWrap: "break-word",
                     wordBreak: "break-word",

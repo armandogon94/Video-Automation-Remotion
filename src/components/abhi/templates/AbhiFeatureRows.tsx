@@ -74,6 +74,9 @@ export const abhiFeatureRowsSchema = z.object({
     { icon: "doc", title: "Documentos y hojas", caption: "redacta, edita, formatea", valence: "neutral" },
     { icon: "bolt", title: "Opera el software", caption: "clics, escribe, navega", valence: "neutral" },
   ]),
+  /** Optional green ✓ "kicker" pill that pops in below the rows last (the source's
+   *  "until the task is finished" capsule). "" hides it. */
+  footerPill: z.string().default(""),
 });
 export type AbhiFeatureRowsProps = z.infer<typeof abhiFeatureRowsSchema>;
 
@@ -224,10 +227,13 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
   const ROW_START = 14;
   const STAGGER = 5;
 
-  // Vertical layout: rows centered x50%, band y≈28%→73% of height.
+  // Vertical layout: rows centered x50%, band y≈28%→73% of height. When a footer
+  // pill is present, pull the band up a touch so the pill clears the last row
+  // (the source seats the green capsule just under the final row at ~0.75).
+  const hasFooterPill = p.footerPill.trim() !== "";
   const rowW = PX(89.5); // ~90% of 720w
   const bandTop = height * 0.275;
-  const bandBottom = height * 0.735;
+  const bandBottom = height * (hasFooterPill ? 0.705 : 0.735);
   const gap = PX(2.6);
   const n = rows.length;
   const rowH = (bandBottom - bandTop - gap * (n - 1)) / n;
@@ -446,6 +452,79 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
           </div>
         );
       })}
+
+      {/* ── Footer green ✓ pill (pops in last, just under the rows) ── */}
+      {hasFooterPill ? (() => {
+        const pillStart = ROW_START + n * STAGGER + 4;
+        const pillSpring = spring({
+          frame: frame - pillStart,
+          fps,
+          config: { damping: 13, mass: 0.6, stiffness: 220 },
+          durationInFrames: 12,
+        });
+        const pillScale = interpolate(pillSpring, [0, 1], [0.8, 1]);
+        const pillOpacity = interpolate(frame - pillStart, [0, 6], [0, 1], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        });
+        const pillGlow = interpolate(frame - pillStart, [0, 10], [0, 1], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        });
+        const pillFont = PX(2.5);
+        const checkSize = pillFont * 1.15;
+        return (
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: bandBottom + PX(2.4),
+              display: "flex",
+              justifyContent: "center",
+              opacity: pillOpacity,
+              transform: `scale(${pillScale})`,
+            }}
+          >
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: PX(1.5),
+                padding: `${PX(1.4)}px ${PX(3.0)}px`,
+                borderRadius: 999,
+                background: goodColor,
+                boxShadow: `0 0 ${PX(5) * pillGlow}px ${hexA(goodColor, 0.55 * pillGlow)}`,
+              }}
+            >
+              <span
+                style={{
+                  width: checkSize,
+                  height: checkSize,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flex: "0 0 auto",
+                }}
+              >
+                <Icon icon="check" color="#0B1A14" size={checkSize} strokePx={iconStrokePx * 1.1} />
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT_STACKS.sans,
+                  fontWeight: 800,
+                  fontSize: pillFont,
+                  letterSpacing: "-0.005em",
+                  color: "#0B1A14",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {p.footerPill}
+              </span>
+            </div>
+          </div>
+        );
+      })() : null}
     </AbsoluteFill>
   );
 };
