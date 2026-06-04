@@ -391,3 +391,36 @@ all source scenes). C2 built the 15 expansion templates. C3 verified+fixed all 2
 C4 final polish (5 parallel agents, per-template frame-compare + minimal edits) → all 9-9.5/10;
 neutralized AbhiBackground dark gradient purple cast. C5 adversarial QA pass (skeptic finds
 the ONE remaining gap per template). Source reels KEPT until user signs off on fidelity.
+
+## 2026-06-03 — Cross-creator validation pass (all other creators)
+
+After abhi, ran the same "their source vs our replica" consolidation across every
+OTHER reference creator we built templates for. Unlike abhi (dedicated family), these
+fed a SHARED library (111 registered comps). Pipeline:
+- Discovery (2 Explore agents): `docs/research/cross-creator/ATTRIBUTION-MAP.md`
+  (creator→built-comp map: 16 ★ BUILT-REPLICA, 3 ◐ partial, 4 ○ inspiration-only) +
+  `RENDER-SURFACE.md` (how to render any comp standalone).
+- Render driver: `src/autoedit/runCrossCreatorReplicas.ts` (bundle once, render the ~23
+  signature comps to `output/cross-creator/<Comp>.mp4`, 150f cap, default props or
+  `docs/research/cross-creator/props/<Comp>.json` override). Templates ship strong demo
+  defaults so {} already yields real content.
+- Compare/validate/improve (6-agent dynamic workflow, grouped by comp cluster so each
+  comp .tsx is edited by exactly one agent — race-safe). Each compared our clip vs the
+  creator's PRESERVED KEYFRAMES (full videos erased per "erase after use"; frames kept).
+  Judged PATTERN fidelity (layout/color/type/motion), NOT copy — our templates use the
+  Armando navy/gold brand + own copy by design.
+- Result: 4 IMPROVED + 19 VALIDATED (7–9/10). Improvements:
+  · RankedTierList9x16 (adamrosler): persistent single glowing-active-row.
+  · LayerCardStack9x16 (simonhoiberg): squared 'Layer N' badge (radius 999→8).
+  · TalkingHeadDynamic9x16 (builtbystephan): fallback band colors so hard-split reads.
+  · TechNewsFlash9x16 (diysmartcode): props override → dark changelog palette (was blank @3s).
+  · QuoteCard9x16 (black.one.studio): props override → palette:dark tagline-on-black.
+- Gallery: `CROSS-CREATOR-COMPARE.html` (`scripts/build-cross-creator-gallery.py`) —
+  per pairing: creator source-frame strip + our looping clip + score + verdict.
+- Per-comp notes: `docs/research/cross-creator/notes/<Comp>.md`.
+BACKLOG (agents recommended, NOT built — net-new features, deferred): BarChartList
+`rankedReveal` mode (sahil), AnimatedCounter `figureFont:mono` (adam), ForceGraph in-node
+labels, DarkSlateChassis deeper center-vignette (nate, shared by 21 comps), TechNewsFlash
+`dark-changelog` numbered-counter mode, dedicated OpeningTitleCard9x16 (hormozi),
+SplitWebcam/CalloutOverlay `seamCaptionStyle:pill|naked` (mreflow vs midu).
+Creator source material (frames + ANALYSIS.md) STILL KEPT until user signs off.

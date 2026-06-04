@@ -214,7 +214,11 @@ const StackCard: React.FC<{
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
                 padding: "8px 18px",
-                borderRadius: 999,
+                // Simon's signature "Layer N" badge is a rectangular chip with a
+                // small corner radius (~6px), NOT a full pill. Matching that squared
+                // form is the defining shape of this pattern (ref frame
+                // simonhoiberg/DPT3n_PgEiU/frames/frame-00).
+                borderRadius: 8,
                 opacity: badgeOpacity,
                 transform: `scale(${badgeScale})`,
                 transformOrigin: "left center",

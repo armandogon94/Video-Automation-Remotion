@@ -279,6 +279,10 @@ const TierCard: React.FC<{
   item: RankedTierItem;
   visualIndex: number;
   revealIndex: number;
+  /** True for the row that reveals LAST (the climax / "most-valuable" tier).
+   *  This is the row that stays distinguished as the single glowing active row
+   *  once it has landed — the Hormozi/adamrosler "one highlighted row" signature. */
+  isClimax: boolean;
   topPx: number;
   leftPx: number;
   widthPx: number;
@@ -294,6 +298,7 @@ const TierCard: React.FC<{
   item,
   visualIndex,
   revealIndex,
+  isClimax,
   topPx,
   leftPx,
   widthPx,
@@ -332,19 +337,28 @@ const TierCard: React.FC<{
 
   const itemAccent = item.color && item.color.length > 0 ? item.color : accentColor;
 
+  // The single glowing ACTIVE row (adamrosler / Hormozi signature): the climax
+  // tier stays distinguished with a persistent accent glow once it has landed —
+  // not just during its brief dwell. Every other row reads as neutral chrome.
+  // `state.phase === "held" | "past"` == "this row has finished revealing".
+  const climaxRevealed =
+    isClimax && (state.phase === "held" || state.phase === "past");
+
   // Held beat = the climax frame for this item. Lift it visually with a stronger
   // shadow so the eye sees the dwell as "this one matters".
-  const cardShadow = state.isHeld
-    ? paletteMode === "dark" ||
-      paletteMode === "warm-black" ||
-      paletteMode === "true-black"
-      ? `0 10px 32px rgba(212, 160, 74, 0.22), 0 1px 0 rgba(212, 160, 74, 0.30)`
-      : `0 10px 32px rgba(0, 0, 0, 0.10), 0 1px 0 ${itemAccent}33`
-    : paletteMode === "dark" ||
+  const cardShadow = climaxRevealed
+    ? `0 0 0 2px ${itemAccent}, 0 12px 36px ${itemAccent}55, 0 2px 0 ${itemAccent}66`
+    : state.isHeld
+      ? paletteMode === "dark" ||
         paletteMode === "warm-black" ||
         paletteMode === "true-black"
-      ? `0 6px 20px rgba(212, 160, 74, 0.14), 0 1px 0 rgba(212, 160, 74, 0.20)`
-      : `0 6px 20px rgba(0, 0, 0, 0.06), 0 1px 0 ${itemAccent}22`;
+        ? `0 10px 32px rgba(212, 160, 74, 0.22), 0 1px 0 rgba(212, 160, 74, 0.30)`
+        : `0 10px 32px rgba(0, 0, 0, 0.10), 0 1px 0 ${itemAccent}33`
+      : paletteMode === "dark" ||
+          paletteMode === "warm-black" ||
+          paletteMode === "true-black"
+        ? `0 6px 20px rgba(212, 160, 74, 0.14), 0 1px 0 rgba(212, 160, 74, 0.20)`
+        : `0 6px 20px rgba(0, 0, 0, 0.06), 0 1px 0 ${itemAccent}22`;
 
   // Suppress unused-paperColor warning while keeping it in the API.
   void paperColor;
@@ -360,8 +374,10 @@ const TierCard: React.FC<{
         left: leftPx,
         width: widthPx,
         height: ITEM_H,
-        background: cardBg,
-        border: `2px solid ${itemAccent}`,
+        // Active (climax) row gets a faint accent wash so the single highlighted
+        // row reads instantly even on light palettes; all others stay neutral.
+        background: climaxRevealed ? `${itemAccent}14` : cardBg,
+        border: `${climaxRevealed ? 3 : 2}px solid ${itemAccent}`,
         borderRadius: 16,
         padding: "0 28px",
         display: "flex",
@@ -509,6 +525,15 @@ export const RankedTierList9x16: React.FC<RankedTierList9x16Props> = ({
 
   const baseStartFrame = Math.round(firstItemEnterSeconds * fps);
 
+  // The single glowing ACTIVE row (adamrosler / leaderboard signature): exactly
+  // one row stays distinguished with a persistent accent glow. Prefer the literal
+  // rank-"1" / winner row (matches adamrosler's gold #1 leaderboard row); fall
+  // back to the climax row — the one that reveals LAST — when no plain "1" exists.
+  const rankOneVisualIndex = items.findIndex((it) => it.rank.trim() === "1");
+  const climaxVisualIndex = revealDirection === "bottom-up" ? 0 : N - 1;
+  const activeVisualIndex =
+    rankOneVisualIndex >= 0 ? rankOneVisualIndex : climaxVisualIndex;
+
   // Title block layout (left-aligned in side-by-side mode, centered otherwise).
   const titleLeft = sideBySideHost
     ? FRAME_W - itemsW - SIDE_RIGHT_MARGIN
@@ -587,6 +612,7 @@ export const RankedTierList9x16: React.FC<RankedTierList9x16Props> = ({
             item={item}
             visualIndex={i}
             revealIndex={revealIndex}
+            isClimax={i === activeVisualIndex}
             topPx={topPx}
             leftPx={itemsLeft}
             widthPx={itemsW}

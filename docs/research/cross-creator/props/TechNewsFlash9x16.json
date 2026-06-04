@@ -1,0 +1,19 @@
+{
+  "audioUrl": "",
+  "wordTimings": [],
+  "breadcrumb": {
+    "text": "FILTRACIÓN",
+    "date": "GOOGLE · GEMINI 3.2"
+  },
+  "overlays": [
+    { "kind": "chip", "text": "FILTRACIÓN", "startSeconds": 0, "endSeconds": 5 },
+    { "kind": "huge", "text": "GEMINI 3.2 FLASH", "startSeconds": 0, "endSeconds": 2.4 },
+    { "kind": "subtitle", "text": "15× más barato que GPT-5.", "startSeconds": 2.4, "endSeconds": 5 }
+  ],
+  "paperColor": "#0A0F1A",
+  "inkColor": "#F2E9D8",
+  "accentColor": "#D4A04A",
+  "mutedColor": "#7A6F5C",
+  "captionFontSize": 48,
+  "useHeroTransitions": false
+}

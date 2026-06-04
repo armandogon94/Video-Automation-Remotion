@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cross-creator — source vs our templates (23 pairings)</title>
+<style>
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--line:#222836;--imp:#E8a13b;--val:#4bc07a}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,Inter,sans-serif;padding:28px 38px}
+  h1{font-size:28px;margin:0 0 4px}.sub{color:var(--muted);max-width:1100px;margin:0 0 8px}
+  .stat{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-right:6px;color:var(--muted)}
+  .filter{margin:12px 0 18px}.filter button{background:#141821;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:5px 11px;margin:0 6px 6px 0;cursor:pointer;font-size:12.5px}
+  .filter button.on{border-color:var(--cyan);color:var(--cyan)}
+  .row{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px}
+  .hd{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .row h2{margin:0;font-size:17px;font-weight:700}.arrow{color:var(--muted)}.cre{color:var(--gold)}
+  .badge{font-size:11.5px;font-weight:800;letter-spacing:.04em;padding:3px 10px;border-radius:7px}
+  .badge.imp{background:rgba(232,161,59,.16);color:var(--imp);border:1px solid var(--imp)}
+  .badge.val{background:rgba(75,192,122,.14);color:var(--val);border:1px solid var(--val)}
+  .note{color:var(--muted);font-size:13px;margin:6px 0 11px}
+  .pair{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
+  .cell{position:relative}.cell .tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.07em;padding:2px 8px;border-radius:6px;margin-bottom:7px}
+  .tag.s{background:rgba(212,175,55,.92);color:#1a1206}.tag.r{background:rgba(91,192,232,.92);color:#04222e}
+  .strip{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+  .strip img{height:300px;border-radius:8px;border:1px solid var(--line);background:#000;flex:0 0 auto}
+  .cell video{width:100%;max-width:380px;aspect-ratio:auto;border-radius:10px;background:#000;border:1px solid var(--line);display:block}
+  .noimg{color:var(--muted);font-size:12px;padding:20px;border:1px dashed var(--line);border-radius:8px}
+  @media(max-width:900px){.pair{grid-template-columns:1fr}}
+</style></head><body>
+  <h1>Cross-creator validation — <b style="color:var(--gold)">SOURCE FRAMES</b> vs <b style="color:var(--cyan)">OUR TEMPLATES</b></h1>
+  <p class="sub">For each reference creator we built templates from, their preserved source keyframes (left strip — scrub) next to our rendered signature composition (right — looping). Judged on PATTERN fidelity (layout/color/type/motion), not copy — our templates intentionally use the Armando navy/gold brand + our own copy. <span class="stat">23 pairings</span><span class="stat" style="color:var(--imp)">5 improved</span><span class="stat" style="color:var(--val)">18 validated</span></p>
+  <div class="filter" id="filter"></div>
+  <div id="rows">
+    <div class="row" data-creator="adamrosler">
+      <div class="hd">
+        <h2>RankedTierList9x16 <span class="arrow">↔</span> <span class="cre">@adamrosler</span></h2>
+        <span class="badge imp">IMPROVED · 8/10</span>
+      </div>
+      <div class="note">Added persistent single glowing-active-row (his signature; ours only glowed during dwell).</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 66 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/RankedTierList9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/RankedTierList9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/RankedTierList9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/RankedTierList9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/RankedTierList9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/RankedTierList9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/RankedTierList9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="adamrosler">
+      <div class="hd">
+        <h2>TerminalBlock9x16 <span class="arrow">↔</span> <span class="cre">@adamrosler</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">SKILL-LIBRARY/terminal grammar: dark, mac chrome, mono body, green success, typewriter reveal.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 66 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/TerminalBlock9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TerminalBlock9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TerminalBlock9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TerminalBlock9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TerminalBlock9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TerminalBlock9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TerminalBlock9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="adamrosler">
+      <div class="hd">
+        <h2>ForceGraph9x16 <span class="arrow">↔</span> <span class="cre">@adamrosler</span></h2>
+        <span class="badge val">VALIDATED · 7/10</span>
+      </div>
+      <div class="note">d3-force layout, accent focus node w/ pulse ring, staggered edge draw-on; palette is brand-driven.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 66 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/ForceGraph9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ForceGraph9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ForceGraph9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ForceGraph9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ForceGraph9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ForceGraph9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/ForceGraph9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="adamrosler">
+      <div class="hd">
+        <h2>AnimatedCounter9x16 <span class="arrow">↔</span> <span class="cre">@adamrosler</span></h2>
+        <span class="badge val">VALIDATED · 7/10</span>
+      </div>
+      <div class="note">Rolling-digit ramp, cubic ease-out, comma-thousands, tabular-nums; mono vs sans is brand identity.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 66 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/AnimatedCounter9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/AnimatedCounter9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/AnimatedCounter9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/AnimatedCounter9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/AnimatedCounter9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/AnimatedCounter9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/AnimatedCounter9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="natebjones">
+      <div class="hd">
+        <h2>EquationCardChain16x9 <span class="arrow">↔</span> <span class="cre">@natebjones</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span>
+      </div>
+      <div class="note">NamedCardEquation: A+B=C chips, colored operators, L→R stagger, orange-keyword pill, dark slate.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 26 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/EquationCardChain16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/EquationCardChain16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/EquationCardChain16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/EquationCardChain16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/EquationCardChain16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/EquationCardChain16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/EquationCardChain16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="natebjones">
+      <div class="hd">
+        <h2>BeforeAfterText16x9 <span class="arrow">↔</span> <span class="cre">@natebjones</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span>
+      </div>
+      <div class="note">Two-column DEFAULT/BETTER + central operator, colored underline labels, blurIn slide-in.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 26 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/BeforeAfterText16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BeforeAfterText16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BeforeAfterText16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BeforeAfterText16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BeforeAfterText16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BeforeAfterText16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/BeforeAfterText16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="natebjones">
+      <div class="hd">
+        <h2>TopHeroBottomTrioCards16x9 <span class="arrow">↔</span> <span class="cre">@natebjones</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span>
+      </div>
+      <div class="note">N4 hero header + 3 supporting cards + emphasis pill; hero-drops-then-trio-rises motion.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 26 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/TopHeroBottomTrioCards16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TopHeroBottomTrioCards16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TopHeroBottomTrioCards16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TopHeroBottomTrioCards16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TopHeroBottomTrioCards16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TopHeroBottomTrioCards16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TopHeroBottomTrioCards16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="natebjones">
+      <div class="hd">
+        <h2>ThreeStageRisingBars16x9 <span class="arrow">↔</span> <span class="cre">@natebjones</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span>
+      </div>
+      <div class="note">N2 three-labeled-tower chronology: staggered L→R rise + accent border-draw + uppercase labels.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 26 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/ThreeStageRisingBars16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ThreeStageRisingBars16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ThreeStageRisingBars16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ThreeStageRisingBars16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ThreeStageRisingBars16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ThreeStageRisingBars16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/ThreeStageRisingBars16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="motiondarwin">
+      <div class="hd">
+        <h2>BigNumberHero9x16 <span class="arrow">↔</span> <span class="cre">@motiondarwin</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">Giant-numeral + small-label-beneath + land-then-context beat (Brevo 99% stat-card pattern).</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 8 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/BigNumberHero9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BigNumberHero9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BigNumberHero9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BigNumberHero9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BigNumberHero9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BigNumberHero9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/BigNumberHero9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="sahilbloom">
+      <div class="hd">
+        <h2>BarChartList9x16 <span class="arrow">↔</span> <span class="cre">@sahilbloom</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span>
+      </div>
+      <div class="note">Horizontal rounded bars, left labels, sparse cream, single-accent, stagger + L→R fill.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 60 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/BarChartList9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BarChartList9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BarChartList9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BarChartList9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BarChartList9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BarChartList9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/BarChartList9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="sahilbloom">
+      <div class="hd">
+        <h2>BenchmarkBars9x16 <span class="arrow">↔</span> <span class="cre">@sahilbloom</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">X-vs-Y comparison bars: rounded, left labels, sequential eased fill, value-on-complete, source caption.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 60 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/BenchmarkBars9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BenchmarkBars9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BenchmarkBars9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BenchmarkBars9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BenchmarkBars9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BenchmarkBars9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/BenchmarkBars9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="aiexplained">
+      <div class="hd">
+        <h2>LineChartAnnotated9x16 <span class="arrow">↔</span> <span class="cre">@aiexplained</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">Rising hero trend line, academic ground, axis+gridline chrome, end-dot ping + terminus label.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 21 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/LineChartAnnotated9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LineChartAnnotated9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LineChartAnnotated9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LineChartAnnotated9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LineChartAnnotated9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LineChartAnnotated9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/LineChartAnnotated9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="bilawal.ai">
+      <div class="hd">
+        <h2>TweetCardHero9x16 <span class="arrow">↔</span> <span class="cre">@bilawal.ai</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">TweetCardOverlay: white card w/ avatar/bold-name/muted-handle/blue-tick over near-black field.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 23 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/TweetCardHero9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TweetCardHero9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="diysmartcode">
+      <div class="hd">
+        <h2>TechNewsFlash9x16 <span class="arrow">↔</span> <span class="cre">@diysmartcode</span></h2>
+        <span class="badge imp">IMPROVED · 8/10</span>
+      </div>
+      <div class="note">Cross-creator dark-changelog palette + persistent gold section-label + sustained overlays (was blank @3s).</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 6 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/TechNewsFlash9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TechNewsFlash9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TechNewsFlash9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TechNewsFlash9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TechNewsFlash9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TechNewsFlash9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TechNewsFlash9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="black.one.studio">
+      <div class="hd">
+        <h2>QuoteCard9x16 <span class="arrow">↔</span> <span class="cre">@black.one.studio</span></h2>
+        <span class="badge imp">IMPROVED · 7/10</span>
+      </div>
+      <div class="note">palette:dark — near-black field + warm vignette + declarative period copy + late staggered reveal.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 7 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/QuoteCard9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/QuoteCard9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="alexhormozi">
+      <div class="hd">
+        <h2>BrandedOpener9x16 <span class="arrow">↔</span> <span class="cre">@alexhormozi</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span>
+      </div>
+      <div class="note">Opening-title-card discipline: solid dark field, bold white ALL-CAPS centered sans, snap-in opener.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 32 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/BrandedOpener9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BrandedOpener9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BrandedOpener9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BrandedOpener9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BrandedOpener9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BrandedOpener9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/BrandedOpener9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="midu.dev">
+      <div class="hd">
+        <h2>DiagramExplainer9x16 <span class="arrow">↔</span> <span class="cre">@midu.dev</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">Single-accent discipline (every chrome element one warm-red family), mono meta, sequential box build.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 8 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/DiagramExplainer9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="aiexplained">
+      <div class="hd">
+        <h2>VennDiagram9x16 <span class="arrow">↔</span> <span class="cre">@aiexplained</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">Neutral surface + one saturated accent marking subject; circles draw-on; intersection pops last.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 21 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/VennDiagram9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/VennDiagram9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/VennDiagram9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/VennDiagram9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/VennDiagram9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/VennDiagram9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/VennDiagram9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="simonhoiberg">
+      <div class="hd">
+        <h2>LayerCardStack9x16 <span class="arrow">↔</span> <span class="cre">@simonhoiberg</span></h2>
+        <span class="badge imp">IMPROVED · 8.5/10</span>
+      </div>
+      <div class="note">Squared 'Layer N' badge (borderRadius 999→8) to match Simon's rectangular chip; glassmorphic backdrop.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 8 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/LayerCardStack9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LayerCardStack9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LayerCardStack9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LayerCardStack9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LayerCardStack9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/LayerCardStack9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/LayerCardStack9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="theaiadvantage">
+      <div class="hd">
+        <h2>StudioCompositor16x9 <span class="arrow">↔</span> <span class="cre">@theaiadvantage</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">Deep-navy stage, presenter PIP bottom-left, floating UI mockup right w/ glow, orange-keyword pill.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 12 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/StudioCompositor16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/StudioCompositor16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/StudioCompositor16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/StudioCompositor16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/StudioCompositor16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/StudioCompositor16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/StudioCompositor16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="allin">
+      <div class="hd">
+        <h2>KeynoteSlidePIP16x9 <span class="arrow">↔</span> <span class="cre">@allin</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span>
+      </div>
+      <div class="note">All-In P2: slide left + white-bordered PIP bottom-right + persistent never-animating event-lockup chyron.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 152 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/KeynoteSlidePIP16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="mreflow">
+      <div class="hd">
+        <h2>SplitWebcamScreen9x16 <span class="arrow">↔</span> <span class="cre">@mreflow</span></h2>
+        <span class="badge val">VALIDATED · 7/10</span>
+      </div>
+      <div class="note">Two-half vertical split + seam band + seam-riding keyword caption w/ karaoke pop + hard-cut grammar.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 4 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__3.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/SplitWebcamScreen9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="builtbystephan">
+      <div class="hd">
+        <h2>TalkingHeadDynamic9x16 <span class="arrow">↔</span> <span class="cre">@builtbystephan</span></h2>
+        <span class="badge imp">IMPROVED · 8/10</span>
+      </div>
+      <div class="note">Tightened fallback band colors so the load-bearing hard split reads in the placeholder render.</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 24 preserved frames</span><div class="strip"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TalkingHeadDynamic9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div></div>
+<script>
+  const CREATORS=["adamrosler","natebjones","motiondarwin","sahilbloom","aiexplained","bilawal.ai","diysmartcode","black.one.studio","alexhormozi","midu.dev","simonhoiberg","theaiadvantage","allin","mreflow","builtbystephan"];
+  const f=document.getElementById('filter');
+  f.innerHTML='<button data-c="all" class="on">All ('+23+')</button>'+CREATORS.map(c=>`<button data-c="${c}">@${c}</button>`).join('');
+  f.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    f.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    const c=b.dataset.c;
+    document.querySelectorAll('.row').forEach(r=>{r.style.display=(c==='all'||r.dataset.creator===c)?'':'none';});
+  });
+  document.querySelectorAll('video').forEach(v=>v.play().catch(()=>{}));
+</script></body></html>

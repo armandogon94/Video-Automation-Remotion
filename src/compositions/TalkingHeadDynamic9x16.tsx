@@ -412,9 +412,14 @@ export const TalkingHeadDynamic9x16: React.FC<TalkingHeadDynamic9x16Props> = ({
   const resolvedVoiceoverSrc = resolveSrc(voiceoverSrc);
   const resolvedAudioUrl = resolveSrc(audioUrl);
 
-  // Fallback colors for empty slots — on-brand but obviously "missing".
-  const fallbackFaceBg = `${resolvedInk}33`; // ink @ ~20% alpha
-  const fallbackBrollBg = resolvedPaper;
+  // Fallback colors for empty slots — on-brand but obviously "missing". The two
+  // bands are deliberately DISTINCT so the hard split (the load-bearing
+  // @builtbystephan signature) stays legible even when a face-cam or B-roll
+  // asset hasn't loaded yet — the face band reads as a faint ink wash, the
+  // B-roll band as a slightly-elevated muted panel. Real `objectFit: cover`
+  // media fully occludes both, so this only affects the missing/loading state.
+  const fallbackFaceBg = `${resolvedInk}1A`; // ink @ ~10% alpha (subtle face wash)
+  const fallbackBrollBg = `${resolvedMuted}3D`; // muted @ ~24% alpha — distinct from face band + bg
 
   return (
     <AbsoluteFill style={{ background: resolvedPaper }}>
