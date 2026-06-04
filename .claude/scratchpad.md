@@ -4,6 +4,27 @@
 
 ---
 
+## LATEST (2026-06-03): abhishek.devini replication COMPLETE — 23 templates, 5 cycles
+
+Replicated Instagram creator **abhishek.devini**'s full motion-graphics vocabulary as a
+Remotion template family. 18 reels scraped → 171 scenes → 23 distinct template types, all
+built + frame-by-frame matched to source. **5 iteration cycles done; all 23 at 9–9.5/10.**
+
+- Templates: `src/components/abhi/templates/*.tsx` (23) on shared `AbhiBackground.tsx`,
+  mounted by `src/compositions/AbhiScene9x16.tsx` via `registry.ts`. Render config:
+  `docs/research/abhishek/build-meta.json`. Driver: `src/autoedit/runAbhiTemplates.ts`
+  (one key as argv, or all). Style spec + scene index: `docs/research/abhishek/`.
+- Review here: **`ABHI-COMPARE.html`** (video head-to-head, all 23) + QA contact sheets
+  `output/abhi-qa/abhi-qa-sheet-{1,2}.png` (`scripts/abhi-qa-contactsheet.py`).
+- Source KEPT until user signs off: 18 reels `references/creators/abhishek.devini/*.mp4`,
+  23 matched scene clips `output/abhi/source-scenes/*.mp4`. Replicas `output/abhi/*.mp4`.
+- Full detail + gotchas: see `.claude/memory.md` (2026-06-03 abhi section). Key gotcha:
+  Remotion headless renders `background-clip:text`+`color:transparent` as an OPAQUE box —
+  use solid color for swept/hero text. Zod v4: never reflect `._def`/`.shape`.
+- DEFERRED (user call): optional warm/intensify of shared dark-mode background glow.
+
+---
+
 ## Current State: BAKE-OFF READY (2026-05-15)
 
 The pipeline now runs through **two parallel engines** (Remotion + Hyperframes), both branded with Armando Inteligencia, both consuming the same Edge-TTS audio + faster-whisper word timings.
