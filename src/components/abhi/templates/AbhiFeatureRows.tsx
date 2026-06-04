@@ -210,7 +210,6 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
   });
-  const dotGlow = interpolate(frame, [0, 4], [0, 1], { extrapolateRight: "clamp" });
 
   // ── Headline slides left-in ~8f (group rise + tint-sweep on accent). ──
   const hIn = interpolate(frame, [3, 12], [0, 1], { extrapolateRight: "clamp" });
@@ -250,7 +249,7 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none", overflow: "hidden" }}>
-      {/* ── Kicker (left x6%, y≈15%) ── */}
+      {/* ── Kicker (left x6%, y≈15%) — plain accent mono text, NO leading dot ── */}
       <div
         style={{
           position: "absolute",
@@ -258,28 +257,18 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
           top: height * 0.152,
           display: "flex",
           alignItems: "center",
-          gap: PX(1.4),
           opacity: kIn,
           transform: `translateY(${kY}px)`,
           fontFamily: FONT_STACKS.mono,
           fontWeight: 600,
           fontSize: kickerSize,
-          letterSpacing: "0.18em",
+          letterSpacing: "0.2em",
           textTransform: "uppercase",
-          color: subInk,
+          color: p.accentColor,
           whiteSpace: "nowrap",
         }}
       >
-        <span
-          style={{
-            width: kickerSize * 0.6,
-            height: kickerSize * 0.6,
-            borderRadius: "50%",
-            background: p.accentColor,
-            boxShadow: `0 0 ${kickerSize * 1.2 * dotGlow}px ${hexA(p.accentColor, 0.85 * dotGlow)}`,
-          }}
-        />
-        <span style={{ color: p.accentColor }}>{p.kicker}</span>
+        <span>{p.kicker}</span>
       </div>
 
       {/* ── Two-tone headline (left x6%, y≈18.5%) ── */}

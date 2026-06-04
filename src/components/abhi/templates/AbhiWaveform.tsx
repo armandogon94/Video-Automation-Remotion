@@ -148,11 +148,11 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
   // ============================================================
   if (centerMode) {
     const cx = width / 2;
-    const micD = px(101); // mic-disc diameter → ~151px on 1080 (matches source)
+    const micD = px(118); // mic-disc diameter → ~177px on 1080 (source ⌀≈177px)
     const micCenterY = height * 0.42; // ~807/1920
-    const barsCenterY = height * 0.56; // ~1075/1920
-    const clusterW = px(182); // ~273px on 1080 canvas (source ⌀≈269px)
-    const maxHalf = px(75); // max half-height of the tallest bar
+    const barsCenterY = height * 0.535; // ~1027/1920 (source bar cluster center)
+    const clusterW = px(203); // ~305px on 1080 canvas (source cluster w≈305px)
+    const maxHalf = px(78); // max half-height of the tallest bar (source peak ≈68px)
 
     // Mic disc: scale 0.9→1 + fade up at ~f10.
     const MIC_START = 8;
@@ -246,8 +246,8 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
                 width: px(9),
                 height: px(9),
                 borderRadius: "50%",
-                background: accent,
-                boxShadow: `0 0 ${px(8)}px ${hexA(accent, 0.9 * dotGlow)}`,
+                background: barB,
+                boxShadow: `0 0 ${px(8)}px ${hexA(barB, 0.9 * dotGlow)}`,
                 flexShrink: 0,
               }}
             />
@@ -305,7 +305,7 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
           }}
         >
           {bars.map(({ i, scaleY, color, env }) => {
-            const half = Math.max(px(3), maxHalf * scaleY * (0.45 + 0.55 * env));
+            const half = Math.max(px(3), maxHalf * scaleY * (0.6 + 0.4 * env));
             const cy = maxHalf;
             const x = i * slot + (slot - barW) / 2;
             return (

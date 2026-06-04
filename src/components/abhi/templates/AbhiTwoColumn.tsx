@@ -66,6 +66,11 @@ export const abhiTwoColumnSchema = z.object({
    * Up to ~4 read well; extra are accepted but may crowd the phone body.
    */
   leftBubbles: z.array(z.string()).default(["…", "fix the bug"]),
+  /**
+   * Optional GREY left-aligned "received" reply bubble that pops in LAST under
+   * the user bubbles (source: "On it. Running now."). "" hides it.
+   */
+  leftReply: z.string().default(""),
   /** Small caption label under the LEFT panel (mono, UPPERCASE). "" hides it. */
   leftLabel: z.string().default("YOU TEXT"),
 
@@ -76,10 +81,22 @@ export const abhiTwoColumnSchema = z.object({
   rightRows: z
     .array(z.string())
     .default(["Parsing codebase…", "Locating bug in auth.ts", "Writing fix + tests"]),
+  /**
+   * Optional final highlighted SUMMARY row inside the terminal, drawn in a
+   * subtle boxed strip below the log rows (source: "> auth.ts — bug patched.
+   * 3 tests passing."). Reveals after the last log row. "" hides it.
+   */
+  rightSummary: z.string().default(""),
   /** Tint the terminal card green (signature look) vs neutral slate. */
   rightGreen: z.boolean().default(true),
   /** Small caption label under the RIGHT panel (mono, UPPERCASE). "" hides it. */
   rightLabel: z.string().default("CLAUDE RUNS"),
+  /**
+   * Optional sans subtitle under the RIGHT panel (source: "Full tasks. In the
+   * background."). When set it replaces the mono panel labels for a cleaner
+   * single-caption layout. "" hides it.
+   */
+  caption: z.string().default(""),
 
   /** Draw the dashed connector curve + travelling dot between the panels. */
   showConnector: z.boolean().default(true),
@@ -407,7 +424,6 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-end",
             gap: px(8),
             padding: `${px(14)}px ${px(12)}px`,
           }}
@@ -425,6 +441,7 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
               <div
                 key={i}
                 style={{
+                  alignSelf: "flex-end",
                   opacity: sp,
                   transform: `scale(${sc})`,
                   transformOrigin: "100% 50%",
@@ -446,6 +463,44 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
               </div>
             );
           })}
+
+          {/* Grey received reply bubble (left-aligned), pops in last */}
+          {p.leftReply.trim() !== S &&
+            (() => {
+              const start = BUBBLE_START + p.leftBubbles.length * BUBBLE_STEP;
+              const sp = spring({
+                frame: frame - start,
+                fps,
+                config: { damping: 12, mass: 0.5, stiffness: 150 },
+                durationInFrames: 12,
+              });
+              const sc = interpolate(sp, [0, 1], [0.6, 1]);
+              return (
+                <div
+                  style={{
+                    alignSelf: "flex-start",
+                    opacity: sp,
+                    transform: `scale(${sc})`,
+                    transformOrigin: "0% 50%",
+                    maxWidth: "78%",
+                    padding: `${px(7)}px ${px(11)}px`,
+                    borderRadius: `${px(13)}px ${px(13)}px ${px(13)}px ${px(4)}px`,
+                    background: isDark
+                      ? "rgba(255,255,255,0.09)"
+                      : "rgba(255,255,255,0.12)",
+                    color: ink,
+                    fontFamily: FONT_STACKS.sans,
+                    fontWeight: 500,
+                    fontSize: px(10.5),
+                    lineHeight: 1.25,
+                    overflowWrap: "break-word",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {p.leftReply}
+                </div>
+              );
+            })()}
         </div>
       </div>
 
@@ -557,8 +612,65 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
               </div>
             );
           })}
+
+          {/* Highlighted summary strip (source: "> auth.ts — bug patched…") */}
+          {p.rightSummary.trim() !== S &&
+            (() => {
+              const start = ROW_START + p.rightRows.length * ROW_STEP + 4;
+              const op = interpolate(frame, [start, start + 6], [0, 1], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              });
+              const sumGreen = p.rightGreen ? "#7FCF8E" : accent;
+              return (
+                <div
+                  style={{
+                    marginTop: px(3),
+                    padding: `${px(7)}px ${px(9)}px`,
+                    borderRadius: px(7),
+                    background: p.rightGreen
+                      ? "rgba(120,210,140,0.08)"
+                      : hexA(accent, 0.08),
+                    border: `1px solid ${
+                      p.rightGreen
+                        ? "rgba(120,210,140,0.18)"
+                        : hexA(accent, 0.18)
+                    }`,
+                    color: sumGreen,
+                    fontFamily: FONT_STACKS.mono,
+                    fontSize: px(11),
+                    opacity: op,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {p.rightSummary}
+                </div>
+              );
+            })()}
         </div>
       </div>
+
+      {/* ── RIGHT-panel sans subtitle (source: "Full tasks. In the background.") ── */}
+      {p.caption.trim() !== S && (
+        <div
+          style={{
+            position: "absolute",
+            left: termLeft,
+            top: termTop + px(210),
+            width: termW,
+            opacity: settle,
+            fontFamily: FONT_STACKS.sans,
+            fontWeight: 600,
+            fontSize: px(15),
+            letterSpacing: "-0.01em",
+            color: grey,
+          }}
+        >
+          {p.caption}
+        </div>
+      )}
 
       {/* ── Panel caption labels (mono, UPPERCASE) under each panel ── */}
       {p.leftLabel.trim() !== S && (

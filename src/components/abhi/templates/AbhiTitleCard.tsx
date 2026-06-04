@@ -139,7 +139,10 @@ export const AbhiTitleCard: React.FC<Partial<AbhiTitleCardProps>> = (props) => {
   });
   const breathe = Math.sin((frame / 30) * Math.PI * 2) * 0.04;
   const glowScale = (0.96 + 0.04 * bloomIn) * (1 + breathe * bloomIn);
-  const glowOpacity = (isDark ? 0.55 : 0.42) * bloomIn;
+  // Source bloom is a SUBTLE warm bloom hugging the headline — not a spotlight.
+  // Measured: source lower-third stays near-black (≈23,12,12) with only a faint
+  // amber wash; the previous 0.55 opacity blew out into a visible orange blob.
+  const glowOpacity = (isDark ? 0.24 : 0.2) * bloomIn;
 
   // --- Subtitle (optional): fade up from +18px starting ~f22 ---
   const hasSub = p.subtitle.trim() !== SENTINEL;
@@ -155,11 +158,21 @@ export const AbhiTitleCard: React.FC<Partial<AbhiTitleCardProps>> = (props) => {
     extrapolateRight: "clamp",
   });
 
-  // ---- Kicker pill surface (DARK warm-glass / LIGHT frosted) ----
-  const pillBg = isDark ? "rgba(51,28,6,0.55)" : "rgba(244,244,250,0.85)";
-  const pillBorder = isDark
-    ? `1px solid ${hexA(p.accentColor, 0.45)}`
-    : "1px solid rgba(12,12,18,0.08)";
+  // ---- Kicker surface ----
+  // Source: LEFT-aligned numbered/section kickers are BARE (dot + mono text, no
+  // pill chrome); only CENTER hero cards wear the warm-glass pill. The previous
+  // build drew a bordered pill on every kicker, which the source never shows for
+  // the bottom-anchored "THE FIX ↓" headline.
+  const pillBg = centered
+    ? isDark
+      ? "rgba(51,28,6,0.55)"
+      : "rgba(244,244,250,0.85)"
+    : "transparent";
+  const pillBorder = centered
+    ? isDark
+      ? `1px solid ${hexA(p.accentColor, 0.45)}`
+      : "1px solid rgba(12,12,18,0.08)"
+    : "1px solid transparent";
 
   const headlineStyle: React.CSSProperties = {
     fontFamily: FONT_STACKS.sans,
@@ -191,17 +204,17 @@ export const AbhiTitleCard: React.FC<Partial<AbhiTitleCardProps>> = (props) => {
             position: "absolute",
             // Centered hero cards bloom mid-frame; numbered/left cards sit in the
             // lower third (matches abhishek.devini's bottom-anchored headlines).
-            top: centered ? "62%" : "72%",
-            left: centered ? "50%" : "34%",
-            width: "78%",
-            height: "44%",
+            top: centered ? "62%" : "70%",
+            left: centered ? "50%" : "32%",
+            width: "62%",
+            height: "36%",
             transform: `translate(-50%, -50%) scale(${glowScale})`,
             background: `radial-gradient(ellipse at center, ${hexA(
               p.accentColor,
-              0.9,
-            )} 0%, ${hexA(p.accentColor, 0.35)} 36%, rgba(0,0,0,0) 70%)`,
+              0.85,
+            )} 0%, ${hexA(p.accentColor, 0.28)} 30%, rgba(0,0,0,0) 62%)`,
             opacity: glowOpacity,
-            filter: "blur(60px)",
+            filter: "blur(70px)",
           }}
         />
       </AbsoluteFill>
@@ -229,14 +242,16 @@ export const AbhiTitleCard: React.FC<Partial<AbhiTitleCardProps>> = (props) => {
             display: "inline-flex",
             alignItems: "center",
             gap: Math.round(kickerPx * 0.55),
-            padding: `${Math.round(kickerPx * 0.62)}px ${Math.round(
-              kickerPx * 0.95,
-            )}px`,
+            padding: centered
+              ? `${Math.round(kickerPx * 0.62)}px ${Math.round(
+                  kickerPx * 0.95,
+                )}px`
+              : 0,
             borderRadius: 999,
             background: pillBg,
             border: pillBorder,
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
+            backdropFilter: centered ? "blur(8px)" : "none",
+            WebkitBackdropFilter: centered ? "blur(8px)" : "none",
           }}
         >
           <span

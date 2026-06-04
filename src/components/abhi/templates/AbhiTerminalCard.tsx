@@ -85,7 +85,11 @@ export const AbhiTerminalCard: React.FC<Partial<AbhiTerminalCardProps>> = (props
   const accent = p.accentColor;
 
   // ── Headline: word-by-word pop ~1 word / 4f, starts ~f4 ──
-  const headWords = p.headline.split(" ");
+  // Source ground-truth has NO big headline between the pill and the terminal —
+  // it goes pill → terminal → bottom subtitle. An empty `headline` suppresses it
+  // entirely and pulls the pill down + the terminal up to match the source frame.
+  const hasHeadline = p.headline.trim() !== S;
+  const headWords = hasHeadline ? p.headline.split(" ") : [];
   const HEAD_START = 4;
   const HEAD_STEP = 4;
 
@@ -154,18 +158,27 @@ export const AbhiTerminalCard: React.FC<Partial<AbhiTerminalCardProps>> = (props
   const cardW = px(636); // ≈ 84% of 720 → 954px @1080
   const cardLeft = (width - cardW) / 2;
 
+  // Vertical seating: with a headline, pill@150 / card@372. Without (the source
+  // layout), drop the pill to ~15.7% (px≈201) and raise the card to ~25%
+  // (480px = px(320)) so the stack reads pill → terminal → subtitle like source.
+  const pillTop = hasHeadline ? px(150) : px(196);
+  const cardTop = hasHeadline ? px(372) : px(320);
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* ── Kicker pill (mono, accent dot/fill), LEFT x≈8% y≈16% ── */}
+      {/* ── Kicker pill (mono, accent border, no dot), LEFT x≈8% ── */}
       <KickerPill
         frame={frame}
         fps={fps}
         px={px}
         accent={accent}
         text={p.kicker}
+        top={pillTop}
+        showDot={hasHeadline}
       />
 
-      {/* ── Headline (two-tone, left-aligned x≈8% y≈18%) ── */}
+      {/* ── Headline (two-tone, left-aligned) — only when provided ── */}
+      {hasHeadline && (
       <div
         style={{
           position: "absolute",
@@ -205,6 +218,7 @@ export const AbhiTerminalCard: React.FC<Partial<AbhiTerminalCardProps>> = (props
           );
         })}
       </div>
+      )}
 
       {/* ── Terminal card ── */}
       <div
@@ -213,7 +227,7 @@ export const AbhiTerminalCard: React.FC<Partial<AbhiTerminalCardProps>> = (props
           left: cardLeft,
           // Source seats the terminal high (~25% down), right under the kicker/
           // headline, with the breathing room below it for the bottom subtitle.
-          top: px(372),
+          top: cardTop,
           width: cardW,
           opacity: cardOpacity,
           transform: `translateY(${cardRise}px) scale(${cardScale})`,
@@ -405,7 +419,9 @@ const KickerPill: React.FC<{
   px: (n: number) => number;
   accent: string;
   text: string;
-}> = ({ frame, fps, px, accent, text }) => {
+  top: number;
+  showDot: boolean;
+}> = ({ frame, fps, px, accent, text, top, showDot }) => {
   // Fade + drop from y−16px over 6f; accent dot ignites 4f.
   const sp = spring({
     frame,
@@ -424,12 +440,14 @@ const KickerPill: React.FC<{
       style={{
         position: "absolute",
         left: px(56),
-        top: px(150),
+        top,
         display: "inline-flex",
         alignItems: "center",
-        gap: px(10),
-        padding: `${px(9)}px ${px(16)}px`,
-        borderRadius: px(10),
+        // Source pill is dot-less mono text → tighter gap when no dot.
+        gap: showDot ? px(10) : 0,
+        padding: `${px(9)}px ${px(18)}px`,
+        // Source pill is fully pill-rounded (not the rounded-rect r10).
+        borderRadius: px(999),
         background: hexA(accent, 0.1),
         border: `1px solid ${hexA(accent, 0.45)}`,
         boxShadow: `0 0 ${px(22)}px ${hexA(accent, 0.18 * dotGlow)}`,
@@ -437,6 +455,7 @@ const KickerPill: React.FC<{
         transform: `translateY(${ty}px)`,
       }}
     >
+      {showDot ? (
       <span
         style={{
           width: px(9),
@@ -446,6 +465,7 @@ const KickerPill: React.FC<{
           boxShadow: `0 0 ${px(8)}px ${hexA(accent, 0.9 * dotGlow)}`,
         }}
       />
+      ) : null}
       <span
         style={{
           fontFamily: FONT_STACKS.mono,

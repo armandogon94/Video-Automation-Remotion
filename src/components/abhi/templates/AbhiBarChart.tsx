@@ -117,7 +117,8 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
   // ---- Geometry (spec % of 720w → px on 1080) ----
   const marginX = Math.round(0.078 * PX); // left text margin x≈7.8%
   const kickerPx = Math.round(0.0205 * PX); // ~2.05% → 22px
-  const headlinePx = Math.round(0.058 * PX); // ~5.8% → 63px
+  // Source headline is compact (does not reach the left safe margin) — ~5.3%.
+  const headlinePx = Math.round(0.0535 * PX); // ~5.35% → 58px
 
   // Plot box (the bar field). Measured from source: baseline y≈70%, tallest
   // bar top y≈37% → tallest bar ≈ 33% of 1920h ≈ 637px (much taller than before).
@@ -171,10 +172,11 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
     extrapolateRight: "clamp",
   });
 
-  // --- Bars: grow from baseline staggered ~4f each, ~14f grow per bar ---
-  const BAR_FIRST = 16; // first bar starts after the headline lands
-  const BAR_STAGGER = 4;
-  const BAR_GROW = 14;
+  // --- Bars: grow from baseline, SNAPPY (source has all bars settled by
+  //     ~0.8s). Tighter stagger + shorter grow so the field locks in fast. ---
+  const BAR_FIRST = 12; // first bar starts just as the headline lands
+  const BAR_STAGGER = 2.5;
+  const BAR_GROW = 11;
   const barStart = (i: number) => BAR_FIRST + i * BAR_STAGGER;
 
   // After all bars land, the optional dashed threshold line wipes in L→R.
@@ -276,7 +278,7 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
       >
         <span
           style={{
-            fontWeight: 900,
+            fontWeight: 800,
             fontSize: headlinePx,
             letterSpacing: "-0.02em",
             lineHeight: 1.0,
@@ -382,22 +384,23 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
 
           return (
             <React.Fragment key={i}>
-              {/* hero glow bloom (behind the bar) */}
+              {/* hero glow bloom — a TIGHT warm rim hugging the bar (source has
+                  a slim vertical halo, not a wide diffuse blob). */}
               {isHero && (
                 <div
                   style={{
                     position: "absolute",
-                    left: barLeft - px(18),
-                    top: baselineTop - h - px(18),
-                    width: barW + px(36),
-                    height: h + px(28),
-                    borderRadius: px(20),
-                    background: `radial-gradient(ellipse at 50% 40%, ${hexA(
+                    left: barLeft - px(10),
+                    top: baselineTop - h - px(10),
+                    width: barW + px(20),
+                    height: h + px(16),
+                    borderRadius: px(14),
+                    background: `radial-gradient(ellipse at 50% 45%, ${hexA(
                       p.accentColor,
-                      0.55,
-                    )} 0%, ${hexA(p.accentColor, 0.18)} 45%, rgba(0,0,0,0) 72%)`,
-                    filter: "blur(22px)",
-                    opacity: 0.85 * landGlow,
+                      0.45,
+                    )} 0%, ${hexA(p.accentColor, 0.12)} 52%, rgba(0,0,0,0) 78%)`,
+                    filter: "blur(13px)",
+                    opacity: 0.8 * landGlow,
                   }}
                 />
               )}

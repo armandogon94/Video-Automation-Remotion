@@ -50,6 +50,8 @@ const rowSchema = z.object({
   title: z.string().default(""),
   /** Grey secondary caption (one line). "" hides it. */
   caption: z.string().default(""),
+  /** Right-aligned mono status badge (UPPERCASE), e.g. "ACTIVE". "" hides it. */
+  status: z.string().default(""),
 });
 
 export const abhiPhoneMockupSchema = z.object({
@@ -99,6 +101,13 @@ export const abhiPhoneMockupSchema = z.object({
   dotCount: z.number().default(5),
   /** Which dot is the accent-active one. */
   activeDot: z.number().default(1),
+
+  /**
+   * Optional mono UPPERCASE footer line pinned to the bottom of the screen
+   * (source's "ORG RUNNING · 24/7" status line). When set it REPLACES the
+   * pagination dots. "" hides it.
+   */
+  screenFooter: z.string().default(""),
 });
 
 export type AbhiPhoneMockupProps = z.infer<typeof abhiPhoneMockupSchema>;
@@ -512,6 +521,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
           )}
 
           {/* Circular app icon (Anthropic burst when icon === "✳") */}
+          {p.appIcon.trim() !== S && (
           <div
             style={{
               display: "flex",
@@ -553,6 +563,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
               )}
             </div>
           </div>
+          )}
 
           {/* Two-tone screen title */}
           <div
@@ -620,7 +631,20 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                     transform: `translateY(${rr.ty}px)`,
                   }}
                 >
-                  {row.glyph.trim() !== S && (
+                  {/* A bare "●" renders as a small solid accent status dot
+                      (source roster look); any other glyph keeps the tile box. */}
+                  {row.glyph.trim() === "●" ? (
+                    <span
+                      style={{
+                        flex: "0 0 auto",
+                        width: px(7),
+                        height: px(7),
+                        borderRadius: "50%",
+                        background: accent,
+                        boxShadow: `0 0 ${px(6)}px ${hexA(accent, 0.7)}`,
+                      }}
+                    />
+                  ) : row.glyph.trim() !== S ? (
                     <span
                       style={{
                         flex: "0 0 auto",
@@ -639,7 +663,7 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                     >
                       {row.glyph}
                     </span>
-                  )}
+                  ) : null}
                   <span style={{ flex: 1, minWidth: 0 }}>
                     <span
                       style={{
@@ -675,13 +699,68 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                       </span>
                     )}
                   </span>
+                  {row.status.trim() !== S && (
+                    <span
+                      style={{
+                        flex: "0 0 auto",
+                        fontFamily: FONT_STACKS.mono,
+                        fontWeight: 600,
+                        fontSize: px(8.5),
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: hexA(accent, 0.85),
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {row.status}
+                    </span>
+                  )}
                 </div>
               );
             })}
           </div>
 
+          {/* Footer status line (source: "ORG RUNNING · 24/7") — replaces dots */}
+          {p.screenFooter.trim() !== S && (
+            <div
+              style={{
+                marginTop: "auto",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: px(6),
+                opacity: dotsR.opacity,
+                transform: `translateY(${dotsR.ty}px)`,
+                paddingTop: px(10),
+              }}
+            >
+              <span
+                style={{
+                  width: px(5),
+                  height: px(5),
+                  borderRadius: "50%",
+                  background: accent,
+                  boxShadow: `0 0 ${px(6)}px ${hexA(accent, 0.7)}`,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: FONT_STACKS.mono,
+                  fontWeight: 600,
+                  fontSize: px(9),
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: SC.grey,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {p.screenFooter}
+              </span>
+            </div>
+          )}
+
           {/* Pagination dots (active dot accent) */}
-          {p.dotCount > 0 && (
+          {p.screenFooter.trim() === S && p.dotCount > 0 && (
             <div
               style={{
                 marginTop: "auto",

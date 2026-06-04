@@ -68,7 +68,8 @@ export const abhiBigStatSchema = z.object({
   dotCols: z.number().int().min(4).max(40).default(20),
   dotRows: z.number().int().min(1).max(8).default(5),
 
-  /** Thin DARK-only corner brackets ⌐ ⌐ framing the number. Empty = auto (dark only). */
+  /** Thin DARK-only corner brackets ⌐ ⌐ framing the number. Empty = auto.
+   *  Source DXUhthziNCS shows NO brackets around the number, so auto = off. */
   cornerBrackets: z.union([z.boolean(), z.literal(AUTO)]).default(AUTO),
 });
 export type AbhiBigStatProps = z.infer<typeof abhiBigStatSchema>;
@@ -117,11 +118,14 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
 
   const isDark = p.mode === "dark";
   const ink = isDark ? "#F2F2F4" : "#0C0C12";
+  // The unit glyph (% / × / +) in the source is a warm off-white, not bright white.
+  const unitInk = isDark ? "#D0CCC8" : "#0C0C12";
   const inkDim = isDark ? rgba("#F2F2F4", 0.86) : rgba("#0C0C12", 0.78);
   const greyLabel = isDark ? "#9A9AA0" : "#5A5A66";
   const digitColor = p.digitColor && p.digitColor !== AUTO ? p.digitColor : p.accentColor;
+  // Source shows a clean number with no framing brackets → auto resolves to OFF.
   const showBrackets =
-    p.cornerBrackets === AUTO ? isDark : (p.cornerBrackets as boolean);
+    p.cornerBrackets === AUTO ? false : (p.cornerBrackets as boolean);
 
   // ── TIMING (frames @30fps), per STYLE-SPEC big-stat conventions ──
   // hold start ~6f → ease-out count over ~24f (fast→slow) with 0.9→1 + 1.06
@@ -176,7 +180,6 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
     easing: Easing.out(Easing.cubic),
   });
   const kickerY = (1 - kickerT) * -16 * U;
-  const dotGlow = 0.5 + 0.5 * Math.sin((frame / (fps * 1.1)) * Math.PI * 2);
 
   // Subtitle reveal (rise + fade as two lines).
   const subT = interpolate(frame, [SUB_IN, SUB_IN + 8], [0, 1], {
@@ -202,7 +205,9 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
 
   // ── derived geometry ──
   const numFontPx = 280 * U; // ≈420px@1080 — large hero numeral (~spec 28-31%)
-  const unitFontPx = 168 * U; // % roughly 60% of the digit cap-height
+  // Source % cap-height ≈ 0.82× the digit cap-height (measured) → larger than a
+  // naive 60% suffix. Bump the unit font so the glyph reads near-full height.
+  const unitFontPx = 224 * U;
   const valueStr = formatStat(value, p.statDecimals, p.statThousands);
 
   const unitGlyph = p.statUnit;
@@ -233,38 +238,27 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
               marginBottom: 26 * U,
               display: "inline-flex",
               alignItems: "center",
-              gap: 9 * U,
-              padding: `${8 * U}px ${17 * U}px`,
+              // Source pill is a clean outlined capsule — no leading dot.
+              padding: `${9 * U}px ${22 * U}px`,
               borderRadius: 999,
               background: isDark
-                ? "rgba(40,24,18,0.72)"
+                ? "rgba(18,15,18,0.55)"
                 : "rgba(255,255,255,0.7)",
               border: `1px solid ${
-                isDark ? rgba(p.accentColor, 0.22) : "rgba(20,20,30,0.10)"
+                isDark ? "rgba(150,148,152,0.30)" : "rgba(20,20,30,0.10)"
               }`,
               backdropFilter: "blur(6px)",
             }}
           >
             <span
               style={{
-                width: 7 * U,
-                height: 7 * U,
-                borderRadius: "50%",
-                background: p.accentColor,
-                boxShadow: `0 0 ${10 * U}px ${rgba(
-                  p.accentColor,
-                  0.4 + 0.5 * dotGlow,
-                )}`,
-              }}
-            />
-            <span
-              style={{
                 fontFamily: FONT_STACKS.mono,
                 fontWeight: 600,
-                fontSize: 17 * U,
-                letterSpacing: "0.18em",
+                // Source tracks wide (~0.24em) and sits a touch smaller/cooler.
+                fontSize: 16 * U,
+                letterSpacing: "0.24em",
                 textTransform: "uppercase",
-                color: isDark ? "#C8C8CC" : "#5A5A66",
+                color: isDark ? "#C6C2C0" : "#5A5A66",
                 whiteSpace: "nowrap",
               }}
             >
@@ -333,10 +327,12 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
                 fontSize: unitFontPx,
                 lineHeight: 0.98,
                 letterSpacing: "-0.02em",
-                color: ink,
+                color: unitInk,
                 opacity: unitOpacity,
-                transform: `scale(${unitScale})`,
-                transformOrigin: "left bottom",
+                // Source aligns the % glyph to the TOP of the digits (its cap
+                // floats up near the digit top, not on the baseline), so lift it.
+                transform: `translateY(${-40 * U}px) scale(${unitScale})`,
+                transformOrigin: "left top",
                 marginLeft: 4 * U,
               }}
             >

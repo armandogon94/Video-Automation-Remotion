@@ -255,13 +255,14 @@ export const AbhiCtaComment: React.FC<Partial<AbhiCtaCommentProps>> = (
             alignItems: "center",
           }}
         >
-          {/* "Comment" lead-in */}
+          {/* "Comment" lead-in — source renders this small + medium-weight,
+              roughly a third of the giant word's cap-height (measured ≈38px@1080). */}
           <div
             style={{
               fontFamily: FONT_STACKS.sans,
-              fontWeight: 700,
-              fontSize: 52 * M,
-              letterSpacing: "-0.01em",
+              fontWeight: 600,
+              fontSize: 36 * M,
+              letterSpacing: "-0.005em",
               lineHeight: 1,
               color: inkComment,
               opacity: comment.opacity,

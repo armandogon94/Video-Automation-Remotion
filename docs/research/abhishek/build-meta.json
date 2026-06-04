@@ -62,7 +62,7 @@
       "accentColor": "#8789ED",
       "useGradient": true,
       "gradientFrom": "#8789ED",
-      "gradientMid": "#9A8AF9",
+      "gradientMid": "#8588E4",
       "gradientTo": "#D99BCC",
       "kicker": "GET THE LINK",
       "commentLabel": "Comment",
@@ -88,7 +88,7 @@
     "demoProps": {
       "accentColor": "#FD9B00",
       "kicker": "ONE-LINE INSTALL",
-      "headline": "Type. Paste. Watch.",
+      "headline": "",
       "headlineAccentFrom": 2,
       "pathCrumb": "~/projects · zsh",
       "commentLine": "# una línea. las 20 skills.",
@@ -219,6 +219,7 @@
       "accentColor": "#FD9B00",
       "mode": "dark",
       "kicker": "THE HONEST TAKE",
+      "kickerDot": false,
       "headlineLead": "¿Reemplazarlo del todo?",
       "headlineTail": "Probablemente no.",
       "tailStyle": "muted",
@@ -294,12 +295,12 @@
       "headlineSizePct": 3.6,
       "chassisWidthPct": 88.5
     },
-    "durationFrames": 96
+    "durationFrames": 72
   },
   "AbhiKineticSubtitle": {
     "bgProps": {
       "mode": "dark",
-      "accentColor": "#47B16A",
+      "accentColor": "#E8743B",
       "glowYPct": 0.32,
       "glowStrength": 0.22,
       "showGrid": true
@@ -307,7 +308,7 @@
     "demoProps": {
       "variant": "stacked",
       "mode": "dark",
-      "accentColor": "#FD9B00",
+      "accentColor": "#E8743B",
       "successColor": "#47B16A",
       "negativeColor": "#F5553A",
       "punchWords": "SAFER.,CHEAPER.,SMOOTHER.",
@@ -402,30 +403,40 @@
       "mode": "light",
       "accentColor": "#8789ED",
       "entrance": "rise",
-      "kicker": "ELIGE UN ESTILO",
+      "kicker": "",
       "screenChip": "PAPERCLIP",
-      "appIcon": "✳",
-      "titlePre": "Multimodal",
-      "titleAccent": "sin la demo.",
+      "appIcon": "",
+      "titlePre": "",
+      "titleAccent": "",
       "rows": [
         {
-          "glyph": "◆",
+          "glyph": "●",
           "title": "CEO",
-          "caption": "orchestrating · live"
+          "caption": "",
+          "status": "ACTIVE"
         },
         {
-          "glyph": "◇",
-          "title": "Engineer",
-          "caption": "shipping src/launch.tsx"
+          "glyph": "●",
+          "title": "Engineers",
+          "caption": "",
+          "status": "ACTIVE"
         },
         {
-          "glyph": "▦",
+          "glyph": "●",
           "title": "Marketing",
-          "caption": "drafting the reel"
+          "caption": "",
+          "status": "ACTIVE"
+        },
+        {
+          "glyph": "●",
+          "title": "Copy",
+          "caption": "",
+          "status": "ACTIVE"
         }
       ],
-      "dotCount": 5,
+      "dotCount": 0,
       "activeDot": 1,
+      "screenFooter": "ORG RUNNING · 24/7",
       "screenMode": "dark",
       "headline": "Run a whole company from your phone.",
       "headlineAccentWords": "company phone."
@@ -593,15 +604,18 @@
         "arregla el bug",
         "y corre los tests"
       ],
-      "leftLabel": "TÚ ESCRIBES",
+      "leftReply": "Listo. Corriendo ahora.",
+      "leftLabel": "",
       "rightCrumb": "dispatch --run",
       "rightRows": [
         "Analizando el código…",
         "Localizando el bug en auth.ts",
         "Escribiendo el fix + tests"
       ],
+      "rightSummary": "auth.ts — bug corregido. 3 tests OK.",
       "rightGreen": true,
-      "rightLabel": "CLAUDE EJECUTA",
+      "rightLabel": "",
+      "caption": "Tareas completas. En segundo plano.",
       "showConnector": true
     },
     "durationFrames": 270
@@ -626,8 +640,8 @@
       "subLine": "right out of any open-source AI.",
       "showLock": true,
       "heroSizePct": 11,
-      "resolveFrames": 36,
-      "scrambleStart": 6,
+      "resolveFrames": 54,
+      "scrambleStart": 0,
       "terminalLine": "with one command."
     },
     "durationFrames": 120
@@ -662,9 +676,9 @@
       "accentColor": "#FAB400",
       "glowXPct": 0.5,
       "glowYPct": 0.34,
-      "glowStrength": 0.22,
+      "glowStrength": 0.1,
       "darkBase": "#0A090B",
-      "showGrid": true,
+      "showGrid": false,
       "gridSpacingPx": 72
     },
     "demoProps": {
@@ -741,10 +755,16 @@
           "delay": 0
         },
         {
+          "text": "big brain time",
+          "side": "above",
+          "offsetXPct": -18,
+          "delay": 18
+        },
+        {
           "text": "almost there",
           "side": "below",
           "offsetXPct": 22,
-          "delay": 10
+          "delay": 28
         }
       ],
       "inkColor": "",
@@ -1015,6 +1035,36 @@
             },
             {
               "t": "<Proof ",
+              "k": "tag"
+            },
+            {
+              "t": "/>",
+              "k": "punct"
+            }
+          ]
+        },
+        {
+          "indent": 2,
+          "diff": "add",
+          "tokens": [
+            {
+              "t": "<Product ",
+              "k": "tag"
+            },
+            {
+              "t": "/> ",
+              "k": "punct"
+            },
+            {
+              "t": "<Styles ",
+              "k": "tag"
+            },
+            {
+              "t": "/> ",
+              "k": "punct"
+            },
+            {
+              "t": "<CTA ",
               "k": "tag"
             },
             {

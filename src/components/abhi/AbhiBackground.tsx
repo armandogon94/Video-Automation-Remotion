@@ -62,7 +62,7 @@ export const AbhiBackground: React.FC<Partial<AbhiBackgroundProps>> = (props) =>
     const gx = `${p.glowXPct * 100}%`;
     const gy = `${p.glowYPct * 100}%`;
     return (
-      <AbsoluteFill style={{ background: `linear-gradient(178deg, ${p.darkBase} 0%, #120E18 55%, #0B0710 100%)` }}>
+      <AbsoluteFill style={{ background: `linear-gradient(178deg, ${p.darkBase} 0%, #110E12 55%, #0A0709 100%)` }}>
         {/* faint warm square grid */}
         {p.showGrid ? (
           <AbsoluteFill

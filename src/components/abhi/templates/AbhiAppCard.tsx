@@ -387,7 +387,7 @@ export const AbhiAppCard: React.FC<Partial<AbhiAppCardProps>> = (props) => {
         const active = frame >= RING_START + delay;
         const ringScale = 0.55 + ph * 1.15;
         const ringOpacity = active
-          ? interpolate(ph, [0, 0.15, 1], [0, 0.5, 0], {
+          ? interpolate(ph, [0, 0.15, 1], [0, 0.16, 0], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             })
@@ -404,7 +404,7 @@ export const AbhiAppCard: React.FC<Partial<AbhiAppCardProps>> = (props) => {
               marginLeft: -(iconSize * 1.5) / 2,
               marginTop: -(iconSize * 1.5) / 2,
               borderRadius: "50%",
-              border: `${PX(0.32)}px solid ${hexA(accent, 0.55)}`,
+              border: `${PX(0.22)}px solid ${hexA(accent, 0.4)}`,
               transform: `scale(${ringScale})`,
               opacity: ringOpacity,
             }}

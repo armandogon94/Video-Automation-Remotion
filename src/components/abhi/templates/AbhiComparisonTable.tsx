@@ -530,20 +530,24 @@ const ModelIcon: React.FC<{
   ink: string;
 }> = ({ kind, px, accent, isHero, ink }) => {
   const s = px(22);
+  // Source: the hero Anthropic burst is accent-orange; the non-hero Anthropic
+  // burst (Opus 4.7) is a muted CORAL, not pure white. Other logos stay light.
   const col = isHero ? accent : ink;
   if (kind === "none") {
     return <span style={{ height: s, display: "block" }} />;
   }
   if (kind === "anthropic") {
-    // Radiating burst (Anthropic spark) — 8 spokes.
+    // Anthropic spark — a DENSE radiating burst whose spokes start near the
+    // centre (source reads as a filled spark, not a hollow snowflake).
+    const burstCol = isHero ? accent : "#C9826B"; // muted coral for rivals
     return (
       <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
-        {Array.from({ length: 8 }).map((_, i) => {
-          const a = (i * Math.PI) / 4;
-          const x1 = 12 + Math.cos(a) * 3.2;
-          const y1 = 12 + Math.sin(a) * 3.2;
-          const x2 = 12 + Math.cos(a) * 10;
-          const y2 = 12 + Math.sin(a) * 10;
+        {Array.from({ length: 12 }).map((_, i) => {
+          const a = (i * Math.PI) / 6;
+          const x1 = 12 + Math.cos(a) * 1.4;
+          const y1 = 12 + Math.sin(a) * 1.4;
+          const x2 = 12 + Math.cos(a) * 9.6;
+          const y2 = 12 + Math.sin(a) * 9.6;
           return (
             <line
               key={i}
@@ -551,8 +555,8 @@ const ModelIcon: React.FC<{
               y1={y1}
               x2={x2}
               y2={y2}
-              stroke={col}
-              strokeWidth={2.1}
+              stroke={burstCol}
+              strokeWidth={1.9}
               strokeLinecap="round"
             />
           );
@@ -561,24 +565,24 @@ const ModelIcon: React.FC<{
     );
   }
   if (kind === "openai") {
-    // Simplified OpenAI knot ring.
+    // OpenAI hexafoil — six identical petal lobes radiating from the centre,
+    // each a stroked rounded-rect rotated 60°, so it reads as the real knot.
     return (
       <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
-        <circle cx={12} cy={12} r={7.5} stroke={col} strokeWidth={1.8} />
-        <path
-          d="M12 4.5 L12 12 L18.5 15.5"
-          stroke={col}
-          strokeWidth={1.8}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <path
-          d="M5.5 15.5 L12 12"
-          stroke={col}
-          strokeWidth={1.8}
-          strokeLinecap="round"
-        />
+        {Array.from({ length: 6 }).map((_, i) => (
+          <rect
+            key={i}
+            x={9.4}
+            y={1.6}
+            width={5.2}
+            height={11.2}
+            rx={2.6}
+            stroke={col}
+            strokeWidth={1.35}
+            fill="none"
+            transform={`rotate(${i * 60} 12 12)`}
+          />
+        ))}
       </svg>
     );
   }

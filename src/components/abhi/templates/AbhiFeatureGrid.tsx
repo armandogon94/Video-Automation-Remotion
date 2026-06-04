@@ -122,12 +122,13 @@ const BrandLogo: React.FC<{ kind: LogoKind; size: number; color: string }> = ({
     "aria-hidden": true,
   };
   if (kind === "anthropic") {
-    // Three forward slashes splaying out — the Anthropic mark.
+    // The Anthropic burst — slashes splaying out from a shared lower-left pivot
+    // (the source mark radiates rather than running parallel).
     return (
-      <svg {...common} fill="none" stroke={color} strokeWidth={2.4} strokeLinecap="round">
-        <line x1="8.5" y1="20" x2="13" y2="4" />
-        <line x1="13" y1="20" x2="17.5" y2="4" />
-        <line x1="4" y1="20" x2="8.5" y2="4" />
+      <svg {...common} fill="none" stroke={color} strokeWidth={2.3} strokeLinecap="round">
+        <line x1="5" y1="20" x2="10.5" y2="4.5" />
+        <line x1="5" y1="20" x2="14.5" y2="6.5" />
+        <line x1="5" y1="20" x2="18" y2="10" />
       </svg>
     );
   }
@@ -252,7 +253,7 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none", overflow: "hidden" }}>
-      {/* ---- Kicker pill (left x≈5.5%, y≈15%) ---- */}
+      {/* ---- Kicker pill (left x≈5.5%, y≈15%) — clean outlined capsule, NO dot ---- */}
       <div
         style={{
           position: "absolute",
@@ -262,31 +263,22 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
           opacity: kProg,
           display: "inline-flex",
           alignItems: "center",
-          gap: PX(8),
-          padding: `${PX(8)}px ${PX(14)}px`,
-          borderRadius: PX(12),
-          background: isDark ? hexA("#FFFFFF", 0.06) : hexA("#FFFFFF", 0.7),
-          border: `1px solid ${isDark ? hexA("#FFFFFF", 0.1) : hexA("#000000", 0.08)}`,
+          // Source pill is a fully-rounded capsule with mono text only — no leading dot.
+          padding: `${PX(8)}px ${PX(18)}px`,
+          borderRadius: 999,
+          background: isDark ? hexA("#FFFFFF", 0.04) : hexA("#FFFFFF", 0.7),
+          border: `1px solid ${isDark ? hexA("#FFFFFF", 0.12) : hexA("#000000", 0.08)}`,
           backdropFilter: "blur(8px)",
         }}
       >
         <span
           style={{
-            width: PX(7),
-            height: PX(7),
-            borderRadius: "50%",
-            background: accent,
-            boxShadow: `0 0 ${PX(9)}px ${hexA(accent, 0.9)}`,
-          }}
-        />
-        <span
-          style={{
             fontFamily: FONT_STACKS.mono,
             fontWeight: 600,
             fontSize: PX(14),
-            letterSpacing: "0.18em",
+            letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: isDark ? "#C8C8CC" : "#3A3A44",
+            color: isDark ? "#C6C2C0" : "#3A3A44",
           }}
         >
           {p.kicker}
@@ -400,9 +392,9 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
         // Per-card tint: a faint colored wash over the base surface + a colored
         // border. Matches the source's red/cool/teal/amber card palette.
         const fill = isDark
-          ? `linear-gradient(135deg, ${hexA(cc, 0.14)} 0%, ${hexA(cc, 0.05)} 60%, ${cardBaseFill} 100%)`
+          ? `linear-gradient(100deg, ${hexA(cc, 0.16)} 0%, ${hexA(cc, 0.04)} 34%, ${cardBaseFill} 64%)`
           : `linear-gradient(135deg, ${hexA(cc, 0.12)} 0%, ${hexA("#FFFFFF", 0.86)} 80%)`;
-        const border = hexA(cc, isDark ? 0.42 : 0.34);
+        const border = hexA(cc, isDark ? 0.36 : 0.34);
         return (
           <div
             key={i}

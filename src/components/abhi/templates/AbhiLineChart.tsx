@@ -96,13 +96,7 @@ export const abhiLineChartSchema = z.object({
     { label: "Claude Opus 4.7", color: "#C8C8CE", kind: "rival", values: [null, null, 48, 52.5, 54.5, 56, 56.5] },
     { label: "Opus 4.8", color: "#F2F2F4", kind: "hero", values: [41, null, 52, 56.5, 57.5, 59.5, 60.5] },
   ]),
-}).transform((v) => ({
-  ...v,
-  // Promote the hero series' color to the accent so callers only set accentColor.
-  series: v.series.map((s) =>
-    s.kind === "hero" && s.color === "#F2F2F4" ? { ...s, color: v.accentColor } : s,
-  ),
-}));
+});
 export type AbhiLineChartProps = z.input<typeof abhiLineChartSchema>;
 
 const PX = 1080; // 1px@720-spec → 1.5px on this 1080-wide canvas
@@ -155,10 +149,6 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
   });
   const kickerY = interpolate(kickerProg, [0, 1], [-px(16), 0]);
   const kickerOpacity = interpolate(frame, [1, 6], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const dotGlow = interpolate(frame, [4, 8], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -307,7 +297,8 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* ── Kicker (inline mono caps, accent, LEFT x≈7.8% y≈16%) ── */}
+      {/* ── Kicker (inline mono caps, accent, LEFT x≈7.8% y≈16%) ──
+           Source for this reel is a bare index-name kicker (no leading dot). */}
       <div
         style={{
           position: "absolute",
@@ -321,16 +312,6 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
           gap: px(10),
         }}
       >
-        <span
-          style={{
-            width: px(7),
-            height: px(7),
-            borderRadius: "50%",
-            background: accent,
-            boxShadow: `0 0 ${px(6 + dotGlow * 8)}px ${hexA(accent, 0.4 + dotGlow * 0.5)}`,
-            flexShrink: 0,
-          }}
-        />
         <span
           style={{
             fontFamily: FONT_STACKS.mono,
@@ -429,7 +410,7 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
           }}
         />
 
-        {/* card title + gear (top chrome) */}
+        {/* card title (CENTERED in source) + gear pinned far-right */}
         <div
           style={{
             position: "absolute",
@@ -438,37 +419,41 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
             top: px(22),
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "center",
             opacity: chromeOp,
           }}
         >
           <span
             style={{
               fontFamily: FONT_STACKS.sans,
-              fontWeight: 800,
-              fontSize: px(15),
-              letterSpacing: "-0.01em",
+              fontWeight: 700,
+              fontSize: px(13.5),
+              letterSpacing: "-0.005em",
               color: ink,
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              textAlign: "center",
             }}
           >
             {p.cardTitle}
           </span>
-          <GearGlyph px={px} color={tickColor} />
+          <div style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}>
+            <GearGlyph px={px} color={tickColor} />
+          </div>
         </div>
 
-        {/* colored-dot legend row */}
+        {/* colored-dot legend row (CENTERED in source) */}
         <div
           style={{
             position: "absolute",
             left: px(28),
             right: px(28),
-            top: px(54),
+            top: px(52),
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
+            justifyContent: "center",
             gap: px(14),
             opacity: chromeOp,
           }}
@@ -629,16 +614,17 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
               const endRevealed = wipeX >= last.x - px(2);
               return (
                 <g key={si}>
-                  {/* hero accent glow under the line */}
+                  {/* hero accent glow under the line — subtle in source (the
+                      hero line itself stays white; only a faint accent bloom). */}
                   {isHero && (
                     <path
                       d={d}
                       fill="none"
-                      stroke={hexA(accent, 0.5)}
-                      strokeWidth={px(7)}
+                      stroke={hexA(accent, 0.32)}
+                      strokeWidth={px(5)}
                       strokeLinejoin="round"
                       strokeLinecap="round"
-                      style={{ filter: `blur(${px(5)}px)` }}
+                      style={{ filter: `blur(${px(4)}px)` }}
                       opacity={interpolate(draw, [0.2, 1], [0, 1], {
                         extrapolateLeft: "clamp",
                         extrapolateRight: "clamp",

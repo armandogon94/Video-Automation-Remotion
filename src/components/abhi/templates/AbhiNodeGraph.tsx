@@ -97,8 +97,10 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
   const accent = p.accentColor;
 
   // Neutral dot / spoke colors per mode (source uses cool greys on dark).
+  // Source spokes are barely-there hairlines (rays read ~RGB 20 vs bg ~13) —
+  // the eye registers the DOT trails, not bright lines. Keep spokes very faint.
   const dotNeutral = isDark ? "#C4C2CC" : "#3A3A46";
-  const spokeColor = isDark ? "rgba(190,188,200,0.22)" : "rgba(40,40,60,0.20)";
+  const spokeColor = isDark ? "rgba(190,188,200,0.12)" : "rgba(40,40,60,0.14)";
 
   // ---- Constellation geometry (canvas-relative; hub above the stat) ----
   const CX = PX / 2; // 540
@@ -393,9 +395,9 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
               x2={s.x2}
               y2={s.y2}
               stroke={
-                isAccentEdge ? hexA(accent, 0.45) : spokeColor
+                isAccentEdge ? hexA(accent, 0.20) : spokeColor
               }
-              strokeWidth={isAccentEdge ? 1.6 : 1.2}
+              strokeWidth={isAccentEdge ? 1.3 : 1.1}
               strokeLinecap="round"
               strokeDasharray={len}
               strokeDashoffset={len * (1 - draw)}
@@ -428,7 +430,7 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
                 cy={dot.y}
                 r={dot.r * dScale}
                 fill={color}
-                opacity={dOpacity * (dot.isAccent ? 0.95 : 0.72)}
+                opacity={dOpacity * (dot.isAccent ? 0.8 : 0.72)}
               />
             );
           }),
@@ -448,7 +450,8 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
           transformOrigin: "50% 50%",
         }}
       >
-        {/* Soft accent glow behind the disc (pulses). */}
+        {/* Soft accent glow behind the disc (pulses). Source keeps this very
+            restrained — a faint warm halo, not a bright bloom. */}
         <div
           style={{
             position: "absolute",
@@ -456,10 +459,10 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
             borderRadius: "50%",
             background: `radial-gradient(circle at center, ${hexA(
               accent,
-              0.28,
-            )} 0%, ${hexA(accent, 0.08)} 45%, rgba(0,0,0,0) 70%)`,
-            opacity: hubBloom * 0.7,
-            filter: "blur(16px)",
+              0.17,
+            )} 0%, ${hexA(accent, 0.05)} 45%, rgba(0,0,0,0) 70%)`,
+            opacity: hubBloom * 0.55,
+            filter: "blur(18px)",
             transform: `scale(${hubPulse})`,
           }}
         />
@@ -583,7 +586,9 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
             {statSuffixShown !== "" && (
               <span
                 style={{
-                  color: accent,
+                  // Source "+" is a MUTED GREY (~#8A888C), a touch dimmer than the
+                  // light digits — NOT the accent color. Keep it neutral.
+                  color: grey,
                   opacity: suffixOpacity,
                   display: "inline-block",
                   transform: `scale(${suffixScale})`,

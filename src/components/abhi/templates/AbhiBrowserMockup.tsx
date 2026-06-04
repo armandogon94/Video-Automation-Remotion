@@ -157,13 +157,16 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
     extrapolateRight: "clamp",
   });
 
-  // ── Browser chassis: rise +28px + scale 0.95→1 + fade over 10–12f, from f8 ──
-  const CHASSIS_START = 8;
+  // ── Browser chassis: rise +28px + scale 0.95→1 + fade over ~9f, from f4 ──
+  // Source pops the WHOLE card (chassis + all inner rows) in by ~0.4s (≈f12) and
+  // reserves the late beat purely for the strikethrough; the previous f8 start
+  // with f22 inner rows revealed everything ~2× too slow vs the 2.2s source.
+  const CHASSIS_START = 4;
   const chassisSpring = spring({
     frame: frame - CHASSIS_START,
     fps,
-    config: { damping: 200, mass: 0.8, stiffness: 110 },
-    durationInFrames: 12,
+    config: { damping: 200, mass: 0.7, stiffness: 130 },
+    durationInFrames: 10,
   });
   const chassisScale = interpolate(chassisSpring, [0, 1], [0.95, 1]);
   const chassisRise = interpolate(chassisSpring, [0, 1], [px(2.6), 0]);
@@ -184,7 +187,7 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
   const glowOpacity = (isDark ? 0.2 : 0.34) * bloomIn;
 
   // ── Chrome dots overshoot-pop ~2f after the chassis lands ──
-  const DOTS_START = CHASSIS_START + 12;
+  const DOTS_START = CHASSIS_START + 6;
   const dotsSpring = spring({
     frame: frame - DOTS_START,
     fps,
@@ -195,28 +198,32 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
     extrapolateRight: "clamp",
   });
 
-  // ── URL crumb types on ~2 chars/f after the dots ──
-  const CRUMB_START = DOTS_START + 2;
+  // ── URL crumb types on ~3 chars/f (fast) right as the dots pop ──
+  // Source has the full "claude.ai/design" crumb up almost instantly, so this
+  // types quickly (≈5f for 16 chars) rather than dragging across the scene.
+  const CRUMB_START = DOTS_START + 1;
   const crumbChars = Math.max(
     0,
-    Math.min(p.urlCrumb.length, Math.floor((frame - CRUMB_START) * 2)),
+    Math.min(p.urlCrumb.length, Math.floor((frame - CRUMB_START) * 3)),
   );
   const typedCrumb = p.urlCrumb.slice(0, crumbChars);
   const crumbCaretOn = Math.floor(frame / 8) % 2 === 0;
   const crumbTyping = crumbChars < p.urlCrumb.length && frame >= CRUMB_START;
 
-  // ── Inner content cross-dissolves row-by-row (~4f each) after chassis lands ──
-  const INNER_START = CHASSIS_START + 14;
+  // ── Inner content cross-dissolves row-by-row (~2f each), tight after chassis ──
+  // Source has the kicker + headline + meta all up by ~0.4s (≈f12); reveal rows
+  // land in quick succession right as the chassis settles rather than trailing it.
+  const INNER_START = CHASSIS_START + 5;
   const rowReveal = (rowIndex: number) => {
-    const start = INNER_START + rowIndex * 4;
-    return interpolate(frame, [start, start + 5], [0, 1], {
+    const start = INNER_START + rowIndex * 2;
+    return interpolate(frame, [start, start + 4], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
   };
   const rowRise = (rowIndex: number) => {
-    const start = INNER_START + rowIndex * 4;
-    return interpolate(frame, [start, start + 6], [px(0.9), 0], {
+    const start = INNER_START + rowIndex * 2;
+    return interpolate(frame, [start, start + 5], [px(0.9), 0], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
       easing: Easing.out(Easing.cubic),
@@ -224,7 +231,9 @@ export const AbhiBrowserMockup: React.FC<Partial<AbhiBrowserMockupProps>> = (
   };
 
   // ── Optional red-laser strikethrough sweep over the headline ──
-  const STRIKE_START = INNER_START + 14;
+  // Fires LATE (near the 66f / 2.2s end) — the whole card is already settled, so
+  // the strike reads as the closing "you're cut off" punch, like the source.
+  const STRIKE_START = 46;
   const strikeProg = p.strikeHook
     ? interpolate(frame, [STRIKE_START, STRIKE_START + 8], [0, 1], {
         extrapolateLeft: "clamp",

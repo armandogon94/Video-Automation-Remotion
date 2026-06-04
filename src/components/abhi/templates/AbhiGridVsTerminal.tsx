@@ -37,8 +37,11 @@ export const abhiGridVsTerminalSchema = z.object({
   /** "dark" tunes inks for the dark-grid-glow bg; "light" for light-mesh. */
   mode: z.enum(["dark", "light"]).default("dark"),
 
-  /** Mono UPPERCASE kicker (no leading dot — dot is drawn). */
+  /** Mono UPPERCASE kicker (no leading dot — dot is drawn when `kickerDot`). */
   kicker: z.string().default("THE HONEST TAKE"),
+  /** Draw the accent dot inside the kicker pill. Source's "honest take" beat
+   *  has NO dot — set false to match it. */
+  kickerDot: z.boolean().default(true),
 
   /** Two-tone headline. First clause = primary ink, second = de-emphasis/accent. */
   headlineLead: z.string().default("¿Reemplazarlo del todo?"),
@@ -262,15 +265,17 @@ export const AbhiGridVsTerminal: React.FC<Partial<AbhiGridVsTerminalProps>> = (
           border: `1px solid ${isDark ? hexA("#FFFFFF", 0.1) : hexA("#0C0C12", 0.08)}`,
         }}
       >
-        <span
-          style={{
-            width: 7 * PX,
-            height: 7 * PX,
-            borderRadius: 999,
-            background: p.accentColor,
-            boxShadow: `0 0 ${8 * PX * dotGlow}px ${hexA(p.accentColor, 0.9 * dotGlow)}`,
-          }}
-        />
+        {p.kickerDot && (
+          <span
+            style={{
+              width: 7 * PX,
+              height: 7 * PX,
+              borderRadius: 999,
+              background: p.accentColor,
+              boxShadow: `0 0 ${8 * PX * dotGlow}px ${hexA(p.accentColor, 0.9 * dotGlow)}`,
+            }}
+          />
+        )}
         <span
           style={{
             ...monoLabel,
@@ -391,7 +396,7 @@ export const AbhiGridVsTerminal: React.FC<Partial<AbhiGridVsTerminalProps>> = (
               background: p.accentColor,
             }}
           />
-          {/* dark window over it */}
+          {/* dark window over it (chat/comment bubble) */}
           <div
             style={{
               position: "absolute",
@@ -401,6 +406,19 @@ export const AbhiGridVsTerminal: React.FC<Partial<AbhiGridVsTerminalProps>> = (
               height: 44 * PX,
               borderRadius: 9 * PX,
               background: "#33302F",
+            }}
+          />
+          {/* comment-bubble tail at the window's bottom-left */}
+          <div
+            style={{
+              position: "absolute",
+              left: 66 * PX,
+              top: 84 * PX,
+              width: 11 * PX,
+              height: 11 * PX,
+              background: "#33302F",
+              transform: "rotate(45deg)",
+              borderRadius: 2 * PX,
             }}
           />
           {/* grey text lines */}
