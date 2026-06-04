@@ -339,3 +339,55 @@ of reflecting the schema default. Watch for this in agent-authored zod code.
   TWO full 65.6s reels (editorial vs punchy) with per-beat keyword + advancing progress bar.
 - Galleries: NEW-COMPONENTS(12), COMBOS(6), STYLED-REELS(2), linked from INDEX.html.
 OPEN (needs user taste): pick winners + reel style (editorial vs punchy).
+
+## 2026-06-03 — abhishek.devini full-vocabulary replication (5 cycles)
+
+Replicated Instagram creator **abhishek.devini**'s entire motion-graphics vocabulary
+as a self-contained Remotion template family. End-to-end per-creator pipeline:
+scrape (gallery-dl, 18 reels) → dense frame extraction (ffmpeg fps=30) → parallel
+frame-by-frame analysis → STYLE-SPEC → parallel source-grounded template build →
+render → frame-by-frame head-to-head compare → iterate (5 cycles).
+
+**Architecture (foreground/background split):**
+- `src/components/abhi/AbhiBackground.tsx` — the two signature bg modes (dark grid+glow,
+  light pastel mesh+floating squares), parameterized. SHARED by every template.
+- `src/compositions/AbhiScene9x16.tsx` — host: mounts AbhiBackground + the named
+  foreground template from `ABHI_REGISTRY`. Registered in Root.tsx (1080x1920, 30fps).
+- `src/components/abhi/registry.ts` — 23 templates (full vocabulary; 171 source scenes
+  collapse to 23 distinct types). 8 core + 15 expansion.
+- `src/components/abhi/templates/*.tsx` — 23 self-contained foreground FCs.
+- `src/autoedit/runAbhiTemplates.ts` — renders each via AbhiScene9x16, reads per-key
+  {bgProps, demoProps, durationFrames} from `docs/research/abhishek/build-meta.json`.
+  **Takes exactly ONE key as argv[2]** (render one template at a time), or all if none.
+- `docs/research/abhishek/` — STYLE-SPEC.md, SCENE-INDEX.json (171 scenes),
+  VOCABULARY.json (23 types + cleanest source refs), build-meta.json (render config).
+- `references/creators/abhishek.devini/*.mp4` — 18 source reels (gitignored, KEPT for
+  comparison). `output/abhi/<Key>.mp4` = replicas; `output/abhi/source-scenes/<Key>.mp4`
+  = the matched source scene clip for each template. `ABHI-COMPARE.html` = head-to-head
+  gallery. `scripts/abhi-qa-contactsheet.py` = source-vs-replica static QA contact sheet.
+
+**Style tokens:** DARK = warm near-black base #08050B, gradient to #0A0709, faint warm
+square grid @4.5%, radial accent glow (topic-brand color) behind hero text, gentle
+breathe. LIGHT = pastel mesh (peach #F9C8BA / lavender #CBC9F9 / mint #E0EEE7) on
+#E7E0EA + drifting rounded squares. Fonts: headline=Inter Black 900 tracking -0.02em;
+kicker=JetBrains/Fira mono uppercase ~0.2em (usually DOT-FREE — abhi's kicker pills
+have no leading dot in most dark templates); accent sweep on second headline tone.
+
+**GOTCHAS (critical):**
+- Remotion headless Chromium renders `background-clip:text + color:transparent` as an
+  OPAQUE rectangle (caused the BrandLockup "orange rectangle blocking text" bug). Use
+  SOLID color for any animated/swept/hero text.
+- Zod v4: every field needs `.default()`; NEVER reflect via `._def`/`.shape` (throws at
+  render); use `""` sentinel for override/empty detection.
+- bash `while IFS='|' read` drops the first char of the last line w/o trailing newline
+  (mangled "AbhiBrandLockup"→"bhiBrandLockup"). Use python for robust line extraction.
+- Parallel agents editing registry.ts / build-meta.json concurrently can race — rewrite
+  registry cleanly afterward; validate build-meta JSON + re-render ALL at the end.
+- Agents return one-line confirmations + write files to disk (more reliable than deeply
+  nested StructuredOutput schemas for vision-heavy work).
+
+**Cycles:** C1 fixed core 8 + corrected muddled source refs (terminal off +7s; re-extracted
+all source scenes). C2 built the 15 expansion templates. C3 verified+fixed all 23 (7-9/10).
+C4 final polish (5 parallel agents, per-template frame-compare + minimal edits) → all 9-9.5/10;
+neutralized AbhiBackground dark gradient purple cast. C5 adversarial QA pass (skeptic finds
+the ONE remaining gap per template). Source reels KEPT until user signs off on fidelity.

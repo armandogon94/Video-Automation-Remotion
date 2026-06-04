@@ -150,13 +150,15 @@ const NumberBadge: React.FC<{
   index: number;
   ringColor: string;
   textColor: string;
-}> = ({ size, index, ringColor, textColor }) => (
+  fill: string;
+}> = ({ size, index, ringColor, textColor, fill }) => (
   <div
     style={{
       width: size,
       height: size,
       borderRadius: "50%",
       border: `${Math.max(1.5, size * 0.045)}px solid ${ringColor}`,
+      background: fill,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -506,12 +508,47 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
         {/* Body: checklist rows */}
         <div
           style={{
+            position: "relative",
             display: "flex",
             flexDirection: "column",
             gap: rowGap,
             padding: `${cardBodyPadTop}px ${rowPadX}px ${cardBodyPadBottom}px`,
           }}
         >
+          {/* Number-steps variant: vertical connector "spine" joining the step
+              circles (source's "Trust the loop." timeline). Centered on the badge
+              column; grows downward as the rows reveal, brighter near the active
+              (top) step and dimming below. Sits BEHIND the badges. */}
+          {numberMode && n > 1
+            ? (() => {
+                const lineX = rowPadX + badgeSize / 2;
+                // Connector runs from the first badge center to the last badge center.
+                const firstCenter = cardBodyPadTop + rowH / 2;
+                const fullSpan = (n - 1) * (rowH + rowGap);
+                // Grow in sync with the row reveal (each row ~ROW_STAGGER apart),
+                // finishing just after the last row's badge lands.
+                const grow = interpolate(
+                  frame,
+                  [ROW_START, ROW_START + (n - 1) * ROW_STAGGER + BADGE_DELAY + 6],
+                  [0, 1],
+                  { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+                );
+                return (
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: lineX - 1,
+                      top: firstCenter,
+                      width: 2,
+                      height: fullSpan * grow,
+                      borderRadius: 2,
+                      background: `linear-gradient(180deg, ${hexA(accent, 0.55)} 0%, ${hexA(ink, 0.18)} 22%, ${hexA(ink, 0.14)} 100%)`,
+                      zIndex: 0,
+                    }}
+                  />
+                );
+              })()
+            : null}
           {items.map((it, i) => {
             const start = ROW_START + i * ROW_STAGGER;
 
@@ -568,6 +605,8 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
               <div
                 key={i}
                 style={{
+                  position: "relative",
+                  zIndex: 1,
                   display: "flex",
                   alignItems: "center",
                   gap: leftVariant ? PX(2.6) : PX(2),
@@ -599,6 +638,7 @@ export const AbhiChecklist: React.FC<Partial<AbhiChecklistProps>> = (props) => {
                       index={i}
                       ringColor={stepRing}
                       textColor={stepNumColor}
+                      fill="#0A0B10"
                     />
                   ) : isBad ? (
                     <CrossBadge size={badgeSize} color={badgeColor} />

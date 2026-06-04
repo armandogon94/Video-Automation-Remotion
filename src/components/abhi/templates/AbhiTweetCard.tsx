@@ -167,7 +167,9 @@ export const AbhiTweetCard: React.FC<Partial<AbhiTweetCardProps>> = (props) => {
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
   });
-  const glowBreathe = 1 + 0.12 * Math.sin((frame / 30) * Math.PI * 2);
+  // Source glow is a RESTRAINED thin amber edge, not a neon bloom — keep the
+  // breathe nearly imperceptible so the card edge reads as a soft halo, not a pulse.
+  const glowBreathe = 1 + 0.05 * Math.sin((frame / 30) * Math.PI * 2);
   const glowAlpha = glowIn * glowBreathe;
   // Header lockup (spark + author) + body reveal after the card lands.
   const HEAD_REVEAL = REPLY_START + 8;
@@ -369,9 +371,9 @@ export const AbhiTweetCard: React.FC<Partial<AbhiTweetCardProps>> = (props) => {
             borderBottomLeftRadius: k(6),
             background: replyCardBg,
             border: `1.5px solid ${hexA(accent, 0.22 + 0.5 * glowAlpha)}`,
-            boxShadow: `0 0 ${k(2) + k(30) * glowAlpha}px ${hexA(
+            boxShadow: `0 0 ${k(2) + k(14) * glowAlpha}px ${hexA(
               accent,
-              0.45 * glowAlpha,
+              0.22 * glowAlpha,
             )}, inset 0 0 ${k(20)}px ${hexA(accent, 0.05 * glowIn)}, 0 ${k(
               12,
             )}px ${k(34)}px ${hexA("#000000", isDark ? 0.5 : 0.14)}`,

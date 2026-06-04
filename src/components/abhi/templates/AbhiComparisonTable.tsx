@@ -106,6 +106,12 @@ export const abhiComparisonTableSchema = z.object({
       winnerCol: -1,
     },
   ]),
+  /**
+   * Optional takeaway pill below the card (mono caps, accent dot + soft glow) —
+   * the source's closing "Terminal coding — the one exception" line that pops in
+   * after the brackets settle. "" hides it.
+   */
+  footnote: z.string().default(""),
 });
 export type AbhiComparisonTableProps = z.infer<typeof abhiComparisonTableSchema>;
 
@@ -222,6 +228,22 @@ export const AbhiComparisonTable: React.FC<
     [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
+
+  // ── Takeaway pill: fades + rises below the card after the brackets settle ──
+  const hasFootnote = p.footnote.trim() !== S;
+  const FOOT_START = BRACKET_START + 8;
+  const footSpring = spring({
+    frame: frame - FOOT_START,
+    fps,
+    config: { damping: 200, mass: 0.7, stiffness: 150 },
+    durationInFrames: 8,
+  });
+  const footOpacity = footSpring;
+  const footY = interpolate(footSpring, [0, 1], [px(14), 0]);
+  const footGlow = interpolate(frame, [FOOT_START + 2, FOOT_START + 10], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   // x-center of a model column (0-based among model columns).
   const modelColCenterX = (i: number) => labelColW + modelColW * (i + 0.5);
@@ -516,6 +538,61 @@ export const AbhiComparisonTable: React.FC<
         opacity={bracketOpacity}
         cardRise={cardRise}
       />
+
+      {/* ── Takeaway pill below the card (accent dot + soft glow) ── */}
+      {hasFootnote && (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: cardTop + cardH + py(40),
+            display: "flex",
+            justifyContent: "center",
+            opacity: footOpacity,
+            transform: `translateY(${footY}px)`,
+          }}
+        >
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: px(10),
+              padding: `${px(11)}px ${px(22)}px`,
+              borderRadius: px(999),
+              background: pillBg,
+              border: `1px solid ${hexA(accent, 0.45)}`,
+              boxShadow: `0 0 ${px(28)}px ${hexA(accent, 0.22 * footGlow)}`,
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              maxWidth: cardW,
+            }}
+          >
+            <span
+              style={{
+                width: px(8),
+                height: px(8),
+                borderRadius: "50%",
+                background: accent,
+                boxShadow: `0 0 ${px(8)}px ${hexA(accent, 0.7 * footGlow)}`,
+                flexShrink: 0,
+              }}
+            />
+            <span
+              style={{
+                fontFamily: FONT_STACKS.mono,
+                fontWeight: 600,
+                fontSize: px(18),
+                letterSpacing: "0.04em",
+                color: ink,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {p.footnote}
+            </span>
+          </div>
+        </div>
+      )}
     </AbsoluteFill>
   );
 };

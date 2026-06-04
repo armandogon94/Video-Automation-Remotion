@@ -52,6 +52,12 @@ const rowSchema = z.object({
   caption: z.string().default(""),
   /** Right-aligned mono status badge (UPPERCASE), e.g. "ACTIVE". "" hides it. */
   status: z.string().default(""),
+  /**
+   * Per-row override for the "●" status dot color (#hex). "" → use accentColor.
+   * The source roster color-codes each role (CEO mint / Engineers periwinkle /
+   * Marketing pink / Copy gold) rather than a single accent — set this per row.
+   */
+  dotColor: z.string().default(""),
 });
 
 export const abhiPhoneMockupSchema = z.object({
@@ -631,19 +637,25 @@ export const AbhiPhoneMockup: React.FC<Partial<AbhiPhoneMockupProps>> = (
                     transform: `translateY(${rr.ty}px)`,
                   }}
                 >
-                  {/* A bare "●" renders as a small solid accent status dot
-                      (source roster look); any other glyph keeps the tile box. */}
+                  {/* A bare "●" renders as a small solid status dot (source roster
+                      look). Each row may color-code its dot via row.dotColor; "" →
+                      accent. Any other glyph keeps the tile box. */}
                   {row.glyph.trim() === "●" ? (
-                    <span
-                      style={{
-                        flex: "0 0 auto",
-                        width: px(7),
-                        height: px(7),
-                        borderRadius: "50%",
-                        background: accent,
-                        boxShadow: `0 0 ${px(6)}px ${hexA(accent, 0.7)}`,
-                      }}
-                    />
+                    (() => {
+                      const dc = row.dotColor.trim() === S ? accent : row.dotColor.trim();
+                      return (
+                        <span
+                          style={{
+                            flex: "0 0 auto",
+                            width: px(7),
+                            height: px(7),
+                            borderRadius: "50%",
+                            background: dc,
+                            boxShadow: `0 0 ${px(6)}px ${hexA(dc, 0.7)}`,
+                          }}
+                        />
+                      );
+                    })()
                   ) : row.glyph.trim() !== S ? (
                     <span
                       style={{

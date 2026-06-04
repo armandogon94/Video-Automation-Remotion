@@ -620,11 +620,11 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
                     <path
                       d={d}
                       fill="none"
-                      stroke={hexA(accent, 0.32)}
-                      strokeWidth={px(5)}
+                      stroke={hexA(accent, 0.14)}
+                      strokeWidth={px(3.4)}
                       strokeLinejoin="round"
                       strokeLinecap="round"
-                      style={{ filter: `blur(${px(4)}px)` }}
+                      style={{ filter: `blur(${px(3)}px)` }}
                       opacity={interpolate(draw, [0.2, 1], [0, 1], {
                         extrapolateLeft: "clamp",
                         extrapolateRight: "clamp",
@@ -662,8 +662,8 @@ export const AbhiLineChart: React.FC<Partial<AbhiLineChartProps>> = (props) => {
                     <circle
                       cx={last.x}
                       cy={last.y}
-                      r={px(11)}
-                      fill={hexA(accent, 0.28)}
+                      r={px(8)}
+                      fill={hexA(accent, 0.16)}
                       style={{ filter: `blur(${px(4)}px)` }}
                     />
                   )}

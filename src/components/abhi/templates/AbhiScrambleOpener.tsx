@@ -196,11 +196,16 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
   //    line finishes typing within the scene (source completes well before end),
   //    capped to a snappy floor so short lines still read as "typed". ──
   const hasSub = p.subLine.trim() !== S;
+  const hasTermLine = p.terminalLine.trim() !== S;
   const SUB_START = finishFrame + 4;
-  // Reserve ~16f tail after typing so a trailing terminal pill can pop + hold.
-  const subBudget = Math.max(8, durationInFrames - SUB_START - 16);
+  // Reserve a tail after typing so a trailing terminal pill can pop + HOLD on
+  // screen (the source resolves the "$ …" pill well before the scene ends). When
+  // a terminal pill exists we reserve ~28f; otherwise ~16f is plenty.
+  const subBudget = Math.max(8, durationInFrames - SUB_START - (hasTermLine ? 28 : 16));
+  // Floor drops to 1.1f/char when a pill must follow, so a long sub-line still
+  // finishes typing in time to leave the pill a readable hold window.
   const SUB_RATE = Math.max(
-    1.4,
+    hasTermLine ? 1.1 : 1.4,
     Math.min(2.2, subBudget / Math.max(1, p.subLine.length)),
   );
   const subChars = Math.max(
@@ -212,7 +217,7 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
   const subVisible = frame >= SUB_START && hasSub;
 
   // ── Terminal pill ("$ …"): pops in once the sub-line finishes typing ──
-  const hasTerm = p.terminalLine.trim() !== S;
+  const hasTerm = hasTermLine;
   const TERM_START = SUB_START + p.subLine.length * SUB_RATE + 3;
   const termProg = spring({
     frame: frame - TERM_START,

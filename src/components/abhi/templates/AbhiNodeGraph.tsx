@@ -113,7 +113,10 @@ export const AbhiNodeGraph: React.FC<Partial<AbhiNodeGraphProps>> = (props) => {
   // Source's node trails curve into a slight galaxy swirl rather than firing as
   // perfectly straight radial lines: each dot is rotated a little further around
   // the hub as it gets further out (tangential drift ∝ radius).
-  const SWIRL = 0.55; // radians of total swirl from inner→outer reach
+  // Source arms are clearly log-spiral (dots curve ~CCW well past a straight
+  // spur). A larger swirl makes the trails arc into the galaxy look without
+  // touching dot radius, so the silhouette/extent is unchanged (no clipping).
+  const SWIRL = 1.0; // radians of total swirl from inner→outer reach
 
   const spokes = clamp(Math.round(p.spokeCount), 6, 28);
   const dotsPer = clamp(Math.round(p.dotsPerSpoke), 2, 6);

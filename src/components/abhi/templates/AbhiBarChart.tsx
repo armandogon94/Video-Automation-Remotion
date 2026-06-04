@@ -127,7 +127,7 @@ export const AbhiBarChart: React.FC<Partial<AbhiBarChartProps>> = (props) => {
   const plotWidth = plotRight - plotLeft;
   const baselineTop = Math.round(0.699 * 1920); // y≈70% of 1920h → ~1342px
   const maxBarH = Math.round(0.332 * 1920); // tallest bar ≈ 33% of 1920 → ~637px
-  const barW = Math.round(0.083 * PX); // bar width ≈ 8.3% of 720w → ~90px
+  const barW = Math.round(0.111 * PX); // bar width ≈ 11.1% of 720w → ~120px (source bars are chunky, ~120px wide; pitch ~195px leaves a ~75px gap, matching ground-truth)
 
   const bars = p.bars.length > 0 ? p.bars : [{ label: "", value: 0, kind: "rival" as const }];
   const n = bars.length;

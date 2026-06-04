@@ -234,7 +234,7 @@ export const AbhiTwoColumn: React.FC<Partial<AbhiTwoColumnProps>> = (props) => {
           textAlign: "center",
           fontFamily: FONT_STACKS.sans,
           fontWeight: 900,
-          fontSize: px(54),
+          fontSize: px(43),
           lineHeight: 0.98,
           letterSpacing: "-0.03em",
           padding: `0 ${px(44)}px`,

@@ -89,7 +89,7 @@ export const abhiAppCardSchema = z.object({
   /** Icon gradient stops (3). Defaults match the sampled source icon. */
   iconColorA: z.string().default("#FFAC7C"),
   iconColorB: z.string().default("#C9A9E6"),
-  iconColorC: z.string().default("#8FB0DA"),
+  iconColorC: z.string().default("#A8D3C2"),
 
   /** Floating notification chips around the icon (decorative). */
   notifications: z.array(chipSchema).default([

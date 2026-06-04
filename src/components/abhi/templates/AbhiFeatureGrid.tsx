@@ -206,9 +206,14 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
     extrapolateRight: "clamp",
   });
 
-  // ---- 2×2 cards: Z-order stagger TL→TR→BL→BR, each scale 0.94→1 over 6f, ~5f apart ----
-  const CARD_START = 18;
-  const CARD_STAGGER = 5;
+  // ---- 2×2 cards: Z-order stagger TL→TR→BL→BR, each scale 0.94→1 over 6f ----
+  // Source ground-truth lands ALL FOUR cards almost at once, very early (~0.5s):
+  // by the time the pill has popped the whole 2×2 grid is already present and
+  // settled. The prior 18/5 schedule dribbled the 4th card (OpenClaw) in as late
+  // as ~1.5s. Start the grid as the capsule pops and tighten the stagger so the
+  // full grid is in by ~f24 (≈0.8s), keeping only a subtle Z-order cascade.
+  const CARD_START = 12;
+  const CARD_STAGGER = 3;
   const cardAnim = (i: number) => {
     const local = frame - (CARD_START + i * CARD_STAGGER);
     const sp = spring({ frame: local, fps, config: { damping: 200, mass: 0.6 } });
@@ -221,8 +226,8 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
     return { scale, ty, opacity };
   };
 
-  // ---- Bottom footnote: fades up last ----
-  const footProg = interpolate(frame, [42, 54], [0, 1], {
+  // ---- Bottom footnote: fades up last (just after the grid lands ~f24) ----
+  const footProg = interpolate(frame, [28, 40], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),

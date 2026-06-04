@@ -259,7 +259,7 @@
       "mode": "dark",
       "accentColor": "#FD9B00",
       "kicker": "NUEVO · CÓDIGO ABIERTO",
-      "kickerGlyph": "star",
+      "kickerGlyph": "dot",
       "iconStyle": "none",
       "lineOne": "ARMANDO",
       "lineTwo": "INTELIGENCIA.",
@@ -274,7 +274,7 @@
   "AbhiBrowserMockup": {
     "bgProps": {
       "mode": "dark",
-      "accentColor": "#F5553A",
+      "accentColor": "#F2455C",
       "glowXPct": 0.5,
       "glowYPct": 0.5,
       "glowStrength": 0.12,
@@ -283,7 +283,7 @@
       "gridSpacingPx": 84
     },
     "demoProps": {
-      "accentColor": "#F5553A",
+      "accentColor": "#F2455C",
       "mode": "dark",
       "statusPill": "LÍMITE ALCANZADO · CUOTA AGOTADA",
       "urlCrumb": "claude.ai/design",
@@ -413,25 +413,29 @@
           "glyph": "●",
           "title": "CEO",
           "caption": "",
-          "status": "ACTIVE"
+          "status": "ACTIVE",
+          "dotColor": "#7FE3CE"
         },
         {
           "glyph": "●",
           "title": "Engineers",
           "caption": "",
-          "status": "ACTIVE"
+          "status": "ACTIVE",
+          "dotColor": "#8C8CF0"
         },
         {
           "glyph": "●",
           "title": "Marketing",
           "caption": "",
-          "status": "ACTIVE"
+          "status": "ACTIVE",
+          "dotColor": "#E0A3D0"
         },
         {
           "glyph": "●",
           "title": "Copy",
           "caption": "",
-          "status": "ACTIVE"
+          "status": "ACTIVE",
+          "dotColor": "#E8D3A0"
         }
       ],
       "dotCount": 0,
@@ -531,7 +535,8 @@
           ],
           "winnerCol": -1
         }
-      ]
+      ],
+      "footnote": "Terminal coding — the one exception"
     },
     "durationFrames": 255
   },
