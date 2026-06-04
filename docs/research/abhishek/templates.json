@@ -7,9 +7,50 @@
     "sourceEndSec": 5.5,
     "transitionVerb": "Kicker fades+drops from y-16px over f1-6; headline rises word-group by word-group from +18px (white words first, then the accent word tint-sweeps L->R over ~8f), groups ~6f apart settling by ~f20; radial glow blooms behind 14f.",
     "buildSpec": {
-      "kicker": { "text": "THE FIX / NN — WORD", "font": "JetBrains Mono", "fontSizePct": 2.0, "case": "uppercase", "tracking": "0.18em", "dot": "accent", "pos": { "x": 50, "y": 17 }, "altPos": { "x": 6, "y": 16, "align": "left" }, "pill": "DARK #331C06 hairline / LIGHT frosted #F4F4FA" },
-      "headline": { "text": "1-3 lines, one clause recolored accent", "font": "Inter Black 800-900", "fontSizePct": "7-12", "lines": "1-3", "inkColor": "DARK #F2F2F4 / LIGHT #000000", "accentColor": "topic accent", "periodAccent": true, "pos": { "x": 50, "y": 30 }, "altPos": { "x": 6, "y": 22, "align": "left" } },
-      "subtitle": { "text": "optional mono or kinetic two-tone", "fontSizePct": 4.0, "pos": { "x": 50, "y": 70 } }
+      "kicker": {
+        "text": "THE FIX / NN \u2014 WORD",
+        "font": "JetBrains Mono",
+        "fontSizePct": 2.0,
+        "case": "uppercase",
+        "tracking": "0.18em",
+        "dot": "accent",
+        "pos": {
+          "x": 50,
+          "y": 17
+        },
+        "altPos": {
+          "x": 6,
+          "y": 16,
+          "align": "left"
+        },
+        "pill": "DARK #331C06 hairline / LIGHT frosted #F4F4FA"
+      },
+      "headline": {
+        "text": "1-3 lines, one clause recolored accent",
+        "font": "Inter Black 800-900",
+        "fontSizePct": "7-12",
+        "lines": "1-3",
+        "inkColor": "DARK #F2F2F4 / LIGHT #000000",
+        "accentColor": "topic accent",
+        "periodAccent": true,
+        "pos": {
+          "x": 50,
+          "y": 30
+        },
+        "altPos": {
+          "x": 6,
+          "y": 22,
+          "align": "left"
+        }
+      },
+      "subtitle": {
+        "text": "optional mono or kinetic two-tone",
+        "fontSizePct": 4.0,
+        "pos": {
+          "x": 50,
+          "y": 70
+        }
+      }
     },
     "priority": 1
   },
@@ -21,10 +62,43 @@
     "sourceEndSec": 4.4,
     "transitionVerb": "Numeral holds start ~6f then counts up with strong ease-out (0->98% over ~24f, fast->slow) scaling 0.9->1 with 1.06 overshoot settle; accent unit suffix pops in beside it 6f; label + glow bloom fade up 8f after number lands.",
     "buildSpec": {
-      "kicker": { "text": "A SECRET MOST MISS / TRACTION / NN — THE MATH", "font": "JetBrains Mono", "fontSizePct": 2.6, "dot": "accent", "pos": { "x": 50, "y": 17 } },
-      "statNumber": { "text": "98% (digits ink, % accent)", "font": "Inter Black", "fontSizePct": "13-31", "inkColor": "DARK #DE6D35 digits / LIGHT #19151F", "unitColor": "accent or white", "cornerBracket": "DARK only", "commaFormat": true, "pos": { "x": 50, "y": 42 } },
-      "subLabel": { "text": "STARS ON GITHUB / fewer tokens per query", "font": "JetBrains Mono", "fontSizePct": 3.0, "color": "grey #9A9AA0", "pos": { "x": 50, "y": 56 } },
-      "supportingCards": { "optional": true, "type": "equation cards or stat chips row" }
+      "kicker": {
+        "text": "A SECRET MOST MISS / TRACTION / NN \u2014 THE MATH",
+        "font": "JetBrains Mono",
+        "fontSizePct": 2.6,
+        "dot": "accent",
+        "pos": {
+          "x": 50,
+          "y": 17
+        }
+      },
+      "statNumber": {
+        "text": "98% (digits ink, % accent)",
+        "font": "Inter Black",
+        "fontSizePct": "13-31",
+        "inkColor": "DARK #DE6D35 digits / LIGHT #19151F",
+        "unitColor": "accent or white",
+        "cornerBracket": "DARK only",
+        "commaFormat": true,
+        "pos": {
+          "x": 50,
+          "y": 42
+        }
+      },
+      "subLabel": {
+        "text": "STARS ON GITHUB / fewer tokens per query",
+        "font": "JetBrains Mono",
+        "fontSizePct": 3.0,
+        "color": "grey #9A9AA0",
+        "pos": {
+          "x": 50,
+          "y": 56
+        }
+      },
+      "supportingCards": {
+        "optional": true,
+        "type": "equation cards or stat chips row"
+      }
     },
     "priority": 2
   },
@@ -36,12 +110,60 @@
     "sourceEndSec": 53.84,
     "transitionVerb": "'Comment' fades up 6f; giant 'AI' snaps in scale 1.06->1 with accent/gradient sweeping across glyphs over ~8f + glow bloom + blinking caret; input bar slides up from +40px 8f, send button pops overshoot 6f; subtitle + handle pill rise under it 4-6f later.",
     "buildSpec": {
-      "kicker": { "text": "GET THE LINK / DROP A COMMENT", "font": "JetBrains Mono", "dot": "accent", "pos": { "x": 50, "y": 18 } },
-      "commentLabel": { "text": "Comment", "color": "grey caps or bold ink", "pos": { "x": 50, "y": 37 } },
-      "giantAI": { "text": "\"AI\"", "font": "Inter Black", "fontSizePct": "8-20", "color": "orange accent OR blue-purple gradient #8F89F6", "caret": "blinking bar", "pos": { "x": 50, "y": 44 } },
-      "subtitle": { "text": "and I'll DM the GitHub repo.", "fontSizePct": 3.5, "pos": { "x": 50, "y": 52 } },
-      "inputBar": { "type": "glassy rounded pill", "elements": "avatar(accent ring) + typed 'A I |' + send button(accent circle/Post/paper-plane)", "pos": { "x": 50, "y": 59 } },
-      "handlePill": { "text": "● @abhishek.devini", "font": "JetBrains Mono", "glyph": "instagram", "pos": { "x": 50, "y": 60 }, "footerPersistent": "y96 on many reels" }
+      "kicker": {
+        "text": "GET THE LINK / DROP A COMMENT",
+        "font": "JetBrains Mono",
+        "dot": "accent",
+        "pos": {
+          "x": 50,
+          "y": 18
+        }
+      },
+      "commentLabel": {
+        "text": "Comment",
+        "color": "grey caps or bold ink",
+        "pos": {
+          "x": 50,
+          "y": 37
+        }
+      },
+      "giantAI": {
+        "text": "\"AI\"",
+        "font": "Inter Black",
+        "fontSizePct": "8-20",
+        "color": "orange accent OR blue-purple gradient #8F89F6",
+        "caret": "blinking bar",
+        "pos": {
+          "x": 50,
+          "y": 44
+        }
+      },
+      "subtitle": {
+        "text": "and I'll DM the GitHub repo.",
+        "fontSizePct": 3.5,
+        "pos": {
+          "x": 50,
+          "y": 52
+        }
+      },
+      "inputBar": {
+        "type": "glassy rounded pill",
+        "elements": "avatar(accent ring) + typed 'A I |' + send button(accent circle/Post/paper-plane)",
+        "pos": {
+          "x": 50,
+          "y": 59
+        }
+      },
+      "handlePill": {
+        "text": "\u25cf @abhishek.devini",
+        "font": "JetBrains Mono",
+        "glyph": "instagram",
+        "pos": {
+          "x": 50,
+          "y": 60
+        },
+        "footerPersistent": "y96 on many reels"
+      }
     },
     "priority": 3
   },
@@ -49,14 +171,40 @@
     "name": "terminal-mockup-card",
     "bgMode": "dark",
     "sourceShortcode": "DXpZf2ziBYP",
-    "sourceStartSec": 13.5,
-    "sourceEndSec": 17.0,
-    "transitionVerb": "Headline pops word-by-word ~1/4f; terminal card scales 0.96->1 + fades up 10-12f; command types char-by-char ~2 chars/f with blinking block caret; orange progress bar fills 0->100% width over ~18f; green '✓ success' line pops in last.",
+    "sourceStartSec": 20.0,
+    "sourceEndSec": 26.0,
+    "transitionVerb": "Headline pops word-by-word ~1/4f; terminal card scales 0.96->1 + fades up 10-12f; command types char-by-char ~2 chars/f with blinking block caret; orange progress bar fills 0->100% width over ~18f; green '\u2713 success' line pops in last.",
     "buildSpec": {
-      "kicker": { "text": "ONE-LINE INSTALL / RUN IT", "font": "JetBrains Mono", "dot": "accent", "pos": { "x": 6, "y": 16, "align": "left" } },
-      "headline": { "text": "Type. Paste. Watch. (accent on last word)", "font": "Inter Black", "fontSizePct": "8.5" },
-      "terminalCard": { "fill": "#181A21 or #0E1117", "widthPct": "80-88", "pos": { "x": 50, "y": 40 }, "chrome": "3 traffic-light dots + path crumb (~/claude-projects)", "body": "comment line grey, $ command ($ accent / cmd white), resolving line, accent progress bar L->R, ✓ installed · N skills · 0 errors (green)", "cornerBracket": "optional DARK ⌐ ⌐" },
-      "subtitle": { "text": "optional bottom kinetic two-tone", "fontSizePct": 4.0 }
+      "kicker": {
+        "text": "ONE-LINE INSTALL / RUN IT",
+        "font": "JetBrains Mono",
+        "dot": "accent",
+        "pos": {
+          "x": 6,
+          "y": 16,
+          "align": "left"
+        }
+      },
+      "headline": {
+        "text": "Type. Paste. Watch. (accent on last word)",
+        "font": "Inter Black",
+        "fontSizePct": "8.5"
+      },
+      "terminalCard": {
+        "fill": "#181A21 or #0E1117",
+        "widthPct": "80-88",
+        "pos": {
+          "x": 50,
+          "y": 40
+        },
+        "chrome": "3 traffic-light dots + path crumb (~/claude-projects)",
+        "body": "comment line grey, $ command ($ accent / cmd white), resolving line, accent progress bar L->R, \u2713 installed \u00b7 N skills \u00b7 0 errors (green)",
+        "cornerBracket": "optional DARK \u2310 \u2310"
+      },
+      "subtitle": {
+        "text": "optional bottom kinetic two-tone",
+        "fontSizePct": 4.0
+      }
     },
     "priority": 4
   },
@@ -66,11 +214,39 @@
     "sourceShortcode": "DXhkSFiD8dL",
     "sourceStartSec": 22.0,
     "sourceEndSec": 30.0,
-    "transitionVerb": "Headline slides left-in ~8f; rows cascade up one-by-one bottom-edge ~6f each with ~5f stagger (3-card list lands ~33f), each scaling 0.96->1 + fade; accent icon/border/✓ badge pops 2-3f after its row lands (solution checks bloom green glow).",
+    "transitionVerb": "Headline slides left-in ~8f; rows cascade up one-by-one bottom-edge ~6f each with ~5f stagger (3-card list lands ~33f), each scaling 0.96->1 + fade; accent icon/border/\u2713 badge pops 2-3f after its row lands (solution checks bloom green glow).",
     "buildSpec": {
-      "kicker": { "text": "WHAT IT'S BUILT TO DO / WHAT WENT WRONG", "font": "JetBrains Mono", "dot": "accent", "pos": { "x": 6, "y": 16, "align": "left" } },
-      "headline": { "text": "Five jobs. One model. (accent on 2nd clause)", "font": "Inter Black", "fontSizePct": "5.0", "align": "left", "pos": { "x": 6, "y": 19 } },
-      "rows": { "count": "3-5", "fill": "DARK #121418 / LIGHT frosted", "widthPct": "88-90", "pos": { "x": 50, "y": "28-73" }, "perRow": "accent monoline icon in square (left) + bold title + accent mono sub-caption", "valence": "accent-bordered; problem=red/orange tint; solution=green border + ✓ check badge; CTA/Comment row=green focus" }
+      "kicker": {
+        "text": "WHAT IT'S BUILT TO DO / WHAT WENT WRONG",
+        "font": "JetBrains Mono",
+        "dot": "accent",
+        "pos": {
+          "x": 6,
+          "y": 16,
+          "align": "left"
+        }
+      },
+      "headline": {
+        "text": "Five jobs. One model. (accent on 2nd clause)",
+        "font": "Inter Black",
+        "fontSizePct": "5.0",
+        "align": "left",
+        "pos": {
+          "x": 6,
+          "y": 19
+        }
+      },
+      "rows": {
+        "count": "3-5",
+        "fill": "DARK #121418 / LIGHT frosted",
+        "widthPct": "88-90",
+        "pos": {
+          "x": 50,
+          "y": "28-73"
+        },
+        "perRow": "accent monoline icon in square (left) + bold title + accent mono sub-caption",
+        "valence": "accent-bordered; problem=red/orange tint; solution=green border + \u2713 check badge; CTA/Comment row=green focus"
+      }
     },
     "priority": 5
   },
@@ -78,13 +254,37 @@
     "name": "feature-card-grid",
     "bgMode": "both",
     "sourceShortcode": "DXpZf2ziBYP",
-    "sourceStartSec": 17.0,
-    "sourceEndSec": 21.0,
+    "sourceStartSec": 15.5,
+    "sourceEndSec": 19.5,
     "transitionVerb": "Headline settles; four cards fade+rise in Z-order stagger (TL->TR->BL->BR), each scale 0.94->1 over 6f ~5f apart; accent top-border (or icon glyph) wipes/pops in 2-3f after each card lands.",
     "buildSpec": {
-      "kicker": { "text": "ONE SKILL · FOUR DELIVERABLES", "font": "JetBrains Mono", "dot": "accent", "pos": { "x": 6, "y": 16, "align": "left" } },
-      "headline": { "text": "Type once. Ship anything. (accent on payoff)", "font": "Inter Black", "fontSizePct": "6.5", "align": "left", "pos": { "x": 6, "y": 20 } },
-      "grid": { "layout": "2x2", "cardPos": "x6-49/51-94, y32-55", "fill": "DARK #13141B / LIGHT frosted white / amber-tint #140E07 in gold reels", "perCard": "small accent icon top-left + numbered mono kicker (01 · INTERACTIVE) + bold title ~2.8% + grey one-line desc", "topBorder": "optional accent wipe L->R" }
+      "kicker": {
+        "text": "ONE SKILL \u00b7 FOUR DELIVERABLES",
+        "font": "JetBrains Mono",
+        "dot": "accent",
+        "pos": {
+          "x": 6,
+          "y": 16,
+          "align": "left"
+        }
+      },
+      "headline": {
+        "text": "Type once. Ship anything. (accent on payoff)",
+        "font": "Inter Black",
+        "fontSizePct": "6.5",
+        "align": "left",
+        "pos": {
+          "x": 6,
+          "y": 20
+        }
+      },
+      "grid": {
+        "layout": "2x2",
+        "cardPos": "x6-49/51-94, y32-55",
+        "fill": "DARK #13141B / LIGHT frosted white / amber-tint #140E07 in gold reels",
+        "perCard": "small accent icon top-left + numbered mono kicker (01 \u00b7 INTERACTIVE) + bold title ~2.8% + grey one-line desc",
+        "topBorder": "optional accent wipe L->R"
+      }
     },
     "priority": 6
   },
@@ -96,12 +296,38 @@
     "sourceEndSec": 86.0,
     "transitionVerb": "Headline builds ~12f; two solid placeholder squares slide up from below ~10f, then cross-fade their contents in (left->color grid/GUI card, right->terminal text) over ~12f; circular accent VS badge pops scale 0->1 + slight rotate at ~f10; mono labels type under each ~6f.",
     "buildSpec": {
-      "kicker": { "text": "UNDER THE HOOD / NN — THE MECHANISM / THE HONEST TAKE", "font": "JetBrains Mono", "dot": "accent" },
-      "headline": { "text": "Replace it fully? Probably not. (accent or de-emphasis on 2nd clause)", "font": "Inter Black", "fontSizePct": "6.5-8" },
-      "leftBlock": { "type": "light/grid/GUI card", "label": "IMAGES / BRAINS / CLAUDE DESIGN · GUI", "content": "color-tile grid or cream GUI mock" },
-      "rightBlock": { "type": "dark terminal/text card", "label": "TEXT / GUARDRAILS / HUASHU · TERMINAL", "content": "mono log lines, [00:14] timestamps, $ prompt" },
-      "vsBadge": { "optional": true, "type": "circular accent badge", "pos": { "x": 50, "y": 50 } },
-      "statOverlay": { "optional": true, "type": "99% indigo / 4% red counting" }
+      "kicker": {
+        "text": "UNDER THE HOOD / NN \u2014 THE MECHANISM / THE HONEST TAKE",
+        "font": "JetBrains Mono",
+        "dot": "accent"
+      },
+      "headline": {
+        "text": "Replace it fully? Probably not. (accent or de-emphasis on 2nd clause)",
+        "font": "Inter Black",
+        "fontSizePct": "6.5-8"
+      },
+      "leftBlock": {
+        "type": "light/grid/GUI card",
+        "label": "IMAGES / BRAINS / CLAUDE DESIGN \u00b7 GUI",
+        "content": "color-tile grid or cream GUI mock"
+      },
+      "rightBlock": {
+        "type": "dark terminal/text card",
+        "label": "TEXT / GUARDRAILS / HUASHU \u00b7 TERMINAL",
+        "content": "mono log lines, [00:14] timestamps, $ prompt"
+      },
+      "vsBadge": {
+        "optional": true,
+        "type": "circular accent badge",
+        "pos": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "statOverlay": {
+        "optional": true,
+        "type": "99% indigo / 4% red counting"
+      }
     },
     "priority": 7
   },
@@ -113,11 +339,43 @@
     "sourceEndSec": 9.5,
     "transitionVerb": "Spark icon scales 0->1 with spoke/ray bloom 8-10f; lockup wordmark scales 0.9->1 + fades as one block 8f, accent part/period dropping in ~4f later (or wiping L->R 8f); repo/credit card slides up from below +40px over 10f; orange glow pulse blooms behind ~14f.",
     "buildSpec": {
-      "kicker": { "text": "★ NEW · OPEN SOURCE / INTRODUCING", "font": "JetBrains Mono", "dot": "accent", "pos": { "x": 6, "y": 17, "align": "left" } },
-      "sparkIcon": { "type": "Anthropic burst glyph (radiating spokes) OR rounded-square app tile (white asterisk on accent fill)", "color": "accent #DE7854/#FC7E48", "sizePct": "9-16", "orbitRing": "optional", "idleBob": true },
-      "lockupWordmark": { "text": "HUASHU DESIGN. / Reel Stack / Heretic.", "font": "Inter Black", "fontSizePct": "14-22", "accentPart": "one word or period recolored accent" },
-      "subLabel": { "text": "A CLAUDE CODE SKILL · DEVINI LABS", "font": "JetBrains Mono", "case": "uppercase", "color": "grey" },
-      "repoCard": { "type": "dark/frosted credit card bottom", "content": "GitHub mark + owner/repo mono + tag chips (● JUST DROPPED, Personal use license)", "pos": { "x": 50, "y": 78 } }
+      "kicker": {
+        "text": "\u2605 NEW \u00b7 OPEN SOURCE / INTRODUCING",
+        "font": "JetBrains Mono",
+        "dot": "accent",
+        "pos": {
+          "x": 6,
+          "y": 17,
+          "align": "left"
+        }
+      },
+      "sparkIcon": {
+        "type": "Anthropic burst glyph (radiating spokes) OR rounded-square app tile (white asterisk on accent fill)",
+        "color": "accent #DE7854/#FC7E48",
+        "sizePct": "9-16",
+        "orbitRing": "optional",
+        "idleBob": true
+      },
+      "lockupWordmark": {
+        "text": "HUASHU DESIGN. / Reel Stack / Heretic.",
+        "font": "Inter Black",
+        "fontSizePct": "14-22",
+        "accentPart": "one word or period recolored accent"
+      },
+      "subLabel": {
+        "text": "A CLAUDE CODE SKILL \u00b7 DEVINI LABS",
+        "font": "JetBrains Mono",
+        "case": "uppercase",
+        "color": "grey"
+      },
+      "repoCard": {
+        "type": "dark/frosted credit card bottom",
+        "content": "GitHub mark + owner/repo mono + tag chips (\u25cf JUST DROPPED, Personal use license)",
+        "pos": {
+          "x": 50,
+          "y": 78
+        }
+      }
     },
     "priority": 8
   }
