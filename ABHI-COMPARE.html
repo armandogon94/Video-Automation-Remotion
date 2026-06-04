@@ -1,39 +1,64 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>abhishek.devini — source vs our replica</title>
+<title>abhishek.devini — source vs replica (23 templates)</title>
 <style>
-  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--ok:#3ddc84;--line:#222836;--orange:#FD9B00}
+  :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--line:#222836}
   *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,Inter,sans-serif;padding:30px 40px}
   h1{font-size:30px;margin:0 0 4px}.sub{color:var(--muted);max-width:1040px;margin:0 0 8px}
-  .legend{color:var(--muted);font-size:13px;margin:6px 0 22px}.legend b.s{color:var(--gold)}.legend b.r{color:var(--cyan)}
-  .row{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:22px}
-  .row h2{margin:0 0 2px;font-size:19px}.row .meta{color:var(--muted);font-size:13px;margin-bottom:12px}
-  .pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  .cell{position:relative}.cell .tag{position:absolute;top:8px;left:8px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.08em;padding:3px 9px;border-radius:6px}
-  .tag.s{background:rgba(212,175,55,.9);color:#1a1206}.tag.r{background:rgba(91,192,232,.9);color:#04222e}
+  .filter{margin:10px 0 20px}.filter button{background:#141821;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin-right:8px;cursor:pointer;font-size:13px}
+  .filter button.on{border-color:var(--cyan);color:var(--cyan)}
+  .row{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:18px}
+  .row h2{margin:0 0 2px;font-size:18px}.row .meta{color:var(--muted);font-size:12.5px;margin-bottom:10px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .cell{position:relative}.cell .tag{position:absolute;top:7px;left:7px;z-index:2;font-size:10px;font-weight:800;letter-spacing:.07em;padding:2px 8px;border-radius:6px}
+  .tag.s{background:rgba(212,175,55,.92);color:#1a1206}.tag.r{background:rgba(91,192,232,.92);color:#04222e}
   video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#000;display:block;border:1px solid var(--line)}
-  code{background:#1a1f2a;padding:1px 6px;border-radius:5px;font-size:12px}
+  .badge{display:inline-block;font-size:11px;background:#1a1f2a;color:var(--gold);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px}
 </style></head><body>
-  <h1>abhishek.devini — head-to-head: <b style="color:var(--gold)">SOURCE</b> vs <b style="color:var(--cyan)">OUR REPLICA</b></h1>
-  <p class="sub">8 templates rebuilt from a frame-by-frame analysis of 18 of his reels (palette, fonts, backgrounds, and frame-timed motion). Each row plays the original scene (left) next to our Remotion replica (right). Replicas use our own copy/brand, so judge the <b>style, layout, type, color, and motion</b> — not the words.</p>
-  <p class="legend"><b class="s">SOURCE</b> = his actual reel scene · <b class="r">REPLICA</b> = our <code>AbhiScene9x16</code> template. Both loop; click to scrub frame-by-frame.</p>
+  <h1>abhishek.devini — <b style="color:var(--gold)">SOURCE</b> vs <b style="color:var(--cyan)">OUR REPLICA</b> <span class="badge">23 templates · full vocabulary</span></h1>
+  <p class="sub">Every distinct template type across his 18 reels, rebuilt from a frame-by-frame analysis. Left = his actual scene, right = our Remotion replica. Replicas use our own copy/brand — judge the style/type/color/layout/motion. Click any video to scrub frame-by-frame.</p>
+  <div class="filter" id="filter"></div>
   <div id="rows"></div>
 <script>
-  const ROWS = [
-    ["AbhiTitleCard","title-card-two-tone","DXpZf2ziBYP 2.2–5.5s — mono pill kicker + giant two-tone Inter-black headline, accent word tint-sweeps in, radial glow behind."],
-    ["AbhiBigStat","big-stat-number","DXUhthziNCS 0–4.4s — giant count-up numeral (ease-out + overshoot), accent unit, two-tone subtitle, dot strip."],
-    ["AbhiTerminalCard","terminal-mockup-card","DXpZf2ziBYP 20–26s — two-tone headline + glass terminal card ($ npx skills add, orange progress, green ✓ success). [ref corrected]"],
-    ["AbhiFeatureGrid","feature-card-grid","DXpZf2ziBYP 15.5–19.5s — colored cards with REAL brand logos (Claude/Cursor/Codex/OpenClaw), no top highlight, bigger caption. [ref corrected]"],
-    ["AbhiFeatureRows","feature-rows-list","DXhkSFiD8dL 22–30s — headline slides in, rows cascade up one-by-one with accent icons."],
-    ["AbhiGridVsTerminal","grid-vs-terminal","DXpZf2ziBYP 72–86s — light GUI card vs dark terminal card, VS badge pops between, content cross-fades in."],
-    ["AbhiCtaComment","cta-comment-outro","DYukIE0PFac 50–53.8s — light mesh, 'Comment' + giant gradient word snap-in + blinking caret + input bar."],
-    ["AbhiBrandLockup","brand-lockup","DXpZf2ziBYP 5.5–9.5s — spark icon bloom + two-line wordmark (accent period) + repo/credit card slide-up."],
+  const CORE = [
+    ["AbhiTitleCard","title-card-two-tone","mono pill kicker + giant two-tone Inter-black headline, accent tint-sweep, radial glow."],
+    ["AbhiBigStat","big-stat-number","giant count-up numeral (ease-out+overshoot) + accent unit + dot-marker grid."],
+    ["AbhiTerminalCard","terminal-mockup-card","two-tone headline + glass terminal ($ npx skills, orange progress, green ✓)."],
+    ["AbhiFeatureGrid","feature-card-grid","colored cards + REAL brand logos (Claude/Cursor/Codex/OpenClaw), no top highlight."],
+    ["AbhiFeatureRows","feature-rows-list","headline + rows cascade up with thin recognizable line icons."],
+    ["AbhiGridVsTerminal","grid-vs-terminal","light GUI card vs dark terminal, VS badge pops, content cross-fades."],
+    ["AbhiCtaComment","cta-comment-outro","light mesh, 'Comment' + giant gradient word + blinking caret + navy/gold handle."],
+    ["AbhiBrandLockup","brand-lockup","spark bloom + two-line wordmark (accent line + period) + repo card."],
   ];
-  document.getElementById("rows").innerHTML = ROWS.map(([k,name,meta])=>`
-    <div class="row"><h2>${name}</h2><div class="meta">${meta}</div>
-      <div class="pair">
-        <div class="cell"><span class="tag s">SOURCE</span><video src="output/abhi/source-scenes/${k}.mp4" muted loop autoplay playsinline controls></video></div>
-        <div class="cell"><span class="tag r">REPLICA</span><video src="output/abhi/${k}.mp4" muted loop autoplay playsinline controls></video></div>
-      </div></div>`).join("");
-  addEventListener("DOMContentLoaded",()=>document.querySelectorAll("video").forEach(v=>v.play().catch(()=>{})));
+  const NEW = [
+    ["AbhiBrowserMockup","browser-mockup ★ his #1","macOS browser window framing a product UI, rises in, red strikethrough hook."],
+    ["AbhiKineticSubtitle","kinetic-subtitle","bottom caption builds word-by-word, keyword recolors to accent on landing."],
+    ["AbhiNodeGraph","node-graph","labeled nodes + edges drawing between them; network/flow diagram."],
+    ["AbhiBarChart","bar-chart","bars grow from baseline with value labels + axis + accent hero bar."],
+    ["AbhiPhoneMockup","phone-mockup","phone frame showing an app screen, floats, content reveals inside."],
+    ["AbhiComparisonTable","comparison-table","2-3 column comparison; rows reveal; ✓/✗ marks, accent header."],
+    ["AbhiChecklist","checklist-typeon","checklist reveals one line at a time with ✓ badges popping."],
+    ["AbhiTwoColumn","two-column-split","two labeled panels slide in from opposite sides."],
+    ["AbhiScrambleOpener","letter-scramble-opener","hero word letters scramble + resolve L→R into the final word."],
+    ["AbhiQuoteCard","quote-card","cream serif pull-quote card + attribution, builds line-by-line."],
+    ["AbhiTweetCard","tweet-card","tweet/X card (avatar, handle, body), staged reveal."],
+    ["AbhiWaveform","audio-waveform","animated audio waveform + transcript line."],
+    ["AbhiAppCard","app-card","app icon scale-pops + name + one-line desc + CTA chip."],
+    ["AbhiLineChart","line-chart","line series draws L→R + accent line + end dots + axis."],
+    ["AbhiCodeDiff","code-diff","code diff panel (red removed / green added) reveals top-down."],
+  ];
+  const ALL = [...CORE.map(r=>["core",...r]), ...NEW.map(r=>["new",...r])];
+  function render(filter){
+    document.getElementById("rows").innerHTML = ALL.filter(r=>filter==="all"||r[0]===filter).map(([grp,k,name,meta])=>`
+      <div class="row"><h2>${name}</h2><div class="meta">${k} — ${meta}</div>
+        <div class="pair">
+          <div class="cell"><span class="tag s">SOURCE</span><video src="output/abhi/source-scenes/${k}.mp4" muted loop autoplay playsinline controls></video></div>
+          <div class="cell"><span class="tag r">REPLICA</span><video src="output/abhi/${k}.mp4" muted loop autoplay playsinline controls></video></div>
+        </div></div>`).join("");
+    document.querySelectorAll("video").forEach(v=>v.play().catch(()=>{}));
+  }
+  const F=[["all","All 23"],["core","Core 8"],["new","New 15"]];
+  document.getElementById("filter").innerHTML=F.map(([k,l],i)=>`<button data-f="${k}" class="${i==0?'on':''}">${l}</button>`).join("");
+  document.querySelectorAll("#filter button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#filter button").forEach(x=>x.classList.remove("on"));b.classList.add("on");render(b.dataset.f);});
+  render("all");
 </script></body></html>
