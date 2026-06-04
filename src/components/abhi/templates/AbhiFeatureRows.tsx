@@ -85,8 +85,15 @@ function hexA(hex: string, a: number): string {
   return `rgba(${r},${g},${b},${a})`;
 }
 
-const Icon: React.FC<{ icon: IconKey; color: string; size: number }> = ({ icon, color, size }) => {
-  const sw = Math.max(2, size * 0.085);
+const Icon: React.FC<{ icon: IconKey; color: string; size: number; strokePx: number }> = ({
+  icon,
+  color,
+  size,
+  strokePx,
+}) => {
+  // Thin clean line-icon look like the source: convert a target rendered px
+  // stroke into the 24-unit viewBox (svg scales viewBox 24 → `size` px).
+  const sw = (strokePx * 24) / size;
   const common = {
     width: size,
     height: size,
@@ -99,38 +106,47 @@ const Icon: React.FC<{ icon: IconKey; color: string; size: number }> = ({ icon, 
   };
   switch (icon) {
     case "code":
+      // Two chevrons spread apart: < >
       return (
         <svg {...common}>
-          <path d="M8.5 8 4.5 12l4 4M15.5 8l4 4-4 4" />
+          <path d="M9 8 4 12l5 4M15 8l5 4-5 4" />
         </svg>
       );
     case "globe":
+      // Circle + equator + meridian + two curved longitude arcs.
       return (
         <svg {...common}>
-          <circle cx="12" cy="12" r="8.2" />
-          <path d="M3.8 12h16.4M12 3.8c2.4 2.2 2.4 14.2 0 16.4M12 3.8c-2.4 2.2-2.4 14.2 0 16.4" />
+          <circle cx="12" cy="12" r="8.4" />
+          <path d="M3.6 12h16.8" />
+          <path d="M12 3.6v16.8" />
+          <path d="M12 3.6c-3.1 2.4-3.1 14 0 16.8" />
+          <path d="M12 3.6c3.1 2.4 3.1 14 0 16.8" />
         </svg>
       );
     case "chart":
+      // L-shaped axis + 3 distinct vertical bars rising left→right.
       return (
         <svg {...common}>
-          <path d="M5 19V5" />
-          <path d="M5 19h14" />
-          <path d="M8.5 19v-5M12 19v-9M15.5 19v-6.5M19 19V8" />
+          <path d="M5 4v15.5h15" />
+          <rect x="8" y="13" width="2.4" height="6.5" rx="0.5" />
+          <rect x="12.3" y="9.5" width="2.4" height="10" rx="0.5" />
+          <rect x="16.6" y="6" width="2.4" height="13.5" rx="0.5" />
         </svg>
       );
     case "doc":
+      // Page with folded top-right corner + 2 text lines.
       return (
         <svg {...common}>
-          <path d="M7 3.5h6.5L18 8v12.5H7z" />
-          <path d="M13.5 3.5V8H18" />
-          <path d="M9.6 12.5h6.2M9.6 15.5h6.2" />
+          <path d="M7 3.5h7L18 7.5v13H7z" />
+          <path d="M14 3.5V7.5h4" />
+          <path d="M9.6 13h6.8M9.6 16h4.8" />
         </svg>
       );
     case "bolt":
+      // Open lightning-bolt outline.
       return (
         <svg {...common}>
-          <path d="M13 3 5 13.5h6L11 21l8-10.5h-6z" />
+          <path d="M13 3 5.5 13.5H11L11 21l7.5-10.5H13z" />
         </svg>
       );
     case "check":
@@ -142,7 +158,7 @@ const Icon: React.FC<{ icon: IconKey; color: string; size: number }> = ({ icon, 
     case "search":
       return (
         <svg {...common}>
-          <circle cx="10.5" cy="10.5" r="6.2" />
+          <circle cx="10.5" cy="10.5" r="6.4" />
           <path d="M15.3 15.3 20 20" />
         </svg>
       );
@@ -218,6 +234,8 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
 
   const iconSquare = rowH * 0.6;
   const iconInner = iconSquare * 0.56;
+  // Thin, recognizable line icons (round caps/joins) — ~2.4px rendered @ 1080w.
+  const iconStrokePx = Math.max(2, PX(0.22));
   const titleSize = Math.min(rowH * 0.31, PX(4.4));
   const captionSize = titleSize * 0.5;
 
@@ -389,6 +407,7 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
                 icon={row.valence === "good" ? "check" : row.icon}
                 color={accentForValence}
                 size={iconInner}
+                strokePx={iconStrokePx}
               />
             </div>
 

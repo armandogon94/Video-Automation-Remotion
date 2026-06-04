@@ -15,7 +15,7 @@
  * Choreography (transitionVerb):
  *   - Spark/app icon scales 0→1 with a spoke/ray bloom over 8–10f (+ idle bob).
  *   - Lockup wordmark scales 0.9→1 + fades as one block over 8f; the accent line
- *     (or period) drops in ~4f later and tint-sweeps L→R over ~8f.
+ *     (line two, solid accent incl. its terminal period) drops in ~4f later.
  *   - Repo/credit card slides up from below +40px over 10f.
  *   - An accent glow pulse blooms behind ~14f (rendered by the bg; we add a faint
  *     local bloom too for self-containment).
@@ -148,7 +148,8 @@ export const AbhiBrandLockup: React.FC<Partial<AbhiBrandLockupProps>> = (props) 
   });
   const l1Y = interpolate(l1Spring, [0, 1], [18, 0]);
 
-  // Line two (accent): drops in ~4f later, tint-sweeps white→accent L→R over ~8f.
+  // Line two (accent): drops in ~4f later as a solid accent block (matches source —
+  // "DESIGN." is fully orange incl. its terminal period from the moment it appears).
   const L2_START = L1_START + 4;
   const l2Spring = spring({
     frame: frame - L2_START,
@@ -162,12 +163,6 @@ export const AbhiBrandLockup: React.FC<Partial<AbhiBrandLockupProps>> = (props) 
     extrapolateRight: "clamp",
   });
   const l2Y = interpolate(l2Spring, [0, 1], [18, 0]);
-  // L→R tint sweep: fraction of glyph width already recolored to accent.
-  const tintSweep = interpolate(frame, [L2_START + 2, L2_START + 12], [0, 100], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.cubic),
-  });
 
   // Sub-label fades up under the wordmark ~4f after line two.
   const SUB_START = L2_START + 6;
@@ -213,7 +208,12 @@ export const AbhiBrandLockup: React.FC<Partial<AbhiBrandLockupProps>> = (props) 
   const bloomBreathe = 1 + 0.04 * Math.sin((frame / (fps * 1.6)) * Math.PI * 2);
 
   // ── sizes (spec %s of 720 → px×1.5) ──────────────────────────────────────────
-  const headlinePx = PX(15.5); // ≈ 14–22% cap-height → render fontSize ~16% → ~250px
+  const headlinePxRaw = PX(15.5); // ≈ 14–22% cap-height → render fontSize ~16% → ~250px
+  // Auto-fit: shrink to keep the LONGEST wordmark line inside ~92% of frame width
+  // (Inter-Black avg glyph advance ≈ 0.60·fontSize). Short words (HUASHU/DESIGN.)
+  // stay big; long ones (INTELIGENCIA) shrink to fit instead of clipping.
+  const longestChars = Math.max(p.lineOne.length, p.lineTwo.length, 1);
+  const headlinePx = Math.min(headlinePxRaw, (1080 * 0.92) / (longestChars * 0.6));
   const kickerPx = PX(2.0); // ≈ 14px@720 → 21px
   const subPx = PX(1.9);
 
@@ -356,7 +356,11 @@ export const AbhiBrandLockup: React.FC<Partial<AbhiBrandLockupProps>> = (props) 
         >
           {p.lineOne}
         </div>
-        {/* line two — accent, tint-sweeps white→accent L→R */}
+        {/* line two — solid accent (incl. terminal period), always readable.
+            NOTE: previously this used a background-clip:text gradient "tint sweep"
+            which Chromium (Remotion's renderer) rendered as an opaque accent
+            RECTANGLE over the glyphs, hiding line two. Solid accent text matches
+            the source ("DESIGN." is fully orange) and removes that failure mode. */}
         <div
           style={{
             fontFamily: FONT_STACKS.sans,
@@ -368,13 +372,7 @@ export const AbhiBrandLockup: React.FC<Partial<AbhiBrandLockupProps>> = (props) 
             transform: `translateY(${l2Y}px) scale(${l2Scale})`,
             transformOrigin: "left top",
             whiteSpace: "pre",
-            // L→R sweep: accent fills from the left edge to `tintSweep%`,
-            // remaining glyphs stay in primary ink until the sweep passes.
-            background: `linear-gradient(90deg, ${accent} ${tintSweep}%, ${ink} ${tintSweep}%)`,
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
+            color: accent,
           }}
         >
           {p.lineTwo}

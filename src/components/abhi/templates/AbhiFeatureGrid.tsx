@@ -7,8 +7,10 @@
  *
  * Choreography (transitionVerb): headline settles first; the center capsule pops; the
  * four cards fade+rise in Z-order stagger (TL→TR→BL→BR), each scale 0.94→1 over ~6f,
- * ~5f apart; each card's accent top-border + icon wipe/pop in 2–3f after it lands; a
- * bottom mono caption fades up last. Animates from frame 0, then HOLDS.
+ * ~5f apart. Each card carries its OWN color tint + a real inline-SVG brand logo
+ * (Anthropic / OpenAI / Cursor / smiley). No accent top-border strip — the source
+ * cards have a flat colored border only. A bottom mono caption fades up last.
+ * Animates from frame 0, then HOLDS.
  *
  * Renders TRANSPARENT over the shared AbhiBackground (mounted by the host). Only the
  * local card/pill surfaces are opaque. Pure inline styles, self-contained.
@@ -27,14 +29,24 @@ import {
 import { z } from "zod";
 import { FONT_STACKS } from "../../../brand";
 
+/** Which real brand logo to render in the card (inline SVG). */
+const logoKindSchema = z.enum([
+  "anthropic",
+  "openai",
+  "cursor",
+  "smiley",
+  "generic",
+]);
+type LogoKind = z.infer<typeof logoKindSchema>;
+
 const cardSchema = z.object({
   index: z.string().default(""),
   title: z.string().default(""),
   desc: z.string().default(""),
-  /** Mono glyph drawn in the small accent icon square (top-left of the card). */
-  glyph: z.string().default(""),
-  /** When true the card gets the accent-tint fill + brighter accent border. */
-  accentTint: z.boolean().default(false),
+  /** Real brand logo drawn (inline SVG) at the card's leading edge. */
+  logo: logoKindSchema.default("generic"),
+  /** Per-card accent — tints the card fill, border and logo individually. */
+  cardColor: z.string().default("#FD9B00"),
 });
 
 export const abhiFeatureGridSchema = z.object({
@@ -48,16 +60,17 @@ export const abhiFeatureGridSchema = z.object({
   capsuleChip: z.string().default("SKILL"),
   /** Bottom mono caption that fades in last. Empty hides it. */
   footnote: z.string().default("+ OPENCLAW · HERMES · ANY SKILLS-COMPATIBLE AGENT"),
-  /** Exactly four cards, in TL, TR, BL, BR reading order. */
+  /** Exactly four cards, in TL, TR, BL, BR reading order. Each card carries its
+   *  OWN color + real brand logo (matches the source's multi-color logo grid). */
   cards: z
     .array(cardSchema)
     .default([
-      { index: "01", title: "Claude Code", desc: "Skills load natively", glyph: "≋", accentTint: false },
-      { index: "02", title: "Cursor", desc: "Drop into the agent", glyph: "▸", accentTint: false },
-      { index: "03", title: "Codex", desc: "Works out of the box", glyph: "◎", accentTint: false },
-      { index: "04", title: "OpenClaw", desc: "Same skill, any host", glyph: "☺", accentTint: true },
+      { index: "01", title: "Claude Code", desc: "Skills load natively", logo: "anthropic", cardColor: "#FD9B00" },
+      { index: "02", title: "Cursor", desc: "Drop into the agent", logo: "cursor", cardColor: "#AEB4C2" },
+      { index: "03", title: "Codex", desc: "Works out of the box", logo: "openai", cardColor: "#00A080" },
+      { index: "04", title: "OpenClaw", desc: "Same skill, any host", logo: "smiley", cardColor: "#E8A22B" },
     ]),
-  /** Single accent color (default Anthropic orange). */
+  /** Accent color used by the kicker dot + center capsule (not the cards). */
   accentColor: z.string().default("#FD9B00"),
   /** DARK vs LIGHT styling of the foreground surfaces (must match the bg mode). */
   mode: z.enum(["dark", "light"]).default("dark"),
@@ -86,6 +99,73 @@ function parseTwoTone(s: string): { text: string; accent: boolean }[] {
   if (last < s.length) out.push({ text: s.slice(last), accent: false });
   return out;
 }
+
+/**
+ * Real brand marks as inline SVG, single-color (currentColor) so each card can
+ * tint its own logo. Paths are simplified but recognizable reproductions:
+ *  - anthropic — the Anthropic "burst" of three diagonal slashes (Claude Code).
+ *  - openai    — the OpenAI blossom / hexafoil knot (Codex).
+ *  - cursor    — the Cursor caret/triangle.
+ *  - smiley    — the OpenClaw smiley disc.
+ *  - generic   — a neutral rounded-square placeholder.
+ */
+const BrandLogo: React.FC<{ kind: LogoKind; size: number; color: string }> = ({
+  kind,
+  size,
+  color,
+}) => {
+  const common = {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    style: { flex: "none" as const, display: "block" },
+    "aria-hidden": true,
+  };
+  if (kind === "anthropic") {
+    // Three forward slashes splaying out — the Anthropic mark.
+    return (
+      <svg {...common} fill="none" stroke={color} strokeWidth={2.4} strokeLinecap="round">
+        <line x1="8.5" y1="20" x2="13" y2="4" />
+        <line x1="13" y1="20" x2="17.5" y2="4" />
+        <line x1="4" y1="20" x2="8.5" y2="4" />
+      </svg>
+    );
+  }
+  if (kind === "openai") {
+    // OpenAI hexafoil / blossom knot.
+    return (
+      <svg {...common} fill="none" stroke={color} strokeWidth={1.7} strokeLinejoin="round" strokeLinecap="round">
+        <path d="M12 3.2c2 0 3.6 1.6 3.6 3.6 1.7-1 3.9-.4 4.9 1.3s.4 3.9-1.3 4.9c1.7 1 2.3 3.2 1.3 4.9s-3.2 2.3-4.9 1.3c0 2-1.6 3.6-3.6 3.6s-3.6-1.6-3.6-3.6c-1.7 1-3.9.4-4.9-1.3s-.4-3.9 1.3-4.9c-1.7-1-2.3-3.2-1.3-4.9s3.2-2.3 4.9-1.3C8.4 4.8 10 3.2 12 3.2Z" />
+        <path d="M12 8.4 15 10v4l-3 1.6L9 14v-4Z" />
+      </svg>
+    );
+  }
+  if (kind === "cursor") {
+    // Pointer caret.
+    return (
+      <svg {...common} fill={color} stroke="none">
+        <path d="M6 4l11.5 6.8-5 .9-2.4 4.6L6 4Z" />
+      </svg>
+    );
+  }
+  if (kind === "smiley") {
+    // Filled disc with a smile + eyes (OpenClaw).
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="9.2" fill={color} />
+        <circle cx="9" cy="10" r="1.3" fill="#1A1208" />
+        <circle cx="15" cy="10" r="1.3" fill="#1A1208" />
+        <path d="M8 13.6c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4" fill="none" stroke="#1A1208" strokeWidth={1.6} strokeLinecap="round" />
+      </svg>
+    );
+  }
+  // generic — rounded square outline.
+  return (
+    <svg {...common} fill="none" stroke={color} strokeWidth={2}>
+      <rect x="4.5" y="4.5" width="15" height="15" rx="4" />
+    </svg>
+  );
+};
 
 export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) => {
   const p = abhiFeatureGridSchema.parse(props);
@@ -137,13 +217,7 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
-    // Accent top-border wipes L→R 2–3f after the card lands.
-    const borderWipe = interpolate(local, [3, 12], [0, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.out(Easing.cubic),
-    });
-    return { scale, ty, opacity, borderWipe };
+    return { scale, ty, opacity };
   };
 
   // ---- Bottom footnote: fades up last ----
@@ -153,9 +227,8 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
     easing: Easing.out(Easing.cubic),
   });
 
-  // Card surface tokens (per STYLE TOKENS).
+  // Card surface tokens (per STYLE TOKENS). Per-card color tint is applied below.
   const cardBaseFill = isDark ? "#13141B" : "rgba(255,255,255,0.86)";
-  const cardBaseBorder = isDark ? hexA("#FFFFFF", 0.07) : hexA("#000000", 0.08);
   const cardTopEdge = isDark ? hexA("#FFFFFF", 0.06) : hexA("#FFFFFF", 0.6);
 
   // Grid geometry (% of frame). Two columns, two rows. From source measurements.
@@ -316,18 +389,17 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
         </div>
       ) : null}
 
-      {/* ---- 2×2 card grid ---- */}
+      {/* ---- 2×2 card grid (each card in its OWN color, with a real logo) ---- */}
       {p.cards.slice(0, 4).map((card, i) => {
         const pos = positions[i];
         const a = cardAnim(i);
-        const fill = card.accentTint
-          ? isDark
-            ? "linear-gradient(135deg, #271C13 0%, #1C1510 100%)"
-            : hexA(accent, 0.1)
-          : cardBaseFill;
-        const border = card.accentTint
-          ? hexA(accent, 0.45)
-          : cardBaseBorder;
+        const cc = card.cardColor;
+        // Per-card tint: a faint colored wash over the base surface + a colored
+        // border. Matches the source's red/cool/teal/amber card palette.
+        const fill = isDark
+          ? `linear-gradient(135deg, ${hexA(cc, 0.14)} 0%, ${hexA(cc, 0.05)} 60%, ${cardBaseFill} 100%)`
+          : `linear-gradient(135deg, ${hexA(cc, 0.12)} 0%, ${hexA("#FFFFFF", 0.86)} 80%)`;
+        const border = hexA(cc, isDark ? 0.42 : 0.34);
         return (
           <div
             key={i}
@@ -347,44 +419,13 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
                 : `0 ${PX(8)}px ${PX(20)}px rgba(20,16,30,0.12), inset 0 1px 0 ${cardTopEdge}`,
               display: "flex",
               alignItems: "center",
-              gap: PX(13),
+              gap: PX(14),
               padding: `0 ${PX(18)}px`,
               overflow: "hidden",
             }}
           >
-            {/* accent top-border wipe L→R */}
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: PX(2.5),
-                width: `${a.borderWipe * 100}%`,
-                background: `linear-gradient(90deg, ${accent} 0%, ${hexA(accent, 0)} 100%)`,
-                borderTopLeftRadius: PX(14),
-              }}
-            />
-            {/* small accent icon square */}
-            <div
-              style={{
-                width: PX(34),
-                height: PX(34),
-                flex: "none",
-                borderRadius: PX(9),
-                background: hexA(accent, isDark ? 0.14 : 0.12),
-                border: `1px solid ${hexA(accent, 0.4)}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: accent,
-                fontFamily: FONT_STACKS.mono,
-                fontWeight: 700,
-                fontSize: PX(18),
-                lineHeight: 1,
-              }}
-            >
-              {card.glyph || card.index}
-            </div>
+            {/* real brand logo, tinted to the card's color (no icon box) */}
+            <BrandLogo kind={card.logo} size={PX(28)} color={cc} />
             <div style={{ display: "flex", flexDirection: "column", gap: PX(2), minWidth: 0 }}>
               <span
                 style={{
@@ -433,12 +474,13 @@ export const AbhiFeatureGrid: React.FC<Partial<AbhiFeatureGridProps>> = (props) 
             opacity: footProg,
             transform: `translateY(${(1 - footProg) * PX(8)}px)`,
             fontFamily: FONT_STACKS.mono,
-            fontWeight: 500,
-            fontSize: PX(12),
-            letterSpacing: "0.14em",
+            fontWeight: 600,
+            fontSize: PX(19),
+            lineHeight: 1.35,
+            letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: isDark ? hexA("#FFFFFF", 0.32) : hexA("#000000", 0.36),
-            padding: "0 8%",
+            color: isDark ? hexA("#FFFFFF", 0.46) : hexA("#000000", 0.46),
+            padding: "0 6%",
           }}
         >
           <span style={{ color: isDark ? hexA("#FFFFFF", 0.22) : hexA("#000000", 0.26) }}>— </span>

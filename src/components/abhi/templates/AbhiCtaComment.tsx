@@ -62,6 +62,12 @@ export const abhiCtaCommentSchema = z.object({
   sendLabel: z.string().default("Post"),
 
   handle: z.string().default("@armandointeligencia"),
+  /** Brand gradient stops for the handle text fill (left -> right). His source
+   *  uses a holographic pill; we instead pour MY brand mix — navy -> gold ->
+   *  navy — into the handle glyphs via background-clip:text. */
+  handleFrom: z.string().default("#1B3A6E"),
+  handleMid: z.string().default("#D4AF37"),
+  handleTo: z.string().default("#1B3A6E"),
   /** Faint footer rule under the handle. Empty string hides it. */
   footer: z.string().default("FOLLOW FOR MORE"),
 });
@@ -420,14 +426,17 @@ export const AbhiCtaComment: React.FC<Partial<AbhiCtaCommentProps>> = (
             </div>
           ) : null}
 
-          {/* Handle pill */}
+          {/* Handle pill — navy->gold->navy brand gradient poured into the
+              glyphs via background-clip:text (polished grotesk-mono). The
+              Instagram glyph is tinted to the navy stop so the lockup reads as
+              one branded unit. */}
           <div
             style={{
               marginTop: 24 * M,
               display: "flex",
               alignItems: "center",
-              gap: 10 * M,
-              padding: `${10 * M}px ${20 * M}px`,
+              gap: 11 * M,
+              padding: `${11 * M}px ${24 * M}px`,
               borderRadius: 999,
               background: handleFill,
               border: pillBorder,
@@ -437,14 +446,19 @@ export const AbhiCtaComment: React.FC<Partial<AbhiCtaCommentProps>> = (
               transform: `translateY(${handlePill.translateY}px)`,
             }}
           >
-            <InstagramGlyph size={20 * M} color={inkKicker} />
+            <InstagramGlyph size={22 * M} color={p.handleFrom} />
             <span
               style={{
                 fontFamily: FONT_STACKS.mono,
-                fontWeight: 600,
-                fontSize: 22 * M,
-                letterSpacing: "0.01em",
-                color: inkHeadline,
+                fontWeight: 700,
+                fontSize: 24 * M,
+                letterSpacing: "-0.005em",
+                lineHeight: 1,
+                textAlign: "center",
+                backgroundImage: `linear-gradient(95deg, ${p.handleFrom} 0%, ${p.handleMid} 52%, ${p.handleTo} 100%)`,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
               }}
             >
               {p.handle}

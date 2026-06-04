@@ -1,0 +1,187 @@
+[
+  {
+    "type": "title-card-two-tone",
+    "count": 19,
+    "cleanestRef": { "shortcode": "DXpZf2ziBYP", "start": 2.2, "end": 5.5 },
+    "builtAs": "AbhiTitleCard",
+    "priority": 1,
+    "buildNotes": "Mono pill kicker (left x6% or centered x50%, in by f6) over a giant 1-3 line extra-bold grotesk headline with one clause recolored to the topic accent (terminal period often accent too). Headline rises word-group by word-group from +18px, white/near-black words first then the accent word tint-sweeps L->R over ~8f, ~6f stagger; radial accent glow blooms behind over 14f."
+  },
+  {
+    "type": "big-stat-number",
+    "count": 13,
+    "cleanestRef": { "shortcode": "DXUhthziNCS", "start": 0.0, "end": 4.4 },
+    "builtAs": "AbhiBigStat",
+    "priority": 1,
+    "buildNotes": "Giant numeral (cap-height 13-31%) with the unit suffix (%, x, +, $) recolored to accent and a soft accent glow halo; sub-label mono below + a dot-grid viz (rows of dim dots, one accent-lit) at the bottom. Number holds ~6f then counts up ease-out (0->98% over ~24f, fast->slow) scaling 0.9->1; suffix pops 6f; label + glow fade up 8f after the number lands."
+  },
+  {
+    "type": "terminal-mockup-card",
+    "count": 7,
+    "cleanestRef": { "shortcode": "DXpZf2ziBYP", "start": 20.0, "end": 26.0 },
+    "builtAs": "AbhiTerminalCard",
+    "priority": 1,
+    "buildNotes": "Dark rounded terminal card (#181A21) with 3 traffic-light dots + path crumb (~/projects · zsh); body: grey comment line, '$ command' ($ accent, cmd white), resolving line, an accent progress bar filling L->R over ~18f, then a green '✓ installed · 20 skills · 0 errors' line. Headline pops word-by-word; card scales 0.96->1 + fades up 10-12f; command types char-by-char with a blinking block caret."
+  },
+  {
+    "type": "feature-card-grid",
+    "count": 14,
+    "cleanestRef": { "shortcode": "DXpZf2ziBYP", "start": 9.5, "end": 20.0 },
+    "builtAs": "AbhiFeatureGrid",
+    "priority": 1,
+    "buildNotes": "2x2 (or 2x3) rounded cards, each brand-tinted with a REAL brand icon top-left + bold title (DXpZf2ziBYP: Claude Code orange / Cursor / Codex teal / OpenClaw amber, under a glowing 'huashu-design SKILL' chip). Two-tone headline settles, then cards fade+rise in Z-order stagger (TL->TR->BL->BR), each scale 0.94->1 over 6f ~5f apart; accent top-border or icon pops 2-3f after each card lands. NOTE: the brand-logo grid is here, NOT in DXUzK1fCLhF (Claude Dispatch, which has no such scene) — verified via ffmpeg at ~15-18s."
+  },
+  {
+    "type": "feature-rows-list",
+    "count": 7,
+    "cleanestRef": { "shortcode": "DXhkSFiD8dL", "start": 22.0, "end": 30.0 },
+    "builtAs": "AbhiFeatureRows",
+    "priority": 1,
+    "buildNotes": "Left-aligned two-tone headline ('Five jobs. One model.') over 3-5 stacked rounded rows, each: accent monoline icon in a small square + bold title + accent mono sub-caption. Headline slides left-in ~8f; rows cascade up bottom-edge ~6f each with ~5f stagger (3-card list lands in ~33f), scaling 0.96->1; accent icon/border/✓-badge pops 2-3f after its row (solution checks bloom green, problem rows tint red/orange)."
+  },
+  {
+    "type": "grid-vs-terminal",
+    "count": 7,
+    "cleanestRef": { "shortcode": "DXpZf2ziBYP", "start": 72.0, "end": 86.0 },
+    "builtAs": "AbhiGridVsTerminal",
+    "priority": 1,
+    "buildNotes": "Two side-by-side blocks: LEFT a light/GUI/grid card ('CLAUDE DESIGN · GUI' cream card, or a 3x3 color-tile grid labeled IMAGES) and RIGHT a dark terminal/text card (mono '$' log lines, labeled TEXT/TERMINAL), with a circular accent 'VS' badge centered between. Headline builds ~12f; two placeholder squares slide up ~10f then cross-fade contents in over ~12f; VS badge pops scale 0->1 + slight rotate at ~f10; mono labels type under each ~6f."
+  },
+  {
+    "type": "cta-comment-outro",
+    "count": 18,
+    "cleanestRef": { "shortcode": "DYukIE0PFac", "start": 50.0, "end": 53.84 },
+    "builtAs": "AbhiCtaComment",
+    "priority": 1,
+    "buildNotes": "Mono kicker ('● GET THE LINK') + 'Comment' label + GIANT quoted 'AI' (accent, or blue-purple gradient sweep L->R over ~8f) with a blinking caret + subtitle ('and I'll DM the GitHub repo.') + a glassy input/comment bar (avatar + typed 'A I |' + accent send button) + persistent handle pill '● @abhishek.devini'. 'AI' snaps scale 1.06->1 with glow bloom; bar slides up from +40px (8f), send button overshoots; subtitle + handle rise 4-6f later."
+  },
+  {
+    "type": "brand-lockup",
+    "count": 17,
+    "cleanestRef": { "shortcode": "DXpZf2ziBYP", "start": 5.5, "end": 9.5 },
+    "builtAs": "AbhiBrandLockup",
+    "priority": 1,
+    "buildNotes": "Spark/app icon (Anthropic burst glyph, radiating accent spokes — or a rounded-square app tile with white asterisk, often an orbiting ellipse ring + idle bob) over a GIANT wordmark lockup (cap-height 14-22%, e.g. 'HUASHU DESIGN.' / 'Reel Stack' / 'MYTHOS') with one part + the period recolored accent, mono sub-label, and a dark/frosted repo/credit card (GitHub mark + owner/repo + tag chips). Icon scales 0->1 with spoke bloom 8-10f; wordmark scales 0.9->1 as a block, accent part drops/wipes 4f later; repo card slides up +40px over 10f; glow pulse 14f."
+  },
+
+  {
+    "type": "browser-mockup",
+    "count": 25,
+    "cleanestRef": { "shortcode": "DXpZf2ziBYP", "start": 0.0, "end": 2.2 },
+    "builtAs": "NEW",
+    "priority": 1,
+    "buildNotes": "Most-used template (25 scenes). Rounded browser/window chassis with 3 traffic-light dots + url/path crumb, an inner screenshot/UI that cross-dissolves between states (product page, GitHub repo, dashboard, 3D-tilted screen-recording with chat pills, or full-bleed scroll-capture + webcam PiP). Chassis rises +24-40px + scales 0.95->1 over 10-12f; inner content cross-dissolves ~10-12f; status pills clip-reveal above; supports a red-laser strikethrough sweep for 'hook' scenes (DXpZf2ziBYP quota hook)."
+  },
+  {
+    "type": "node-graph",
+    "count": 7,
+    "cleanestRef": { "shortcode": "DY6pP0FP4Qa", "start": 60.0, "end": 68.0 },
+    "builtAs": "NEW",
+    "priority": 2,
+    "buildNotes": "Network/routing/constellation diagram: a central ringed accent node ('✳ 1 SESSION' / a switch hub / OBSIDIAN VAULT) with dots radiating outward on thin spokes or curved connector lines drawing from source cards down to the hub. Center node pulses; dots spray outward in waves ~6 dots/3f (or ~1 node/3f), connector edges draw ~1 edge/3f over ~12-14f. Highly reusable for 'how it works / routing / second-brain' explainer beats in AI reels."
+  },
+  {
+    "type": "comparison-table",
+    "count": 3,
+    "cleanestRef": { "shortcode": "DY6pP0FP4Qa", "start": 9.5, "end": 18.0 },
+    "builtAs": "NEW",
+    "priority": 2,
+    "buildNotes": "Dark/frosted data-table card with model columns (Opus 4.8 / GPT-5.5 / Gemini 3.1...) and benchmark rows; the hero column gets a warm vertical tint-wipe + its values bolded. Card scales/fades in 10f; the highlighted-column tint sweeps in over ~12f; rows reveal top->bottom ~3f/row. Near-essential for benchmark/'we win across the board' AI-model reels."
+  },
+  {
+    "type": "bar-chart",
+    "count": 4,
+    "cleanestRef": { "shortcode": "DY6pP0FP4Qa", "start": 40.0, "end": 46.0 },
+    "builtAs": "NEW",
+    "priority": 2,
+    "buildNotes": "Metric bars (vertical rising-bars or horizontal grouped bars) where the hero series is accent/white-glow and rivals are grey, with value labels counting up above + optional delta pills (+42% teal / -38% red / IDENTICAL amber). Bars grow from baseline staggered ~4f each (horizontal grow L->R ~14f); highlighted bar blooms a soft glow on land; delta pill pops 0.8->1 ~5f. Core for 'better/cheaper/faster' metric beats."
+  },
+  {
+    "type": "phone-mockup",
+    "count": 4,
+    "cleanestRef": { "shortcode": "DX4GVwQPyaD", "start": 46.0, "end": 52.0 },
+    "builtAs": "NEW",
+    "priority": 2,
+    "buildNotes": "Dark iPhone frame whose screen lists app/chat/notification rows (org roster, IG comment UI, dock with app icons) populating top-down ~3-4f/row. Phone rises +12-20px (or slides in from left -80px) + fades over 10-12f with a slight parallax tilt; on-screen rows populate after. Reusable for 'run it from your phone / DM proof / mobile demo' beats."
+  },
+  {
+    "type": "kinetic-subtitle",
+    "count": 8,
+    "cleanestRef": { "shortcode": "DXUzK1fCLhF", "start": 63.0, "end": 67.0 },
+    "builtAs": "NEW",
+    "priority": 2,
+    "buildNotes": "A word-by-word reveal beat (~1 word/6f, ≈5 w/s) with the final/keyword word recolored to accent on landing — either a bottom karaoke line layered under another template, or a standalone stacked-punch variant (SAFER. green / CHEAPER. orange / SMOOTHER. white, ~17f apart with scale-overshoot + glow). Lightweight connective-tissue template that appears inside most reels; build as a reusable text layer."
+  },
+  {
+    "type": "checklist-typeon",
+    "count": 3,
+    "cleanestRef": { "shortcode": "DXhkSFiD8dL", "start": 37.0, "end": 48.0 },
+    "builtAs": "NEW",
+    "priority": 2,
+    "buildNotes": "A numbered vertical stepper / checklist: nodes (01->04) connected by a vertical line, with progressive activation (grey ring -> accent-glow ring) in sequence, or rows with ✓/✗ check icons revealing one-by-one. Nodes drop top->bottom ~6f apart; connecting line draws downward ~16f; activation glow ramps ~8f each sequentially. Good for 'the loop / the only step / lint passes' process beats."
+  },
+  {
+    "type": "two-column-split",
+    "count": 3,
+    "cleanestRef": { "shortcode": "DXUzK1fCLhF", "start": 9.0, "end": 18.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "Two panels (phone+terminal, or video-card+badge, or anthropic-vs-openai split band) sliding in from opposite edges to meet center, often joined by a dashed accent connector curve with a dot traveling along it, or a central '=' / timeline scrubber. Panels slide ±40px over 9-10f; dashed curve draws L->R ~14f as the dot travels; supporting caption/timeline pops after. Distinct from grid-vs-terminal (no VS badge, more 'sync/flow' than 'compare')."
+  },
+  {
+    "type": "letter-scramble-opener",
+    "count": 2,
+    "cleanestRef": { "shortcode": "DYukIE0PFac", "start": 0.0, "end": 4.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "A hook-opener where each headline glyph rapid-cycles random letters (~1 swap/1-2f) and resolves L->R over ~60f (2s) into the real word ('Strip the CENSORSHIP.'), often with a central icon (padlock) holding during the scramble then fading as a sub-line types in. High-attention cold-open device; reusable as a one-off intro effect on any two-tone headline."
+  },
+  {
+    "type": "quote-card",
+    "count": 2,
+    "cleanestRef": { "shortcode": "DXhkSFiD8dL", "start": 30.0, "end": 37.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "Editorial pull-quote: large accent open-quote glyph '❝' + a centered serif (Playfair-style) quote with the keyword clause bold, plus attribution (name bold + role mono) with an accent left-border bar. Quote-mark scales 0.8->1 ~8f, quote lines fade up ~10f (line2 +6f), attribution slides in ~6f. Cream-card #E1D7C8 variant in DXUzK1fCLhF. Distinctive 'credibility' beat — the only place the serif font appears."
+  },
+  {
+    "type": "tweet-card",
+    "count": 2,
+    "cleanestRef": { "shortcode": "DY6pP0FP4Qa", "start": 46.0, "end": 52.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "A chat/message exchange: a user message bubble (right-aligned, plain) + a model reply card with an accent glow border and a header lockup ('✳ OPUS 4.8'), or two stacked ChatGPT/Claude 'RESPONSE' cards. Headline fades up 6f; user bubble slides up + fades 8f; reply card slides up beneath then its accent border-glow fades in ~6f. Reusable for 'the model pushes back / compare answers' demo beats."
+  },
+  {
+    "type": "audio-waveform",
+    "count": 2,
+    "cleanestRef": { "shortcode": "DYUcj5iPAxL", "start": 27.0, "end": 32.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "A wide glassy pill containing a row of rounded vertical bars (alternating accent/secondary color) that spring up sequentially L->R (each scaleY 0->1 ~2f) then idle-oscillate continuously, with a mono label ('VOICEOVER.WAV') and optional mic icon. Niche but clean for voiceover/transcribe/audio-pipeline beats."
+  },
+  {
+    "type": "app-card",
+    "count": 2,
+    "cleanestRef": { "shortcode": "DXwq6HYoogv", "start": 40.0, "end": 47.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "A centered gradient app-icon emblem (rounded-square with a gradient face/blob) inside concentric ring halos that pulse outward over ~12f, plus a notification/'done!' chip sliding up with a small bounce — or a 'design-system' tablet card with descending 'Aa' type specimens. Pops scale 0->1 ~8f, ring pulse 12f. Decorative 'product personality / it talks back' beat, lower reuse value."
+  },
+  {
+    "type": "line-chart",
+    "count": 1,
+    "cleanestRef": { "shortcode": "DXhkSFiD8dL", "start": 7.5, "end": 14.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "A dark browser/card with a multi-series line chart (each model a colored line) drawing on L->R over ~20f, plus a rotated 'STATE OF THE ART' badge that pops + slightly over-rotates (0.9->1.05->1, ~8f). Card fades+slides up ~10f. Only one instance, but a strong benchmark/'leads across the board' device that pairs with comparison-table; could fold into a shared chart component with bar-chart."
+  },
+  {
+    "type": "code-diff",
+    "count": 1,
+    "cleanestRef": { "shortcode": "DYUcj5iPAxL", "start": 37.0, "end": 41.0 },
+    "builtAs": "NEW",
+    "priority": 3,
+    "buildNotes": "A dark code-editor card (traffic lights + filename tab + REACT badge + line-number gutter) with syntax-highlighted code typing/revealing line-by-line ~4f/line (e.g. Remotion JSX: import Audio/Sequence, <Hook/><Reveal/><Proof/>). Card scales 0.96->1 + fades 10f. Single instance and overlaps terminal-mockup-card; lowest priority — likely a variant skin of the terminal component rather than its own template."
+  }
+]

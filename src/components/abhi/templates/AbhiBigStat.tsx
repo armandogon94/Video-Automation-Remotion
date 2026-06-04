@@ -64,9 +64,9 @@ export const abhiBigStatSchema = z.object({
 
   /** Dot-matrix progress strip with one accent dot (the signature "loading" motif). */
   showDotMatrix: z.boolean().default(true),
-  /** Columns × rows of the dot matrix. */
-  dotCols: z.number().int().min(4).max(40).default(22),
-  dotRows: z.number().int().min(1).max(8).default(3),
+  /** Columns × rows of the dot matrix. Source: 20 cols × 5 rows, square pitch. */
+  dotCols: z.number().int().min(4).max(40).default(20),
+  dotRows: z.number().int().min(1).max(8).default(5),
 
   /** Thin DARK-only corner brackets ⌐ ⌐ framing the number. Empty = auto (dark only). */
   cornerBrackets: z.union([z.boolean(), z.literal(AUTO)]).default(AUTO),
@@ -416,9 +416,9 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
               transform: `translateY(${dotMatrixY}px)`,
               marginTop: 40 * U,
               display: "grid",
-              gridTemplateColumns: `repeat(${p.dotCols}, ${7 * U}px)`,
-              gridAutoRows: `${7 * U}px`,
-              gap: `${10 * U}px ${10 * U}px`,
+              gridTemplateColumns: `repeat(${p.dotCols}, ${11 * U}px)`,
+              gridAutoRows: `${11 * U}px`,
+              gap: `${8 * U}px ${8 * U}px`,
               justifyContent: "center",
             }}
           >
@@ -427,18 +427,23 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
               // proportional to value/maxScale (clamped inside the grid).
               const col = i % p.dotCols;
               const row = Math.floor(i / p.dotCols);
-              const fillCol = Math.round(
-                ((value - p.statStart) / Math.max(1, p.statValue - p.statStart)) *
-                  (p.dotCols - 1),
+              // Source places the single lit dot near the START of the strip
+              // (middle row, ~2nd column), not at a value-proportional far point.
+              const fillFrac = interpolate(
+                value,
+                [p.statStart, p.statValue],
+                [0, 1],
+                { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
               );
+              const fillCol = Math.round(fillFrac * Math.min(p.dotCols - 1, 1));
               const isAccent =
                 row === Math.floor(p.dotRows / 2) && col === fillCol;
               return (
                 <span
                   key={i}
                   style={{
-                    width: 7 * U,
-                    height: 7 * U,
+                    width: 11 * U,
+                    height: 11 * U,
                     borderRadius: "50%",
                     background: isAccent
                       ? p.accentColor
@@ -446,7 +451,7 @@ export const AbhiBigStat: React.FC<Partial<AbhiBigStatProps>> = (props) => {
                         ? rgba("#FFFFFF", 0.12)
                         : rgba("#0C0C12", 0.14),
                     boxShadow: isAccent
-                      ? `0 0 ${12 * U}px ${rgba(p.accentColor, 0.7)}`
+                      ? `0 0 ${14 * U}px ${rgba(p.accentColor, 0.7)}`
                       : "none",
                   }}
                 />
