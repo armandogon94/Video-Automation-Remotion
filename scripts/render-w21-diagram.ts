@@ -20,7 +20,7 @@
 import path from "path";
 import fs from "fs";
 import { execa } from "execa";
-import { bundle } from "@remotion/bundler";
+import { bundleOnce as bundle } from "../src/autoedit/bundleOnce";
 import { renderMedia, selectComposition, ensureBrowser } from "@remotion/renderer";
 
 const SLUG = "2026-05-18-gemini-3-2-flash-leak";

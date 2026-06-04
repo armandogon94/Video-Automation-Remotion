@@ -424,3 +424,29 @@ labels, DarkSlateChassis deeper center-vignette (nate, shared by 21 comps), Tech
 `dark-changelog` numbered-counter mode, dedicated OpeningTitleCard9x16 (hormozi),
 SplitWebcam/CalloutOverlay `seamCaptionStyle:pill|naked` (mreflow vs midu).
 Creator source material (frames + ANALYSIS.md) STILL KEPT until user signs off.
+
+## 2026-06-03 — FIX: Remotion bundle() disk leak (~2.9 GB per render)
+
+GOTCHA (was leaking the disk): `@remotion/bundler`'s `bundle()` writes a ~2.5-3 GB
+`remotion-webpack-bundle-*` dir into $TMPDIR (here /tmp/claude-501, the macOS per-user
+tmp — SHARED across ALL Claude sessions/projects) and NEVER deletes it. Every render
+leaked one; across a heavy session they pile up and fill the disk (a sibling project
+once leaked 204 ≈ 370 GB → "System Data" balloons; a reboot wipes /tmp so it "fixes
+itself" then recurs). Reboot-transient, not permanent.
+
+FIX (root cause, never recurs):
+- `src/autoedit/bundleOnce.ts` — self-cleaning drop-in for `bundle()`. Registers the
+  returned bundle dir and `fs.rmSync`'s it on process `exit` AND on SIGINT/SIGTERM/SIGHUP
+  (more robust than try/finally — covers Ctrl-C). Same signature/return as `bundle()`.
+- All 33 callers (src/**, scripts/render-*.ts) converted with a ONE-LINE import swap:
+  `import { bundleOnce as bundle } from "<rel>/bundleOnce";` — call sites unchanged.
+  (renderFromPlan.ts + runTella16x9Demo.ts bundle twice; both registrations cleaned.)
+- `scripts/clean-remotion-bundles.sh` (npm run clean:bundles) — manual sweep for the
+  SIGKILL/crash case the exit-handler can't catch. PORTABLE (macOS bash 3.2, no mapfile).
+  REFUSES to delete while any Remotion render is alive (compositor/chrome-headless-shell/
+  our run*.ts) — critical because the tmpdir is shared, so a bundle may be ANOTHER
+  project's live render. After any killed render: `npm run clean:bundles`.
+VERIFIED: a real render now leaves 0 bundle dirs (was ~2.9 GB), tmpdir stays ~11 MB.
+NOTE: when checking ps for "active render", remember sibling project 17-Instagram-Slides
+renders into the SAME /tmp/claude-501 — never blanket `rm -rf /tmp/claude-*/remotion-*`
+without the running-process guard or you can break their live render.

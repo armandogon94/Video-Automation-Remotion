@@ -5,7 +5,7 @@
 import path from "path";
 import fs from "fs";
 import { execa } from "execa";
-import { bundle } from "@remotion/bundler";
+import { bundleOnce as bundle } from "../autoedit/bundleOnce";
 import { renderMedia, selectComposition, ensureBrowser } from "@remotion/renderer";
 import { exportMultiPlatform, normalizeAudio, extractThumbnail } from "../ffmpeg/commands.js";
 import { BRAND } from "../brand/index.js";

@@ -16,7 +16,8 @@
     "analyze:creator": "scripts/extract-keyframes.py",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint src/ --ext .ts,.tsx"
+    "lint": "eslint src/ --ext .ts,.tsx",
+    "clean:bundles": "bash scripts/clean-remotion-bundles.sh"
   },
   "keywords": [
     "video",

@@ -29,7 +29,7 @@
  * `editPlan.ts`. Overriding `durationInFrames` on the `selectComposition` result is
  * the same idiom the main pipeline uses (`src/pipeline/pipeline.ts`).
  */
-import { bundle } from "@remotion/bundler";
+import { bundleOnce as bundle } from "./bundleOnce";
 import {
   ensureBrowser,
   renderMedia,
