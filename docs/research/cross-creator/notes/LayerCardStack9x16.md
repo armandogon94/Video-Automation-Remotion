@@ -59,3 +59,29 @@ staggered fade-up. Accent hue left as our brand-driven warm-red by design.
 
 **Files edited:** src/compositions/LayerCardStack9x16.tsx (badge borderRadius 999 → 8).
 No shared-molecule changes.
+
+---
+
+## Re-verification pass (deep adversarial QA, diagram-ig cluster)
+
+Re-extracted 4 evenly-spaced frames from `output/cross-creator/LayerCardStack9x16.mp4`
+(dur 5.06s) and re-read Simon's canonical `DPT3n_PgEiU/frames/frame-00`. The prior
+badge-radius fix (`999 → 8`) has landed and reads correctly.
+
+**Fresh RGB sample (most-saturated pixel inside each badge, frame 4):** LAYER1 (199,47,42),
+LAYER2 (199,48,37), LAYER3 (196,50,37) — all three badges are the SAME warm-red/clay hue
+(tighter than the original note's estimate). Cards pure white (255,255,255); backdrop warm
+tint upper area (239,224,217) fading to cream paper at the bottom. Single-accent discipline is
+airtight.
+
+**Structure vs Simon frame-00:** 3 white rounded cards, ~85% width, soft shadow, even gaps;
+**squared** "LAYER N" chips (not pills) matching Simon's squared purple badges; bold near-black
+headline + muted body per card; glassmorphic tinted backdrop faked with layered radial
+gradients (Remotion still-render ignores backdrop-filter). All on-pattern.
+
+**Motion (4 frames):** card 1 → card 1+2 → all 3, staggered fade-up (scale 0.92→1, translateY
+24→0); badge scale-pops just after its card lands. Matches Simon's "cards fade-up then static".
+
+**Verdict: 8.5/10 — VALIDATED (prior IMPROVED edit confirmed, no new edit).** Accent hue stays
+our brand-driven warm-red by design (content-driven via subjectTool, never Simon's purple).
+Typecheck clean (no edits this pass).

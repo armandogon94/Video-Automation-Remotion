@@ -27,31 +27,52 @@ const PROPS_DIR = path.join(PROJECT_ROOT, "docs/research/cross-creator/props");
 /** The signature composition per creator (each comp owned/edited by exactly one
  * compare-agent to avoid races). compId → primary creator it is compared against. */
 const TARGETS: { comp: string; creator: string }[] = [
-  // adamrosler cluster (dark procedural — closest match in the set)
+  // ── adamrosler cluster (dark procedural — closest match in the set) ──
   { comp: "RankedTierList9x16", creator: "adamrosler" },
   { comp: "TerminalBlock9x16", creator: "adamrosler" },
   { comp: "ForceGraph9x16", creator: "adamrosler" },
   { comp: "AnimatedCounter9x16", creator: "adamrosler" },
-  // natebjones 16:9
+  { comp: "BigNumberDuel9x16", creator: "adamrosler" },
+  { comp: "DecisionTree9x16", creator: "adamrosler" },
+  { comp: "EditorBlock9x16", creator: "adamrosler" },
+  { comp: "IllustratedConcept9x16", creator: "adamrosler" },
+  { comp: "KineticTypoCard9x16", creator: "adamrosler" },
+  { comp: "LockedFeatureRow9x16", creator: "adamrosler" },
+  { comp: "NeuralNetwork9x16", creator: "adamrosler" },
+  { comp: "PipelineFlow9x16", creator: "adamrosler" },
+  { comp: "TerminalCommand9x16", creator: "adamrosler" },
+  { comp: "TitledDossierCard9x16", creator: "adamrosler" },
+  { comp: "TokenStream9x16", creator: "adamrosler" },
+  // ── natebjones 16:9 deterministic-procedural ──
   { comp: "EquationCardChain16x9", creator: "natebjones" },
   { comp: "BeforeAfterText16x9", creator: "natebjones" },
   { comp: "TopHeroBottomTrioCards16x9", creator: "natebjones" },
   { comp: "ThreeStageRisingBars16x9", creator: "natebjones" },
-  // stat / number / chart lane
+  { comp: "ThreeRowLabeledCardStack16x9", creator: "natebjones" },
+  { comp: "PipelineFlow16x9", creator: "natebjones" },
+  { comp: "KaraokeWithBlueChipPullout9x16", creator: "natebjones" },
+  // ── stat / number / chart lane ──
   { comp: "BigNumberHero9x16", creator: "motiondarwin" },
   { comp: "BarChartList9x16", creator: "sahilbloom" },
   { comp: "BenchmarkBars9x16", creator: "sahilbloom" },
+  { comp: "BigNumberHorizontalBars16x9", creator: "sahilbloom" },
+  { comp: "TitleCardKineticTwoLine16x9", creator: "sahilbloom" },
+  { comp: "KineticEssay9x16", creator: "sahilbloom" },
+  { comp: "BrollListicle9x16", creator: "sahilbloom" },
+  { comp: "GenerativeBrollWithDiegeticUI9x16", creator: "sahilbloom" },
   { comp: "LineChartAnnotated9x16", creator: "aiexplained" },
-  // card / news lane
+  // ── card / news lane ──
   { comp: "TweetCardHero9x16", creator: "bilawal.ai" },
   { comp: "TechNewsFlash9x16", creator: "diysmartcode" },
   { comp: "QuoteCard9x16", creator: "black.one.studio" },
   { comp: "BrandedOpener9x16", creator: "alexhormozi" },
-  // diagram / structure lane
+  // ── diagram / structure lane ──
   { comp: "DiagramExplainer9x16", creator: "midu.dev" },
   { comp: "VennDiagram9x16", creator: "aiexplained" },
   { comp: "LayerCardStack9x16", creator: "simonhoiberg" },
-  // 16:9 studio / keynote + footage-layout validation
+  { comp: "Listicle", creator: "simonhoiberg" },
+  { comp: "TalkingHead", creator: "simonhoiberg" },
+  // ── 16:9 studio / keynote + footage-layout validation ──
   { comp: "StudioCompositor16x9", creator: "theaiadvantage" },
   { comp: "KeynoteSlidePIP16x9", creator: "allin" },
   { comp: "SplitWebcamScreen9x16", creator: "mreflow" },

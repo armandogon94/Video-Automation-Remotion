@@ -27,3 +27,6 @@ Faithful capture of the N4 hero+trio pattern — vertical hierarchy, left→righ
 
 ## Recommendation (optional, not made)
 If we want to lean toward the icon-rich TreeOfChildCards variant, a future enhancement could add an optional monoline icon slot + full outline per child card. Not a defect for the N4 pattern; deferred.
+
+## Deep QA re-verification (cross-creator pass 2)
+Re-extracted 4 frames and re-examined against all available natebjones card references (NamedCardEquation iUSdS/woGB2, fresh-frame process cards, ANALYSIS.md §159 "role-coded accent borders"). The cited N4 anchors (`ogTLWGBc3cE@905s`, `zP6TnEiueEc@820s`) re-sampled to **talking-head** shots — no clean N4 graphic frame is available in the corpus, so the single-edge-vs-full-outline border question cannot be settled against a reference. Frame-2 confirms the choreography precisely: hero settled on top while the trio is mid-rise and card-3's headline ("Verify, don't hand-hold") is still partially faded — i.e. label-leads-headline + L→R stagger is working. Render faithfully captures the documented N4 pattern. **Confirmed VALIDATE — left untouched (conservative; no reference to justify a border change).**

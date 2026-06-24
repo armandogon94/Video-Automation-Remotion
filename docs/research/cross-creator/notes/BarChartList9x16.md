@@ -25,3 +25,29 @@ Faithful capture of the transferable signature: horizontal rounded bars, left la
 
 ## Recommendation (NOT made — would change template contract / belongs in a new mode)
 Add a `mode: "rankedReveal"` to `BarChartList9x16` that (a) sorts bars descending by value and (b) optionally drives an N-step color ramp across rows, to fully reproduce Sahil's §P4 ranked look as an opt-in. Leave default behaviour (caller-ordered, monochrome) unchanged.
+
+---
+
+## Re-confirmation (deep pass — FRESH frames now available)
+The original note relied on ANALYSIS.md prose because only plain talking-head frames
+existed. The deep pass compared OUR render directly against the FRESH ranked-bars
+frames `references/creators/sahilbloom/_fresh/fresh-rankedbars-redcalendar-{reveal,typelabels,contentlabels}.jpg`
+("The Red Calendar Protocol" — cream bg, left vertical separator rail, dark-sans
+top-left title, 4 full-width rounded bars red/green/blue/yellow with WHITE SERIF
+ITALIC labels centered inside).
+
+Pixel-level read of our clip (header→0.4s, bars 0.5s+; dense frames at 0.5/0.7/0.9s)
+confirms the prior verdict and the motion claim:
+- **Motion VERIFIED:** at 0.5s the header is settled and Gemini's bar is ~40% filled
+  with its row faded-in; 0.7s shows the top-to-bottom accelerating stagger (Gemini
+  full, GPT mid, Claude just appearing); 0.9s all three near-full. Faithful to
+  Sahil's "L→R eased fill, top-to-bottom stagger, title-before-first-bar" beat.
+- Structural deltas unchanged and still ACCEPTABLE: centered eyebrow vs left-rail
+  title (house grammar); monochrome single-accent vs Sahil's 4-color rows (on-brand
+  editorial restraint, and per §P4 the multi-color RANKED look is a separate opt-in
+  `rankedReveal` mode, not this generic proportional-bar template); proportional
+  value-widths + count-up + left mono labels (this template's own identity vs Sahil's
+  full-width categorical bars).
+
+Verdict stands: **8/10 — VALIDATED, no edit.** The fresh frames did not surface any
+new defect; the un-reproduced Sahil gesture remains an explicit future mode, not a fix.

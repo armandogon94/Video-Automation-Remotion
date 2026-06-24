@@ -28,7 +28,15 @@ Re-rendered (`runCrossCreatorReplicas.ts TechNewsFlash9x16`, 150f). Sampled bg =
 **Score: before 4/10 (cream-inverted, half-empty) → after 8/10 — IMPROVED.** Now faithfully captures diysmartcode's dark-changelog palette, persistent accent section-label, and bold declarative hero with sustained cadence — without touching the production-cream comp.
 
 ## Recommended (NOT done — structural, out of minimal scope)
-The comp lacks two diysmartcode structural elements I did not force in (would be a large, risky addition, not a minimal safe edit):
+The comp lacks three diysmartcode structural elements I did not force in (each would be a large, risky addition, not a minimal safe edit):
 - **Numbered counter** ("01/02/03") for changelog items.
 - **Persistent bottom progress stepper** (`SETUP · CREATE · EVAL · DEPLOY · PUBLISH` segmented timeline).
+- **Cosmic-gradient + particle-drift background.** diysmartcode's field is a deep blue→green radial gradient with floating multicolor bokeh + a thin colored progress bar at the very top. Ours renders `background: paperColor` (flat `#0A0F1A`) with only a white-on-multiply radial grain overlay (line 226/233) — which is a no-op on a dark paper, so our field reads dead-flat. The TechNewsFlash schema has NO gradient/particle field (unlike Listicle's `gradientTo`), so this needs new comp layers + schema, not a prop.
 These would be a `mode: "dark-changelog"` variant on TechNewsFlash (new scene atoms) — worth a dedicated task, not a cross-creator tweak.
+
+## DEEP QA pass 2 (2026-06-04) — re-verified, VALIDATED at 8/10
+Re-extracted 4 evenly-spaced frames + re-sampled with PIL. Confirmed independently:
+- bg = `(11,15,26)` = `#0B0F1A` deep navy (dark-palette override applied as claimed).
+- Cadence is full across the whole 5s with NO blank frames: chip "FILTRACIÓN" persists 0–5s, huge "GEMINI 3.2 FLASH" 0–2.4s (frames 1–2), subtitle "15× más barato que GPT-5." + gold dotted rule 2.4–5s (frames 3–4). Motion progression reads cleanly huge→subtitle.
+- Palette discipline (one warm-gold accent), persistent tracked section-label breadcrumb, and bold declarative hero all match diysmartcode's signature.
+The prior agent's props-override IMPROVE was correct and the three remaining gaps are genuinely structural (need comp+schema work). No minimal/safe props win remains — forcing a 4th overlay or faux-gradient would invent content and risk colliding with the caption zone. **Left untouched; VALIDATED.**

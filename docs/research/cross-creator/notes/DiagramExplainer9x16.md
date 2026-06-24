@@ -44,3 +44,23 @@ template; the discipline transfers cleanly.
 **Score: 9/10 — VALIDATED.** Faithful capture of the midu single-accent / monospace-meta /
 structured-surface discipline, realized as a clean sequential flow-chart. No edit made;
 introducing a second accent or breaking the mono-meta register would *reduce* fidelity.
+
+---
+
+## Re-verification pass (deep adversarial QA, diagram-ig cluster)
+
+Re-extracted 4 evenly-spaced frames from `output/cross-creator/DiagramExplainer9x16.mp4`
+(dur 5.06s) and re-read the midu source frames (DYj5imcE8ZL concept-diagram, DYPnhQPiY4s
+IDE/keyhole). Findings hold exactly as the original note states.
+
+**Fresh RGB sample (our frame 4, all chrome elements):** card border (163,63,47), arrow
+shaft (167,59,56), mono `$ you` sublabel (187,112,119) — ALL the same warm-red/clay family.
+Headline ink near-black (27,27,27); paper cream (246,243,238). Confirmed: exactly ONE accent
+across every structural element (kicker, eyebrow, borders, arrows, mono meta), pure-black
+titles, cream surface — textbook midu single-accent + monospace-meta discipline.
+
+**Motion (4 frames):** node 1 only → node 1 + node 2 mid-spring → both + drawn arrow →
++ ghosted node 3 + 2nd arrow. Correct staged "build the diagram one box at a time" beat.
+
+**Verdict: 9/10 — VALIDATED, untouched.** No clear/safe/high-confidence win remains; adding a
+second accent or breaking the mono register would REDUCE fidelity. Typecheck clean (no edits).

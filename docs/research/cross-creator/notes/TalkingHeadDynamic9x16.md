@@ -56,3 +56,38 @@ asset-missing state, without touching real-media behavior.
 
 ## Files edited
 - `src/compositions/TalkingHeadDynamic9x16.tsx` (2 fallback-color constants)
+
+---
+
+## DEEP adversarial re-pass (2026-06-04)
+
+Re-extracted 4 frames of our clip and re-read builtbystephan source frames
+`DW4pAkNkT7_/frame-06` (top b-roll / bottom face-cam hard split, caption "so
+instead" on the seam), `DXzkSK1RyFo/frame-04` (App-Store screen-rec top / face-cam
+bottom, caption "this"), `DXC4oRLEYih/frame-05` (FACE_FULL, caption "for example"),
+plus `DW4pAkNkT7_/frame-03` ("including" on near-black). These FRESH frames re-confirm
+the signature: **top/bottom hard split, B-roll/screen-rec on TOP + face-cam on
+BOTTOM, NO decorative seam divider, bold LOWERCASE WHITE sans captions (no
+box/pill, subtle shadow) centered near the seam/mid-frame**.
+
+**Verified the prior fallback-color IMPROVED edit is in place and working:** source
+shows `fallbackFaceBg = ${resolvedInk}1A`, `fallbackBrollBg = ${resolvedMuted}3D`.
+Our re-rendered frame (~2.8s, SPLIT mode) shows a clean, legible hard split —
+dark-grey top band over deep-navy bottom band with a crisp edge at y=960 — and the
+breadcrumb "STEPHAN · PATTERN" (green accent) at top. FACE_FULL frames stay uniform.
+The load-bearing hard-split signature is legible even with placeholder media. No
+regression.
+
+**Caption-style observation (SHARED molecule — described, NOT edited):**
+builtbystephan's captions are bold lowercase white sans with NO border/pill,
+centered mid-frame. Our `EditorialCaption` (shared molecule, off-limits for this
+comp's agent) uses a more editorial treatment. The demo render has empty
+`wordTimings` so no caption shows; with real timings the EditorialCaption style
+would differ from Stefan's naked-white-word look. If a builtbystephan-faithful
+caption is wanted, that belongs in a shared-molecule change (a "naked bold white"
+caption preset), not in this composition.
+
+**Decision: VALIDATE the architecture (score held at 8/10 — IMPROVED via the prior
+fallback-color fix, which this pass confirms is correct).** The comp is a faithful
+capture of the continuous-face-cam + hard-cut-crop-modes + no-seam-divider pattern.
+No further in-comp edit needed.

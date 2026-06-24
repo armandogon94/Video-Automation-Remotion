@@ -1,0 +1,7 @@
+{
+  "emojiStrip": {
+    "enabled": false,
+    "emojis": ["⚡", "💸", "🚀"],
+    "topPx": 220
+  }
+}

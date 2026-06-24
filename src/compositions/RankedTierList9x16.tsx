@@ -124,7 +124,11 @@ export const rankedTierList9x16Schema = z.object({
   // Brand chrome
   breadcrumb: breadcrumbSchema_local.nullable().default(null),
   subjectTool: z.string().nullable().default(null),
-  palette: z.enum(ALL_PALETTE_MODES).default("cream"),
+  // Default surface = true-black to match the adamrosler dark-procedural lane
+  // this template is compared against (near-#000 paper, white ink, single
+  // gold-glow climax row). The dark TierCard branch is purpose-built for this.
+  // Override with "cream" for the original Hormozi/Tella light styling.
+  palette: z.enum(ALL_PALETTE_MODES).default("true-black"),
   paperColor: z.string().default(""),
   inkColor: z.string().default(""),
   accentColor: z.string().default(""),
@@ -230,6 +234,18 @@ const TitleBlock: React.FC<{
   // Reserved unused: keep for potential future muted-subtitle styling.
   void mutedColor;
 
+  // adamrosler accent-discipline: on dark surfaces the headline is WHITE/ink and
+  // the gold accent is reserved for the single highlighted climax row (matching
+  // his "white headline + one gold key element" pattern). On cream, keep the
+  // original Hormozi/Tella accent-colored headline.
+  const isDarkSurface =
+    paletteMode === "dark" ||
+    paletteMode === "warm-black" ||
+    paletteMode === "true-black";
+  const titleColor = isDarkSurface
+    ? getBodyTextColor(paletteMode, inkColor, 84)
+    : accentColor;
+
   return (
     <div
       style={{
@@ -249,7 +265,7 @@ const TitleBlock: React.FC<{
           fontSize: 84,
           letterSpacing: "-0.02em",
           lineHeight: 1.0,
-          color: accentColor,
+          color: titleColor,
         }}
       >
         {title}

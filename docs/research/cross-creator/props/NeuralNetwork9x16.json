@@ -1,0 +1,20 @@
+{
+  "audioUrl": "",
+  "wordTimings": [],
+  "title": "Cómo aprende un modelo",
+  "layers": [4, 6, 6, 4],
+  "layerLabels": ["INPUT", "HIDDEN 1", "HIDDEN 2", "OUTPUT"],
+  "firstWaveDelaySeconds": 0.5,
+  "waveIntervalSeconds": 0.9,
+  "pulsePropagateSeconds": 0.4,
+  "showLayerLabels": true,
+  "breadcrumb": { "text": "Deep Learning", "date": "Forward Pass" },
+  "subjectTool": "",
+  "palette": "dark",
+  "paperColor": "",
+  "inkColor": "",
+  "accentColor": "#4F9BD8",
+  "mutedColor": "",
+  "captionFontSize": 38,
+  "showCaptions": false
+}

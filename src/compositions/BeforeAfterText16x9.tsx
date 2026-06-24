@@ -14,8 +14,8 @@
  *   │ ANTHROPIC · MAY 27, 2026                                             │  ← BrandBreadcrumb16x9
  *   │                                                                      │
  *   │           ┌─────────────────┐  TO  ┌─────────────────┐               │
- *   │           │ DEFAULT         │      │ BETTER          │               │
  *   │           │ ─────           │      │ ─────           │               │
+ *   │           │ DEFAULT         │      │ BETTER          │               │
  *   │           │ Cloud Home      │      │ Cloud Guest     │               │
  *   │           │ (sub-line)      │      │ (sub-line)      │               │
  *   │           └─────────────────┘      └─────────────────┘               │
@@ -78,7 +78,11 @@ const COLUMN_SLIDE_DISTANCE = 120; // px the column travels during entry
 const COLUMN_LABEL_Y = 400;
 const COLUMN_BODY_Y = 480;
 const COLUMN_SUB_Y = 640;
-const COLUMN_UNDERLINE_Y = 444; // sits 4px below the 32px label baseline
+// Colored accent rule sits ABOVE the uppercase label (rule → label → headline →
+// sub), matching Nate's BeforeAfter/VS contrast stacking order — the colored
+// dash caps the column from the top. (refs: iUSdS-6uwr4 v2-anim-04 "TO" frame;
+// ANALYSIS-VOTE1 §4 #4/#5 both list the underline before the label.)
+const COLUMN_UNDERLINE_Y = 368; // ~32px above the 32px label at y=400
 const COLUMN_UNDERLINE_W = 200;
 const COLUMN_UNDERLINE_H = 4;
 

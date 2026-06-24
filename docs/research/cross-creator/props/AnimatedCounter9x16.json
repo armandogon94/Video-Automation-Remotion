@@ -1,0 +1,15 @@
+{
+  "target": 2907583,
+  "prefix": "",
+  "suffix": "",
+  "decimals": 0,
+  "countDurationSeconds": 2.2,
+  "figureFont": "mono",
+  "kicker": "PASOS DE ENTRENAMIENTO",
+  "subtitle": "y aún así no sabemos por qué funciona",
+  "caption": "un billón de operaciones por época",
+  "breadcrumb": { "text": "Cómo aprende un modelo", "date": "ML · 2026" },
+  "palette": "dark",
+  "subjectTool": "",
+  "showCaptions": false
+}

@@ -53,3 +53,35 @@ RECOMMENDATION (not made): if a dedicated mreflow-flavored sibling is ever wante
 add an opt-in `seamCaptionStyle: "pill" | "naked"` flag that wraps the CalloutOverlay
 text in a black `border-radius:9999px` lozenge with white text + ~40px padding —
 that would let one template serve both creators without changing the midu.dev default.
+
+---
+
+## DEEP adversarial re-pass (2026-06-04)
+
+Re-extracted 4 frames of our clip (0.05s→4.5s) and re-read mreflow source
+`references/creators/mreflow/8Jw5Wa_8K0Y/frames/anim-01-*.jpg` (screen-recording
+fills frame + small ROUND cam PIP bottom-right) and `anim-02-*.jpg` (slide deck
+"Saturn's Wobbly Day Mystery" with a **purple/violet gradient border frame**
+around the whole composition + round cam PIP bottom-right).
+
+**RGB sampled (anim-02-frame-005):** right-edge frame border = `(198,140,255)`
+≈ `#C68CFF` — confirms mreflow wraps the composition in a **purple gradient frame**
+and uses a **circular** cam PIP in the corner. That is a meaningfully DIFFERENT
+layout from our 50/50 top-webcam/bottom-screen editorial split.
+
+**Our render re-confirmed (judging chrome only — both halves are placeholders):**
+two distinct half-blocks (grey top webcam-fallback / cream bottom screen-fallback),
+red seam accent band straddling y=940–980, top breadcrumb "MIDU.DEV · REACTION",
+and keyword-anchored seam callouts with spring-in motion VERIFIED across frames:
+frame-0 no callout → frame-1 "BOOM" (seam-left) → frame-2 none → frame-3 "15× MÁS
+BARATO" (seam-center, two lines). Callout choreography + hard-cut timing is correct.
+
+**Decision: VALIDATE, left UNTOUCHED (score held at 7/10).** Our comp is the
+@midu.dev WebcamScreenshareCallout template (top-webcam / bottom-screen split +
+naked-accent seam callouts), cross-judged against mreflow's structurally-related
+but visually-distinct split (screen-dominant + round corner PIP + purple frame).
+The split + seam-riding keyword caption + karaoke timing capture the STRUCTURE;
+mreflow's purple frame + round PIP + black-pill caption are that creator's specific
+chrome. Forcing them in would degrade fidelity to the template's registered owner
+(midu.dev). No shared molecules edited. The opt-in `seamCaptionStyle` recommendation
+above stands as the clean way to serve both creators from one template later.

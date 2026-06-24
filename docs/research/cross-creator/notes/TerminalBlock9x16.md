@@ -41,3 +41,23 @@ reveal, tracked label. Editing would be change-for-change's-sake.
 
 **Score: 9/10** — VALIDATED. Closest single-system match in the cluster; only difference is
 the header-bar-vs-mac-chrome variant choice, both of which exist in adamrosler's own work.
+
+---
+
+## Re-confirmation (DEEP pass, FRESH frames)
+Re-judged against the freshly re-downloaded graphics frames and a fresh 4-frame extract of
+`output/cross-creator/TerminalBlock9x16.mp4`.
+
+- **Our 4 frames:** mac 3-dot chrome window centered on dark, title `zsh — claude-code · 80×24`;
+  typewriter line-by-line reveal (`$ cl` → `$ claude code` / `Welcome to Claude Code v1.2.` →
+  + `✓ Ready` in green); blue `$` prompt, orange `code` token, gray output, **green success row**;
+  tracked-uppercase green section label `CLAUDE CODE · SUBAGENTS`; thin accent ring on the card.
+- **adamrosler grammar (fresh):** the `7RhJawm2nw4` console lines (`> forward pass: making a
+  guess` blue, `> error signal traveling backwards` orange, `> every weight nudged toward right`
+  green) confirm his **`>`-prompt + monospace + color-coded-by-semantics** idiom; the `mZgCDFEBna0`
+  NEW SESSION / SKILL LIBRARY frames confirm the literal mac-chrome terminal + green-success +
+  typewriter beat our comp uses.
+- Color discipline, monospace body, green=success, colored prompt, line-by-line typewriter, and
+  the tracked label all match. Differing copy is correct (our own).
+
+**No change** — editing would be change-for-change's-sake. Confirmed **VALIDATED, 9/10**.

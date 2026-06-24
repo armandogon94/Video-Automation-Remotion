@@ -129,12 +129,17 @@ const GROUP_PALETTE_CREAM = [
   "#F4B89A", // peach
   "#A8C5D8", // pale steel blue
 ];
+// On the dark paper (#0A0F1A) the previous fills (deep amber-brown / deep
+// sage etc.) were too low-contrast to read as "glowing" filled discs — the
+// adamrosler node-graph signature uses SATURATED, luminous role colors
+// (gold source / teal destination / coral / blue / green). Bright fills that
+// sit clearly above the near-black paper.
 const GROUP_PALETTE_DARK = [
-  "#3A2E1F", // deep amber-brown
-  "#1F3A2F", // deep sage-green
-  "#3A1F35", // deep mauve
-  "#3A2820", // burnt sienna
-  "#1F2E3A", // deep steel blue
+  "#D4A04A", // gold (matches dark-palette accent / "source" role)
+  "#3FB68B", // teal-green (destination / active)
+  "#C06CC9", // mauve-magenta
+  "#E8895A", // coral / warning
+  "#4F9BD8", // steel blue (input)
 ];
 
 // ─── Helpers ────────────────────────────────────────────────────────
@@ -489,6 +494,11 @@ export const ForceGraph9x16: React.FC<ForceGraph9x16Props> = ({
                 : n.group
                   ? (groupColors.get(n.group) ?? resolvedPaper)
                   : resolvedPaper;
+              // On dark, filled nodes (focus or grouped) get a soft glow so they
+              // read as luminous discs — the adamrosler node-graph signature.
+              // Hollow paper nodes stay crisp (no glow).
+              const isFilled = isFocus || Boolean(n.group);
+              const glow = palette === "dark" && isFilled;
               return (
                 <circle
                   key={`node-${n.id}`}
@@ -498,6 +508,7 @@ export const ForceGraph9x16: React.FC<ForceGraph9x16Props> = ({
                   fill={fillColor}
                   stroke={resolvedAccent}
                   strokeWidth={2.5}
+                  style={glow ? { filter: "url(#fg-pulse-glow)" } : undefined}
                 />
               );
             })}

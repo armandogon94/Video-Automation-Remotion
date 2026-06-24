@@ -450,3 +450,27 @@ VERIFIED: a real render now leaves 0 bundle dirs (was ~2.9 GB), tmpdir stays ~11
 NOTE: when checking ps for "active render", remember sibling project 17-Instagram-Slides
 renders into the SAME /tmp/claude-501 — never blanket `rm -rf /tmp/claude-*/remotion-*`
 without the running-process guard or you can break their live render.
+
+## 2026-06-04 — Cross-creator DEEP QA (full 44-comp set) + 2 render gotchas
+
+Expanded the cross-creator pass from 23 signature comps to the FULL 44 the attribution
+map ties to these creators. Re-downloaded FRESH source frames for the 6 weak-frame
+creators (adamrosler/aiexplained/motiondarwin/theaiadvantage/natebjones/sahilbloom) →
+`references/creators/<c>/_fresh/` (videos deleted after extraction). 12-agent Opus
+adversarial QA (each comp owned by one agent → race-safe). Result: 17 IMPROVED / 27
+VALIDATED. Gallery `CROSS-CREATOR-COMPARE.html` now data-driven over all 44.
+- Biggest finding: the adamrosler procedural diagrams (ForceGraph/NeuralNetwork/
+  PipelineFlow9x16/DecisionTree/RankedTierList) were faithful in STRUCTURE but rendered
+  CREAM while Adam is near-black → flipped to dark via per-comp props overrides
+  (`docs/research/cross-creator/props/<comp>.json`, merged by the driver) + 2 .tsx tweaks.
+- Per-comp tuning lever WITHOUT touching Root.tsx: write a props JSON; the driver
+  shallow-merges it over the comp's defaultProps. Root.tsx defaultProps pin these
+  procedural comps to `palette:"cream"` — a dark default / "adamrosler preset" is the
+  real root-cause fix (BACKLOG, not done).
+
+GOTCHA 1 (render vs network): running heavy downloads (yt-dlp/gallery-dl) CONCURRENTLY
+with Remotion renders breaks the render — Remotion fetches Google Fonts at render time,
+and the network contention throws `ERR_INTERNET_DISCONNECTED`/`ERR_NETWORK_CHANGED` →
+comps render with fallback fonts or fail. SEQUENCE them: finish downloads, THEN render.
+GOTCHA 2 (macOS bash): `timeout` and `mapfile`/`readarray` don't exist in stock macOS
+bash 3.2 — wrapping render commands in `timeout` silently no-ops ("command not found").

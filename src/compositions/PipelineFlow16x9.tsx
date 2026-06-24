@@ -108,15 +108,23 @@ const breadcrumbSchema_local = z.object({
 });
 
 const stageSchema = z.object({
-  /** Mono title (e.g. "Weights"). */
+  /** Mono title (e.g. "Weights"). Rendered in WHITE (Nate's headline is white;
+   *  the per-card accent lives in the kicker + subline + border). */
   name: z.string().default(""),
-  /** Sans body below the title — multi-line is fine. */
+  /** Sans body below the title — multi-line is fine. Rendered in the card's
+   *  accent color, muted (Nate's subline). */
   body: z.string().default(""),
-  /** Optional kind — drives the small colored dot in the card. */
+  /** Small uppercase tracking-spaced KICKER above the headline (Nate's
+   *  category label, e.g. "MODEL" / "FIND"). When empty it falls back to the
+   *  uppercased `kind` so every card carries a kicker like Nate's. */
+  kicker: z.string().default(""),
+  /** Optional kind — drives the per-card ACCENT (border + kicker + subline +
+   *  corner dot), giving the row Nate's color-coded look. */
   kind: z
     .enum(["input", "agent", "tool", "check", "output"])
     .default("agent"),
-  /** Optional accent color override for THIS card's title (empty = palette accent). */
+  /** Optional accent override for THIS card (empty = the kind's accent). When
+   *  set it keys the border, kicker, subline and dot for the card. */
   color: z.string().default(""),
   /** Optional offset (seconds) added to this stage's computed enter time. */
   enterOffsetSeconds: z.number().default(0),
@@ -269,13 +277,31 @@ const StageCard: React.FC<{
     paletteMode === "warm-black" ||
     paletteMode === "true-black";
   const cardBg = isDark ? "#161D2B" : "#FFFFFF";
-  const cardShadow = isDark
-    ? "0 8px 28px rgba(212, 160, 74, 0.16), 0 1px 0 rgba(212, 160, 74, 0.22)"
-    : "0 8px 28px rgba(179, 58, 42, 0.10), 0 1px 0 rgba(179, 58, 42, 0.18)";
 
-  const titleColor = stage.color ? stage.color : accentColor;
-  const kindColor = KIND_COLORS[stage.kind];
-  const bodyInk = getBodyTextColor(paletteMode, inkColor, 28);
+  // Per-card ACCENT (Nate's color-coded flow): explicit `stage.color` wins,
+  // else the kind's accent. This single hue keys the border, kicker, subline,
+  // corner dot and the faint inner glow — so each card reads as its own color
+  // (gray/blue/green/orange family) rather than a uniform blue row.
+  const cardAccent = stage.color ? stage.color : KIND_COLORS[stage.kind];
+
+  // Faint inner glow keyed to the card accent (Nate's cards carry a soft
+  // accent-tinted halo, not a flat drop shadow).
+  const cardShadow = `0 8px 28px ${cardAccent}1F, 0 0 0 1px ${cardAccent}1A inset`;
+
+  // Headline is WHITE (or palette ink on light surfaces) — the accent never
+  // colors the headline, it sits in the kicker/subline/border.
+  const headlineColor = isDark ? "#FFFFFF" : inkColor || "#0F1B2D";
+  // Subline rides the card accent, slightly muted, exactly like Nate's
+  // "muted subline in the card's accent color".
+  const sublineColor = `${cardAccent}D0`;
+  // Kicker: explicit override, else the uppercased kind (INPUT/AGENT/...),
+  // so every card carries a category label like Nate's FIND / SAVE / MAP.
+  const kickerText = (stage.kicker || stage.kind).toUpperCase();
+  // bodyInk is still referenced via getBodyTextColor on light palettes to keep
+  // the helper import live and give a readable subline off-dark surfaces.
+  const sublineResolved = isDark
+    ? sublineColor
+    : getBodyTextColor(paletteMode, inkColor, 28);
 
   return (
     <div
@@ -286,41 +312,58 @@ const StageCard: React.FC<{
         width,
         height,
         background: cardBg,
-        border: `2px solid ${accentColor}`,
+        border: `2px solid ${cardAccent}`,
         borderRadius: 16,
-        padding: "28px 28px 26px 28px",
+        padding: "26px 28px 26px 28px",
         display: "flex",
         flexDirection: "column",
-        gap: 14,
+        gap: 8,
         boxShadow: cardShadow,
         opacity,
         transform: `translateY(${translateY}px)`,
         boxSizing: "border-box",
       }}
     >
-      {/* Kind dot in top-left corner of card */}
+      {/* Kind dot in top-left corner of card (reinforces the per-card accent) */}
       <div
         style={{
           position: "absolute",
-          top: 14,
-          left: 14,
+          top: 16,
+          left: 16,
           width: KIND_DOT_SIZE,
           height: KIND_DOT_SIZE,
           borderRadius: KIND_DOT_SIZE / 2,
-          background: kindColor,
-          boxShadow: `0 0 0 3px ${kindColor}22`,
+          background: cardAccent,
+          boxShadow: `0 0 0 3px ${cardAccent}22`,
         }}
         aria-hidden
       />
 
-      {/* Mono title — leave room above for the kind-dot row */}
+      {/* Kicker — small uppercase tracking-spaced category label, accent-tinted */}
       <div
         style={{
-          marginTop: 14,
+          fontFamily: FONT_STACKS.sans,
+          fontWeight: 700,
+          fontSize: 18,
+          color: cardAccent,
+          letterSpacing: "0.16em",
+          textTransform: "uppercase",
+          lineHeight: 1,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {kickerText}
+      </div>
+
+      {/* Headline — bold WHITE, the load-bearing word */}
+      <div
+        style={{
           fontFamily: FONT_STACKS.monoCode,
-          fontWeight: 600,
+          fontWeight: 700,
           fontSize: 36,
-          color: titleColor,
+          color: headlineColor,
           letterSpacing: "-0.005em",
           lineHeight: 1.1,
           whiteSpace: "nowrap",
@@ -331,13 +374,13 @@ const StageCard: React.FC<{
         {stage.name}
       </div>
 
-      {/* Sans body — wraps to multi-line if needed */}
+      {/* Subline — accent-tinted muted, wraps to multi-line if needed */}
       <div
         style={{
           fontFamily: FONT_STACKS.sans,
           fontWeight: 500,
-          fontSize: 28,
-          color: bodyInk,
+          fontSize: 26,
+          color: sublineResolved,
           lineHeight: 1.25,
           letterSpacing: "-0.005em",
           overflow: "hidden",

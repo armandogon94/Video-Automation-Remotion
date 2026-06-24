@@ -1,0 +1,16 @@
+{
+  "palette": "dark",
+  "sectionLabel": "FUNCIONES",
+  "rows": [
+    { "feature": "Multiple workspaces", "state": "available", "color": "" },
+    { "feature": "Custom domains", "state": "locked-tier", "modifier": "PRO", "color": "" },
+    { "feature": "Mobile app", "state": "soon", "modifier": "Q3 2026", "color": "" },
+    { "feature": "Live collaboration", "state": "beta", "modifier": "BETA", "color": "" },
+    { "feature": "EU data residency", "state": "locked-region", "modifier": "US ONLY", "color": "" }
+  ],
+  "breadcrumb": { "text": "Features", "date": "Roadmap" },
+  "enterSeconds": 0.4,
+  "staggerSeconds": 0.18,
+  "showCaptions": true,
+  "captionFontSize": 38
+}

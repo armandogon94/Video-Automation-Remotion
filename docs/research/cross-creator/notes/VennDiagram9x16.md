@@ -45,3 +45,27 @@ highlighted-subject intent and motion. Differing form is acceptable; the discipl
 neutral surface, one saturated subject accent (the exact pale-blue family Philip uses for the
 subject column), draw-on geometry, and an editorial payoff callout revealed last in the overlap.
 No edit made — adding a second structural accent or a busier surface would reduce fidelity.
+
+---
+
+## DEEP PASS (cross-creator round 2 — vs FRESH frames) — 2026-06-04
+
+Re-rendered the clip (was missing from output/cross-creator) and re-checked all 4 frames against the
+aiexplained `_fresh/` comparison register. The `_fresh/` set confirms Philip's "overlap/comparison"
+DNA = grouped benchmark BAR charts with a single **darker focal column** (sampled RGB(47,70,202) deep
+blue vs sibling RGB(68,146,254) sky blue on white) + the meme IronyCycle loop. The transferable
+discipline is **neutral surface + exactly one saturated subject accent revealed as the payoff**.
+
+Our render is a faithful realization:
+- Frame 1 (0.3s): kicker + black hero title only (clean cream surface).
+- Frame 2 (1.5s): blue "PRECIO" circle outline draws + fills, "$0.25/M" sublabel; other circles entering.
+- Frame 3 (3.0s): all 3 circles filled translucent (blue/orange/green legend), overlaps alpha-blended.
+- Frame 4 (4.6s): the saturated-blue "Gemini 3.2 Flash" pill scale-pops in the CENTER intersection —
+  the editorial payoff revealed LAST, exactly mirroring Philip's "YOU ARE HERE" / focal-column move.
+
+Single-accent discipline holds (the subject pill + kicker share one saturated blue; the tri-color circle
+fills are a legend, not competing accents). Motion grammar (drift-in → outline draw-on → fill fade →
+center label pop) matches the documented IronyCycle beat. No defects found.
+
+## Score: 9/10 — VALIDATED (no edit; re-rendered only)
+Adding a second structural accent or a busier surface would REDUCE fidelity. Left untouched.

@@ -54,3 +54,44 @@ and dwell beats intact (no regression).
 **Score: 8/10** — IMPROVED (added the persistent single-glowing-active-row signature).
 Structure + motion already faithful; the held→persistent active-row fix closes the named
 gap. Remaining distance to the reference is palette only, which is brand-driven via Root.tsx.
+
+---
+
+## DEEP PASS 2 (adamrosler-diagrams cluster) — closed the palette gap
+
+Used the FRESH frames (`references/creators/adamrosler/S5ZFkY756IY/_fresh/frame-028.jpg`,
+`frame-033.jpg`): pure-black bg · WHITE bold sans headline · monospace labels · color-coded
+boxes · exactly ONE gold/amber "key" element (the gold `RSS DOUBLED ≠ LEAK` pill).
+
+The prior pass left palette as "the remaining distance, driven by Root.tsx which I must not
+edit." The missing lever: the cross-creator runner (`runCrossCreatorReplicas.ts`) merges
+`docs/research/cross-creator/props/<Comp>.json` **over** Root.tsx defaultProps. That props
+JSON is mine to own — so I can flip the comparison surface to dark without touching Root.tsx.
+
+**Root cause of the cream/blue render:** Root.tsx defaultProps pin `palette: "cream"` AND
+`subjectTool: "gemini"` (the latter forces a Gemini-blue accent via `getToolAccentForSurface`,
+overriding the palette accent entirely).
+
+**Changes (minimal, high-confidence, all in MY files — copy untouched):**
+1. NEW `docs/research/cross-creator/props/RankedTierList9x16.json` — copy/items verbatim from
+   Root.tsx, but `palette: "true-black"` + `subjectTool: null` (so the brand-gold #D4AF37
+   palette accent shows instead of forced Gemini-blue).
+2. `src/compositions/RankedTierList9x16.tsx`:
+   - schema default `palette` `cream` → `true-black` (Studio/standalone hygiene parity).
+   - `TitleBlock`: on dark surfaces the headline now renders in `ink` (WHITE) instead of
+     `accent` (gold), so gold stays reserved for the single climax row — exactly adamrosler's
+     "white headline + one gold element" accent discipline. Cream path unchanged.
+
+**Re-rendered + re-extracted @0.3/1.6/3.0/4.6s — confirmed:** pure-black bg, white bold
+headline, gold breadcrumb + "RANKED" eyebrow, dark-navy (#10172A) cards with gold borders +
+gold rank numerals + white labels + mono-gray sub, and the single GOLD-glow #1 climax row.
+Bottom-up held-stagger motion fully preserved (title-only → #1 glowing → full 1–5 stack with
+#1 still the lone distinguished row). `tsc --noEmit` clean for this comp; no regression.
+
+**Updated score: 9/10** — faithful adamrosler dark-procedural surface + accent discipline +
+the previously-added single-glow active row, motion intact, copy unchanged. Not 10 only
+because his boxes are often semantically color-coded (green/red); a tier list is mono-gold by
+design (a correct, intentional divergence).
+
+**Verdict: IMPROVED (pass 2)** — flipped the cross-creator comparison surface to adamrosler's
+black + reserved-gold via the props JSON; white headline; single gold-glow climax row.

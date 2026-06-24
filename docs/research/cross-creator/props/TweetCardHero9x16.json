@@ -1,0 +1,12 @@
+{
+  "tweet": {
+    "name": "Armando Inteligencia",
+    "handle": "armandointeligencia",
+    "avatarUrl": "",
+    "body": "Gemini 3.2 Flash filtra benchmarks: 15× más barato que GPT-5 con casi el mismo score. Esto cambia el cálculo para todos los que están construyendo con LLMs.",
+    "verified": true
+  },
+  "breadcrumb": { "text": "Google", "date": "Filtración" },
+  "palette": "dark",
+  "showCaptions": false
+}

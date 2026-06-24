@@ -54,12 +54,16 @@
  *
  * VISUAL STYLE
  * ------------
- *   - Each card: rounded pill (border-radius 999), translucent slate
- *     bg (rgba(20,30,55,0.7)), accent-color left border (4px), white text,
- *     Inter font, 36px font size (between the 32-40 range from the brief).
- *   - Operators (`+`, `=`): bold Inter 48px, color = the right-adjacent
- *     card's accent. The brief locks this in: "+ color matches next operand's
- *     accent", "= color matches result card's accent".
+ *   - Each card: rounded RECTANGLE (border-radius 16) with a thin
+ *     full-perimeter accent outline (1.5px) + a soft accent-tinted glow over a
+ *     translucent slate bg (rgba(20,30,55,0.55)), centered white text, Inter
+ *     font, 36px (result 40px). This mirrors Nate's NamedCardEquation card
+ *     chrome (refs: iUSdS-6uwr4 anim-1 / woGB2vr5wTg anim-2) — NOT a pill with
+ *     a left-only accent.
+ *   - Operators (`+`, `=`): bold Inter 48px, neutral slate-GRAY
+ *     (`OPERATOR_GRAY`). Nate's operators are desaturated, never the adjacent
+ *     card's accent — sampled rgb(53,64,69)/(61,74,79) from his equation
+ *     frames. The colored card outlines carry the category coding alone.
  *   - EDITORIAL_SPRING profile (damping 22 / stiffness 130 / mass 0.7) for
  *     all card landings — firm settle, no bouncy overshoot. Matches the
  *     editorial-motion DNA Wave-3 named on the cream/dark templates.
@@ -124,6 +128,14 @@ const EDITORIAL_SPRING = {
   stiffness: 130,
   mass: 0.7,
 } as const;
+
+/**
+ * Operator (`+` / `=`) glyph color. Nate's NamedCardEquation operators are a
+ * neutral slate-GRAY, never the adjacent card's accent — sampled at
+ * rgb(53,64,69)/(61,74,79) from iUSdS-6uwr4 anim-1. Keeping them desaturated
+ * lets the colored card outlines carry the category coding without competing.
+ */
+const OPERATOR_GRAY = "#8B95A1";
 
 // ─── Schema ──────────────────────────────────────────────────────────────
 
@@ -264,19 +276,26 @@ const PillCard: React.FC<PillCardProps> = ({
       style={{
         display: "inline-flex",
         alignItems: "center",
-        background: "rgba(20,30,55,0.7)",
-        borderLeft: `4px solid ${accentColor}`,
-        borderRadius: 999,
-        padding: "16px 32px",
+        justifyContent: "center",
+        textAlign: "center",
+        background: "rgba(20,30,55,0.55)",
+        // Nate's NamedCardEquation cards are rounded RECTANGLES with a thin
+        // full-perimeter colored outline + soft matching glow — NOT pills with
+        // a left-only accent. (refs: iUSdS-6uwr4 anim-1 / woGB2vr5wTg anim-2.)
+        border: `1.5px solid ${accentColor}`,
+        borderRadius: 16,
+        padding: "20px 32px",
         fontFamily: FONT_STACKS.sans,
-        fontWeight: 600,
+        fontWeight: 700,
         fontSize,
         color: "#FFFFFF",
         letterSpacing: "0.005em",
         whiteSpace: "nowrap",
         opacity,
         transform: `translateY(${translateY}px)`,
-        boxShadow: "0 8px 28px rgba(0,0,0,0.32)",
+        // Soft outer glow tinted to the card accent (Nate's cards bloom faintly)
+        // layered over a grounding drop shadow.
+        boxShadow: `0 0 18px -2px ${accentColor}55, 0 8px 28px rgba(0,0,0,0.32)`,
       }}
     >
       {text}
@@ -287,8 +306,6 @@ const PillCard: React.FC<PillCardProps> = ({
 // ─── Operator primitives ─────────────────────────────────────────────────
 
 interface PlusOperatorProps {
-  /** Color matches the right-adjacent (next) operand's accent. */
-  color: string;
   enterFrame: number;
 }
 
@@ -296,7 +313,7 @@ interface PlusOperatorProps {
  * `+` separator — pops in (scale 0.6 → 1.0 + fade) over PLUS_POP_FRAMES. The
  * pop uses EDITORIAL_SPRING so it shares the calmer family as the cards.
  */
-const PlusOperator: React.FC<PlusOperatorProps> = ({ color, enterFrame }) => {
+const PlusOperator: React.FC<PlusOperatorProps> = ({ enterFrame }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -323,7 +340,7 @@ const PlusOperator: React.FC<PlusOperatorProps> = ({ color, enterFrame }) => {
         fontWeight: 800,
         fontSize: 48,
         lineHeight: 1,
-        color,
+        color: OPERATOR_GRAY,
         opacity,
         transform: `scale(${scale})`,
       }}
@@ -335,8 +352,6 @@ const PlusOperator: React.FC<PlusOperatorProps> = ({ color, enterFrame }) => {
 };
 
 interface EqualsOperatorProps {
-  /** Color matches the result card's accent. */
-  color: string;
   enterFrame: number;
 }
 
@@ -344,10 +359,7 @@ interface EqualsOperatorProps {
  * `=` separator — slides up + fades in alongside the result card over
  * RESULT_SLIDE_FRAMES. Same EDITORIAL_SPRING family, no pop scale.
  */
-const EqualsOperator: React.FC<EqualsOperatorProps> = ({
-  color,
-  enterFrame,
-}) => {
+const EqualsOperator: React.FC<EqualsOperatorProps> = ({ enterFrame }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -374,7 +386,7 @@ const EqualsOperator: React.FC<EqualsOperatorProps> = ({
         fontWeight: 800,
         fontSize: 48,
         lineHeight: 1,
-        color,
+        color: OPERATOR_GRAY,
         opacity,
         transform: `translateY(${translateY}px)`,
       }}
@@ -460,18 +472,14 @@ export const EquationCardChain16x9: React.FC<EquationCardChainProps> = ({
                 enterFrame={timeline.operandEnterFrames[i]}
               />
               {i < operands.length - 1 ? (
-                <PlusOperator
-                  // Brief: "+ separator pops in matching the next card's
-                  // accent color" → use operand[i+1]'s accent.
-                  color={operandAccents[i + 1]}
-                  enterFrame={timeline.plusEnterFrames[i]}
-                />
+                // Operator glyph is neutral gray (Nate's signature) — it pops in
+                // after operand[i] lands, in the visual pause before operand[i+1].
+                <PlusOperator enterFrame={timeline.plusEnterFrames[i]} />
               ) : null}
             </React.Fragment>
           ))}
 
           <EqualsOperator
-            color={resultAccent}
             enterFrame={timeline.equalsAndResultEnterFrame}
           />
           <PillCard

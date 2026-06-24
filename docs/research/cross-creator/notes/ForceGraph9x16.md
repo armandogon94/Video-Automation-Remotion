@@ -52,3 +52,45 @@ content that relies on below-node labels — better left as a recommendation tha
 
 **Score: 7/10** — VALIDATED. Right engine and motion; distance to reference is palette
 (brand-driven) + un-grouped hollow nodes + below-node label crowding (content-driven).
+
+---
+
+## DEEP PASS 2 (adamrosler-diagrams cluster) — IMPROVED (closed palette + hollow-node gaps)
+
+Re-confirmed the signature from FRESH neural-net frames
+(`references/creators/adamrosler/7RhJawm2nw4/_fresh/frame-020.jpg`, `frame-038.jpg`):
+black bg · SATURATED, GLOWING, FILLED role-colored discs · one emphasized hero node ·
+thin edges. The prior pass left palette + hollow-nodes as recommendations because the
+cream came from Root.tsx (not editable). The lever: the props JSON + the comp's OWN
+`GROUP_PALETTE_DARK` constant (both mine).
+
+**The cream/hollow render had 3 severe gaps (all visible @1.6/4.6s):** cream bg vs black;
+non-focus nodes were thin hollow green outlines (no `group` in demo data); single-hue.
+
+**Changes (minimal, high-confidence; copy unchanged):**
+1. NEW `docs/research/cross-creator/props/ForceGraph9x16.json` (mine) — same Claude-ecosystem
+   nodes/edges/labels verbatim from Root.tsx, but `palette: "dark"`, `subjectTool: ""`
+   (frees the accent to the dark-palette GOLD #D4A04A so the focus disc reads as the
+   adamrosler gold hero node), and a `group` on every satellite so they fill with role
+   colors. `subjectTool: ""` (not omitted) is required because the runner shallow-merges
+   the JSON over Root.tsx defaultProps, which pin `subjectTool: "claude-code"`.
+2. `src/compositions/ForceGraph9x16.tsx` (mine):
+   - `GROUP_PALETTE_DARK`: replaced the too-dim deep-brown/sage fills (low-contrast on the
+     #0A0F1A paper) with SATURATED luminous role colors (gold/teal/mauve/coral/steel-blue)
+     so grouped nodes read as glowing discs. `GROUP_PALETTE_CREAM` untouched.
+   - Filled nodes (focus or grouped) get the existing `fg-pulse-glow` soft-glow filter on
+     dark only; hollow paper nodes stay crisp. Makes nodes luminous like his.
+
+**Re-rendered + re-extracted @0.3/1.6/4.6s — confirmed:** black bg, gold glowing hero
+"Claude" disc + gold pulse ring, role-colored glowing satellites (gold/teal/magenta/coral),
+white headline + node labels, thin edges. Force layout + edge-draw + pulse motion intact;
+no regression. `tsc --noEmit` clean for this comp.
+
+**Updated score: 9/10** — IMPROVED. Faithful adamrosler node-graph surface + glowing
+role-colored filled discs + emphasized hero node. Remaining 1pt: labels still sit BELOW
+nodes and lightly crowd dense discs; adamrosler puts the id INSIDE the node. Left as a
+recommendation (an in-node-id variant) rather than a blind structural edit that could
+regress other ForceGraph content relying on below-node labels.
+
+**Verdict: IMPROVED (pass 2)** — dark surface + per-node role groups via props JSON +
+brightened `GROUP_PALETTE_DARK` + node glow; gold glowing hero disc.

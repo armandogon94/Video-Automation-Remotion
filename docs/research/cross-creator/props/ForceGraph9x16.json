@@ -1,0 +1,40 @@
+{
+  "audioUrl": "",
+  "wordTimings": [],
+  "title": "El ecosistema Claude",
+  "nodes": [
+    { "id": "claude",  "label": "Claude",  "weight": 1.8 },
+    { "id": "code",    "label": "Code",    "weight": 1, "group": "surface" },
+    { "id": "web",     "label": "Web",     "weight": 1, "group": "surface" },
+    { "id": "api",     "label": "API",     "weight": 1, "group": "interface" },
+    { "id": "agents",  "label": "Agents",  "weight": 1, "group": "runtime" },
+    { "id": "mcp",     "label": "MCP",     "weight": 1, "group": "interface" },
+    { "id": "skills",  "label": "Skills",  "weight": 1, "group": "runtime" },
+    { "id": "plugins", "label": "Plugins", "weight": 1, "group": "extension" }
+  ],
+  "edges": [
+    { "source": "claude", "target": "code" },
+    { "source": "claude", "target": "web" },
+    { "source": "claude", "target": "api" },
+    { "source": "claude", "target": "agents" },
+    { "source": "claude", "target": "mcp" },
+    { "source": "claude", "target": "skills" },
+    { "source": "claude", "target": "plugins" },
+    { "source": "code",   "target": "agents" },
+    { "source": "agents", "target": "mcp" },
+    { "source": "mcp",    "target": "skills" },
+    { "source": "skills", "target": "plugins" }
+  ],
+  "focusNodeId": "claude",
+  "showNodeLabels": true,
+  "rotateSlowly": false,
+  "breadcrumb": { "text": "Anthropic", "date": "Ecosistema" },
+  "subjectTool": "",
+  "palette": "dark",
+  "paperColor": "",
+  "inkColor": "",
+  "accentColor": "",
+  "mutedColor": "",
+  "captionFontSize": 38,
+  "showCaptions": false
+}

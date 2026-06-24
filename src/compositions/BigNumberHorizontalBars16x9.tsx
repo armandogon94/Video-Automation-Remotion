@@ -208,7 +208,9 @@ const BARS_ZONE_HEIGHT = BARS_BOTTOM - BARS_TOP;
 const BARS_AVAILABLE_W = CANVAS_W - BARS_LEFT_X - BARS_RIGHT_PADDING; // 840
 
 // Bar row internals
-const BAR_LABEL_W = 200; // category label column
+// Label column sized to clear a ~10-char mono-bold uppercase label (e.g.
+// "MULTIMODAL") at 32px + 0.08em tracking without colliding into the fill track.
+const BAR_LABEL_W = 248; // category label column
 const BAR_LABEL_GAP = 20; // gap before the fill track starts
 const BAR_VALUE_W = 110; // count value column (reserved at the right)
 const BAR_TRACK_W =
@@ -317,6 +319,7 @@ const BarRow: React.FC<{
             letterSpacing: "0.08em",
             textTransform: "uppercase",
             lineHeight: 1.1,
+            whiteSpace: "nowrap",
           }}
         >
           {bar.label}

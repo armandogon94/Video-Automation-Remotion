@@ -38,7 +38,12 @@ import {
 import { z } from "zod";
 import { EditorialCaption } from "../components/captions/EditorialCaption";
 import { BrandBreadcrumb } from "../components/BrandBreadcrumb";
-import { getToolAccentForSurface, resolveColors, getPalette } from "../brand";
+import {
+  getToolAccentForSurface,
+  resolveColors,
+  getPalette,
+  FONT_STACKS,
+} from "../brand";
 import { outCubic } from "../timing/easing";
 
 // TODO: wordTimingSchema + breadcrumbSchema are not exported from schemas.ts
@@ -74,6 +79,14 @@ export const animatedCounter9x16Schema = z.object({
   kicker: z.string().optional(),
   subtitle: z.string().default(""),
   caption: z.string().optional(),
+  /**
+   * Face for the numeric figure (prefix + digits + suffix).
+   * - `"sans"` (default): Inter 900 house display face — sibling of BigNumberHero9x16.
+   * - `"mono"`: JetBrains Mono — the live-readout / odometer look (e.g. adamrosler's
+   *   `ERROR 0.81`, `step 2,907,583` orange/blue monospace counters). Keeps
+   *   `tabular-nums` so digits don't jitter as the value ramps.
+   */
+  figureFont: z.enum(["sans", "mono"]).default("sans"),
   breadcrumb: breadcrumbSchema.optional(),
   subjectTool: z.string().optional(),
   palette: z.enum(["cream", "dark"]).default("cream"),
@@ -147,6 +160,7 @@ export const AnimatedCounter9x16: React.FC<AnimatedCounter9x16Props> = ({
   kicker,
   subtitle,
   caption,
+  figureFont,
   breadcrumb,
   subjectTool,
   palette,
@@ -222,6 +236,18 @@ export const AnimatedCounter9x16: React.FC<AnimatedCounter9x16Props> = ({
       : Math.max(220, Math.round(NUMBER_BASE_SIZE * (4 / figureLen)));
   const suffixFontSize = Math.round(numberFontSize * 0.7);
   const prefixFontSize = Math.round(numberFontSize * 0.6);
+
+  // Figure face: Inter 900 (default house display) or JetBrains Mono (live-readout
+  // / odometer look). Mono glyphs are wider and read best without the tight
+  // negative tracking the sans face uses, so relax letter-spacing in mono mode.
+  const isMono = figureFont === "mono";
+  const figureFontFamily = isMono ? FONT_STACKS.mono : "Inter, sans-serif";
+  const figureWeight = isMono ? 700 : 900;
+  const figureTracking = isMono ? "0em" : "-0.04em";
+  // In mono (live-readout) mode the whole figure carries the accent color, matching
+  // adamrosler's fully-orange `ERROR 0.81` / fully-blue `step 2,907,583` readouts.
+  // In sans mode the digits stay ink and only the suffix carries the accent.
+  const figureColor = isMono ? resolvedAccent : resolvedInk;
 
   // Prefix + suffix fade in 0.15s AFTER the counter starts ramping (so the eye
   // lands on the numerals first, then the modifiers attach).
@@ -318,11 +344,11 @@ export const AnimatedCounter9x16: React.FC<AnimatedCounter9x16Props> = ({
           {prefix && (
             <span
               style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 900,
+                fontFamily: figureFontFamily,
+                fontWeight: figureWeight,
                 fontSize: prefixFontSize,
-                color: resolvedInk,
-                letterSpacing: "-0.04em",
+                color: figureColor,
+                letterSpacing: figureTracking,
                 lineHeight: 0.92,
                 marginRight: 8,
                 marginTop: Math.round((numberFontSize - prefixFontSize) * 0.18),
@@ -337,11 +363,11 @@ export const AnimatedCounter9x16: React.FC<AnimatedCounter9x16Props> = ({
           {/* Main ramping figure — tabular-nums so digit widths don't jitter */}
           <span
             style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 900,
+              fontFamily: figureFontFamily,
+              fontWeight: figureWeight,
               fontSize: numberFontSize,
-              color: resolvedInk,
-              letterSpacing: "-0.04em",
+              color: figureColor,
+              letterSpacing: figureTracking,
               lineHeight: 0.92,
               display: "inline-block",
               fontVariantNumeric: "tabular-nums",
@@ -354,11 +380,11 @@ export const AnimatedCounter9x16: React.FC<AnimatedCounter9x16Props> = ({
           {suffix && (
             <span
               style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 900,
+                fontFamily: figureFontFamily,
+                fontWeight: figureWeight,
                 fontSize: suffixFontSize,
                 color: resolvedAccent,
-                letterSpacing: "-0.04em",
+                letterSpacing: figureTracking,
                 lineHeight: 0.92,
                 marginLeft: 12,
                 marginTop: Math.round((numberFontSize - suffixFontSize) * 0.12),

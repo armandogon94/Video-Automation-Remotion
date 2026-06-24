@@ -1,0 +1,12 @@
+{
+  "palette": "dark",
+  "sectionLabel": "CONCEPTO",
+  "captionLine": "una idea con forma",
+  "breadcrumb": { "text": "Idea", "date": "Concept" },
+  "layoutMode": "centered",
+  "kenBurns": true,
+  "kenBurnsZoomFactor": 1.04,
+  "showCaptions": true,
+  "captionFontSize": 38,
+  "enterSeconds": 0.4
+}

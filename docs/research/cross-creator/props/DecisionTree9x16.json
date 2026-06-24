@@ -1,0 +1,29 @@
+{
+  "audioUrl": "",
+  "wordTimings": [],
+  "sectionLabel": "DECIDE",
+  "title": "¿Usar Gemini Flash?",
+  "subtitle": "",
+  "rootNode": { "label": "¿Usar Gemini Flash?", "sub": "", "color": "" },
+  "children": [
+    { "label": "Sí, para todo", "sub": "Tareas rutinarias", "color": "#7CE49A" },
+    { "label": "Con A/B test", "sub": "Producción crítica", "color": "#5BC0E8" },
+    { "label": "Esperar 3.5", "sub": "Más capacidad", "color": "#E89B7A" }
+  ],
+  "layout": "radial-fan",
+  "edgeTipMarker": "dot",
+  "rootEnterSeconds": 0.4,
+  "edgeDrawStartSeconds": 1.2,
+  "edgeDrawFrames": 18,
+  "edgeStaggerFrames": 6,
+  "labelRevealAfterEdgeFrames": 4,
+  "breadcrumb": { "text": "Google", "date": "I/O 2026 · Filtración" },
+  "subjectTool": "gemini",
+  "palette": "true-black",
+  "paperColor": "",
+  "inkColor": "",
+  "accentColor": "",
+  "mutedColor": "",
+  "captionFontSize": 36,
+  "showCaptions": false
+}

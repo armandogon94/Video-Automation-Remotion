@@ -1,0 +1,28 @@
+{
+  "audioUrl": "",
+  "wordTimings": [],
+  "title": "Top 5 reasons Gemini 3.2 Flash matters",
+  "subtitle": "",
+  "sectionLabel": "RANKED",
+  "items": [
+    { "rank": "5", "label": "Hits 92% of GPT-5.5's score", "sub": "", "color": "" },
+    { "rank": "4", "label": "Sub-200ms latency", "sub": "", "color": "" },
+    { "rank": "3", "label": "Native 1M-token context", "sub": "", "color": "" },
+    { "rank": "2", "label": "Free tier in AI Studio", "sub": "", "color": "" },
+    { "rank": "1", "label": "15× cheaper than GPT-5.5", "sub": "$0.25 / 1M tokens", "color": "" }
+  ],
+  "revealDirection": "bottom-up",
+  "revealFrames": 10,
+  "holdFrames": 14,
+  "firstItemEnterSeconds": 1.0,
+  "sideBySideHost": false,
+  "breadcrumb": { "text": "Google", "date": "I/O 2026 · Filtración" },
+  "subjectTool": null,
+  "palette": "true-black",
+  "paperColor": "",
+  "inkColor": "",
+  "accentColor": "",
+  "mutedColor": "",
+  "captionFontSize": 38,
+  "showCaptions": false
+}

@@ -1,0 +1,16 @@
+{
+  "sectionLabel": "ADOPCIÓN IA",
+  "breadcrumb": { "text": "McKinsey", "date": "State of AI" },
+  "xLabels": ["2021", "2022", "2023", "2024", "2025", "2026"],
+  "series": [
+    {
+      "name": "Adopción",
+      "color": "",
+      "values": [18, 41, 58, 69, 76, 80],
+      "annotations": [
+        { "atIndex": 5, "text": "80%" },
+        { "atIndex": 2, "text": "GPT-4" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "audioUrl": "",
+  "wordTimings": [],
+  "sectionLabel": "EL PIPELINE",
+  "stages": [
+    { "name": "implementation-agent", "body": "Writes the first draft", "kind": "agent" },
+    { "name": "test-runner", "body": "Runs the test suite", "kind": "tool" },
+    { "name": "review-agent", "body": "Checks for issues", "kind": "check" }
+  ],
+  "footerLabel": "PIPELINE",
+  "arrowStyle": "accent",
+  "sequenceStepSeconds": 1.0,
+  "firstStageDelaySeconds": 0.4,
+  "breadcrumb": { "text": "Claude Code", "date": "Subagents" },
+  "subjectTool": "",
+  "palette": "true-black",
+  "paperColor": "",
+  "inkColor": "",
+  "accentColor": "#3FB68B",
+  "mutedColor": "",
+  "captionFontSize": 40,
+  "showCaptions": false
+}

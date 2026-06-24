@@ -1,0 +1,33 @@
+{
+  "sectionLabel": "PRECIO POR M TOKENS",
+  "left": {
+    "value": 0.25,
+    "prefix": "$",
+    "suffix": "",
+    "decimals": 2,
+    "label": "Gemini 3.2 Flash",
+    "tagline": "entrada · por 1M tokens",
+    "sourceIcon": "",
+    "accentColor": "",
+    "brandLogo": ""
+  },
+  "right": {
+    "value": 3.75,
+    "prefix": "$",
+    "suffix": "",
+    "decimals": 2,
+    "label": "GPT-5.5",
+    "tagline": "entrada · por 1M tokens",
+    "sourceIcon": "",
+    "accentColor": "",
+    "brandLogo": ""
+  },
+  "vsSeparator": true,
+  "conclusionLine": "15× más barato, misma precisión.",
+  "enterLeftSeconds": 0.4,
+  "enterRightSeconds": 0.7,
+  "countDurationSeconds": 1.0,
+  "breadcrumb": { "text": "Google", "date": "Filtración" },
+  "subjectTool": "",
+  "palette": "dark"
+}
