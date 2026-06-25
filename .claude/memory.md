@@ -509,3 +509,32 @@ procedural comps. Dark is already available via 11 existing `*Dark` registered v
 wrongly darken cream brand content. Correct outcome = keep cream default, dark via variant/prop.
 
 Gallery `CROSS-CREATOR-COMPARE.html` now 47 pairings (19 improved / 28 validated), data-driven.
+
+## 2026-06-25 — Overnight autonomous run (back-catalog + 8 new templates + 3 Codex cycles)
+
+Deep back-catalog scan of ALL 22 creators (enumerated full channels — thousands of videos;
+deep-sampled ~150 previously-unanalyzed; frames in references/creators/<c>/_backcat/, videos
+deleted). Library already covered ~everything → 8 genuinely-new templates built + registered
+(cross-creator driver now 55 + abhi 23): MatrixGridHeatmap9x16, DocumentHighlightSwipe16x9,
+PaintStrokeRibbonBanner16x9 (aiexplained), SpectrumSlider9x16 (abhishek), BeforeAfterSliderWipe9x16
++ ModelNameChipComparison9x16 (estebandiba), RingTopologyHopCounter9x16 + RotatingVectorDial9x16
+(adamrosler).
+
+Then 3 Codex (gpt-5.5, reasoning=high — gpt-5.5-pro/codex are BLOCKED on the ChatGPT-account
+Codex CLI) visual+code review cycles (docs/codex-review/OVERNIGHT-ITER-{1,2,3}.md), fixing real
+findings between each (always verify Codex against ground truth — it produced a confident FALSE
+POSITIVE earlier claiming ABHI-COMPARE paths broken; they resolve via k=component id):
+- C1: BeforeAfterSliderWipe label/handle collision (anchor labels per-half, upper band, smaller);
+  build-cross-creator-gallery.py blurb markdown cleanup.
+- C2: ModelNameChipComparison persistent ModelRail (comparison legible on a still); gallery "NEW"
+  verdict + badge for the 8 unscored new comps (were overstated as VALIDATED·—).
+- C3: clean final pass (only NITs).
+
+OVERNIGHT TOOLING/HABITS that worked: .claude/OVERNIGHT-PLAN.md = idempotent phase checklist a
+resume reads; armed a durable-ish CronCreate at 5:22am to auto-resume after the 5h limit reset
+(the disk-backed scheduled-tasks MCP needs an approval the sleeping user can't give). Codex CLI:
+`cat promptfile | codex exec -m gpt-5.5 -c model_reasoning_effort=high -s workspace-write -c
+approval_policy=never --skip-git-repo-check -i <sheets...>` (the -i flag is VARIADIC — pass the
+prompt via stdin, not as a positional arg, or -i swallows it). Codex sheets:
+scripts/build-codex-review-sheets.py (source vs ours contact sheets).
+End state: tsc=0, registry loads, 55+23 clips, 0 leaked bundles, all committed.

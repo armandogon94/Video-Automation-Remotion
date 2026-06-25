@@ -1,3 +1,39 @@
+# ☀️ OVERNIGHT RUN SUMMARY — 2026-06-25 (read this first)
+
+Ran fully autonomous overnight (~01:10→04:00 EDT). Everything committed on branch
+claude/recursing-tu-dac74b; tsc=0, 0 leaked render bundles, working tree clean.
+
+## What got done
+1. **Deep back-catalog scan (all 22 creators).** Enumerated EVERY video on each channel
+   (thousands: midu 899, alexhormozi 4721 shorts, matthewberman 785, theaiadvantage 725,
+   mreflow 715, bilawal 526, allin 479…) and deep-sampled ~150 previously-UNANALYZED
+   back-catalog videos (frames in references/creators/<c>/_backcat/, videos deleted).
+   Verdict: the existing library already covers ~everything → only **8 genuinely-new
+   buildable patterns** surfaced.
+2. **Built + registered 8 new templates** (now 55 cross-creator comps + 23 abhi):
+   MatrixGridHeatmap9x16, DocumentHighlightSwipe16x9, PaintStrokeRibbonBanner16x9 (aiexplained),
+   SpectrumSlider9x16 (abhishek), BeforeAfterSliderWipe9x16 + ModelNameChipComparison9x16
+   (estebandiba), RingTopologyHopCounter9x16 + RotatingVectorDial9x16 (adamrosler).
+3. **3 Codex (gpt-5.5, reasoning=high) review+fix cycles** — docs/codex-review/OVERNIGHT-ITER-{1,2,3}.md:
+   - C1: fixed BeforeAfterSliderWipe label/handle collision + gallery blurb markdown cleanup.
+   - C2: ModelNameChipComparison density (persistent model rail) + gallery "NEW" verdict for the 8 unscored comps.
+   - C3: clean final pass (only NITs; all fixes hold).
+
+## Review artifacts
+- **CROSS-CREATOR-COMPARE.html** — 55 pairings (17 improved / 27 validated / 11 new). Open it.
+- **ABHI-COMPARE.html** — 23 abhi templates.
+- Codex reports: docs/codex-review/OVERNIGHT-ITER-{1,2,3}.md (+ earlier ITER-{1,2,3}.md).
+- Per-comp notes: docs/research/cross-creator/notes/.
+
+## Notes / open calls for you
+- gpt-5.5-pro is blocked on the ChatGPT-account Codex; used gpt-5.5 at HIGH effort (strongest available).
+- Footage/media-well comps (SplitWebcamScreen, TalkingHeadDynamic, ModelComparison2x2Grid,
+  ModelNameChipComparison, BeforeAfterSliderWipe) intentionally render placeholder media wells —
+  real footage/images composite at use time.
+- Source material KEPT (back-catalog + _new + _fresh frames) for comparison until you sign off.
+
+---
+
 # Scratchpad — Session Handoff Notes
 
 > These notes are for the NEXT Claude Code session to pick up where we left off.
