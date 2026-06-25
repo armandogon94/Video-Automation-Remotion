@@ -98,9 +98,9 @@ export const abhiPhoneMockupSchema = z.object({
 
   /** List rows populating top-down inside the screen (1–5). */
   rows: z.array(rowSchema).default([
-    { glyph: "◆", title: "Glass family", caption: "1080×1920 · GRAPHIFY" },
-    { glyph: "◇", title: "Mesh light", caption: "9:16 · pastel bloom" },
-    { glyph: "▦", title: "Dark grid glow", caption: "warm radial · mono" },
+    { glyph: "◆", title: "Glass family", caption: "1080×1920 · GRAPHIFY", status: "", dotColor: "" },
+    { glyph: "◇", title: "Mesh light", caption: "9:16 · pastel bloom", status: "", dotColor: "" },
+    { glyph: "▦", title: "Dark grid glow", caption: "warm radial · mono", status: "", dotColor: "" },
   ]),
 
   /** Pagination dots under the screen; activeDot is 0-based. -1 = no dots. */

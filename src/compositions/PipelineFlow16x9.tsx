@@ -157,6 +157,7 @@ export const pipelineFlow16x9Schema = z.object({
       {
         name: "Weights",
         body: "GGUF / Safetensors",
+        kicker: "",
         kind: "input",
         color: "",
         enterOffsetSeconds: 0,
@@ -164,6 +165,7 @@ export const pipelineFlow16x9Schema = z.object({
       {
         name: "Runtime",
         body: "llama.cpp / Ollama",
+        kicker: "",
         kind: "tool",
         color: "",
         enterOffsetSeconds: 0,
@@ -171,6 +173,7 @@ export const pipelineFlow16x9Schema = z.object({
       {
         name: "Endpoint",
         body: "OpenAI-compatible",
+        kicker: "",
         kind: "check",
         color: "",
         enterOffsetSeconds: 0,
@@ -178,6 +181,7 @@ export const pipelineFlow16x9Schema = z.object({
       {
         name: "Tools",
         body: "MCP / Plugins",
+        kicker: "",
         kind: "output",
         color: "",
         enterOffsetSeconds: 0,

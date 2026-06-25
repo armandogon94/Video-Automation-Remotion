@@ -682,11 +682,13 @@ const CornerBrackets: React.FC<{
   px: (n: number) => number;
   color: string;
   opacity: number;
-  cardScale: number;
   cardRise: number;
-  cardOpacity: number;
-  canvasW: number;
-  canvasH: number;
+  // Declared for call-site parity but unused inside this component; optional so
+  // the existing call (which omits them) type-checks without changing output.
+  cardScale?: number;
+  cardOpacity?: number;
+  canvasW?: number;
+  canvasH?: number;
 }> = ({ left, top, width, height, px, color, opacity, cardRise }) => {
   const gap = px(14); // brackets sit just OUTSIDE the card edge
   const len = px(26); // arm length

@@ -395,6 +395,10 @@ export const RemotionRoot: React.FC = () => {
             mutedColor: "#6B6760",
             captionFontSize: 48,
             useHeroTransitions: false,
+            mode: "default" as const,
+            counter: "",
+            stepperSteps: [],
+            stepperActiveIndex: 0,
           }}
         />
 
@@ -423,6 +427,7 @@ export const RemotionRoot: React.FC = () => {
             captionFontSize: 40,
             // A4 audit: quote IS the text layer — captions compete with it.
             showCaptions: false,
+            revealDelaySeconds: 0,
           }}
         />
 
@@ -451,6 +456,7 @@ export const RemotionRoot: React.FC = () => {
             captionFontSize: 40,
             // A4 audit: quote IS the text layer — captions compete with it.
             showCaptions: false,
+            revealDelaySeconds: 0,
           }}
         />
 
@@ -909,6 +915,7 @@ export const RemotionRoot: React.FC = () => {
             mutedColor: "",
             captionFontSize: 40,
             showCaptions: false,
+            figureFont: "sans" as const,
             brandId: undefined,
           }}
         />
@@ -3113,10 +3120,10 @@ export const RemotionRoot: React.FC = () => {
             sectionLabel: "THE PIPELINE",
             // Default N=4 — pass shorter `stages` for N=3 (Nate ThreeCardArrowFlow).
             stages: [
-              { name: "Prompt", body: "User input", kind: "input" as const, color: "", enterOffsetSeconds: 0 },
-              { name: "Gemini Flash", body: "Reasoning", kind: "agent" as const, color: "", enterOffsetSeconds: 0 },
-              { name: "Tools", body: "MCP plugins", kind: "tool" as const, color: "", enterOffsetSeconds: 0 },
-              { name: "Response", body: "Streaming", kind: "output" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Prompt", body: "User input", kicker: "", kind: "input" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Gemini Flash", body: "Reasoning", kicker: "", kind: "agent" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Tools", body: "MCP plugins", kicker: "", kind: "tool" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Response", body: "Streaming", kicker: "", kind: "output" as const, color: "", enterOffsetSeconds: 0 },
             ],
             connectorStyle: "chevron" as const,
             emphasisPill: {
@@ -3165,9 +3172,9 @@ export const RemotionRoot: React.FC = () => {
             wordTimings: [],
             sectionLabel: "THE WORKFLOW",
             stages: [
-              { name: "Messy Files", body: "Raw notes & docs", kind: "input" as const, color: "", enterOffsetSeconds: 0 },
-              { name: "Key Questions", body: "What matters?", kind: "agent" as const, color: "", enterOffsetSeconds: 0 },
-              { name: "Clear Story", body: "Structured narrative", kind: "output" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Messy Files", body: "Raw notes & docs", kicker: "", kind: "input" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Key Questions", body: "What matters?", kicker: "", kind: "agent" as const, color: "", enterOffsetSeconds: 0 },
+              { name: "Clear Story", body: "Structured narrative", kicker: "", kind: "output" as const, color: "", enterOffsetSeconds: 0 },
             ],
             connectorStyle: "arrow" as const,
             emphasisPill: {

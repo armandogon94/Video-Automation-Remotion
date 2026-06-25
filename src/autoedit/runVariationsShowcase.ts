@@ -39,7 +39,11 @@ const FULL = { xPct: 0, yPct: 0, wPct: 1, hPct: 1, shape: "rect" as const };
 interface Demo {
   name: string;
   blurb: string;
-  category: "depth" | "text";
+  // Optional: the demo literals below never set this, so at runtime `d.category`
+  // is `undefined` and the `d.category === "depth"` branch is never taken (every
+  // demo renders via the foreground/`text` path). Kept optional to preserve that
+  // exact runtime behavior while satisfying the type checker.
+  category?: "depth" | "text";
   plate: keyof typeof PLATES;
   props: Record<string, unknown>; // RevealText props
 }
@@ -103,7 +107,7 @@ async function main(): Promise<void> {
   const serveUrl = await bundle({ entryPoint: path.join(PROJECT_ROOT, "src/index.ts") });
 
   const all: Demo[] = [...DEPTH, ...TEXT];
-  const results: { name: string; blurb: string; category: string; file: string }[] = [];
+  const results: { name: string; blurb: string; category?: string; file: string }[] = [];
 
   for (const d of all) {
     const pl = PLATES[d.plate];

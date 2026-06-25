@@ -230,10 +230,17 @@ export const AnimatedCounter9x16: React.FC<AnimatedCounter9x16Props> = ({
   // number resizing as it counts up.
   const terminalFigure = formatNumber(target, decimals);
   const figureLen = terminalFigure.length + (prefix ? 1 : 0);
-  const numberFontSize =
+  const charCountSize =
     figureLen <= 4
       ? NUMBER_BASE_SIZE
       : Math.max(220, Math.round(NUMBER_BASE_SIZE * (4 / figureLen)));
+  // The char-count shrink above ignores RENDERED WIDTH, so long figures —
+  // especially wide mono glyphs like "2,907,583" — overflow the 1080 canvas and
+  // clip off both edges. Additionally cap the size to an estimated width fit so
+  // the whole figure always sits inside a safe width (margin left for prefix/suffix).
+  const charEm = figureFont === "mono" ? 0.62 : 0.56; // approx glyph advance / char
+  const widthFit = Math.floor(940 / Math.max(1, figureLen * charEm));
+  const numberFontSize = Math.max(120, Math.min(charCountSize, widthFit));
   const suffixFontSize = Math.round(numberFontSize * 0.7);
   const prefixFontSize = Math.round(numberFontSize * 0.6);
 

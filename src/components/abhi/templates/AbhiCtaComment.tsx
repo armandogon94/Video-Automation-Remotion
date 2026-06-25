@@ -430,10 +430,10 @@ export const AbhiCtaComment: React.FC<Partial<AbhiCtaCommentProps>> = (
                 letterSpacing: "-0.005em",
                 lineHeight: 1,
                 textAlign: "center",
-                backgroundImage: `linear-gradient(95deg, ${p.handleFrom} 0%, ${p.handleMid} 52%, ${p.handleTo} 100%)`,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
+                // NOTE: `background-clip:text` + `color:transparent` renders as an
+                // OPAQUE rectangle in Remotion's headless Chromium (documented gotcha).
+                // Use a SOLID accent color for the swept handle text instead.
+                color: p.handleMid,
               }}
             >
               {p.handle}
