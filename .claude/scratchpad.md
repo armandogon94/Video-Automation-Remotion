@@ -193,3 +193,8 @@ npm run generate -- --script "Texto" --template explainer --platforms youtube
 npm run preview                                     # Hyperframes Studio
 npm run lint                                        # lint current index.html
 ```
+
+
+---
+## ▶ RESUME POINTER (2026-06-25)
+Open backlog for next token window: **`.claude/NEXT-STEPS.md`**. All session work is on branch `claude/recursing-tu-dac74b` (not merged to main). Top item: decide whether to merge the branch. Say "continue with NEXT-STEPS #N" to resume.
