@@ -22,8 +22,8 @@ Branch: claude/recursing-tu-dac74b
       HIGH: MatrixGridHeatmap9x16 (adamrosler — NxN attention/matmul heatmap), DocumentHighlightSwipe16x9 (aiexplained — animated highlighter wipe over a screenshot text block), PaintStrokeRibbonBanner16x9 (aiexplained — hand-painted hot-pink numbered section/lower-third banner w/ paint-reveal).
       MED: SpectrumSlider9x16 (abhishek — 1D continuum, two end-poles, gradient track, marker eases to value), BeforeAfterSliderWipe9x16 (estebandiba — media frame split by animated vertical wipe between two states; placeholder media), ModelNameChipComparison9x16 (estebandiba — full-frame placeholder + cycling corner model-name chips), RingTopologyHopCounter9x16 (adamrosler — nodes on a circle + HOP n/N + parcel orbits), RotatingVectorDial9x16 (adamrosler — clock-face dial + animated needle/angle).
       SKIP (low/dup/non-parametric): Carlos stepper (≈pipeline/flow), sahil nutrition-card/chapter-divider (recompositions), zenzuke hand-drawn (not parametric), LayeredGraphTraversal (≈node-graph), abhi spectrum already covered by SpectrumSlider.
-- [ ] PHASE 3a: Codex review cycle 1 + fixes (IN PROGRESS)
-- [ ] PHASE 3b: Codex review cycle 2 + fixes
+- [x] PHASE 3a: Codex cycle 1 DONE — fixed BeforeAfterSliderWipe label/handle collision + gallery blurb markdown cleanup; verified.
+- [ ] PHASE 3b: Codex review cycle 2 + fixes (IN PROGRESS)
 - [ ] PHASE 3c: Codex review cycle 3 + fixes
 - [ ] PHASE 4: final verify + galleries + commit + write summary to .claude/scratchpad.md
 

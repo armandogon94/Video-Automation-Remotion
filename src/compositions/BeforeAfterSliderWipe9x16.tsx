@@ -237,15 +237,19 @@ const PlaceholderPanel: React.FC<{
           ? "saturate(1.15) contrast(1.05)"
           : "grayscale(0.85) brightness(0.82)",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        // Anchor each well's placeholder label into its OWN half AND lift it into
+        // the upper band, clear of the vertical-center divider line + handle
+        // (which had sat on top of the glyphs -> mid-frame read as broken "BEFOR").
+        alignItems: "flex-start",
+        justifyContent: isAfter ? "flex-end" : "flex-start",
+        padding: isAfter ? "210px 64px 0 0" : "210px 0 0 64px",
       }}
     >
       <span
         style={{
           fontFamily: FONT_STACKS.display,
           fontWeight: 900,
-          fontSize: 116,
+          fontSize: 64,
           letterSpacing: "0.04em",
           color: isAfter ? "#FFFFFF" : "rgba(255,255,255,0.42)",
           textShadow: isAfter

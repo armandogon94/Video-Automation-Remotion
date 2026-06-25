@@ -64,6 +64,10 @@ def note_meta(comp):
             if len(s) > 30 and not s.lower().startswith(comp.lower()):
                 blurb = s
                 break
+    # Clean markdown/punctuation artifacts the notes carry (**, `, leading
+    # ". "/heading "#"/"Creator pattern:") so gallery blurbs read cleanly.
+    blurb = blurb.replace("**", "").replace("`", "")
+    blurb = re.sub(r"^[\s.:>\-—*#]+", "", blurb).strip()
     return (score, verd, blurb[:240])
 
 
