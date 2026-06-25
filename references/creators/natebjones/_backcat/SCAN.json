@@ -1,0 +1,15 @@
+{
+  "scan": "deep-back-catalog",
+  "scanned_at": "2026-06-25",
+  "creator": "natebjones",
+  "channel": "@NateBJones",
+  "back_catalog_total": 1048,
+  "back_catalog_breakdown": {"long_videos": 581, "shorts": 467},
+  "previously_analyzed_in_catalog": 43,
+  "previously_unanalyzed": 1005,
+  "analyzed_this_pass": 13,
+  "sampled_ids": ["b7IS4C9QALc","b1fxYGPbHeo","5Et9WoDCsYs","uVZMc-i5EEs","biJqOrsYN70","ijdhIGRB_Kc","z8-0INxN_Hg","DdlMoRSojtE","V0YhpeSOuzk","uX536ECdb94","BRXGDCBSARY","BFPRcMo4tz8","x8Y404We8O8"],
+  "unsampled_unanalyzed_remaining": 992,
+  "new_patterns": [],
+  "note": "Uniform: talking-head + dual lower-third chips (@nate.b.jones / more on substack); occasional keynote-slide+PIP screen-share (side-by-side AI outputs); shorts = vertical talking-head + karaoke captions. All map to existing library."
+}

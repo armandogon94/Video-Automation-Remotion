@@ -1,0 +1,19 @@
+{
+  "scan": "deep-back-catalog",
+  "scanned_at": "2026-06-25",
+  "creator": "adamrosler",
+  "channel": "@adamrosler",
+  "back_catalog_total": 112,
+  "back_catalog_breakdown": {"shorts": 110, "long_videos": 2},
+  "previously_analyzed_in_catalog": 28,
+  "previously_unanalyzed": 84,
+  "analyzed_this_pass": 12,
+  "sampled_ids": ["prvqXkQDoBw","lj6PVI12_DA","Wa66n8JRytI","fcs1blCNeH0","noZuNnJlezs","K1d_v9SiKHI","gFrq-62r5Iw","riIrZU_l2uE","es79NbFQdzw","zcyVKuEup-k","ApCGuo1KufE","-Sn6m32mOj0"],
+  "unsampled_unanalyzed_remaining": 72,
+  "new_patterns": [
+    {"name":"MatrixGridHeatmap","confidence":"High","evidence":["ApCGuo1KufE/f04.jpg","noZuNnJlezs/f04.jpg"]},
+    {"name":"RingTopologyHopCounter","confidence":"Medium","evidence":["prvqXkQDoBw/f03.jpg","prvqXkQDoBw/f05.jpg"]},
+    {"name":"RotatingVectorDial","confidence":"Medium","evidence":["es79NbFQdzw/f04.jpg"]},
+    {"name":"LayeredGraphTraversal","confidence":"Low-Med","evidence":["lj6PVI12_DA/f04.jpg"]}
+  ]
+}
