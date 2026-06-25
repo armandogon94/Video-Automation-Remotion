@@ -88,8 +88,98 @@ def frames_dir(creator):
     return max(pool, key=lambda d: len(glob.glob(str(d / "*.jpg"))))
 
 
-def sample(d, n):
+SRCMAP = ROOT / "docs" / "research" / "cross-creator" / "source-map.json"
+
+
+def _manifest():
+    """Explicit comp -> {dir, prefix?} overrides (highest priority). Lets the
+    parallel-agent verification pass pin a comp's source scene precisely when the
+    note's auto-resolution is wrong or the note cites no reel."""
+    import json
+    if SRCMAP.exists():
+        try:
+            return json.loads(SRCMAP.read_text())
+        except Exception:
+            return {}
+    return {}
+
+
+MANIFEST = _manifest()
+
+
+def _frame_stem_prefix(name):
+    """'fresh-rankedbars-redcalendar-03.jpg' -> 'fresh-rankedbars-redcalendar-'."""
+    return re.sub(r"\d+(\.jpg)?$", "", name)
+
+
+def list_frames(d, prefix=None):
+    """Sorted jpgs in d, narrowed to a filename prefix when one is given (used for
+    the shared `_fresh/` re-download bucket where many patterns live in one dir,
+    keyed by filename prefix). Prefix is ignored if it matches nothing."""
     js = sorted(glob.glob(str(d / "*.jpg")))
+    if prefix:
+        f = [p for p in js if Path(p).name.startswith(prefix)]
+        if f:
+            return f
+    return js
+
+
+def comp_frames(comp, creator):
+    """Resolve the SOURCE (dir, prefix) for THIS comp — not just its creator.
+
+    Priority: (1) explicit source-map.json override; (2) the reel/frames the comp's
+    note actually cites, e.g. `references/creators/adamrosler/mZgCDFEBna0/frames/frame-009.jpg`
+    or `references/creators/sahilbloom/_fresh/fresh-rankedbars-redcalendar-…`; (3) the
+    creator-level largest-frame-set fallback. This stops every adamrosler row (etc.)
+    from showing one shared scene regardless of the template paired with it."""
+    m = MANIFEST.get(comp)
+    if m:
+        d = ROOT / m["dir"]
+        if d.is_dir() and glob.glob(str(d / "*.jpg")):
+            return d, m.get("prefix")
+    f = NOTES / f"{comp}.md"
+    if f.exists():
+        cite = {}  # (dir, prefix) -> times cited in this comp's note
+        for mt in re.finditer(r"references/creators/[A-Za-z0-9_.\-]+/[A-Za-z0-9_./\-]*",
+                              f.read_text(errors="ignore")):
+            p = ROOT / mt.group(0).rstrip("./")  # trim trailing ellipsis/slash in prose
+            cand, stem = None, None
+            if p.suffix.lower() == ".jpg" and p.parent.is_dir() and glob.glob(str(p.parent / "*.jpg")):
+                cand, stem = p.parent, p.name
+            elif p.is_dir() and glob.glob(str(p / "*.jpg")):
+                cand = p
+            elif p.parent.is_dir() and glob.glob(str(p.parent / "*.jpg")):
+                cand, stem = p.parent, p.name  # note cited a file STEM in a real dir
+            else:
+                for sub in ("_fresh", "frames", "_new"):
+                    if (p / sub).is_dir() and glob.glob(str(p / sub / "*.jpg")):
+                        cand = p / sub
+                        break
+            if cand is None:
+                continue
+            # Narrow by filename prefix only inside the shared `_fresh` bucket.
+            prefix = None
+            if cand.name == "_fresh" and stem:
+                base = _frame_stem_prefix(stem)
+                if base and any(Path(x).name.startswith(base) for x in glob.glob(str(cand / "*.jpg"))):
+                    prefix = base
+            key = (cand, prefix)
+            cite[key] = cite.get(key, 0) + 1
+        if cite:
+            def rank(k):
+                d, pre = k
+                return (
+                    f"{os.sep}creators{os.sep}{creator}{os.sep}" in str(d),  # this creator
+                    d.name == "_fresh",                                      # fresh graphic
+                    cite[k],                                                 # most cited
+                    len(list_frames(d, pre)),                                # most frames
+                )
+            return max(cite, key=rank)
+    return frames_dir(creator), None
+
+
+def sample(js, n):
+    """Evenly sample n items from a pre-resolved list of frame paths."""
     if not js:
         return []
     if len(js) <= n:
@@ -105,23 +195,34 @@ def esc(s):
 rows = []
 for comp, creator in pairings():
     score, verd, blurb = note_meta(comp)
-    d = frames_dir(creator)
+    d, prefix = comp_frames(comp, creator)
     srcs = []
     nframes = 0
-    if d:
-        nframes = len(glob.glob(str(d / "*.jpg")))
-        for i, f in enumerate(sample(d, N_FRAMES)):
+    frames = list_frames(d, prefix) if d else []
+    if frames:
+        nframes = len(frames)
+        for i, f in enumerate(sample(frames, N_FRAMES)):
             dst = SRCF / f"{comp}__{i}.jpg"
             try:
                 shutil.copy(f, dst)
                 srcs.append(f"output/cross-creator/srcframes/{dst.name}")
             except Exception:
                 pass
+    # source id shown in the gallery: the fresh-pattern prefix when the frames come
+    # from the shared per-CREATOR `_fresh` bucket (parent == creator), else the reel
+    # shortcode (the dir's parent, e.g. `7RhJawm2nw4` for `<reel>/_fresh`).
+    if d and d.name == "_fresh" and d.parent.name == creator and prefix:
+        srcid = prefix.rstrip("-_")
+    elif d:
+        srcid = d.parent.name
+    else:
+        srcid = ""
     clip = f"output/cross-creator/{comp}.mp4"
     rows.append({
         "comp": comp, "creator": creator, "score": score, "verdict": verd,
         "blurb": blurb, "srcs": srcs, "fresh": bool(d and "_fresh" in d.name),
         "clip": clip if (ROOT / clip).exists() else "", "nframes": nframes,
+        "srcid": srcid,  # source reel / fresh-pattern id for this comp
     })
 
 order = []
@@ -142,7 +243,7 @@ for r in rows:
         <span class="badge {vc}">{r['verdict']} · {r['score']}</span></div>
       <div class="note">{esc(r['blurb'])}</div>
       <div class="pair">
-        <div class="cell"><span class="tag s">SOURCE · {r['nframes']} frames {fresh}</span><div class="strip">{strip}</div></div>
+        <div class="cell"><span class="tag s">SOURCE · {r['nframes']} frames{(' · ' + esc(r['srcid'])) if r['srcid'] else ''} {fresh}</span><div class="strip">{strip}</div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span>{clip}</div>
       </div>
     </div>''')
