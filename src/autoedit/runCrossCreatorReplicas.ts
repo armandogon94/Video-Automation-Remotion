@@ -90,6 +90,11 @@ const TARGETS: { comp: string; creator: string }[] = [
   { comp: "ModelNameChipComparison9x16", creator: "estebandiba" },
   { comp: "RingTopologyHopCounter9x16", creator: "adamrosler" },
   { comp: "RotatingVectorDial9x16", creator: "adamrosler" },
+  // CodingFab (@CodingFab) — added 2026-06-25
+  { comp: "ConcentricHierarchyRadialCallout9x16", creator: "codingfab" },
+  { comp: "MetricBarsComparisonCard9x16", creator: "codingfab" },
+  { comp: "StatCardSequenceWithUnderlines9x16", creator: "codingfab" },
+  { comp: "AppScreenCarousel9x16", creator: "codingfab" },
 ];
 
 function loadProps(comp: string): Record<string, unknown> {

@@ -70,6 +70,10 @@ import { BeforeAfterSliderWipe9x16, beforeAfterSliderWipe9x16Schema } from "./co
 import { ModelNameChipComparison9x16, modelNameChipComparison9x16Schema } from "./compositions/ModelNameChipComparison9x16";
 import { RingTopologyHopCounter9x16, ringTopologyHopCounter9x16Schema } from "./compositions/RingTopologyHopCounter9x16";
 import { RotatingVectorDial9x16, rotatingVectorDial9x16Schema } from "./compositions/RotatingVectorDial9x16";
+import { ConcentricHierarchyRadialCallout9x16, concentricHierarchyRadialCallout9x16Schema } from "./compositions/ConcentricHierarchyRadialCallout9x16";
+import { MetricBarsComparisonCard9x16, metricBarsComparisonCard9x16Schema } from "./compositions/MetricBarsComparisonCard9x16";
+import { StatCardSequenceWithUnderlines9x16, statCardSequenceWithUnderlines9x16Schema } from "./compositions/StatCardSequenceWithUnderlines9x16";
+import { AppScreenCarousel9x16, appScreenCarousel9x16Schema } from "./compositions/AppScreenCarousel9x16";
 import { BrollListicle9x16, brollListicle9x16Schema } from "./compositions/BrollListicle9x16";
 import { KineticMacroTypeOpener9x16, kineticMacroTypeOpenerSchema } from "./compositions/KineticMacroTypeOpener9x16";
 // Wave-6 — 16:9 horizontal templates
@@ -2637,6 +2641,11 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ModelNameChipComparison9x16" component={ModelNameChipComparison9x16} schema={modelNameChipComparison9x16Schema} durationInFrames={180} fps={30} width={1080} height={1920} defaultProps={modelNameChipComparison9x16Schema.parse({})} />
         <Composition id="RingTopologyHopCounter9x16" component={RingTopologyHopCounter9x16} schema={ringTopologyHopCounter9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={ringTopologyHopCounter9x16Schema.parse({})} />
         <Composition id="RotatingVectorDial9x16" component={RotatingVectorDial9x16} schema={rotatingVectorDial9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={rotatingVectorDial9x16Schema.parse({})} />
+        {/* CodingFab (@CodingFab) — added 2026-06-25 */}
+        <Composition id="ConcentricHierarchyRadialCallout9x16" component={ConcentricHierarchyRadialCallout9x16} schema={concentricHierarchyRadialCallout9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={concentricHierarchyRadialCallout9x16Schema.parse({})} />
+        <Composition id="MetricBarsComparisonCard9x16" component={MetricBarsComparisonCard9x16} schema={metricBarsComparisonCard9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={metricBarsComparisonCard9x16Schema.parse({})} />
+        <Composition id="StatCardSequenceWithUnderlines9x16" component={StatCardSequenceWithUnderlines9x16} schema={statCardSequenceWithUnderlines9x16Schema} durationInFrames={246} fps={30} width={1080} height={1920} defaultProps={statCardSequenceWithUnderlines9x16Schema.parse({})} />
+        <Composition id="AppScreenCarousel9x16" component={AppScreenCarousel9x16} schema={appScreenCarousel9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={appScreenCarousel9x16Schema.parse({})} />
 
         <Composition
           id="KineticMacroTypeOpener9x16"

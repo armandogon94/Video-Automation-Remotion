@@ -312,5 +312,33 @@
     "_changed": true,
     "_confidence": "high",
     "_depicts": "DNVjkdEsKAj is a pure single-scene talking-head reel showing Simon in his warm-lit studio "
+  },
+  "ConcentricHierarchyRadialCallout9x16": {
+    "dir": "references/creators/codingfab/XrGDv4D6_ak/frames",
+    "_verified": true,
+    "_round": "codingfab",
+    "_changed": true,
+    "_depicts": "CodingFab source scene this template was built from"
+  },
+  "MetricBarsComparisonCard9x16": {
+    "dir": "references/creators/codingfab/EePNWETYVYA/frames",
+    "_verified": true,
+    "_round": "codingfab",
+    "_changed": true,
+    "_depicts": "CodingFab source scene this template was built from"
+  },
+  "StatCardSequenceWithUnderlines9x16": {
+    "dir": "references/creators/codingfab/lz0ddzEUTJQ/frames",
+    "_verified": true,
+    "_round": "codingfab",
+    "_changed": true,
+    "_depicts": "CodingFab source scene this template was built from"
+  },
+  "AppScreenCarousel9x16": {
+    "dir": "references/creators/codingfab/nxDVmkv_A-U/frames",
+    "_verified": true,
+    "_round": "codingfab",
+    "_changed": true,
+    "_depicts": "CodingFab source scene this template was built from"
   }
 }

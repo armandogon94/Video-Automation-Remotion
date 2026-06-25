@@ -538,3 +538,22 @@ approval_policy=never --skip-git-repo-check -i <sheets...>` (the -i flag is VARI
 prompt via stdin, not as a positional arg, or -i swallows it). Codex sheets:
 scripts/build-codex-review-sheets.py (source vs ours contact sheets).
 End state: tsc=0, registry loads, 55+23 clips, 0 leaked bundles, all committed.
+
+
+## 2026-06-25 — CodingFab (@CodingFab) added + 4 new templates
+New reference creator: **codingfab** (YouTube, English AI/coding/dev-tools). 24 Shorts
+scraped via `npm run scrape:shorts -- --handle codingfab`, 192 keyframes extracted,
+source videos deleted (frames kept). Analyzed by 24 parallel Opus agents + synthesis vs
+the 121-comp inventory (raw: docs/research/codingfab/SYNTHESIS.md; creator doc:
+references/creators/codingfab/ANALYSIS.md). 13/24 mapped to existing comps; **4 genuinely-new
+atomic templates built + registered + rendered + visually QA'd**:
+- ConcentricHierarchyRadialCallout9x16 (nested containment rings — gap vs Venn/Force/Decision)
+- MetricBarsComparisonCard9x16 (per-item multi-metric bar grids — denser than 2x2/benchmark)
+- StatCardSequenceWithUnderlines9x16 (CodingFab signature colored-underline stat reveal)
+- AppScreenCarousel9x16 (procedural multi-screen phone-mockup walkthrough)
+Added to cross-creator driver TARGETS + source-map.json (pinned to source reels);
+CROSS-CREATOR-COMPARE.html now 59 pairings. Library 121 -> 125 registered compositions.
+Skipped as non-atomic (honest): GameProgressWalkthrough (footage), ProductExplainerHeroSequence
+(sequencer), ComparisonFeatureExplainer + InteractiveUICarousel (covered by existing combos).
+GOTCHA confirmed again: a build agent stacked ConcentricHierarchy ring labels at center; fixed
+to per-band staggered Y (labelY = CENTER_Y - radius + inset).
