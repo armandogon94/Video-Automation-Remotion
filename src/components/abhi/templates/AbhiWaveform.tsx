@@ -18,6 +18,13 @@
  * A secondary "left headline + wide frosted pill + travelling horizontal wave"
  * layout (the DX9k EXTRACT beat) is still reachable via align:"left".
  *
+ * OPTIONAL transcript variant (center mode): some source voiceover beats also
+ * surface a caption/timeline strip under the level meter. Pass
+ * showTranscript:true (default false) to render a frosted transcript chip below
+ * the label whose words illuminate one-by-one over a scrubbing progress bar,
+ * matching those transcript-bearing beats. Default false keeps the canonical
+ * centered mic + bars + label layout exactly as before.
+ *
  * Choreography:
  *   • Kicker pill fades + drops from y−16px over f1–6; accent dot ignites f4.
  *   • (left mode only) Headline rises word-by-word from +18px at ~f6.
@@ -69,6 +76,21 @@ export const abhiWaveformSchema = z.object({
   label: z.string().default("VOICEOVER.WAV"),
   /** Show the white circular MIC button above the bars (center mode). */
   showMic: z.boolean().default(true),
+  /**
+   * (center mode) Render an animated transcript / timeline strip beneath the
+   * bars, matching the source beats where the voiceover scene also surfaces a
+   * caption line. Default false → the canonical centered mic+bars+label layout
+   * is unchanged, so all existing consumers are unaffected.
+   */
+  showTranscript: z.boolean().default(false),
+  /**
+   * (center mode) The transcript copy revealed word-by-word under the bars.
+   * Only used when showTranscript is true. Falls back to a sensible Spanish
+   * placeholder so the strip never renders empty.
+   */
+  transcript: z
+    .string()
+    .default("Transformamos tu guion en una voz natural lista para publicar."),
   /** Number of waveform bars (center: ~10–16 chunky; left: ~40 fine). */
   barCount: z.number().int().min(6).max(80).default(11),
   /** (left mode) Headline cap-height as % of 720w. px@1080 = pct/100*1080. */
@@ -209,6 +231,40 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
     const micShadow = isDark
       ? `0 ${px(14)}px ${px(40)}px ${hexA("#000000", 0.5)}`
       : `0 ${px(14)}px ${px(36)}px ${hexA("#7E78B8", 0.28)}`;
+
+    // ── OPTIONAL transcript / timeline strip (showTranscript:true) ──
+    // A frosted chip below the label whose words light up one-by-one over a
+    // scrubbing progress bar, mirroring transcript-bearing source beats.
+    const transcriptWords =
+      p.transcript.trim() === S ? [] : p.transcript.trim().split(/\s+/);
+    const showTranscript = p.showTranscript && transcriptWords.length > 0;
+    // Strip rises in just after the label settles, then reveals words on a
+    // steady cadence and scrubs a progress bar across its full duration.
+    const TRANSCRIPT_START = LABEL_START + 6;
+    const transcriptSp = spring({
+      frame: frame - TRANSCRIPT_START,
+      fps,
+      config: { damping: 200, mass: 0.6, stiffness: 130 },
+      durationInFrames: 8,
+    });
+    const transcriptOpacity = transcriptSp;
+    const transcriptY = interpolate(transcriptSp, [0, 1], [px(12), 0]);
+    const WORD_REVEAL_START = TRANSCRIPT_START + 6;
+    const WORD_STEP = 4; // frames per word
+    const transcriptSpanFrames = Math.max(1, transcriptWords.length * WORD_STEP);
+    const transcriptProgress = interpolate(
+      frame,
+      [WORD_REVEAL_START, WORD_REVEAL_START + transcriptSpanFrames],
+      [0, 1],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    );
+    const transcriptInk = isDark ? "#C9C9D2" : "#33333E";
+    const transcriptMuted = isDark ? hexA("#C9C9D2", 0.28) : hexA("#33333E", 0.3);
+    const transcriptChipBg = isDark ? hexA("#15161D", 0.7) : hexA("#FFFFFF", 0.7);
+    const transcriptChipBorder = isDark
+      ? hexA("#FFFFFF", 0.08)
+      : hexA("#0C0C12", 0.07);
+    const transcriptTop = barsCenterY + maxHalf + px(78);
 
     return (
       <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -352,6 +408,97 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
             >
               {p.label}
             </span>
+          </div>
+        )}
+
+        {/* OPTIONAL animated transcript / timeline strip below the label. */}
+        {showTranscript && (
+          <div
+            style={{
+              position: "absolute",
+              left: cx - clusterW * 1.45,
+              top: transcriptTop,
+              width: clusterW * 2.9,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: px(14),
+              opacity: transcriptOpacity,
+              transform: `translateY(${transcriptY}px)`,
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                boxSizing: "border-box",
+                padding: `${px(16)}px ${px(22)}px`,
+                borderRadius: px(20),
+                background: transcriptChipBg,
+                border: `1px solid ${transcriptChipBorder}`,
+                boxShadow: isDark
+                  ? `0 ${px(10)}px ${px(30)}px ${hexA("#000000", 0.4)}`
+                  : `0 ${px(10)}px ${px(28)}px ${hexA("#7E78B8", 0.16)}`,
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
+                fontFamily: FONT_STACKS.sans,
+                fontWeight: 600,
+                fontSize: px(24),
+                lineHeight: 1.32,
+                letterSpacing: "-0.01em",
+                textAlign: "center",
+              }}
+            >
+              {transcriptWords.map((w, i) => {
+                // Each word crosses from muted → ink as the scrub passes it,
+                // with a brief accent-tinted "active" highlight at the cursor.
+                const wStart = i / transcriptWords.length;
+                const wEnd = (i + 1) / transcriptWords.length;
+                const lit = transcriptProgress >= wStart;
+                const active =
+                  transcriptProgress >= wStart && transcriptProgress < wEnd;
+                const wColor = active ? accent : lit ? transcriptInk : transcriptMuted;
+                return (
+                  <span
+                    key={`t-${i}`}
+                    style={{
+                      color: wColor,
+                      marginRight: px(8),
+                      transition: "none",
+                    }}
+                  >
+                    {w}
+                  </span>
+                );
+              })}
+            </div>
+
+            {/* Scrubbing timeline bar tracking transcript playback. */}
+            <div
+              style={{
+                position: "relative",
+                width: "78%",
+                height: px(5),
+                borderRadius: px(999),
+                background: isDark
+                  ? hexA("#FFFFFF", 0.12)
+                  : hexA("#0C0C12", 0.1),
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: `${transcriptProgress * 100}%`,
+                  borderRadius: px(999),
+                  background: hasSecondary
+                    ? `linear-gradient(90deg, ${barA} 0%, ${barB} 100%)`
+                    : accent,
+                }}
+              />
+            </div>
           </div>
         )}
       </AbsoluteFill>

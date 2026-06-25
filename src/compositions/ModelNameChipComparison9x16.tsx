@@ -15,13 +15,21 @@
  * media well that CUTS between N models on a fixed schedule (perModelSeconds),
  * with a persistent top-left name chip that swaps to the active model's name on
  * each cut. Because the real processed clip is composited over the media well
- * downstream, the well is rendered here as a labeled PLACEHOLDER whose tint and
- * watermark label change as the chip cycles — so the cut reads even before
- * footage is dropped in.
+ * downstream, the well is rendered here as a RICH labeled PLACEHOLDER: a
+ * clearly-titled "FOOTAGE" panel (per-model deterministic tint + role tag +
+ * dashed drop-target card + muted "PLACEHOLDER" caption) sitting BEHIND the
+ * persistent model-comparison rail. The comparison therefore reads as a real,
+ * finished layout even before footage is dropped in, and the cut still reads
+ * because the tint/role label cycle with the chip.
  *
  * Anatomy (back-to-front):
- *   full-frame media well (tinted placeholder, per-model deterministic hue)
- *     ↳ corner registration ticks + a centered "media" glyph + model watermark
+ *   full-frame media well — RICH "FOOTAGE" placeholder panel:
+ *     ↳ per-model deterministic tint gradient + faint no-signal hatch
+ *     ↳ corner registration ticks
+ *     ↳ top "FOOTAGE" role strip (accent dot) + per-model SOURCE/GRADED tag
+ *     ↳ centered dashed drop-target card holding the clip glyph
+ *     ↳ "FOOTAGE PANEL" label + muted gold "PLACEHOLDER" caption
+ *   persistent model-comparison rail (right edge) — STAYS VISIBLE over the panel
  *   top-left NAME CHIP (solid dark rounded-rect, bold white text, accent dot)
  *     — swaps on each model cut with a quick slide+fade
  *   optional top-right small TAG chip (e.g. "AI Edit")
@@ -183,18 +191,34 @@ function scheduleAt(
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Brand palette (mirrors src/brand tokens; pinned locally so the placeholder
+// reads on-brand even if BRAND.colors.accent is overridden via chipAccent).
+//   navy #1B3A6E · gold #D4AF37 · deep-navy #0F1B2D · cream #FAF7F2
+// ─────────────────────────────────────────────────────────────────────────────
+
+const PALETTE = {
+  navy: "#1B3A6E",
+  gold: "#D4AF37",
+  deepNavy: "#0F1B2D",
+  cream: "#FAF7F2",
+} as const;
+
+/** Hairline (1px) border in cream at a given alpha — for the finished-panel look. */
+const hairline = (alpha: number): string => `1px solid rgba(250,247,242,${alpha})`;
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Inline media glyph — a film/clapper-ish frame drawn in the empty well so the
 // placeholder reads as a video clip well before footage is composited over it.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ClipGlyph: React.FC<{ color: string }> = ({ color }) => (
   <svg
-    width={160}
-    height={160}
+    width={132}
+    height={132}
     viewBox="0 0 24 24"
     fill="none"
     aria-hidden="true"
-    style={{ opacity: 0.34 }}
+    style={{ opacity: 0.92 }}
   >
     <rect
       x={2.5}
@@ -320,29 +344,147 @@ const MediaLayer: React.FC<MediaLayerProps> = ({
             "radial-gradient(120% 80% at 50% 38%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.34) 100%)",
         }}
       />
-      <CornerTicks color="rgba(255,255,255,0.5)" />
+
+      {/* Faint diagonal "no-signal" hatch so the empty panel reads as an
+          intentional placeholder surface rather than a flat color field. */}
       <div
         style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.06,
+          backgroundImage:
+            "repeating-linear-gradient(45deg, #FAF7F2 0 2px, rgba(0,0,0,0) 2px 26px)",
+        }}
+      />
+
+      <CornerTicks color="rgba(250,247,242,0.55)" />
+
+      {/* ── Top role strip: this panel IS the footage well. Label it. ── */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          gap: 22,
+          justifyContent: "space-between",
+          padding: "30px 36px 0",
         }}
       >
-        <ClipGlyph color="#FFFFFF" />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            background: "rgba(15,27,45,0.72)",
+            border: hairline(0.18),
+            borderRadius: 10,
+            padding: "10px 18px",
+          }}
+        >
+          <span
+            style={{
+              width: 12,
+              height: 12,
+              borderRadius: 4,
+              background: accent,
+              boxShadow: `0 0 14px ${accent}cc`,
+            }}
+          />
+          <span
+            style={{
+              fontFamily: FONT_STACKS.condensed,
+              fontWeight: 700,
+              fontSize: 30,
+              letterSpacing: "0.22em",
+              color: PALETTE.cream,
+              textTransform: "uppercase",
+            }}
+          >
+            Footage
+          </span>
+        </div>
+        {/* per-model role tag (SOURCE / GRADED) */}
         <div
           style={{
             fontFamily: FONT_STACKS.mono,
             fontWeight: 500,
-            fontSize: 26,
-            letterSpacing: "0.34em",
-            color: "rgba(255,255,255,0.5)",
+            fontSize: 24,
+            letterSpacing: "0.28em",
+            color: "rgba(250,247,242,0.6)",
             textTransform: "uppercase",
+            background: "rgba(15,27,45,0.55)",
+            border: hairline(0.14),
+            borderRadius: 8,
+            padding: "8px 14px",
           }}
         >
           {tint.label}
         </div>
       </div>
+
+      {/* ── Centered framed glyph card — the "drop footage here" target. ── */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 26,
+        }}
+      >
+        <div
+          style={{
+            width: 248,
+            height: 248,
+            borderRadius: 28,
+            border: `2px dashed rgba(250,247,242,0.32)`,
+            background: "rgba(15,27,45,0.34)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "inset 0 0 60px rgba(0,0,0,0.35)",
+          }}
+        >
+          <ClipGlyph color={PALETTE.cream} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: FONT_STACKS.condensed,
+              fontWeight: 700,
+              fontSize: 34,
+              letterSpacing: "0.16em",
+              color: PALETTE.cream,
+              textTransform: "uppercase",
+            }}
+          >
+            Footage Panel
+          </div>
+          {/* muted PLACEHOLDER caption — the panel-role caption */}
+          <div
+            style={{
+              fontFamily: FONT_STACKS.mono,
+              fontWeight: 500,
+              fontSize: 22,
+              letterSpacing: "0.36em",
+              color: PALETTE.gold,
+              textTransform: "uppercase",
+              opacity: 0.82,
+            }}
+          >
+            Placeholder
+          </div>
+        </div>
+      </div>
+
       {/* thin inner accent line at the bottom of the well as a "now playing" cue */}
       <div
         style={{

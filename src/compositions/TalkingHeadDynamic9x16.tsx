@@ -74,6 +74,15 @@ import { z } from "zod";
 import { EditorialCaption } from "../components/captions/EditorialCaption";
 import { BrandBreadcrumb } from "../components/BrandBreadcrumb";
 import { getToolAccentForSurface, resolveColors, getPalette } from "../brand";
+import { FONT_STACKS } from "../brand/fonts";
+
+// ─── Brand palette (literal hexes — used ONLY by the empty/placeholder branch so
+//     the gallery/standalone render reads as a finished layout even with no
+//     footage supplied. Real-media paths are unaffected). ──────────────────────
+const BRAND_NAVY = "#1B3A6E";
+const BRAND_GOLD = "#D4AF37";
+const BRAND_DEEP_NAVY = "#0F1B2D";
+const BRAND_CREAM = "#FAF7F2";
 
 // ─── Shared word-timing + breadcrumb schemas (mirrored from schemas.ts so this
 //     file stays self-contained, matching the prior convention). ───────────────
@@ -281,6 +290,213 @@ function getLayoutForMode(mode: TalkingHeadCropMode): ModeLayout {
   }
 }
 
+// ─── Placeholder rendering (empty / no-footage branch only) ──────────────────
+
+/** Human-readable crop-mode labels for the no-footage placeholder. Mirrors the
+ *  enum but in display form so the frame reads like a real, labeled layout. */
+const CROP_MODE_LABEL: Record<TalkingHeadCropMode, string> = {
+  FACE_FULL: "FULL FRAME",
+  BROLL_FULL: "B-ROLL FULL",
+  SPLIT_50_TOP_BROLL: "SPLIT 50 · B-ROLL TOP",
+  SPLIT_50_TOP_FACE: "SPLIT 50 · FACE TOP",
+  SPLIT_33_TOP_FACE: "SPLIT 33 · FACE TOP",
+};
+
+type PlaceholderRole = "face" | "broll";
+
+/**
+ * A richly labeled placeholder panel for the no-footage branch. Renders a
+ * brand-palette panel with a hairline border, rounded corners, a centered
+ * role badge ("FACE-CAM" or "B-ROLL / SCREEN"), an optional crop-mode sublabel,
+ * and a small muted "PLACEHOLDER" caption — so the composition reads as a
+ * finished layout even when no media src is supplied.
+ *
+ * NOTE: deliberately avoids `background-clip:text` + transparent fills (Remotion
+ * headless Chromium renders those as opaque rectangles) — every text fill is a
+ * solid color.
+ */
+const PlaceholderPanel: React.FC<{
+  role: PlaceholderRole;
+  /** Crop-mode display label shown as a sublabel (e.g. "SPLIT 50 · FACE TOP"). */
+  modeLabel?: string;
+  /** True when the panel fills the whole 1080×1920 frame (full-bleed face-cam or
+   *  full-bleed b-roll). Sub-panels (split bands) get tighter chrome. */
+  fullBleed: boolean;
+}> = ({ role, modeLabel, fullBleed }) => {
+  const isFace = role === "face";
+
+  // FACE panel = deep-navy field with a navy-tinted vignette so it reads as the
+  // "person" lane; B-ROLL panel = navy field so the two lanes are clearly
+  // distinct at the hard split line. Gold is the shared accent.
+  const fieldColor = isFace ? BRAND_DEEP_NAVY : BRAND_NAVY;
+  const vignette = isFace
+    ? `radial-gradient(ellipse at 50% 38%, ${BRAND_NAVY}80 0%, ${BRAND_DEEP_NAVY} 72%)`
+    : `radial-gradient(ellipse at 50% 42%, ${BRAND_DEEP_NAVY}55 0%, ${BRAND_NAVY} 78%)`;
+
+  const roleLabel = isFace ? "FACE-CAM" : "B-ROLL / SCREEN";
+  // Inset margin + corner radius scale with how big the panel is so a tight
+  // split band doesn't get an oversized frame.
+  const inset = fullBleed ? 28 : 18;
+  const radius = fullBleed ? 36 : 24;
+  const badgeFontSize = fullBleed ? 46 : 34;
+  const sublabelFontSize = fullBleed ? 22 : 18;
+  const microFontSize = fullBleed ? 18 : 15;
+  const glyphSize = fullBleed ? 92 : 64;
+
+  return (
+    <AbsoluteFill
+      style={{
+        background: fieldColor,
+        display: "flex",
+        alignItems: "stretch",
+        justifyContent: "stretch",
+      }}
+    >
+      {/* Bordered inner panel with rounded corners + brand vignette. */}
+      <div
+        style={{
+          position: "absolute",
+          top: inset,
+          left: inset,
+          right: inset,
+          bottom: inset,
+          borderRadius: radius,
+          background: vignette,
+          border: `1px solid ${BRAND_GOLD}59`, // hairline gold @ ~35%
+          boxShadow: `inset 0 0 0 1px ${BRAND_CREAM}14`, // faint cream inner hairline
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
+        {/* Top-left role tag chip — like a real layout's lane marker. */}
+        <div
+          style={{
+            position: "absolute",
+            top: fullBleed ? 26 : 16,
+            left: fullBleed ? 26 : 16,
+            padding: fullBleed ? "8px 16px" : "5px 11px",
+            borderRadius: 999,
+            background: `${BRAND_GOLD}1F`,
+            border: `1px solid ${BRAND_GOLD}66`,
+            color: BRAND_GOLD,
+            fontFamily: FONT_STACKS.mono,
+            fontSize: microFontSize,
+            fontWeight: 600,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+          }}
+        >
+          {roleLabel}
+        </div>
+
+        {/* Centered glyph + role badge + crop-mode sublabel. */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: fullBleed ? 18 : 12,
+            padding: 24,
+            textAlign: "center",
+          }}
+        >
+          <PlaceholderGlyph role={role} size={glyphSize} />
+          <div
+            style={{
+              fontFamily: FONT_STACKS.sans,
+              fontSize: badgeFontSize,
+              fontWeight: 800,
+              letterSpacing: "0.04em",
+              color: BRAND_CREAM,
+              lineHeight: 1.05,
+            }}
+          >
+            {roleLabel}
+          </div>
+          {modeLabel && (
+            <div
+              style={{
+                fontFamily: FONT_STACKS.mono,
+                fontSize: sublabelFontSize,
+                fontWeight: 500,
+                letterSpacing: "0.16em",
+                color: BRAND_GOLD,
+                textTransform: "uppercase",
+              }}
+            >
+              {modeLabel}
+            </div>
+          )}
+        </div>
+
+        {/* Bottom muted PLACEHOLDER caption. */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: fullBleed ? 26 : 16,
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            fontFamily: FONT_STACKS.mono,
+            fontSize: microFontSize,
+            fontWeight: 500,
+            letterSpacing: "0.28em",
+            color: `${BRAND_CREAM}80`, // cream @ ~50% — muted
+            textTransform: "uppercase",
+          }}
+        >
+          Placeholder · no footage
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/** Simple solid-color SVG glyph differentiating the two placeholder lanes:
+ *  a head/shoulders silhouette for FACE-CAM, a play/screen frame for B-ROLL. */
+const PlaceholderGlyph: React.FC<{ role: PlaceholderRole; size: number }> = ({
+  role,
+  size,
+}) => {
+  if (role === "face") {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 100 100"
+        fill="none"
+        aria-hidden
+      >
+        <circle cx="50" cy="34" r="20" fill={BRAND_GOLD} fillOpacity={0.9} />
+        <path
+          d="M16 92c0-20 15-32 34-32s34 12 34 32"
+          fill={BRAND_GOLD}
+          fillOpacity={0.9}
+        />
+      </svg>
+    );
+  }
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" aria-hidden>
+      <rect
+        x="12"
+        y="22"
+        width="76"
+        height="56"
+        rx="8"
+        fill="none"
+        stroke={BRAND_GOLD}
+        strokeWidth={5}
+        strokeOpacity={0.9}
+      />
+      <path d="M42 40v20l18-10z" fill={BRAND_GOLD} fillOpacity={0.95} />
+    </svg>
+  );
+};
+
 // ─── Single segment overlay ────────────────────────────────────────────────
 const SegmentOverlay: React.FC<{
   segment: CropSegment;
@@ -322,7 +538,7 @@ const SegmentOverlay: React.FC<{
             background: fallbackBrollBg,
           }}
         >
-          {brollSrc && (
+          {brollSrc ? (
             <Img
               src={brollSrc}
               style={{
@@ -333,6 +549,20 @@ const SegmentOverlay: React.FC<{
                 display: "block",
               }}
             />
+          ) : (
+            // No B-roll asset supplied → labeled "B-ROLL / SCREEN" placeholder so
+            // the band reads as a finished layout lane, not an empty well. The
+            // mode label only adds noise on full-bleed B-roll, so show it only
+            // for the narrower split bands.
+            <PlaceholderPanel
+              role="broll"
+              fullBleed={segment.cropMode === "BROLL_FULL"}
+              modeLabel={
+                segment.cropMode === "BROLL_FULL"
+                  ? undefined
+                  : CROP_MODE_LABEL[segment.cropMode]
+              }
+            />
           )}
         </div>
       )}
@@ -341,8 +571,10 @@ const SegmentOverlay: React.FC<{
           <OffthreadVideo> at the SAME src + same playback time as the base
           face-cam — Remotion's deterministic frame addressing means both
           mounts paint the same frame, so this reads as one continuous shot.
-          For BROLL_FULL we skip this entirely (hideFace = true). */}
-      {!layout.hideFace && faceCamSrc && layout.faceClipPath && (
+          For BROLL_FULL we skip this entirely (hideFace = true). When NO
+          face-cam src is supplied we render a labeled FACE-CAM placeholder
+          clipped to the same band so the split layout reads as finished. */}
+      {!layout.hideFace && layout.faceClipPath && (
         <div
           style={{
             position: "absolute",
@@ -355,17 +587,25 @@ const SegmentOverlay: React.FC<{
             clipPath: layout.faceClipPath,
           }}
         >
-          <OffthreadVideo
-            src={faceCamSrc}
-            muted
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center top",
-              display: "block",
-            }}
-          />
+          {faceCamSrc ? (
+            <OffthreadVideo
+              src={faceCamSrc}
+              muted
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center top",
+                display: "block",
+              }}
+            />
+          ) : (
+            <PlaceholderPanel
+              role="face"
+              fullBleed
+              modeLabel={CROP_MODE_LABEL[segment.cropMode]}
+            />
+          )}
         </div>
       )}
     </AbsoluteFill>
@@ -412,6 +652,18 @@ export const TalkingHeadDynamic9x16: React.FC<TalkingHeadDynamic9x16Props> = ({
   const resolvedVoiceoverSrc = resolveSrc(voiceoverSrc);
   const resolvedAudioUrl = resolveSrc(audioUrl);
 
+  // Active segment at the current frame — drives the crop-mode label shown on
+  // the no-footage FACE-CAM placeholder base layer (purely cosmetic; the real
+  // overlay stack still renders per-segment exactly as before).
+  const activeSegment = segments.find((s) => {
+    const startFrame = Math.round(s.startSeconds * fps);
+    const endFrame = Math.round(s.endSeconds * fps);
+    return frame >= startFrame && frame < endFrame;
+  });
+  const activeCropModeLabel = activeSegment
+    ? CROP_MODE_LABEL[activeSegment.cropMode]
+    : CROP_MODE_LABEL.FACE_FULL;
+
   // Fallback colors for empty slots — on-brand but obviously "missing". The two
   // bands are deliberately DISTINCT so the hard split (the load-bearing
   // @builtbystephan signature) stays legible even when a face-cam or B-roll
@@ -435,7 +687,7 @@ export const TalkingHeadDynamic9x16: React.FC<TalkingHeadDynamic9x16Props> = ({
           provided. If your face-cam has the load-bearing audio, set voiceoverSrc
           empty AND remove the `muted` attribute via composition customization
           (or re-mount with the audio enabled in a fork). */}
-      {resolvedFaceCamSrc && (
+      {resolvedFaceCamSrc ? (
         <AbsoluteFill>
           <OffthreadVideo
             src={resolvedFaceCamSrc}
@@ -448,6 +700,14 @@ export const TalkingHeadDynamic9x16: React.FC<TalkingHeadDynamic9x16Props> = ({
               display: "block",
             }}
           />
+        </AbsoluteFill>
+      ) : (
+        // No face-cam src supplied → full-bleed FACE-CAM placeholder so the base
+        // lane reads as a real face-cam panel even with no footage. Carries the
+        // active segment's crop-mode label. The per-segment overlay stack still
+        // composites on top exactly as before.
+        <AbsoluteFill>
+          <PlaceholderPanel role="face" fullBleed modeLabel={activeCropModeLabel} />
         </AbsoluteFill>
       )}
 
@@ -516,6 +776,42 @@ export const TalkingHeadDynamic9x16: React.FC<TalkingHeadDynamic9x16Props> = ({
             inkColor: resolvedInk,
           }}
         />
+      )}
+
+      {/* Bold placeholder caption — shown ONLY in the no-footage branch (no
+          face-cam src AND no word timings to animate) so the bottom strip reads
+          as a finished, captioned layout rather than empty space. The real
+          word-by-word caption path above is untouched when timings exist. Uses
+          solid colors (no background-clip:text). */}
+      {showCaptions && wordTimings.length === 0 && !resolvedFaceCamSrc && (
+        <AbsoluteFill
+          style={{
+            justifyContent: "flex-end",
+            alignItems: "center",
+            paddingBottom: 96,
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 920,
+              padding: "18px 30px",
+              borderRadius: 16,
+              background: `${BRAND_DEEP_NAVY}D9`, // deep-navy @ ~85%
+              border: `1px solid ${BRAND_GOLD}59`,
+              fontFamily: FONT_STACKS.sans,
+              fontSize: captionFontSize + 4,
+              fontWeight: 800,
+              letterSpacing: "0.01em",
+              lineHeight: 1.1,
+              textAlign: "center",
+              color: BRAND_CREAM,
+              textTransform: "uppercase",
+            }}
+          >
+            {breadcrumb?.text ?? "Caption preview"}
+          </div>
+        </AbsoluteFill>
       )}
     </AbsoluteFill>
   );

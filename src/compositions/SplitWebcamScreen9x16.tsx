@@ -87,6 +87,160 @@ function resolveImageSrc(raw: string): string | null {
   return raw.startsWith("http") ? raw : staticFile(raw);
 }
 
+// ─── Empty-state placeholder panel ──────────────────────────────────
+/**
+ * Rich labeled placeholder rendered ONLY when a half has no media source.
+ *
+ * Communicates the intended split layout even without footage: each panel
+ * is clearly labeled with its role ("SCREEN / B-ROLL" on top, "FACE-CAM" on
+ * bottom), framed with a hairline border + rounded corners, a tasteful
+ * diagonal-hatch ghost field for texture, a brand glyph, and a small muted
+ * "PLACEHOLDER" caption so the frame reads as a finished layout in the
+ * cross-creator gallery rather than an empty media well.
+ *
+ * Colors are passed in pre-resolved (palette defaults + overrides) so this
+ * stays consistent with the rest of the composition. No background-clip:text
+ * is used — all text is painted with solid colors (Remotion headless Chromium
+ * renders background-clip:text as an opaque rectangle).
+ */
+const PlaceholderPanel: React.FC<{
+  role: "screen" | "facecam";
+  paper: string;
+  ink: string;
+  accent: string;
+  muted: string;
+}> = ({ role, paper, ink, accent, muted }) => {
+  const isScreen = role === "screen";
+  const roleLabel = isScreen ? "SCREEN / B-ROLL" : "FACE-CAM";
+  const roleHint = isScreen
+    ? "Demo capture or supporting footage drops here"
+    : "Creator webcam drops here";
+
+  // Ghost field: subtle diagonal hatch in ink, so the empty panel reads as a
+  // deliberately-styled placeholder surface rather than a flat color block.
+  const hatch = `repeating-linear-gradient(45deg, ${ink}0A 0px, ${ink}0A 2px, transparent 2px, transparent 16px)`;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        // Top panel sits a hair darker (ink wash) than the paper-toned bottom panel
+        // so the seam-split is legible even when both halves are empty.
+        background: isScreen ? `${ink}14` : paper,
+        backgroundImage: hatch,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        // Hairline inner border + rounded corners, inset so the seam band stays clean.
+        boxSizing: "border-box",
+        padding: 28,
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          boxSizing: "border-box",
+          border: `2px solid ${ink}26`,
+          borderRadius: 28,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 22,
+          textAlign: "center",
+          padding: 40,
+        }}
+      >
+        {/* Brand glyph — solid accent disc with the role initial (no gradients/clip). */}
+        <div
+          style={{
+            width: 108,
+            height: 108,
+            borderRadius: 24,
+            background: accent,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: `0 8px 24px ${ink}24`,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 800,
+              fontSize: 56,
+              lineHeight: 1,
+              color: paper,
+            }}
+          >
+            {isScreen ? "▦" : "◉"}
+          </span>
+        </div>
+
+        {/* Role label — large, solid ink, the headline of the panel. */}
+        <div
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 800,
+            fontSize: 64,
+            lineHeight: 1.02,
+            letterSpacing: "-0.02em",
+            color: ink,
+          }}
+        >
+          {roleLabel}
+        </div>
+
+        {/* One-line muted hint describing what belongs here. */}
+        <div
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 500,
+            fontSize: 30,
+            lineHeight: 1.25,
+            color: muted,
+            maxWidth: 720,
+          }}
+        >
+          {roleHint}
+        </div>
+
+        {/* Muted "PLACEHOLDER" caption pill — small, low-key, accent-bordered. */}
+        <div
+          style={{
+            marginTop: 6,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 12,
+            padding: "10px 22px",
+            borderRadius: 999,
+            border: `2px solid ${accent}`,
+            background: `${accent}1A`,
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 700,
+            fontSize: 24,
+            letterSpacing: "0.14em",
+            color: accent,
+          }}
+        >
+          <span
+            style={{
+              width: 11,
+              height: 11,
+              borderRadius: 999,
+              background: accent,
+              display: "inline-block",
+            }}
+          />
+          PLACEHOLDER
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ─── Single callout overlay ─────────────────────────────────────────
 const CalloutOverlay: React.FC<{
   callout: SplitCallout;
@@ -201,7 +355,9 @@ export const SplitWebcamScreen9x16: React.FC<SplitWebcamScreen9x16Props> = ({
   const webcamSrc = resolveImageSrc(webcamImageUrl);
   const screenSrc = resolveImageSrc(screenImageUrl);
 
-  // Fallback half-block colors — paper-tinted ink so the missing image is obvious but on-brand.
+  // Empty-state base color per half — when a source IS provided the <Img> covers
+  // this; when absent the rich PlaceholderPanel paints over it. Kept paper/ink-toned
+  // so the seam-split stays legible behind the placeholder.
   const webcamFallbackBg = `${resolvedInk}22`; // ink at ~13% alpha
   const screenFallbackBg = resolvedPaper;
 
@@ -211,7 +367,7 @@ export const SplitWebcamScreen9x16: React.FC<SplitWebcamScreen9x16Props> = ({
         <Audio src={audioUrl.startsWith("http") ? audioUrl : staticFile(audioUrl)} />
       )}
 
-      {/* TOP HALF — webcam image (or fallback block) */}
+      {/* TOP HALF — webcam image (or rich labeled FACE-CAM placeholder) */}
       <div
         style={{
           position: "absolute",
@@ -223,7 +379,7 @@ export const SplitWebcamScreen9x16: React.FC<SplitWebcamScreen9x16Props> = ({
           background: webcamFallbackBg,
         }}
       >
-        {webcamSrc && (
+        {webcamSrc ? (
           <Img
             src={webcamSrc}
             style={{
@@ -234,10 +390,18 @@ export const SplitWebcamScreen9x16: React.FC<SplitWebcamScreen9x16Props> = ({
               display: "block",
             }}
           />
+        ) : (
+          <PlaceholderPanel
+            role="facecam"
+            paper={resolvedPaper}
+            ink={resolvedInk}
+            accent={resolvedAccent}
+            muted={resolvedMuted}
+          />
         )}
       </div>
 
-      {/* BOTTOM HALF — screen recording image (or fallback block) */}
+      {/* BOTTOM HALF — screen recording image (or rich labeled SCREEN / B-ROLL placeholder) */}
       <div
         style={{
           position: "absolute",
@@ -249,7 +413,7 @@ export const SplitWebcamScreen9x16: React.FC<SplitWebcamScreen9x16Props> = ({
           background: screenFallbackBg,
         }}
       >
-        {screenSrc && (
+        {screenSrc ? (
           <Img
             src={screenSrc}
             style={{
@@ -259,6 +423,14 @@ export const SplitWebcamScreen9x16: React.FC<SplitWebcamScreen9x16Props> = ({
               objectPosition: "center center",
               display: "block",
             }}
+          />
+        ) : (
+          <PlaceholderPanel
+            role="screen"
+            paper={resolvedPaper}
+            ink={resolvedInk}
+            accent={resolvedAccent}
+            muted={resolvedMuted}
           />
         )}
       </div>

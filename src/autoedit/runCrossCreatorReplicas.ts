@@ -106,12 +106,13 @@ function loadProps(comp: string): Record<string, unknown> {
 
 async function main(): Promise<void> {
   const only = process.argv[2];
+  const onlySet = only ? new Set(only.split(",").map((s) => s.trim()).filter(Boolean)) : null;
   fs.mkdirSync(OUT_DIR, { recursive: true });
   await ensureBrowser();
   console.log("[cc] bundling…");
   const serveUrl = await bundle({ entryPoint: path.join(PROJECT_ROOT, "src/index.ts") });
 
-  const targets = TARGETS.filter((t) => !only || t.comp === only);
+  const targets = TARGETS.filter((t) => !onlySet || onlySet.has(t.comp));
   const results: { comp: string; creator: string; file: string; dur: number }[] = [];
   for (const t of targets) {
     const inputProps = loadProps(t.comp);
