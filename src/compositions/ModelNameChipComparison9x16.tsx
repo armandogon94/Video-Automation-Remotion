@@ -497,6 +497,80 @@ const ProgressDots: React.FC<{
 );
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Persistent model rail — the FULL list of compared models down the right edge,
+// active one highlighted. Gives the frame comparison density even on a still
+// (the temporal cut alone read too sparse).
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ModelRail: React.FC<{ models: string[]; activeIndex: number; accent: string }> = ({
+  models,
+  activeIndex,
+  accent,
+}) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [8, 22], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <div
+      style={{
+        position: "absolute",
+        right: 40,
+        top: "50%",
+        transform: "translateY(-50%)",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+        alignItems: "flex-end",
+        opacity,
+      }}
+    >
+      {models.map((m, i) => {
+        const active = i === activeIndex;
+        const past = i < activeIndex;
+        return (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              background: active ? accent : "rgba(8,12,22,0.66)",
+              border: active ? `1px solid ${accent}` : "1px solid rgba(255,255,255,0.14)",
+              borderRadius: 999,
+              padding: active ? "9px 18px" : "7px 14px",
+              opacity: active ? 1 : past ? 0.72 : 0.42,
+            }}
+          >
+            <span
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: 8,
+                background: active ? "#0A0C12" : past ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.35)",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: FONT_STACKS.mono,
+                fontWeight: active ? 700 : 500,
+                fontSize: active ? 26 : 22,
+                letterSpacing: "0.01em",
+                color: active ? "#0A0C12" : "#FFFFFF",
+                textTransform: "uppercase",
+              }}
+            >
+              {m}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Bottom caption bar.
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -682,6 +756,10 @@ export const ModelNameChipComparison9x16: React.FC<
             activeIndex={activeIndex}
             accent={chipAccent}
           />
+        ) : null}
+
+        {modelCount > 1 ? (
+          <ModelRail models={models} activeIndex={activeIndex} accent={chipAccent} />
         ) : null}
 
         {caption !== "" ? <CaptionBar caption={caption} /> : null}

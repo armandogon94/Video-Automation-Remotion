@@ -46,12 +46,16 @@ def note_meta(comp):
     f = NOTES / f"{comp}.md"
     has_props = (PROPS / f"{comp}.json").exists()
     if not f.exists():
-        return ("—", "IMPROVED" if has_props else "VALIDATED", "")
+        return ("—", "NEW", "")
     t = f.read_text(errors="ignore")
     scores = re.findall(r"([0-9]+(?:\.[0-9])?)\s*/\s*10", t)
     score = (scores[-1] + "/10") if scores else "—"
-    improved = has_props or bool(re.search(r"[—\-]\s*IMPROVED", t))
-    verd = "IMPROVED" if improved else "VALIDATED"
+    if re.search(r"[—\-]\s*NEW\b", t):
+        verd = "NEW"
+    elif has_props or re.search(r"[—\-]\s*IMPROVED", t):
+        verd = "IMPROVED"
+    else:
+        verd = "VALIDATED"
     # blurb: text after the verdict token on a score line, else first substantial line
     blurb = ""
     for line in t.splitlines():
@@ -127,7 +131,7 @@ for r in rows:
 
 cards = []
 for r in rows:
-    vc = "imp" if r["verdict"] == "IMPROVED" else ("val" if r["verdict"] == "VALIDATED" else "na")
+    vc = {"IMPROVED": "imp", "VALIDATED": "val", "NEW": "new"}.get(r["verdict"], "na")
     strip = "".join(f'<img src="{s}" loading="lazy">' for s in r["srcs"]) or '<div class="noimg">no preserved frames</div>'
     clip = (f'<video src="{r["clip"]}" muted loop autoplay playsinline controls></video>'
             if r["clip"] else '<div class="noimg">no clip rendered</div>')
@@ -145,6 +149,7 @@ for r in rows:
 
 n_imp = sum(1 for r in rows if r["verdict"] == "IMPROVED")
 n_val = sum(1 for r in rows if r["verdict"] == "VALIDATED")
+n_new = sum(1 for r in rows if r["verdict"] == "NEW")
 creators_js = ",".join(f'"{c}"' for c in order)
 
 html = f'''<!doctype html>
@@ -164,6 +169,7 @@ html = f'''<!doctype html>
   .badge.imp{{background:rgba(232,161,59,.16);color:var(--imp);border:1px solid var(--imp)}}
   .badge.val{{background:rgba(75,192,122,.14);color:var(--val);border:1px solid var(--val)}}
   .badge.na{{background:#1a1f2a;color:var(--muted);border:1px solid var(--line)}}
+  .badge.new{{background:rgba(91,192,232,.16);color:var(--cyan);border:1px solid var(--cyan)}}
   .note{{color:var(--muted);font-size:13px;margin:6px 0 11px}}
   .pair{{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}}
   .cell{{position:relative}}.cell .tag{{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;padding:2px 8px;border-radius:6px;margin-bottom:7px}}
@@ -185,6 +191,7 @@ html = f'''<!doctype html>
   f.innerHTML='<button data-k="creator" data-c="all" class="on">All ('+{len(rows)}+')</button>'
     +'<button data-k="verdict" data-c="IMPROVED">Improved ({n_imp})</button>'
     +'<button data-k="verdict" data-c="VALIDATED">Validated ({n_val})</button>'
+    +'<button data-k="verdict" data-c="NEW">New ({n_new})</button>'
     +CREATORS.map(c=>`<button data-k="creator" data-c="${{c}}">@${{c}}</button>`).join('');
   f.querySelectorAll('button').forEach(b=>b.onclick=()=>{{
     f.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
