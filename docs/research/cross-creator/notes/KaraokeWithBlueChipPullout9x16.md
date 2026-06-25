@@ -34,3 +34,7 @@ To make every Nate-grammar Shorts caption (this comp + any future C7 sibling) ma
 - A `register: "karaoke"` preset (or a `futureColor` style override) so past AND future words are solid white with only the current word green — instead of the dimmed-future custom-register behavior.
 - `showAccentBar?: boolean` (default `true`) gating the hardcoded `borderLeft` rule at line 359, and a `boxless?: boolean` to drop the box border/background — so on-footage karaoke can float with a text stroke (no left bar, no box), matching Nate's Shorts.
 Then this comp would set `register: "karaoke"`, `textTransform: "uppercase"`, `showAccentBar: false`, `boxless: true` to reach ~10/10 against Nate's reference — with zero risk to the ~20 other comps that consume `EditorialCaption`, since all new options default to today's behavior.
+
+
+## Phase-3 triple-vote (2026-06)
+KaraokeWithBlueChipPullout9x16 ↔ natebjones: 8/10 — IMPROVED: panel 8/8/8 PASS; proactively fixed the karaoke inter-word spacing collapse (active scaled word merging with neighbors, "CLAUDEIS") by widening the flex word-gap proportional to font size in boxless mode (boxed renders byte-unchanged).

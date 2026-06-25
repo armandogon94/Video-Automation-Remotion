@@ -198,20 +198,24 @@ export const KaraokeWithBlueChipPullout9x16: React.FC<
       {/* ── Layer 1: green-current-word karaoke baseline (read-only molecule) ── */}
       {/* Consumed without its pulloutChip prop — this composition owns the chip
           SCHEDULE itself (see Layer 2) because the molecule's single chip has a
-          hard exit and cannot slide out. We pass a transparent paper card so the
-          karaoke reads on black (Shorts grammar). register stays "custom" so the
-          explicit accentColor (Nate green active word) and inkColor (white past
-          words) win. */}
+          hard exit and cannot slide out. register="karaoke" + boxless drops the
+          paper card so the words float on black (Shorts grammar) with just a text
+          stroke; showAccentBar=false kills the left rule; textTransform="uppercase"
+          matches the natebjones / mreflow / builtbystephan karaoke caps. We still
+          pass the explicit accentColor (Nate green active word) and inkColor (white
+          past words) so the composition's own colors win over the karaoke palette
+          defaults — identical green/white, but caller-authoritative. */}
       <EditorialCaption
         wordTimings={wordTimings}
         style={{
           position: "bottom",
           distancePx: 360,
           fontSize: 64,
-          register: "custom",
+          register: "karaoke",
+          textTransform: "uppercase",
+          boxless: true,
+          showAccentBar: false,
           transition: "pop",
-          paperColor: "transparent",
-          mutedBorderColor: "transparent",
           accentColor: activeWordColor,
           inkColor: pastWordColor,
           maxWidthPx: 960,

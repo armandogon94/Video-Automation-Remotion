@@ -1,0 +1,3 @@
+# BuilderDropPoster9x16 ↔ builtbystephan (NEW — 2026-06 discovery)
+
+BuilderDropPoster9x16 ↔ builtbystephan: 9/10 — VALIDATED: triple-vote panel 9/9/9. Faithful "Builder Drop" product-spec poster — dashed blueprint frame + corner ticks + left accent rail, mono micro-metadata (BUILDER DROP #NNN · date · @handle), two-tone headline w/ one accent word, mono subhead, [tag] pill, inset media slot w/ floating annotation chips, bottom tag-pills + feature bullets + footnote, dual footer; staggered build-in. Gold-on-navy is the intentional Armando brand swap of his red-on-black. Media slot is an intentional placeholder (real footage composited at use time).

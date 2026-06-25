@@ -36,6 +36,9 @@ import { nonOverlappingGroups, type CaptionGroup } from "../../timing/align";
  *  - 'punchy'    (Hormozi)   : active = yellow #F1C232, past = white,         future = white@0.30
  *  - 'editorial' (Sahil)     : active = cyan   #5BC0E8, past = white,         future = white@0.40
  *  - 'technical' (Adam)      : active = white,          past = white,         future = white@0.55
+ *  - 'karaoke'   (natebjones/mreflow/builtbystephan) : ALL words solid white EXCEPT the
+ *                              current word which is bright green #2ECC71. No dimming of
+ *                              future words — classic karaoke read on a dark background.
  *  - 'custom'                : opt out — keep whatever the user passed in style props (existing behavior)
  *
  * When `register` is set to a preset, the palette is applied to internal active /
@@ -43,7 +46,12 @@ import { nonOverlappingGroups, type CaptionGroup } from "../../timing/align";
  * style color props (accentColor / inkColor). When `register` is undefined or
  * 'custom', existing behavior is preserved 1:1.
  */
-export type CaptionRegister = "punchy" | "editorial" | "technical" | "custom";
+export type CaptionRegister =
+  | "punchy"
+  | "editorial"
+  | "technical"
+  | "karaoke"
+  | "custom";
 
 /**
  * Caption transition verb between paginated groups:
@@ -114,6 +122,13 @@ const REGISTER_PALETTES: Record<Exclude<CaptionRegister, "custom">, RegisterPale
     pastColor: "#FFFFFF",
     futureColor: "rgba(255,255,255,0.55)",
   },
+  // Karaoke: every word solid white, current word bright green. No future-word
+  // dimming (futureColor is also solid white) — the read is "all white, one green".
+  karaoke: {
+    activeColor: "#2ECC71",
+    pastColor: "#FFFFFF",
+    futureColor: "#FFFFFF",
+  },
 };
 
 export interface EditorialCaptionStyle {
@@ -132,10 +147,11 @@ export interface EditorialCaptionStyle {
   /** Trailing hold (ms) past the last word in a group. Default 0 (group hides immediately when last word ends). */
   trailingHoldMs?: number;
   /**
-   * Caption "register" — sets active/past/future color palette to one of three modes:
+   * Caption "register" — sets active/past/future color palette to one of four modes:
    *  - 'punchy' (Hormozi style)    : active = yellow #F1C232, past = white, future = white@0.30
    *  - 'editorial' (Sahil style)   : active = cyan   #5BC0E8, past = white, future = white@0.40
    *  - 'technical' (Adam style)    : active = white,          past = white, future = white@0.55
+   *  - 'karaoke' (Nate/mreflow)    : active = green  #2ECC71, past = white, future = white (no dim)
    *  - 'custom' (or undefined)     : keep existing color props as-is (back-compat)
    *
    * When a preset is set, falls through to existing `accentColor` / `inkColor`
@@ -152,6 +168,24 @@ export interface EditorialCaptionStyle {
    * Explicit values always win and preserve back-compat.
    */
   transition?: CaptionTransition;
+  /**
+   * Letter-casing applied to every caption word. 'none' (default) renders the
+   * text verbatim — byte-identical to prior behavior. 'uppercase' forces caps,
+   * the karaoke convention used by natebjones / mreflow / builtbystephan.
+   */
+  textTransform?: "none" | "uppercase";
+  /**
+   * When true, drops the paper card chassis (background, border, left accent
+   * rule, padding, box-shadow) so the words float directly over the scene with
+   * just a text stroke for legibility. Default false preserves the boxed card 1:1.
+   */
+  boxless?: boolean;
+  /**
+   * Gates the hardcoded left accent rule (the 4px colored `borderLeft`). Default
+   * true preserves the existing accent bar. Set false to drop it (e.g. floating
+   * karaoke). When `boxless` is true the bar is dropped regardless of this flag.
+   */
+  showAccentBar?: boolean;
 }
 
 interface EditorialCaptionProps {
@@ -167,9 +201,13 @@ interface EditorialCaptionProps {
   pulloutChip?: CaptionPulloutChip;
 }
 
-const DEFAULT_STYLE: Required<Omit<EditorialCaptionStyle, "register" | "transition">> & {
+type ResolvedEditorialCaptionStyle = Required<
+  Omit<EditorialCaptionStyle, "register" | "transition">
+> & {
   register: CaptionRegister;
-} = {
+};
+
+const DEFAULT_STYLE: ResolvedEditorialCaptionStyle = {
   position: "bottom",
   distancePx: 240,
   fontSize: 48,
@@ -182,6 +220,9 @@ const DEFAULT_STYLE: Required<Omit<EditorialCaptionStyle, "register" | "transiti
   windowGapMs: 60,
   trailingHoldMs: 0,
   register: "custom",
+  textTransform: "none",
+  boxless: false,
+  showAccentBar: true,
 };
 
 function getPositionStyle(
@@ -201,9 +242,7 @@ export const EditorialCaption: React.FC<EditorialCaptionProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const style: Required<Omit<EditorialCaptionStyle, "register" | "transition">> & {
-    register: CaptionRegister;
-  } = { ...DEFAULT_STYLE, ...userStyle };
+  const style: ResolvedEditorialCaptionStyle = { ...DEFAULT_STYLE, ...userStyle };
 
   // Transition resolution. Explicit value from caller always wins (back-compat
   // for any caller already passing it). Otherwise: editorial register pops
@@ -230,10 +269,19 @@ export const EditorialCaption: React.FC<EditorialCaptionProps> = ({
     userStyle?.inkColor !== undefined
       ? style.inkColor
       : (registerPalette?.pastColor ?? style.inkColor);
+  // Karaoke is "all words solid, one accent" — future words are NOT dimmed, even
+  // when the caller passes an explicit inkColor (which for every other register
+  // would derive a 40%-alpha future shade). For all other registers the prior
+  // resolution is preserved 1:1: explicit inkColor → `${inkColor}66`, else the
+  // register's futureColor, else the dimmed default ink.
   const futureColor =
-    userStyle?.inkColor !== undefined
-      ? `${style.inkColor}66`
-      : (registerPalette?.futureColor ?? `${style.inkColor}66`);
+    style.register === "karaoke"
+      ? userStyle?.inkColor !== undefined
+        ? style.inkColor
+        : (registerPalette?.futureColor ?? style.inkColor)
+      : userStyle?.inkColor !== undefined
+        ? `${style.inkColor}66`
+        : (registerPalette?.futureColor ?? `${style.inkColor}66`);
 
   // Pre-compute groups once per props change. nonOverlappingGroups uses absolute frame
   // coordinates (computed from startSeconds*fps), so we compare directly against `frame`.
@@ -354,16 +402,31 @@ export const EditorialCaption: React.FC<EditorialCaptionProps> = ({
         >
           <div
             style={{
-              background: style.paperColor,
-              border: `1px solid ${style.mutedBorderColor}`,
-              borderLeft: `4px solid ${style.accentColor}`,
-              padding: "20px 28px",
+              // boxless drops the entire card chassis (bg / borders / accent rule /
+              // padding / shadow) so words float over the scene. Default (false)
+              // renders the paper card 1:1 with prior behavior. The left accent
+              // rule is additionally gated by showAccentBar.
+              background: style.boxless ? "transparent" : style.paperColor,
+              border: style.boxless
+                ? "none"
+                : `1px solid ${style.mutedBorderColor}`,
+              borderLeft:
+                style.boxless || !style.showAccentBar
+                  ? undefined
+                  : `4px solid ${style.accentColor}`,
+              padding: style.boxless ? "0" : "20px 28px",
               maxWidth: style.maxWidthPx,
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              gap: "6px 12px",
-              boxShadow: "0 4px 16px rgba(26, 26, 26, 0.06)",
+              // Boxless (karaoke) uses large text + a scale(1.06) active word, so a
+              // fixed 12px gap lets the scaled word visually merge with neighbors
+              // ("CLAUDEIS"). Widen the horizontal gap proportional to font size in
+              // boxless mode only; boxed mode stays byte-identical at "6px 12px".
+              gap: style.boxless
+                ? `8px ${Math.max(16, Math.round(style.fontSize * 0.3))}px`
+                : "6px 12px",
+              boxShadow: style.boxless ? "none" : "0 4px 16px rgba(26, 26, 26, 0.06)",
             }}
           >
             {active.words.map((w, i) => {
@@ -378,11 +441,22 @@ export const EditorialCaption: React.FC<EditorialCaptionProps> = ({
                     fontWeight: 700,
                     letterSpacing: "-0.005em",
                     lineHeight: 1.15,
+                    textTransform: style.textTransform,
                     color: isActive
                       ? activeColor
                       : isPast
                         ? pastColor
                         : futureColor,
+                    // Without the paper card behind the text, add a stroke so the
+                    // words stay legible over arbitrary scene content. Boxed mode
+                    // (default) keeps no stroke — byte-identical to prior render.
+                    ...(style.boxless
+                      ? {
+                          WebkitTextStroke: "2px rgba(0,0,0,0.85)",
+                          paintOrder: "stroke fill",
+                          textShadow: "0 2px 8px rgba(0,0,0,0.55)",
+                        }
+                      : null),
                     transform: isActive ? "scale(1.06)" : "scale(1)",
                     display: "inline-block",
                   }}

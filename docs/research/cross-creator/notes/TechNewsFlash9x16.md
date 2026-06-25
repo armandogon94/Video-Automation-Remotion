@@ -40,3 +40,7 @@ Re-extracted 4 evenly-spaced frames + re-sampled with PIL. Confirmed independent
 - Cadence is full across the whole 5s with NO blank frames: chip "FILTRACIÓN" persists 0–5s, huge "GEMINI 3.2 FLASH" 0–2.4s (frames 1–2), subtitle "15× más barato que GPT-5." + gold dotted rule 2.4–5s (frames 3–4). Motion progression reads cleanly huge→subtitle.
 - Palette discipline (one warm-gold accent), persistent tracked section-label breadcrumb, and bold declarative hero all match diysmartcode's signature.
 The prior agent's props-override IMPROVE was correct and the three remaining gaps are genuinely structural (need comp+schema work). No minimal/safe props win remains — forcing a 4th overlay or faux-gradient would invent content and risk colliding with the caption zone. **Left untouched; VALIDATED.**
+
+
+## Phase-3 triple-vote (2026-06)
+TechNewsFlash9x16 ↔ diysmartcode: 8/10 — IMPROVED: panel 8/9/8 PASS. dark-changelog mode (cosmic gradient + numbered counter + bottom stepper) faithfully captures diysmartcode. Minor open polish (bigger stepper nodes, centered counter block) left as backlog.

@@ -52,12 +52,17 @@ const GLYPH_OPACITY = 0.35;
 const QuoteGlyph: React.FC<{
   glyph: "open" | "close";
   accentColor: string;
-}> = ({ glyph, accentColor }) => {
+  delaySec: number;
+}> = ({ glyph, accentColor, delaySec }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
+  // Offset the entire reveal by delaySec (black.one.studio "arrive late" hold).
+  const localFrame = frame - Math.round(delaySec * fps);
+  if (localFrame < 0) return null;
+
   // Plain fade-in over the first ~0.5s, no scale (per spec).
-  const fadeIn = interpolate(frame, [0, Math.round(0.5 * fps)], [0, GLYPH_OPACITY], {
+  const fadeIn = interpolate(localFrame, [0, Math.round(0.5 * fps)], [0, GLYPH_OPACITY], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -92,16 +97,21 @@ const QuoteBody: React.FC<{
   quote: string;
   inkColor: string;
   paletteMode: PaletteMode;
-}> = ({ quote, inkColor, paletteMode }) => {
+  delaySec: number;
+}> = ({ quote, inkColor, paletteMode, delaySec }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+
+  // Offset the entire reveal by delaySec (black.one.studio "arrive late" hold).
+  const localFrame = frame - Math.round(delaySec * fps);
+  if (localFrame < 0) return null;
 
   // Editorial spring (A1 audit): damping 22 / stiffness 130 / mass 0.7. Shared
   // with DiagramExplainer / BigNumberHero / BenchmarkBars / TweetCardHero. The
   // divider/author blocks below use slightly snappier (s=160 / s=140) variants
   // by design to stagger naturally on top of this base settle.
   const enter = spring({
-    frame,
+    frame: localFrame,
     fps,
     config: { damping: 22, stiffness: 130, mass: 0.7 },
   });
@@ -256,6 +266,7 @@ export const QuoteCard9x16: React.FC<QuoteCard9x16Props> = ({
   mutedColor,
   captionFontSize,
   showCaptions,
+  revealDelaySeconds,
 }) => {
   // Resolve color stack: palette defaults + per-color overrides.
   // Empty string in a color prop = "use palette default" (Zod schemas default to "").
@@ -280,6 +291,11 @@ export const QuoteCard9x16: React.FC<QuoteCard9x16Props> = ({
   // Divider lands a touch below it; author block follows.
   const DIVIDER_TOP = QUOTE_ZONE_TOP + 380;
   const AUTHOR_TOP = DIVIDER_TOP + 36;
+
+  // black.one.studio "arrive late" hold: shift every reveal layer's entrance by
+  // this offset so the whole tagline appears after a 40–60% empty-frame hold.
+  // revealDelay=0 (default) keeps the original immediate-reveal choreography.
+  const revealDelay = revealDelaySeconds;
 
   return (
     <AbsoluteFill style={{ background: resolvedPaper }}>
@@ -306,16 +322,21 @@ export const QuoteCard9x16: React.FC<QuoteCard9x16Props> = ({
       )}
 
       {/* Decorative oversized opening quote glyph (low-opacity accent) */}
-      <QuoteGlyph glyph="open" accentColor={resolvedAccent} />
+      <QuoteGlyph glyph="open" accentColor={resolvedAccent} delaySec={revealDelay} />
 
       {/* Quote body (serif italic, spring-in) */}
-      <QuoteBody quote={quote} inkColor={resolvedInk} paletteMode={palette} />
+      <QuoteBody
+        quote={quote}
+        inkColor={resolvedInk}
+        paletteMode={palette}
+        delaySec={revealDelay}
+      />
 
       {/* Decorative oversized closing quote glyph */}
-      <QuoteGlyph glyph="close" accentColor={resolvedAccent} />
+      <QuoteGlyph glyph="close" accentColor={resolvedAccent} delaySec={revealDelay} />
 
-      {/* Short accent divider (draws from center outward, ~0.55s in) */}
-      <Divider topPx={DIVIDER_TOP} accentColor={resolvedAccent} delaySec={0.55} />
+      {/* Short accent divider (draws from center outward, ~0.55s after reveal) */}
+      <Divider topPx={DIVIDER_TOP} accentColor={resolvedAccent} delaySec={revealDelay + 0.55} />
 
       {/* Author block (lands 0.3s after divider completes ≈ 0.85s + spring tail) */}
       <AuthorBlock
@@ -324,7 +345,7 @@ export const QuoteCard9x16: React.FC<QuoteCard9x16Props> = ({
         accentColor={resolvedAccent}
         mutedColor={resolvedMuted}
         topPx={AUTHOR_TOP}
-        delaySec={0.95}
+        delaySec={revealDelay + 0.95}
       />
 
       {/* Word-by-word captions (bottom zone) — optional */}

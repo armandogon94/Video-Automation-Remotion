@@ -13,5 +13,6 @@
   "accentColor": "",
   "mutedColor": "",
   "captionFontSize": 40,
-  "showCaptions": false
+  "showCaptions": false,
+  "revealDelaySeconds": 2.0
 }

@@ -88,3 +88,13 @@ squares. Signature elements: letter-spaced pill kicker (●  NN / SECTION), gian
 extra-bold grotesk headline (one word accent-colored), brand lockups, browser/grid/terminal
 mockup cards, big stat numbers, kinetic subtitles. Accent color tracks the topic's brand
 (e.g. Anthropic orange). 18 reels scraped for style replication. STYLE MATCHES our system.
+
+## 2026-06-25 re-scan (all 23 creators)
+Re-scanned every creator for content posted since the late-May/early-June scrape (7 parallel
+Opus agents). ~60 new videos analyzed; **zero new buildable template patterns except one**:
+**builtbystephan's "Builder Drop" product-spec poster** → built as `BuilderDropPoster9x16`.
+Everything else reuses the existing 44+23-template library (strong coverage signal). Fresh
+graphic keyframes saved under `references/creators/<handle>/_new/` (source videos deleted).
+Also built (theaiadvantage dominant pattern + Hormozi opener, from `_fresh`/existing frames):
+`ModelComparison2x2Grid16x9`, `OpeningTitleCard9x16`. motiondarwin + zenzuke scrape stayed
+IP-throttled — re-attempt from a fresh IP / authenticated cookie to confirm.

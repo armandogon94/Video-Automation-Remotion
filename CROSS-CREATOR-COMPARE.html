@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Cross-creator deep QA — source vs our templates (44 pairings)</title>
+<title>Cross-creator deep QA — source vs our templates (47 pairings)</title>
 <style>
   :root{--bg:#0b0d12;--panel:#141821;--ink:#eef2f8;--muted:#8b94a6;--cyan:#5BC0E8;--gold:#D4AF37;--line:#222836;--imp:#E8a13b;--val:#4bc07a}
   *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,Inter,sans-serif;padding:28px 38px}
@@ -27,7 +27,7 @@
   @media(max-width:900px){.pair{grid-template-columns:1fr}}
 </style></head><body>
   <h1>Cross-creator deep QA — <b style="color:var(--gold)">SOURCE FRAMES</b> vs <b style="color:var(--cyan)">OUR TEMPLATES</b></h1>
-  <p class="sub">Every composition we built from a reference creator (the full 44-pairing set), each judged frame-by-frame against that creator's preserved source keyframes (green <b>FRESH</b> = freshly re-downloaded graphic frames). Scored on PATTERN fidelity — layout/color/type/motion — not copy; our templates intentionally use the Armando navy/gold brand + own content. <span class="stat">44 pairings</span><span class="stat" style="color:var(--imp)">17 improved</span><span class="stat" style="color:var(--val)">27 validated</span></p>
+  <p class="sub">Every composition we built from a reference creator (the full 47-pairing set), each judged frame-by-frame against that creator's preserved source keyframes (green <b>FRESH</b> = freshly re-downloaded graphic frames). Scored on PATTERN fidelity — layout/color/type/motion — not copy; our templates intentionally use the Armando navy/gold brand + own content. <span class="stat">47 pairings</span><span class="stat" style="color:var(--imp)">19 improved</span><span class="stat" style="color:var(--val)">28 validated</span></p>
   <div class="filter" id="filter"></div>
   <div id="rows">
     <div class="row" data-creator="adamrosler" data-verdict="IMPROVED">
@@ -219,10 +219,10 @@
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/PipelineFlow16x9.mp4" muted loop autoplay playsinline controls></video></div>
       </div>
     </div>
-    <div class="row" data-creator="natebjones" data-verdict="VALIDATED">
+    <div class="row" data-creator="natebjones" data-verdict="IMPROVED">
       <div class="hd"><h2>KaraokeWithBlueChipPullout9x16 <span class="arrow">↔</span> <span class="cre">@natebjones</span></h2>
-        <span class="badge val">VALIDATED · 10/10</span></div>
-      <div class="note">Creator pattern:** Nate B Jones C7 / `KaraokeWithBlueChipPullout9x16` (Shorts caption variant).</div>
+        <span class="badge imp">IMPROVED · 8/10</span></div>
+      <div class="note">panel 8/8/8 PASS; proactively fixed the karaoke inter-word spacing collapse (active scaled word merging with neighbors, "CLAUDEIS") by widening the flex word-gap proportional to font size in boxless mode (boxed renders byte-unchanged).</div>
       <div class="pair">
         <div class="cell"><span class="tag s">SOURCE · 15 frames <span class="fresh">FRESH</span></span><div class="strip"><img src="output/cross-creator/srcframes/KaraokeWithBlueChipPullout9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KaraokeWithBlueChipPullout9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KaraokeWithBlueChipPullout9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KaraokeWithBlueChipPullout9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KaraokeWithBlueChipPullout9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KaraokeWithBlueChipPullout9x16__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/KaraokeWithBlueChipPullout9x16.mp4" muted loop autoplay playsinline controls></video></div>
@@ -314,7 +314,7 @@
         <span class="badge imp">IMPROVED · 9/10</span></div>
       <div class="note">to faithful.** The template already captured Bilawal's TweetCardOverlay signature (white card, top-quarter anchor, near-black letterboxed field, avatar/bold-name/muted-handle/blue-tick anatomy, static-card grammar, one-accent discipline). T</div>
       <div class="pair">
-        <div class="cell"><span class="tag s">SOURCE · 23 frames </span><div class="strip"><img src="output/cross-creator/srcframes/TweetCardHero9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag s">SOURCE · 39 frames </span><div class="strip"><img src="output/cross-creator/srcframes/TweetCardHero9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TweetCardHero9x16__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TweetCardHero9x16.mp4" muted loop autoplay playsinline controls></video></div>
       </div>
     </div>
@@ -329,8 +329,8 @@
     </div>
     <div class="row" data-creator="black.one.studio" data-verdict="IMPROVED">
       <div class="hd"><h2>QuoteCard9x16 <span class="arrow">↔</span> <span class="cre">@black.one.studio</span></h2>
-        <span class="badge imp">IMPROVED · 7/10</span></div>
-      <div class="note">Creator:** black.one.studio — also serves motiondarwin.</div>
+        <span class="badge imp">IMPROVED · 9/10</span></div>
+      <div class="note">panel 9/8/9 PASS. revealDelaySeconds late-arrival (text absent ~2s then reveals, in the 40-60% hold window) faithfully matches black.one.studio. Minor: ours slightly busier than their stark minimalism (taste).</div>
       <div class="pair">
         <div class="cell"><span class="tag s">SOURCE · 8 frames </span><div class="strip"><img src="output/cross-creator/srcframes/QuoteCard9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/QuoteCard9x16__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/QuoteCard9x16.mp4" muted loop autoplay playsinline controls></video></div>
@@ -350,7 +350,7 @@
         <span class="badge val">VALIDATED · 9/10</span></div>
       <div class="note">.** Faithful capture of the midu single-accent / monospace-meta /</div>
       <div class="pair">
-        <div class="cell"><span class="tag s">SOURCE · 24 frames </span><div class="strip"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag s">SOURCE · 48 frames </span><div class="strip"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/DiagramExplainer9x16__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/DiagramExplainer9x16.mp4" muted loop autoplay playsinline controls></video></div>
       </div>
     </div>
@@ -404,7 +404,7 @@
         <span class="badge val">VALIDATED · 9/10</span></div>
       <div class="note">Creator source frames:** `references/creators/allin/ElhxzUO7YQM/frames/coarse-016.jpg`</div>
       <div class="pair">
-        <div class="cell"><span class="tag s">SOURCE · 152 frames </span><div class="strip"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag s">SOURCE · 156 frames </span><div class="strip"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/KeynoteSlidePIP16x9__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/KeynoteSlidePIP16x9.mp4" muted loop autoplay playsinline controls></video></div>
       </div>
     </div>
@@ -413,7 +413,7 @@
         <span class="badge val">VALIDATED · 7/10</span></div>
       <div class="note">(structural match; chrome belongs to midu.dev)</div>
       <div class="pair">
-        <div class="cell"><span class="tag s">SOURCE · 32 frames </span><div class="strip"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag s">SOURCE · 60 frames </span><div class="strip"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/SplitWebcamScreen9x16__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/SplitWebcamScreen9x16.mp4" muted loop autoplay playsinline controls></video></div>
       </div>
     </div>
@@ -425,13 +425,40 @@
         <div class="cell"><span class="tag s">SOURCE · 82 frames </span><div class="strip"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/TalkingHeadDynamic9x16__5.jpg" loading="lazy"></div></div>
         <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/TalkingHeadDynamic9x16.mp4" muted loop autoplay playsinline controls></video></div>
       </div>
+    </div>
+    <div class="row" data-creator="builtbystephan" data-verdict="VALIDATED">
+      <div class="hd"><h2>BuilderDropPoster9x16 <span class="arrow">↔</span> <span class="cre">@builtbystephan</span></h2>
+        <span class="badge val">VALIDATED · 9/10</span></div>
+      <div class="note">triple-vote panel 9/9/9. Faithful "Builder Drop" product-spec poster — dashed blueprint frame + corner ticks + left accent rail, mono micro-metadata (BUILDER DROP #NNN · date · @handle), two-tone headline w/ one accent word, mono subhead, [</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 82 frames </span><div class="strip"><img src="output/cross-creator/srcframes/BuilderDropPoster9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BuilderDropPoster9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BuilderDropPoster9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BuilderDropPoster9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BuilderDropPoster9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/BuilderDropPoster9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/BuilderDropPoster9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="theaiadvantage" data-verdict="VALIDATED">
+      <div class="hd"><h2>ModelComparison2x2Grid16x9 <span class="arrow">↔</span> <span class="cre">@theaiadvantage</span></h2>
+        <span class="badge val">VALIDATED · 8/10</span></div>
+      <div class="note">triple-vote panel 9/8/8. Faithful 2x2 model-comparison grid — deep-navy stage, four rounded label-chip cards w/ media slots, center-bottom presenter PIP, TL→TR→BL→BR scale-pop stagger w/ PIP lighting last. Media slots are intentional placeh</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 16 frames <span class="fresh">FRESH</span></span><div class="strip"><img src="output/cross-creator/srcframes/ModelComparison2x2Grid16x9__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ModelComparison2x2Grid16x9__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ModelComparison2x2Grid16x9__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ModelComparison2x2Grid16x9__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ModelComparison2x2Grid16x9__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/ModelComparison2x2Grid16x9__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/ModelComparison2x2Grid16x9.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
+    </div>
+    <div class="row" data-creator="alexhormozi" data-verdict="IMPROVED">
+      <div class="hd"><h2>OpeningTitleCard9x16 <span class="arrow">↔</span> <span class="cre">@alexhormozi</span></h2>
+        <span class="badge imp">IMPROVED · 9/10</span></div>
+      <div class="note">triple-vote panel 8/8/9 PASS; proactively tightened corner radius 28→14px per panel consensus (template spec says ~12px, not a pill). Solid near-black rounded-rect, bold white ALL-CAPS centered geometric sans, one gold accent word, spring s</div>
+      <div class="pair">
+        <div class="cell"><span class="tag s">SOURCE · 299 frames </span><div class="strip"><img src="output/cross-creator/srcframes/OpeningTitleCard9x16__0.jpg" loading="lazy"><img src="output/cross-creator/srcframes/OpeningTitleCard9x16__1.jpg" loading="lazy"><img src="output/cross-creator/srcframes/OpeningTitleCard9x16__2.jpg" loading="lazy"><img src="output/cross-creator/srcframes/OpeningTitleCard9x16__3.jpg" loading="lazy"><img src="output/cross-creator/srcframes/OpeningTitleCard9x16__4.jpg" loading="lazy"><img src="output/cross-creator/srcframes/OpeningTitleCard9x16__5.jpg" loading="lazy"></div></div>
+        <div class="cell"><span class="tag r">OUR TEMPLATE</span><video src="output/cross-creator/OpeningTitleCard9x16.mp4" muted loop autoplay playsinline controls></video></div>
+      </div>
     </div></div>
 <script>
   const CREATORS=["adamrosler","natebjones","motiondarwin","sahilbloom","aiexplained","bilawal.ai","diysmartcode","black.one.studio","alexhormozi","midu.dev","simonhoiberg","theaiadvantage","allin","mreflow","builtbystephan"];
   const f=document.getElementById('filter');
-  f.innerHTML='<button data-k="creator" data-c="all" class="on">All ('+44+')</button>'
-    +'<button data-k="verdict" data-c="IMPROVED">Improved (17)</button>'
-    +'<button data-k="verdict" data-c="VALIDATED">Validated (27)</button>'
+  f.innerHTML='<button data-k="creator" data-c="all" class="on">All ('+47+')</button>'
+    +'<button data-k="verdict" data-c="IMPROVED">Improved (19)</button>'
+    +'<button data-k="verdict" data-c="VALIDATED">Validated (28)</button>'
     +CREATORS.map(c=>`<button data-k="creator" data-c="${c}">@${c}</button>`).join('');
   f.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     f.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');

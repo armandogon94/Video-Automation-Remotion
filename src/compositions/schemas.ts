@@ -130,6 +130,21 @@ export const techNewsFlashSchema = z.object({
    *  overlays) render via <TransitionSeries> with fade crossfades. Default false to
    *  preserve the W21 v2 visual; opt-in for new renders that want smoother flow. */
   useHeroTransitions: z.boolean().default(false),
+  /** Rendering mode.
+   *  - "default"        — the original editorial news-flash look (UNCHANGED, additive-only).
+   *  - "dark-changelog" — replicates @DIYSmartCode's "DarkChangelog" Short grammar: a deep
+   *    cosmic-gradient background, a top progress sweep, a big numbered counter ("01"/"02"/
+   *    "03"), and a persistent bottom progress stepper (SETUP·CREATE·EVAL·DEPLOY·PUBLISH with
+   *    the active step lit). The existing dark palette + breadcrumb stay. */
+  mode: z.enum(["default", "dark-changelog"]).default("default"),
+  /** dark-changelog only — the big numbered counter shown under the breadcrumb (e.g. "02").
+   *  Empty string = hidden. */
+  counter: z.string().default(""),
+  /** dark-changelog only — labels for the persistent bottom progress stepper. Empty array
+   *  falls back to the canonical DIYSmartCode rail (SETUP·CREATE·EVAL·DEPLOY·PUBLISH). */
+  stepperSteps: z.array(z.string()).default([]),
+  /** dark-changelog only — zero-based index of the lit/active stepper step. Default 0. */
+  stepperActiveIndex: z.number().int().min(0).default(0),
 });
 export type TechNewsFlashProps = z.infer<typeof techNewsFlashSchema>;
 
@@ -197,6 +212,11 @@ export const quoteCard9x16Schema = z.object({
   // strip below it forces the eye to choose between two large text blocks
   // simultaneously and one is always behind the audio. Default OFF.
   showCaptions: z.boolean().default(false),
+  // black.one.studio signature: hold an empty/grain-only frame for the first
+  // 40–60% of the clip, then let the whole tagline ARRIVE LATE. This offsets the
+  // entrance of every reveal layer (glyphs, quote body, divider, author) by N
+  // seconds. default(0) preserves the original immediate-reveal behavior.
+  revealDelaySeconds: z.number().min(0).default(0),
   brandId: z.string().optional(),
 });
 export type QuoteCard9x16Props = z.infer<typeof quoteCard9x16Schema>;

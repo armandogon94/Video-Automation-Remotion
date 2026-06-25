@@ -1,0 +1,9 @@
+{
+  "id": "OpeningTitleCard9x16",
+  "import": "import { OpeningTitleCard9x16 } from \"./compositions/OpeningTitleCard9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 90,
+  "defaultPropsNote": "alexhormozi Pattern E opener: ALL-CAPS headline 'THE FOUR PILLARS OF TRUE INFLUENCE' (accent word INFLUENCE in gold) in a solid near-black rounded-rect, snap-in scale 0.9->1.04->1.0 over 14f then hold."
+}

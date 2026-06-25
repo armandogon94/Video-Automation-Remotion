@@ -474,3 +474,38 @@ and the network contention throws `ERR_INTERNET_DISCONNECTED`/`ERR_NETWORK_CHANG
 comps render with fallback fonts or fail. SEQUENCE them: finish downloads, THEN render.
 GOTCHA 2 (macOS bash): `timeout` and `mapfile`/`readarray` don't exist in stock macOS
 bash 3.2 — wrapping render commands in `timeout` silently no-ops ("command not found").
+
+## 2026-06-25 — Fresh-content scan + net-new build + triple-vote (3 workflows)
+
+DISCOVERY (7 Opus agents, all 23 creators, content since late-May): ~60 new videos scanned;
+**only 1 genuinely new buildable pattern** — builtbystephan's "Builder Drop" product-spec
+poster. Everything else reuses our existing 44+23 library = strong coverage validation.
+Fresh frames under references/creators/<c>/_new/ (videos deleted). IG scrape needs
+`gallery-dl --cookies-from-browser chrome` against /<handle>/posts/ (anon 401s); motiondarwin
++ zenzuke stayed blocked (throttled IP).
+
+BUILT (6 Opus agents, race-safe own-file edits; I wired Root + rendered serially):
+- 3 NEW comps: BuilderDropPoster9x16, ModelComparison2x2Grid16x9 (theaiadvantage's dominant
+  pattern), OpeningTitleCard9x16 (Hormozi Pattern E). Registered in Root + driver TARGETS (47).
+- 3 default-safe extensions: TechNewsFlash9x16 `mode:"dark-changelog"` (diysmartcode), shared
+  EditorialCaption `register:"karaoke"`+`boxless`+`textTransform`+`showAccentBar` (verified 73
+  consumers unaffected), QuoteCard9x16 `revealDelaySeconds` (black.one.studio late arrival).
+
+GOTCHA (real bug caught): **Remotion composition IDs cannot contain `_`** (only a-z A-Z 0-9 -).
+`ModelComparisonGrid2x2_16x9` as an id threw during composition-list build and broke
+selectComposition for the WHOLE registry (every render failed). Fix: id → `ModelComparison2x2Grid16x9`
+(the JS component identifier can keep the underscore; only the id STRING must be hyphen/alnum).
+
+TRIPLE-VOTE (Phase 3, 18 Opus agents = 6 items × 3 independent judges + conditional fixer on
+≥2 REVISE): ALL 6 PASSED (BuilderDrop 9/9/9, ModelGrid 9/8/8, OpeningTitleCard 8/8/9,
+TechNewsFlash 8/9/8, Karaoke 8/8/8, QuoteCard 9/8/9). No fixer fired. Two unanimous minor gaps
+I then fixed proactively: OpeningTitleCard radius 28→14px; karaoke inter-word spacing collapse
+("CLAUDEIS") — widened the EditorialCaption flex word-gap proportional to fontSize in boxless
+mode only (boxed renders byte-unchanged). Both re-rendered + visually confirmed.
+
+ROOT DARK-DEFAULT (backlog item): audited — decided NOT to flip the shared cream default for the
+procedural comps. Dark is already available via 11 existing `*Dark` registered variants +
+`palette:"dark"` prop + the cross-creator props overrides; flipping the global default would
+wrongly darken cream brand content. Correct outcome = keep cream default, dark via variant/prop.
+
+Gallery `CROSS-CREATOR-COMPARE.html` now 47 pairings (19 improved / 28 validated), data-driven.

@@ -1,0 +1,9 @@
+{
+  "id": "BuilderDropPoster9x16",
+  "import": "import { BuilderDropPoster9x16 } from \"./compositions/BuilderDropPoster9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 150,
+  "defaultPropsNote": "builtbystephan 'Builder Drop' product-spec poster: dashed blueprint frame + accent rail, two-tone headline w/ accent word, media slot w/ annotation chips, tag-pills + feature bullets; brand-gold accent by default."
+}

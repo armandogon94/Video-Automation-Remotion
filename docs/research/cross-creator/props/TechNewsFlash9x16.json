@@ -2,18 +2,22 @@
   "audioUrl": "",
   "wordTimings": [],
   "breadcrumb": {
-    "text": "FILTRACIÓN",
-    "date": "GOOGLE · GEMINI 3.2"
+    "text": "GOOGLE",
+    "date": "GEMINI 3.5 FLASH"
   },
   "overlays": [
-    { "kind": "chip", "text": "FILTRACIÓN", "startSeconds": 0, "endSeconds": 5 },
-    { "kind": "huge", "text": "GEMINI 3.2 FLASH", "startSeconds": 0, "endSeconds": 2.4 },
-    { "kind": "subtitle", "text": "15× más barato que GPT-5.", "startSeconds": 2.4, "endSeconds": 5 }
+    { "kind": "chip", "text": "GEMINI 3.5 FLASH", "startSeconds": 0, "endSeconds": 5 },
+    { "kind": "huge", "text": "Beats 3.1 Pro.", "startSeconds": 0, "endSeconds": 2.4 },
+    { "kind": "subtitle", "text": "Half the price. Same speed.", "startSeconds": 2.4, "endSeconds": 5 }
   ],
   "paperColor": "#0A0F1A",
-  "inkColor": "#F2E9D8",
-  "accentColor": "#D4A04A",
-  "mutedColor": "#7A6F5C",
+  "inkColor": "#F2F4F8",
+  "accentColor": "#EA4335",
+  "mutedColor": "#5C6B82",
   "captionFontSize": 48,
-  "useHeroTransitions": false
+  "useHeroTransitions": false,
+  "mode": "dark-changelog",
+  "counter": "02",
+  "stepperSteps": ["SETUP", "CREATE", "EVAL", "DEPLOY", "PUBLISH"],
+  "stepperActiveIndex": 2
 }

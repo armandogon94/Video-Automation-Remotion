@@ -35,3 +35,7 @@ Why I did NOT fix it here (conservative / scope): the comp reveals are all ancho
 ## Recommended (NOT done — needs shared schema + cross-cutting task)
 1. **Add `revealDelaySeconds` (default 0) to `quoteCard9x16Schema`** and thread it as an added offset into QuoteBody, both QuoteGlyphs, Divider, AuthorBlock; set ~2.0s in `docs/research/cross-creator/props/QuoteCard9x16.json`. Implements black.one.studio's late-arriving-tagline patience. ANALYSIS.md recommends shipping the SAME `revealDelaySeconds` on TweetCardHero9x16 + BigNumberHero9x16 in the same task (default 1.5s for TweetCardHero per the bilawal spec).
 2. **Honest residual (comp identity, leave):** black.one.studio uses minimal sans + no quote glyphs; ours keeps serif-italic + decorative gold quote glyphs + byline because that literary-pull-quote chrome is QuoteCard9x16's core identity (needed for motiondarwin). Stripping it would be a structural rewrite that harms the other creator it serves.
+
+
+## Phase-3 triple-vote (2026-06)
+QuoteCard9x16 ↔ black.one.studio: 9/10 — IMPROVED: panel 9/8/9 PASS. revealDelaySeconds late-arrival (text absent ~2s then reveals, in the 40-60% hold window) faithfully matches black.one.studio. Minor: ours slightly busier than their stark minimalism (taste).

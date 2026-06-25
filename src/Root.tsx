@@ -59,6 +59,9 @@ import { AppConnect9x16, appConnect9x16Schema } from "./compositions/AppConnect9
 import { VennDiagram9x16, vennDiagram9x16Schema } from "./compositions/VennDiagram9x16";
 import { DecisionTree9x16, decisionTree9x16Schema } from "./compositions/DecisionTree9x16";
 import { BrandedOpener9x16, brandedOpener9x16Schema } from "./compositions/BrandedOpener9x16";
+import { BuilderDropPoster9x16, builderDropPoster9x16Schema } from "./compositions/BuilderDropPoster9x16";
+import { ModelComparisonGrid2x2_16x9, modelComparisonGrid2x2Schema } from "./compositions/ModelComparisonGrid2x2_16x9";
+import { OpeningTitleCard9x16, openingTitleCard9x16Schema } from "./compositions/OpeningTitleCard9x16";
 import { BrollListicle9x16, brollListicle9x16Schema } from "./compositions/BrollListicle9x16";
 import { KineticMacroTypeOpener9x16, kineticMacroTypeOpenerSchema } from "./compositions/KineticMacroTypeOpener9x16";
 // Wave-6 — 16:9 horizontal templates
@@ -2576,6 +2579,38 @@ export const RemotionRoot: React.FC = () => {
             showCaptions: false,
             backgroundGradient: "",
           }}
+        />
+
+        {/* Cross-creator net-new templates (2026-06): builtbystephan / theaiadvantage / alexhormozi */}
+        <Composition
+          id="BuilderDropPoster9x16"
+          component={BuilderDropPoster9x16}
+          schema={builderDropPoster9x16Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1920}
+          defaultProps={builderDropPoster9x16Schema.parse({})}
+        />
+        <Composition
+          id="ModelComparison2x2Grid16x9"
+          component={ModelComparisonGrid2x2_16x9}
+          schema={modelComparisonGrid2x2Schema}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={modelComparisonGrid2x2Schema.parse({})}
+        />
+        <Composition
+          id="OpeningTitleCard9x16"
+          component={OpeningTitleCard9x16}
+          schema={openingTitleCard9x16Schema}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+          defaultProps={openingTitleCard9x16Schema.parse({})}
         />
 
         <Composition

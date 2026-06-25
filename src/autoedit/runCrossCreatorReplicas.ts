@@ -77,6 +77,10 @@ const TARGETS: { comp: string; creator: string }[] = [
   { comp: "KeynoteSlidePIP16x9", creator: "allin" },
   { comp: "SplitWebcamScreen9x16", creator: "mreflow" },
   { comp: "TalkingHeadDynamic9x16", creator: "builtbystephan" },
+  // ── net-new templates (2026-06 discovery + QA build) ──
+  { comp: "BuilderDropPoster9x16", creator: "builtbystephan" },
+  { comp: "ModelComparison2x2Grid16x9", creator: "theaiadvantage" },
+  { comp: "OpeningTitleCard9x16", creator: "alexhormozi" },
 ];
 
 function loadProps(comp: string): Record<string, unknown> {
