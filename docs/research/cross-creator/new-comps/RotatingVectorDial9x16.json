@@ -1,0 +1,9 @@
+{
+  "id": "RotatingVectorDial9x16",
+  "import": "import { RotatingVectorDial9x16 } from \"./compositions/RotatingVectorDial9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 150,
+  "defaultPropsNote": "adamrosler rotating vector/needle dial: near-black bg, white ALL-CAPS hook 'Rotate before the dot product.', two crosshair tick-mark dials whose glowing blue needles spring 0°→target with a dotted swept-angle arc + center value callout + gold mono labels (POSITION 1 / POSITION 50)."
+}

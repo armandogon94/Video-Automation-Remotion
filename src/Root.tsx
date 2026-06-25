@@ -62,6 +62,14 @@ import { BrandedOpener9x16, brandedOpener9x16Schema } from "./compositions/Brand
 import { BuilderDropPoster9x16, builderDropPoster9x16Schema } from "./compositions/BuilderDropPoster9x16";
 import { ModelComparisonGrid2x2_16x9, modelComparisonGrid2x2Schema } from "./compositions/ModelComparisonGrid2x2_16x9";
 import { OpeningTitleCard9x16, openingTitleCard9x16Schema } from "./compositions/OpeningTitleCard9x16";
+import { MatrixGridHeatmap9x16, matrixGridHeatmap9x16Schema } from "./compositions/MatrixGridHeatmap9x16";
+import { DocumentHighlightSwipe16x9, documentHighlightSwipe16x9Schema } from "./compositions/DocumentHighlightSwipe16x9";
+import { PaintStrokeRibbonBanner16x9, paintStrokeRibbonBannerSchema } from "./compositions/PaintStrokeRibbonBanner16x9";
+import { SpectrumSlider9x16, spectrumSlider9x16Schema } from "./compositions/SpectrumSlider9x16";
+import { BeforeAfterSliderWipe9x16, beforeAfterSliderWipe9x16Schema } from "./compositions/BeforeAfterSliderWipe9x16";
+import { ModelNameChipComparison9x16, modelNameChipComparison9x16Schema } from "./compositions/ModelNameChipComparison9x16";
+import { RingTopologyHopCounter9x16, ringTopologyHopCounter9x16Schema } from "./compositions/RingTopologyHopCounter9x16";
+import { RotatingVectorDial9x16, rotatingVectorDial9x16Schema } from "./compositions/RotatingVectorDial9x16";
 import { BrollListicle9x16, brollListicle9x16Schema } from "./compositions/BrollListicle9x16";
 import { KineticMacroTypeOpener9x16, kineticMacroTypeOpenerSchema } from "./compositions/KineticMacroTypeOpener9x16";
 // Wave-6 — 16:9 horizontal templates
@@ -2619,6 +2627,16 @@ export const RemotionRoot: React.FC = () => {
           height={1920}
           defaultProps={openingTitleCard9x16Schema.parse({})}
         />
+
+        {/* Back-catalog net-new templates (2026-06): adamrosler / aiexplained / abhishek / estebandiba */}
+        <Composition id="MatrixGridHeatmap9x16" component={MatrixGridHeatmap9x16} schema={matrixGridHeatmap9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={matrixGridHeatmap9x16Schema.parse({})} />
+        <Composition id="DocumentHighlightSwipe16x9" component={DocumentHighlightSwipe16x9} schema={documentHighlightSwipe16x9Schema} durationInFrames={120} fps={30} width={1920} height={1080} defaultProps={documentHighlightSwipe16x9Schema.parse({})} />
+        <Composition id="PaintStrokeRibbonBanner16x9" component={PaintStrokeRibbonBanner16x9} schema={paintStrokeRibbonBannerSchema} durationInFrames={120} fps={30} width={1920} height={1080} defaultProps={paintStrokeRibbonBannerSchema.parse({})} />
+        <Composition id="SpectrumSlider9x16" component={SpectrumSlider9x16} schema={spectrumSlider9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={spectrumSlider9x16Schema.parse({})} />
+        <Composition id="BeforeAfterSliderWipe9x16" component={BeforeAfterSliderWipe9x16} schema={beforeAfterSliderWipe9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={beforeAfterSliderWipe9x16Schema.parse({})} />
+        <Composition id="ModelNameChipComparison9x16" component={ModelNameChipComparison9x16} schema={modelNameChipComparison9x16Schema} durationInFrames={180} fps={30} width={1080} height={1920} defaultProps={modelNameChipComparison9x16Schema.parse({})} />
+        <Composition id="RingTopologyHopCounter9x16" component={RingTopologyHopCounter9x16} schema={ringTopologyHopCounter9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={ringTopologyHopCounter9x16Schema.parse({})} />
+        <Composition id="RotatingVectorDial9x16" component={RotatingVectorDial9x16} schema={rotatingVectorDial9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={rotatingVectorDial9x16Schema.parse({})} />
 
         <Composition
           id="KineticMacroTypeOpener9x16"

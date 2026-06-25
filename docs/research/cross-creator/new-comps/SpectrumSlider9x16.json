@@ -1,0 +1,9 @@
+{
+  "id": "SpectrumSlider9x16",
+  "import": "import { SpectrumSlider9x16 } from \"./compositions/SpectrumSlider9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 150,
+  "defaultPropsNote": "abhishek.devini positioning spectrum (DXPok2jktuK/f03): dark grid+glow bg, kicker pill + two-tone headline 'A calculated / half-step' (line 2 in orange accent), a blue->orange->gray gradient TRACK between poles 'Opus 4.6' and 'Mythos'; track draws in left->right then a glowing circular MARKER springs 0->46% with callout '4.7 sits here' above and value '~50%' below."
+}

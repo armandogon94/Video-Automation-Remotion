@@ -1,0 +1,9 @@
+{
+  "id": "DocumentHighlightSwipe16x9",
+  "import": "import { DocumentHighlightSwipe16x9 } from \"./compositions/DocumentHighlightSwipe16x9\";",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationInFrames": 120,
+  "defaultPropsNote": "aiexplained signature: off-white 'screenshot' document card (paper/blog/tweet chrome) of mock body lines; a TRANSLUCENT highlighter (yellow default, +magenta/blue/grey) wipes L->R over docLines[highlightLineIndex] revealing the sentence while the real serif text stays readable (no background-clip). Demo = blog post, line 4 highlighted yellow."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "RingTopologyHopCounter9x16",
+  "import": "import { RingTopologyHopCounter9x16 } from \"./compositions/RingTopologyHopCounter9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 150,
+  "defaultPropsNote": "adamrosler 'RING ATTENTION' ring-topology hop viz: 8 labeled GPU nodes on a dashed circle on near-black bg, bold white headline + amber mono kicker, an amber data parcel eases node->node around the ring while 'HOP n / 8' ticks up and the active node glows (one accent + per-node soft glow discipline)."
+}

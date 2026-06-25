@@ -81,6 +81,15 @@ const TARGETS: { comp: string; creator: string }[] = [
   { comp: "BuilderDropPoster9x16", creator: "builtbystephan" },
   { comp: "ModelComparison2x2Grid16x9", creator: "theaiadvantage" },
   { comp: "OpeningTitleCard9x16", creator: "alexhormozi" },
+  // ── back-catalog net-new templates (2026-06) ──
+  { comp: "MatrixGridHeatmap9x16", creator: "adamrosler" },
+  { comp: "DocumentHighlightSwipe16x9", creator: "aiexplained" },
+  { comp: "PaintStrokeRibbonBanner16x9", creator: "aiexplained" },
+  { comp: "SpectrumSlider9x16", creator: "abhishek.devini" },
+  { comp: "BeforeAfterSliderWipe9x16", creator: "estebandiba" },
+  { comp: "ModelNameChipComparison9x16", creator: "estebandiba" },
+  { comp: "RingTopologyHopCounter9x16", creator: "adamrosler" },
+  { comp: "RotatingVectorDial9x16", creator: "adamrosler" },
 ];
 
 function loadProps(comp: string): Record<string, unknown> {

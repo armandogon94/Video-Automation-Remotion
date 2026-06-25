@@ -1,0 +1,9 @@
+{
+  "id": "ModelNameChipComparison9x16",
+  "import": "import { ModelNameChipComparison9x16 } from \"./compositions/ModelNameChipComparison9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 180,
+  "defaultPropsNote": "estebandiba labeled model-comparison clip reel: full-frame tinted media-well placeholder hard-cuts through 5 named models (Original, Aleph 2, Seedance 2, Ray 3.2, Gemini Omni) at 1.2s each; persistent top-left name chip swaps per cut, top-right AI-Edit tag, N-of-M progress dots, bottom caption; gold chipAccent default."
+}

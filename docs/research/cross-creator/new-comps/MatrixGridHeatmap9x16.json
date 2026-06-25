@@ -1,0 +1,9 @@
+{
+  "id": "MatrixGridHeatmap9x16",
+  "import": "import { MatrixGridHeatmap9x16 } from \"./compositions/MatrixGridHeatmap9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 150,
+  "defaultPropsNote": "adamrosler attention-matrix / matmul heatmap: near-black bg + one purple accent w/ glow, recessed 10x10 rounded-cell grid resting on a demo causal-attention pattern, N/N axis labels, highlightSchedule sweeps columns then lights rows/cells in a wave (per-cell pop + leading-edge glow pulse), solid-accent hero 'ATTENTION IS A MATRIX' + 'INSIDE THE MODEL' kicker, HBM pill + mono 'WRITE → SOFTMAX → READ' + red '64,000,000 ENTRIES / LAYER' footnote."
+}

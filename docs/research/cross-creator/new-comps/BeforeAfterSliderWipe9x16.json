@@ -1,0 +1,9 @@
+{
+  "id": "BeforeAfterSliderWipe9x16",
+  "import": "import { BeforeAfterSliderWipe9x16 } from \"./compositions/BeforeAfterSliderWipe9x16\";",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationInFrames": 150,
+  "defaultPropsNote": "estebandiba before/after media slider: rounded glowing frame, animated vertical divider wipes BEFORE(left,muted)→AFTER(right,blue), two-tone headline 'NITIDEZ IMPOSIBLE', ANTES/DESPUÉS corner badges, keyword-highlighted caption."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "PaintStrokeRibbonBanner16x9",
+  "import": "import { PaintStrokeRibbonBanner16x9 } from \"./compositions/PaintStrokeRibbonBanner16x9\";",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationInFrames": 120,
+  "defaultPropsNote": "aiexplained hand-painted numbered section banner: irregular hot-magenta brush-stroke ribbon (rough edges + stray paint flecks) wipes in L→R via expanding clipPath as a lower-third, then '8.' pops and white serif-italic title 'Image to Text Abilities Analysed' slides up over a faint document area; renders real content with {} props."
+}
