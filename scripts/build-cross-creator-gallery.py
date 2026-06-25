@@ -208,13 +208,16 @@ for comp, creator in pairings():
                 srcs.append(f"output/cross-creator/srcframes/{dst.name}")
             except Exception:
                 pass
-    # source id shown in the gallery: the fresh-pattern prefix when the frames come
-    # from the shared per-CREATOR `_fresh` bucket (parent == creator), else the reel
-    # shortcode (the dir's parent, e.g. `7RhJawm2nw4` for `<reel>/_fresh`).
-    if d and d.name == "_fresh" and d.parent.name == creator and prefix:
+    # source id shown in the gallery: a pattern/reel label for this row.
+    #  - shared per-creator `_fresh` bucket or `_new` bucket keyed by prefix -> the prefix
+    #  - reel `frames`/`_fresh` subdir -> the reel shortcode (the dir's parent)
+    #  - `_backcat/<reel>` (frames directly in the reel dir) -> the reel shortcode (dir name)
+    if d and prefix and (d.parent.name == creator or d.name == "_new"):
         srcid = prefix.rstrip("-_")
-    elif d:
+    elif d and d.name in ("frames", "_fresh", "_new", "_analyzed"):
         srcid = d.parent.name
+    elif d:
+        srcid = d.name
     else:
         srcid = ""
     clip = f"output/cross-creator/{comp}.mp4"

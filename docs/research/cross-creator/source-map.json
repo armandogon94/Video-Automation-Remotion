@@ -1,0 +1,112 @@
+{
+  "AnimatedCounter9x16": {
+    "dir": "references/creators/adamrosler/7RhJawm2nw4/_fresh",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Live-readout counter with monospace numerals, dark background, accent colors"
+  },
+  "DecisionTree9x16": {
+    "dir": "references/creators/adamrosler/S5ZFkY756IY/_fresh",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Parent node fans to multiple children via color-coded pointer lines"
+  },
+  "BeforeAfterText16x9": {
+    "dir": "references/creators/natebjones/iUSdS-6uwr4/frames",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Two-column before/after contrast with colored accent rules, tracked labels, white headlines, central TO operator"
+  },
+  "PipelineFlow16x9": {
+    "dir": "references/creators/natebjones/_fresh",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Horizontal four-stage flow cards with color-coded borders, kickers, chevrons, and animated captions"
+  },
+  "BigNumberHero9x16": {
+    "dir": "references/creators/motiondarwin/DN6w6Tjgbzx/frames",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Giant \"99%\" numeral with \"deliverability\" label beneath in dark ink, white rounded card with 4-point sparkles on mint-green Brevo background."
+  },
+  "BarChartList9x16": {
+    "dir": "references/creators/sahilbloom/_fresh",
+    "prefix": "fresh-rankedbars-redcalendar",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Horizontal ranked bars with cream background and labeled rows"
+  },
+  "TweetCardHero9x16": {
+    "dir": "references/creators/bilawal.ai/DWeLzV4hxsp/frames",
+    "_verified": true,
+    "_changed": true,
+    "_depicts": "Tweet card with avatar, bold name, muted handle, blue checkmark, white body text above dashboard map artifact with HUD chrome."
+  },
+  "TechNewsFlash9x16": {
+    "dir": "references/creators/diysmartcode/rfzA7HWcpCQ/frames",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Dark navy field with particle bokeh, bold white hero text, accent section label, bottom progress stepper."
+  },
+  "LayerCardStack9x16": {
+    "dir": "references/creators/simonhoiberg/DPT3n_PgEiU/frames",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Three stacked white rounded cards, layer badges, glassmorphic blurred backdrop"
+  },
+  "KeynoteSlidePIP16x9": {
+    "dir": "references/creators/allin/ElhxzUO7YQM/frames",
+    "_verified": true,
+    "_changed": true,
+    "_depicts": "Keynote slide left, speaker PIP bottom-right, event chyron"
+  },
+  "SplitWebcamScreen9x16": {
+    "dir": "references/creators/mreflow/b6Ek6-E5V88/frames",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Vertical split (top content, bottom face-cam), seam-riding captions, word-by-word advance"
+  },
+  "TalkingHeadDynamic9x16": {
+    "dir": "references/creators/builtbystephan/DYkyJfxx5Lx/frames",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Continuous home-studio face-cam with hard-cut crop modes, B-roll/screen-rec over face splits, bold white captions"
+  },
+  "BuilderDropPoster9x16": {
+    "dir": "references/creators/builtbystephan/_new",
+    "prefix": "DZ8SE7JSTmR",
+    "_verified": true,
+    "_changed": true,
+    "_depicts": "Black poster with red dashed border, orange accent text, media placeholder slot."
+  },
+  "OpeningTitleCard9x16": {
+    "dir": "references/creators/alexhormozi/zQvXS0vv3Ck/frames",
+    "_verified": true,
+    "_changed": true,
+    "_depicts": "Dark rounded-rect with white ALL-CAPS headline text"
+  },
+  "PaintStrokeRibbonBanner16x9": {
+    "dir": "references/creators/aiexplained/_backcat/2AdkSYWB6LY",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Magenta numbered banner with brush stroke, serif title"
+  },
+  "SpectrumSlider9x16": {
+    "dir": "references/creators/abhishek.devini/_backcat/DXPok2jktuK",
+    "_verified": true,
+    "_changed": false,
+    "_depicts": "Spectrum slider with gradient track, end-poles labeled, glowing marker with callout."
+  },
+  "RingTopologyHopCounter9x16": {
+    "dir": "references/creators/adamrosler/_backcat/prvqXkQDoBw",
+    "_verified": true,
+    "_changed": true,
+    "_depicts": "Eight nodes on ring with hop counter animation."
+  },
+  "RotatingVectorDial9x16": {
+    "dir": "references/creators/adamrosler/_backcat/es79NbFQdzw",
+    "_verified": true,
+    "_changed": true,
+    "_depicts": "Two circular dials with crosshair ticks, glowing blue needles at angles, swept arcs, position labels."
+  }
+}
