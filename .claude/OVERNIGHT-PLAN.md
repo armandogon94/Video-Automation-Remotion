@@ -18,11 +18,11 @@ Branch: claude/recursing-tu-dac74b
 
 ## STATUS (update as you go — resume reads this to know where to pick up)
 - [x] PHASE 1: deep back-catalog scan (all creators) — DONE. ~150 back-catalog videos analyzed across 22 creators (full channels enumerated). 8 NEW templates to build (see below). Frames in references/creators/<c>/_backcat/.
-- [ ] PHASE 2: build + register + render the 8 new templates. BUILD LIST:
+- [x] PHASE 2: DONE — 8 new templates built/registered/rendered (55 cross-creator clips, tsc=0, all load). Gallery rebuilt (55 pairings). BUILD LIST:
       HIGH: MatrixGridHeatmap9x16 (adamrosler — NxN attention/matmul heatmap), DocumentHighlightSwipe16x9 (aiexplained — animated highlighter wipe over a screenshot text block), PaintStrokeRibbonBanner16x9 (aiexplained — hand-painted hot-pink numbered section/lower-third banner w/ paint-reveal).
       MED: SpectrumSlider9x16 (abhishek — 1D continuum, two end-poles, gradient track, marker eases to value), BeforeAfterSliderWipe9x16 (estebandiba — media frame split by animated vertical wipe between two states; placeholder media), ModelNameChipComparison9x16 (estebandiba — full-frame placeholder + cycling corner model-name chips), RingTopologyHopCounter9x16 (adamrosler — nodes on a circle + HOP n/N + parcel orbits), RotatingVectorDial9x16 (adamrosler — clock-face dial + animated needle/angle).
       SKIP (low/dup/non-parametric): Carlos stepper (≈pipeline/flow), sahil nutrition-card/chapter-divider (recompositions), zenzuke hand-drawn (not parametric), LayeredGraphTraversal (≈node-graph), abhi spectrum already covered by SpectrumSlider.
-- [ ] PHASE 3a: Codex review cycle 1 + fixes
+- [ ] PHASE 3a: Codex review cycle 1 + fixes (IN PROGRESS)
 - [ ] PHASE 3b: Codex review cycle 2 + fixes
 - [ ] PHASE 3c: Codex review cycle 3 + fixes
 - [ ] PHASE 4: final verify + galleries + commit + write summary to .claude/scratchpad.md
