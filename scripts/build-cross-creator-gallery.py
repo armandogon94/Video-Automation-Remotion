@@ -112,10 +112,16 @@ def _frame_stem_prefix(name):
     return re.sub(r"\d+(\.jpg)?$", "", name)
 
 
-def list_frames(d, prefix=None):
-    """Sorted jpgs in d, narrowed to a filename prefix when one is given (used for
-    the shared `_fresh/` re-download bucket where many patterns live in one dir,
-    keyed by filename prefix). Prefix is ignored if it matches nothing."""
+def list_frames(d, prefix=None, files=None):
+    """Sorted jpgs in d, optionally narrowed to: an explicit `files` basename list
+    (frame-level curation — reels are mixed-pattern, so a manifest entry can pin the
+    exact frames that show the template), else a filename `prefix` (the shared
+    `_fresh/` re-download bucket keys patterns by prefix). Each narrowing is ignored
+    if it matches nothing on disk."""
+    if files:
+        sel = [str(d / f) for f in files if (d / f).exists()]
+        if sel:
+            return sel
     js = sorted(glob.glob(str(d / "*.jpg")))
     if prefix:
         f = [p for p in js if Path(p).name.startswith(prefix)]
@@ -136,7 +142,7 @@ def comp_frames(comp, creator):
     if m:
         d = ROOT / m["dir"]
         if d.is_dir() and glob.glob(str(d / "*.jpg")):
-            return d, m.get("prefix")
+            return d, m.get("prefix"), m.get("frames")
     f = NOTES / f"{comp}.md"
     if f.exists():
         cite = {}  # (dir, prefix) -> times cited in this comp's note
@@ -174,8 +180,9 @@ def comp_frames(comp, creator):
                     cite[k],                                                 # most cited
                     len(list_frames(d, pre)),                                # most frames
                 )
-            return max(cite, key=rank)
-    return frames_dir(creator), None
+            best = max(cite, key=rank)
+            return best[0], best[1], None
+    return frames_dir(creator), None, None
 
 
 def sample(js, n):
@@ -195,10 +202,10 @@ def esc(s):
 rows = []
 for comp, creator in pairings():
     score, verd, blurb = note_meta(comp)
-    d, prefix = comp_frames(comp, creator)
+    d, prefix, files = comp_frames(comp, creator)
     srcs = []
     nframes = 0
-    frames = list_frames(d, prefix) if d else []
+    frames = list_frames(d, prefix, files) if d else []
     if frames:
         nframes = len(frames)
         for i, f in enumerate(sample(frames, N_FRAMES)):

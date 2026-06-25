@@ -108,5 +108,209 @@
     "_verified": true,
     "_changed": true,
     "_depicts": "Two circular dials with crosshair ticks, glowing blue needles at angles, swept arcs, position labels."
+  },
+  "RankedTierList9x16": {
+    "dir": "references/creators/adamrosler/mZgCDFEBna0/frames",
+    "frames": [
+      "frame-008.jpg",
+      "frame-009.jpg",
+      "frame-010.jpg",
+      "frame-011.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "The OPENROUTER LEADERBOARD scene in mZgCDFEBna0 directly matches the RankedTierList9x16 si"
+  },
+  "NeuralNetwork9x16": {
+    "dir": "references/creators/adamrosler/7RhJawm2nw4/frames",
+    "frames": [
+      "frame-019.jpg",
+      "frame-020.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "frames/frame-019 and frame-020 show the exact pattern: dark bg, blue glowing nodes, INPUT/"
+  },
+  "TokenStream9x16": {
+    "dir": "references/creators/adamrosler/7RhJawm2nw4/_fresh",
+    "frames": [
+      "frame-030.jpg",
+      "frame-031.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "medium",
+    "_depicts": "Frames 030/031 show dark-surface monospace text output (\"the cat sat on the mat.\") in a bo"
+  },
+  "EquationCardChain16x9": {
+    "dir": "references/creators/natebjones/iUSdS-6uwr4/frames",
+    "prefix": "vote1-anim-01",
+    "frames": [
+      "vote1-anim-01-frame-005-t665s.jpg",
+      "vote1-anim-01-frame-006-t665s.jpg",
+      "vote1-anim-01-frame-007-t665s.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "iUSdS-6uwr4 contains pure EquationCardChain16x9 pattern (A+B+C=Result layout with rounded "
+  },
+  "ThreeStageRisingBars16x9": {
+    "dir": "references/creators/natebjones/ogTLWGBc3cE/frames",
+    "prefix": "anim-01",
+    "frames": [
+      "anim-01-frame-001-t425s.jpg",
+      "anim-01-frame-002-t425s.jpg",
+      "anim-01-frame-003-t425s.jpg",
+      "anim-01-frame-004-t425s.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "anim-01 frames 001-004 show the complete N2 three-stage rising bars pattern: three labeled"
+  },
+  "ThreeRowLabeledCardStack16x9": {
+    "dir": "references/creators/natebjones/n0nC1kmztSk/frames",
+    "frames": [
+      "anim-02-frame-005-t285s.jpg",
+      "anim-02-frame-006-t285s.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "medium",
+    "_depicts": "Frames 5-6 from anim-02 sequence show the complete three-row horizontal card stack with le"
+  },
+  "KaraokeWithBlueChipPullout9x16": {
+    "dir": "references/creators/natebjones/LDb0mXNowF4/frames",
+    "frames": [
+      "anim-01-frame-001-t21s.jpg",
+      "anim-01-frame-003-t21s.jpg",
+      "anim-01-frame-004-t21s.jpg",
+      "anim-01-frame-005-t21s.jpg",
+      "anim-02-frame-001-t42s.jpg",
+      "anim-02-frame-004-t42s.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "LDb0mXNowF4 is a C7 karaoke-with-blue-chip-pullout reel (cited in ANALYSIS.md); the 6 fram"
+  },
+  "QuoteCard9x16": {
+    "dir": "references/creators/black.one.studio/DUTmCQfAbPt/frames",
+    "frames": [
+      "frame-00-t00.10s.jpg",
+      "frame-01-t00.80s.jpg",
+      "frame-03-t02.20s.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "DUTmCQfAbPt demonstrates the signature late-arriving tagline reveal (clean field ~1s then "
+  },
+  "StudioCompositor16x9": {
+    "dir": "references/creators/theaiadvantage/_fresh",
+    "frames": [
+      "frame-013.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "Frame-013 perfectly depicts the floating-UI-mockup + corner-presenter pattern: dark navy s"
+  },
+  "MatrixGridHeatmap9x16": {
+    "dir": "references/creators/adamrosler/1eBmR1n0VNk/frames",
+    "frames": [
+      "frame-023.jpg",
+      "frame-024.jpg",
+      "frame-026.jpg",
+      "frame-028.jpg",
+      "frame-030.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "Video 1eBmR1n0VNk (Diffusion Language Models) contains a 6x6 grid of random garbage symbol"
+  },
+  "DocumentHighlightSwipe16x9": {
+    "dir": "references/creators/aiexplained/Iar4yweKGoI/frames",
+    "frames": [
+      "anim-01-frame-005.jpg",
+      "anim-01-frame-012.jpg",
+      "anim-02-frame-004.jpg",
+      "anim-02-frame-008.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "Reel Iar4yweKGoI contains 4 frames showing the exact pattern: translucent yellow/orange hi"
+  },
+  "BeforeAfterSliderWipe9x16": {
+    "dir": "references/creators/estebandiba/_backcat/DYhW4eGglHv",
+    "frames": [
+      "frame-02.jpg",
+      "frame-04.jpg",
+      "frame-05.jpg",
+      "frame-07.jpg",
+      "frame-08.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "DYhW4eGglHv depicts animated vertical wipe slider comparing before/after upscaling with ha"
+  },
+  "ModelNameChipComparison9x16": {
+    "dir": "references/creators/estebandiba/_new/DZ-pBwCEWFU",
+    "frames": [
+      "frame-055.jpg",
+      "frame-064.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "medium",
+    "_depicts": "Frames 055 and 064 show the persistent two-column comparison-list pattern (services/prices"
+  },
+  "ForceGraph9x16": {
+    "dir": "references/creators/adamrosler/I9pjllzSNK0/frames",
+    "frames": [
+      "frame-025.jpg",
+      "frame-027.jpg",
+      "frame-029.jpg",
+      "frame-030.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "I9pjllzSNK0 contains the BGP force-directed AutonomousSystemGraph pattern: organic node la"
+  },
+  "TalkingHead": {
+    "dir": "references/creators/simonhoiberg/DNVjkdEsKAj/frames",
+    "frames": [
+      "frame-00-t00.20s.jpg",
+      "frame-01-t14.37s.jpg",
+      "frame-03-t42.71s.jpg",
+      "frame-05-t71.05s.jpg",
+      "frame-06-t85.22s.jpg"
+    ],
+    "_verified": true,
+    "_round": 2,
+    "_changed": true,
+    "_confidence": "high",
+    "_depicts": "DNVjkdEsKAj is a pure single-scene talking-head reel showing Simon in his warm-lit studio "
   }
 }

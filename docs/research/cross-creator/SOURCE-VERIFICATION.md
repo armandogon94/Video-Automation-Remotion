@@ -101,3 +101,70 @@ synthesized adaptations with no single clean source scene.
    matches **carloscuamatzin/DYqgAYfRqBf**, not its labeled creator midu.dev (kept on midu to
    preserve the row's creator framing).
 
+
+
+---
+
+# Round-2 — frame-level re-curation (the 36 flagged rows)
+
+Second 72-agent pass (re-pick the correct reel + pin the EXACT frames that show the
+pattern -> independent confirming vote). Frame-level selection now supported in
+`source-map.json` (a `frames` basename list per entry) because reels are mixed-scene.
+
+## Result: 15 verified & pinned (frame-level), 12 adaptations (no clean source), 9 still open
+
+### Verified frame-level pins (added to source-map.json)
+
+| Comp | Source reel | Frames |
+|---|---|---|
+| RankedTierList9x16 | adamrosler/mZgCDFEBna0/frames | frame-008.jpg, frame-009.jpg, frame-010.jpg, frame-011.jpg |
+| ForceGraph9x16 | adamrosler/I9pjllzSNK0 | frame-025.jpg, frame-027.jpg, frame-029.jpg, frame-030.jpg |
+| NeuralNetwork9x16 | adamrosler/7RhJawm2nw4/frames | frame-019.jpg, frame-020.jpg |
+| TokenStream9x16 | adamrosler/7RhJawm2nw4/_fresh | frame-030.jpg, frame-031.jpg |
+| EquationCardChain16x9 | natebjones/iUSdS-6uwr4/frames | vote1-anim-01-frame-005-t665s.jpg, vote1-anim-01-frame-006-t665s.jpg, vote1-anim-01-frame-007-t665s.jpg |
+| ThreeStageRisingBars16x9 | natebjones/ogTLWGBc3cE/frames | anim-01-frame-001-t425s.jpg, anim-01-frame-002-t425s.jpg, anim-01-frame-003-t425s.jpg, anim-01-frame-004-t425s.jpg |
+| ThreeRowLabeledCardStack16x9 | natebjones/n0nC1kmztSk/frames | anim-02-frame-005-t285s.jpg, anim-02-frame-006-t285s.jpg |
+| KaraokeWithBlueChipPullout9x16 | natebjones/LDb0mXNowF4/frames | anim-01-frame-001-t21s.jpg, anim-01-frame-003-t21s.jpg, anim-01-frame-004-t21s.jpg, anim-01-frame-005-t21s.jpg, anim-02-frame-001-t42s.jpg, anim-02-frame-004-t42s.jpg |
+| QuoteCard9x16 | black.one.studio/DUTmCQfAbPt/frames | frame-00-t00.10s.jpg, frame-01-t00.80s.jpg, frame-03-t02.20s.jpg |
+| TalkingHead | simonhoiberg/DNVjkdEsKAj | frame-00-t00.20s.jpg, frame-01-t14.37s.jpg, frame-03-t42.71s.jpg, frame-05-t71.05s.jpg, frame-06-t85.22s.jpg |
+| StudioCompositor16x9 | theaiadvantage/_fresh | frame-013.jpg |
+| MatrixGridHeatmap9x16 | adamrosler/1eBmR1n0VNk/frames | frame-023.jpg, frame-024.jpg, frame-026.jpg, frame-028.jpg, frame-030.jpg |
+| DocumentHighlightSwipe16x9 | aiexplained/Iar4yweKGoI/frames | anim-01-frame-005.jpg, anim-01-frame-012.jpg, anim-02-frame-004.jpg, anim-02-frame-008.jpg |
+| BeforeAfterSliderWipe9x16 | estebandiba/_backcat/DYhW4eGglHv | frame-02.jpg, frame-04.jpg, frame-05.jpg, frame-07.jpg, frame-08.jpg |
+| ModelNameChipComparison9x16 | estebandiba/_new/DZ-pBwCEWFU | frame-055.jpg, frame-064.jpg |
+
+### Adaptations — no clean single-scene source in the labeled creator (left at fallback; NOT a render bug)
+
+These templates were synthesized in the project typology, inspired by a creator's
+*discipline* (palette/structure vocabulary) rather than copied from one scene. Honest
+label: adaptation. Candidates for an explicit ADAPTED badge later.
+
+| Comp | Why |
+|---|---|
+| EditorBlock9x16 | EditorBlock9x16 is an adaptation of adamrosler's dark-procedural language (monospace, tracked-uppercase headers, glow highlights, gold accents) but th |
+| IllustratedConcept9x16 | Template is centered-illustration card; adamrosler creates only procedural neon diagrams. Improvement was palette-harmonization (cream→dark), not sour |
+| KineticTypoCard9x16 | KineticTypoCard9x16 is a cross-creator adaptation from builtbystephan with no clean native scene in adamrosler's work; the warm-cream film-frame card  |
+| PipelineFlow9x16 | No scene in adamrosler's reels depicts vertical sequential stacking; template replicates dark aesthetic (black bg, slate boxes, glowing borders, monos |
+| TerminalCommand9x16 | 7RhJawm2nw4/_fresh frames show neural-net diagrams with overlaid terminal text (rejected); mZgCDFEBna0 contains UI elements but lacks the pure typewri |
+| BenchmarkBars9x16 | Template is adaptation—Sahil demonstrates vertical ranked-bar lists (P4), not horizontal 2-item X-vs-Y benchmarks; _fresh frames show only the vertica |
+| BigNumberHorizontalBars16x9 | The _fresh frames show only full-width stacked bars (Sahil's discipline), not the hero-number-left + bars-right split required by the template—the her |
+| BrollListicle9x16 | BrollListicle9x16 replicates Alex Hormozi's listicle pattern (white hook pill + numbered chapter pills); sahilbloom's signature is HeroChapterNumeral  |
+| GenerativeBrollWithDiegeticUI9x16 | Template depicts faked macOS editor window with code syntax + traffic lights + breadcrumb path; sahilbloom's actual diegetic-UI signature is email/Gma |
+| BrandedOpener9x16 | No reel in @alexhormozi's catalog contains an isolated dark-bg brand-opener moment; all are talking-head with overlaid text. BrandedOpener9x16 is a va |
+| VennDiagram9x16 | VennDiagram9x16 is an adaptation/realization of aiexplained's comparison discipline, not a scene from his actual videos; aiexplained's DNA is Benchmar |
+| Listicle | No scene in simonhoiberg's corpus (12 analyzed reels + _backcat backlog) depicts the generic dark-navy/gold numbered listicle pattern. Simon's listicl |
+
+### Still open after round-2 (verifier rejected the re-pick too)
+
+| Comp | Reason |
+|---|---|
+| TerminalBlock9x16 | Frames show a neon GUI button/menu interface, not the line-by-line monospace terminal output (console logs with typewriter reveal) that TerminalBlock9 |
+| BigNumberDuel9x16 | Frames depict adamrosler's source bordered-card duel pattern (orange headers, mini-spark, red pills), not a BigNumberDuel magnitude-duel replica (two  |
+| LockedFeatureRow9x16 | Frames depict a data-structure vectors-visualization pattern, not the feature-gating-row pattern documented for LockedFeatureRow9x16. |
+| TitledDossierCard9x16 | These frames show diagram/list scenes, not the title-hero-stat-bullet dossier card structure documented in the template. |
+| TopHeroBottomTrioCards16x9 | Frames show a horizontal 4-card product flow, not the documented vertical hero+trio+pill pattern (hero top, 3 supporting cards below, emphasis pill la |
+| TitleCardKineticTwoLine16x9 | Frames show comparison layouts, mid-transition text, and a countdown timer—none depict the centered kicker-hero-subtitle editorial stack documented fo |
+| KineticEssay9x16 | Frames depict distinct video scenes with different copy and layouts, not the single unified sequential reveal progression that defines KineticEssay9x1 |
+| LineChartAnnotated9x16 | Frames are static reference screenshots (Metaculus source), not animated LineChartAnnotated9x16 compositions; no motion, no line draw-on, no endpoint  |
+| ModelComparison2x2Grid16x9 | Both frames show 3-column comparison layouts with left-side presenter PIP, not the documented 2x2 grid structure with four rounded cards. |
+
