@@ -23,8 +23,10 @@
  *
  * Motion grammar:
  *   - Whole graph fades in over ~0.5s
- *   - Edges draw on (stroke-dashoffset 0 → length) over 0.6s after node settle,
- *     staggered by edge index (~0.03s per edge)
+ *   - Edges fade in (opacity 0 → 0.55) AND draw on (stroke-dashoffset) starting
+ *     at t=0, concurrent with the node reveal, over ~0.45s with a tiny per-edge
+ *     stagger — so the graph reads as a connected network immediately rather
+ *     than as disconnected floating bubbles while edges trickle in
  *   - Focus node's pulsing glow ring starts once everything is in place
  *   - Optional very-slow continuous graph rotation (off by default)
  */
@@ -328,11 +330,18 @@ export const ForceGraph9x16: React.FC<ForceGraph9x16Props> = ({
   // ── Motion timeline ────────────────────────────────────────────
   // 0.0s             : nothing rendered
   // 0.0s → 0.5s      : whole graph fades in
-  // 0.5s → 1.1s      : edges draw on (stroke-dashoffset → 0), stagger 0.03s/edge
-  // 1.1s+            : focus node pulses indefinitely
+  // 0.0s → ~0.55s    : edges fade in (opacity) CONCURRENTLY with the node reveal
+  //                    + draw on (stroke-dashoffset → 0), tiny per-edge stagger.
+  //                    The graph must read as a connected NETWORK immediately —
+  //                    nodes should never sit as disconnected floating bubbles.
+  // ~0.9s+           : focus node pulses indefinitely
   const FADE_IN_SEC = 0.5;
-  const EDGE_DRAW_SEC = 0.6;
-  const EDGE_STAGGER_SEC = 0.03;
+  // Quick stroke-draw + opacity fade, both starting at t=0 so edges appear with
+  // the nodes. Short duration + near-zero stagger keeps the whole web connected
+  // within the fade-in window instead of trickling in over ~0.9s.
+  const EDGE_DRAW_SEC = 0.45;
+  const EDGE_FADE_SEC = 0.45;
+  const EDGE_STAGGER_SEC = 0.008;
   const PULSE_PERIOD_SEC = 1.6;
 
   const nowSec = frame / fps;
@@ -421,18 +430,30 @@ export const ForceGraph9x16: React.FC<ForceGraph9x16Props> = ({
         {/* Rotation group — `transform-origin` style isn't honored by some
             headless SVG renderers, so we rotate via attribute around the center. */}
         <g transform={`rotate(${rotationDeg} ${GRAPH_W / 2} ${GRAPH_H / 2})`}>
-          {/* ── Edges (drawn on after node settle) ─────────────── */}
+          {/* ── Edges (fade + draw on concurrently with the nodes) ── */}
           <g>
             {layout.edges.map((e, idx) => {
               const length = Math.hypot(
                 e.target.x - e.source.x,
                 e.target.y - e.source.y,
               );
-              const startAt = FADE_IN_SEC + idx * EDGE_STAGGER_SEC;
+              // Start at t=0 (concurrent with the node fade-in), tiny stagger.
+              // Edges fade in by OPACITY while the stroke draws on, so the graph
+              // reads as a connected web from the first visible frame instead of
+              // showing disconnected bubbles for ~0.9s while edges trickle in.
+              const startAt = idx * EDGE_STAGGER_SEC;
               const t = interpolate(
                 nowSec,
                 [startAt, startAt + EDGE_DRAW_SEC],
                 [0, 1],
+                { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+              );
+              // Opacity fade-in, concurrent with the node reveal, up to the
+              // visible target (0.55) established by the prior contrast fix.
+              const edgeOpacity = interpolate(
+                nowSec,
+                [startAt, startAt + EDGE_FADE_SEC],
+                [0, 0.55],
                 { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
               );
               // `stroke-dashoffset` from full length → 0 draws the line on.
@@ -451,7 +472,7 @@ export const ForceGraph9x16: React.FC<ForceGraph9x16Props> = ({
                   // accent (the adamrosler AS-graph uses prominent role-colored
                   // edges) with a thicker stroke that survives the downscale.
                   stroke={resolvedAccent}
-                  strokeOpacity={0.55}
+                  strokeOpacity={edgeOpacity}
                   strokeWidth={4}
                   strokeDasharray={length}
                   strokeDashoffset={dashOffset}

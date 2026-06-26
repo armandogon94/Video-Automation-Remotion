@@ -103,11 +103,19 @@ export const Listicle: React.FC<ListicleProps> = ({
   captions,
   watermark,
 }) => {
-  const { fps, width } = useVideoConfig();
-  const framesPerItem = secondsPerItem * fps;
+  const { fps, width, durationInFrames } = useVideoConfig();
+  const itemCount = Math.max(items.length, 1);
 
-  // Title takes first 2 seconds
-  const titleFrames = 2 * fps;
+  // Title takes up to 2 seconds, but never more than ~30% of the clip so the
+  // list always has room to play (short renders would otherwise be all-title).
+  const titleFrames = Math.min(2 * fps, Math.floor(durationInFrames * 0.3));
+
+  // Pace item reveals to fit the actual composition duration. `secondsPerItem`
+  // is treated as an upper bound: on long comps each item gets its full window,
+  // but on short clips the stagger compresses so EVERY item reveals in time
+  // instead of stalling on item 1.
+  const remainingFrames = Math.max(durationInFrames - titleFrames, 1);
+  const stagger = Math.min(secondsPerItem * fps, remainingFrames / itemCount);
 
   return (
     <AbsoluteFill>
@@ -130,19 +138,23 @@ export const Listicle: React.FC<ListicleProps> = ({
         </AbsoluteFill>
       </Sequence>
 
-      {/* List items */}
-      {items.map((item, i) => (
-        <Sequence
-          key={i}
-          from={titleFrames + i * framesPerItem}
-          durationInFrames={framesPerItem}
-        >
-          <AbsoluteFill
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "0 80px",
-            }}
+      {/* List items — staggered reveals that stack and persist so multiple
+          items are on screen at once (e.g. a "Top 5" accumulating). */}
+      <AbsoluteFill
+        style={{
+          justifyContent: "center",
+          alignItems: "flex-start",
+          padding: "0 120px",
+          flexDirection: "column",
+          gap: 40,
+        }}
+      >
+        {items.map((item, i) => (
+          <Sequence
+            key={i}
+            from={titleFrames + Math.round(i * stagger)}
+            durationInFrames={durationInFrames}
+            layout="none"
           >
             <ListItem
               number={item.number}
@@ -151,9 +163,9 @@ export const Listicle: React.FC<ListicleProps> = ({
               accentColor={accentColor}
               textColor={textColor}
             />
-          </AbsoluteFill>
-        </Sequence>
-      ))}
+          </Sequence>
+        ))}
+      </AbsoluteFill>
 
       {/* Captions */}
       <Caption

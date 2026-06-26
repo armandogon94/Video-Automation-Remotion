@@ -119,6 +119,251 @@ const ROTATE_Y_DEG = -5;
 const GLOW_ALPHA_HEX = "40";
 const GLOW_BLUR_RADIUS_PX = 40;
 
+/** Brand palette (from brand/config.json). The procedural editor mock inside the
+ *  window panel is painted in these so the focal element reads as an on-brand
+ *  studio/editor dashboard rather than a redundant copy of the presenter avatar. */
+const BRAND_NAVY = "#1B3A6E";
+const BRAND_GOLD = "#D4AF37";
+const PANEL_BODY_BG = "#0B0F15";
+const PANEL_RAIL_BG = "#11161F";
+const PANEL_PANEL_BG = "#0F141C";
+const PANEL_HAIRLINE = "rgba(255,255,255,0.08)";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Procedural editor mock — the window-panel body content.
+//
+// Instead of cropping the brand avatar into the panel (which created a redundant
+// "double avatar" against the presenter PIP), we paint a generic editor/dashboard
+// UI: a left tool rail, a main canvas area with a brand-tinted preview block, and
+// a right properties panel with placeholder rows + swatches. Brand-colored, fully
+// procedural — no avatar image. A subtle "Studio Compositor · Preview" caption
+// labels it as a placeholder editor surface.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const TOOL_RAIL_WIDTH_PX = 64;
+const PROPS_PANEL_WIDTH_PX = 240;
+const TOOL_RAIL_ICON_COUNT = 6;
+const PROPS_ROW_COUNT = 5;
+const SWATCH_COLORS = [BRAND_NAVY, BRAND_GOLD, "#3FB8FF", "#2BD49B"] as const;
+
+const EditorMockBody: React.FC = () => {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        background: PANEL_BODY_BG,
+      }}
+    >
+      {/* Left tool rail — a column of placeholder tool buttons. */}
+      <div
+        style={{
+          width: TOOL_RAIL_WIDTH_PX,
+          flexShrink: 0,
+          background: PANEL_RAIL_BG,
+          borderRight: `1px solid ${PANEL_HAIRLINE}`,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 18,
+          paddingTop: 22,
+        }}
+      >
+        {Array.from({ length: TOOL_RAIL_ICON_COUNT }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 8,
+              background:
+                i === 0 ? `${BRAND_GOLD}33` : "rgba(255,255,255,0.06)",
+              border:
+                i === 0
+                  ? `1px solid ${BRAND_GOLD}88`
+                  : "1px solid rgba(255,255,255,0.08)",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main canvas area — toolbar strip + brand-tinted preview block + timeline. */}
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          flexDirection: "column",
+          padding: 22,
+          gap: 16,
+        }}
+      >
+        {/* Toolbar strip. */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            style={{
+              width: 96,
+              height: 14,
+              borderRadius: 7,
+              background: "rgba(255,255,255,0.14)",
+            }}
+          />
+          <div
+            style={{
+              width: 56,
+              height: 14,
+              borderRadius: 7,
+              background: "rgba(255,255,255,0.08)",
+            }}
+          />
+          <div style={{ flex: 1 }} />
+          <div
+            style={{
+              width: 72,
+              height: 24,
+              borderRadius: 6,
+              background: `${BRAND_GOLD}E6`,
+            }}
+          />
+        </div>
+
+        {/* Preview canvas — a brand-navy block with a centered play affordance. */}
+        <div
+          style={{
+            flex: 1,
+            minHeight: 0,
+            borderRadius: 12,
+            background: `linear-gradient(135deg, ${BRAND_NAVY} 0%, #0E1726 100%)`,
+            border: `1px solid ${PANEL_HAIRLINE}`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              width: 76,
+              height: 76,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.10)",
+              border: `2px solid ${BRAND_GOLD}AA`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {/* Play triangle. */}
+            <div
+              style={{
+                width: 0,
+                height: 0,
+                marginLeft: 6,
+                borderTop: "16px solid transparent",
+                borderBottom: "16px solid transparent",
+                borderLeft: `26px solid ${BRAND_GOLD}`,
+              }}
+            />
+          </div>
+          <span
+            style={{
+              position: "absolute",
+              bottom: 14,
+              left: 16,
+              color: "rgba(255,255,255,0.45)",
+              fontSize: 14,
+              fontWeight: 500,
+              letterSpacing: "0.04em",
+            }}
+          >
+            Studio Compositor · Preview
+          </span>
+        </div>
+
+        {/* Timeline strip — a few placeholder clip blocks. */}
+        <div style={{ display: "flex", gap: 8, height: 30 }}>
+          {[0.34, 0.18, 0.26, 0.12].map((w, i) => (
+            <div
+              key={i}
+              style={{
+                width: `${w * 100}%`,
+                borderRadius: 6,
+                background:
+                  i === 1 ? `${BRAND_NAVY}` : "rgba(255,255,255,0.07)",
+                border: `1px solid ${PANEL_HAIRLINE}`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Right properties panel — header, placeholder rows, color swatches. */}
+      <div
+        style={{
+          width: PROPS_PANEL_WIDTH_PX,
+          flexShrink: 0,
+          background: PANEL_PANEL_BG,
+          borderLeft: `1px solid ${PANEL_HAIRLINE}`,
+          padding: 22,
+          display: "flex",
+          flexDirection: "column",
+          gap: 16,
+        }}
+      >
+        <div
+          style={{
+            width: 120,
+            height: 14,
+            borderRadius: 7,
+            background: "rgba(255,255,255,0.16)",
+          }}
+        />
+        {Array.from({ length: PROPS_ROW_COUNT }).map((_, i) => (
+          <div
+            key={i}
+            style={{ display: "flex", flexDirection: "column", gap: 7 }}
+          >
+            <div
+              style={{
+                width: `${50 + (i % 3) * 12}%`,
+                height: 9,
+                borderRadius: 5,
+                background: "rgba(255,255,255,0.10)",
+              }}
+            />
+            <div
+              style={{
+                width: "100%",
+                height: 18,
+                borderRadius: 6,
+                background: "rgba(255,255,255,0.05)",
+                border: `1px solid ${PANEL_HAIRLINE}`,
+              }}
+            />
+          </div>
+        ))}
+        {/* Color swatch row. */}
+        <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
+          {SWATCH_COLORS.map((c) => (
+            <div
+              key={c}
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: 6,
+                background: c,
+                border: "1px solid rgba(255,255,255,0.18)",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 // UI mockup layer — handles the perspective tilt + glow halo + entrance anim.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -246,21 +491,13 @@ const UiMockupLayer: React.FC<UiMockupLayerProps> = ({
         </span>
       </div>
 
-      {/* Screen body — the mockup image clipped into the landscape screen. */}
+      {/* Screen body — a procedural editor/dashboard mock (NOT the avatar image)
+       *  so the panel reads as a generic studio editor surface rather than a
+       *  redundant copy of the presenter PIP. The `mockup.src` prop is retained
+       *  in the schema for backwards compatibility but is intentionally not
+       *  rendered as the panel content. */}
       <div style={{ flex: 1, minHeight: 0, position: "relative" }}>
-        <Img
-          src={mockup.src}
-          alt={mockup.altText ?? ""}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center top",
-            display: "block",
-          }}
-        />
+        <EditorMockBody />
       </div>
     </div>
   );
