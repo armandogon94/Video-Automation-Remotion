@@ -76,10 +76,10 @@ export const concentricHierarchyRadialCallout9x16Schema = z.object({
   rings: z
     .array(ringSchema_local)
     .default([
-      { label: "Artificial Intelligence", description: "Any system that mimics human reasoning" },
-      { label: "Machine Learning", description: "Learns patterns from data" },
-      { label: "Deep Learning", description: "Multi-layer neural networks" },
-      { label: "Generative AI", description: "Creates new text, images, code" },
+      { label: "Artificial Intelligence", description: "" },
+      { label: "Machine Learning", description: "" },
+      { label: "Deep Learning", description: "" },
+      { label: "Generative AI", description: "" },
     ]),
 
   /** Callout boxes anchored around the perimeter, wired to a ring by index. */
@@ -175,11 +175,11 @@ function resolvePalette(mode: "cream" | "dark", accent: string): ResolvedPalette
       ink: BRAND.colors.text,
       inkSoft: "#3A4250",
       muted: BRAND.colors.muted,
-      ringIdle: "rgba(27,58,110,0.22)", // faint navy
+      ringIdle: "rgba(27,58,110,0.70)", // strong navy outline so the rings read clearly
       ringBandFill: (a: number) => `rgba(27,58,110,${a})`,
       calloutBg: "#FFFFFF",
       calloutBorder: "rgba(27,58,110,0.28)",
-      connectorBase: "rgba(27,58,110,0.45)",
+      connectorBase: "rgba(27,58,110,0.55)",
     };
   }
   // dark — deep-navy near-black with a faint warm vignette (CodingFab source look).
@@ -189,13 +189,13 @@ function resolvePalette(mode: "cream" | "dark", accent: string): ResolvedPalette
       "radial-gradient(100% 70% at 50% 50%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.55) 100%)",
     ink: "#F5F2EC",
     inkSoft: "#C9D2DE",
-    muted: "#8A93A3",
-    ringIdle: "rgba(122,135,160,0.20)",
+    muted: "#A6AFBF",
+    ringIdle: "rgba(176,188,209,0.78)", // bright cool-grey outline, high contrast on near-black
     // Bands tinted with the navy spine so the gold accent + white text pop.
-    ringBandFill: (a: number) => `rgba(27,58,110,${a})`,
+    ringBandFill: (a: number) => `rgba(54,92,150,${a})`,
     calloutBg: "rgba(15,27,45,0.92)",
     calloutBorder: accent,
-    connectorBase: "rgba(212,175,55,0.55)",
+    connectorBase: "rgba(212,175,55,0.65)",
   };
 }
 
@@ -363,28 +363,51 @@ const RingView: React.FC<RingViewProps> = ({
   });
 
   // Each band's fill alpha steps up toward the center so the nesting reads as a
-  // depth gradient; the innermost ring carries the accent.
+  // depth gradient; the innermost ring carries the accent. A gentle but clearly
+  // visible step (0.10 → 0.34) keeps each nested band distinct from its parent.
   const depth = total <= 1 ? 0 : index / (total - 1);
-  const bandAlpha = 0.06 + depth * 0.12;
+  const bandAlpha = 0.1 + depth * 0.24;
 
   // The innermost ring is the "payload" — outline it in the accent.
   const outlineColor = isInnermost ? accent : pal.ringIdle;
-  const outlineWidth = isInnermost ? 4 : 3;
+  // Stroke width is DERIVED from this ring's radius: larger (outer) rings get a
+  // proportionally thicker outline so the concentric nesting reads at a glance,
+  // clamped to a clearly-visible 4..9px range. The innermost accent ring gets a
+  // small extra weight so the payload pops.
+  const radiusStroke = (radius / OUTER_RADIUS) * 9;
+  const outlineWidth = isInnermost
+    ? Math.max(6, Math.min(9, radiusStroke + 2))
+    : Math.max(4, Math.min(9, radiusStroke));
 
-  // Label sits INSIDE this ring's own band — anchored just below the band's TOP
-  // edge (the ring's topmost point) rather than the band midpoint, so the whole
-  // label+description block lives within the band thickness above the center.
-  // Because consecutive rings step inward by a fixed amount, top-edge anchoring
-  // spaces successive labels by that full band thickness: the OUTERMOST ring's
-  // label sits highest (just inside the outer ring's top), each inner ring's
-  // label sits progressively lower/closer to center, and none overlap.
-  //   labelY (label baseline) = ring top edge + inset.
-  const BAND_LABEL_INSET = 30;
-  const bandThickness = radius - innerRadius;
-  const labelY = CENTER_Y - radius + BAND_LABEL_INSET;
-  // Keep the description tucked just under the label, still inside the band.
-  // Clamp its offset so it never reaches the next ring's top edge.
-  const descOffset = Math.min(34, Math.max(24, bandThickness - 30));
+  // Label sits INSIDE this ring's own band — the vertical slot is the gap on the
+  // 12-o'clock spine between THIS ring's top stroke and the NEXT-inner ring's top
+  // stroke. We derive both edges from the radii so the label can never sit on a
+  // stroke or bleed into the neighbouring band:
+  //   bandTopY  = this ring's top stroke (CENTER_Y - radius), pushed in past the
+  //               half-stroke so text clears the outline.
+  //   bandBotY  = next-inner ring's top stroke (CENTER_Y - innerRadius), pulled
+  //               up past its half-stroke for the same clearance.
+  // The label baseline is placed a fixed inset below bandTopY; the description is
+  // tucked under it and the whole block is clamped to stay above bandBotY, giving
+  // each successive band's label clear separation (≈ a full band thickness apart)
+  // with no overlap onto the ring stroke or the next label.
+  const halfStroke = outlineWidth / 2;
+  const innerHalfStroke = isInnermost ? halfStroke : 4; // approx inner ring stroke
+  const bandTopY = CENTER_Y - radius + halfStroke;
+  const bandBotY = CENTER_Y - innerRadius - innerHalfStroke;
+  const slot = Math.max(0, bandBotY - bandTopY);
+
+  // Label baseline: an inset below the band's top stroke. For roomy bands keep a
+  // comfortable inset; for tight bands fall back to the band midpoint so the
+  // label still reads centered rather than crowding either stroke.
+  const BAND_LABEL_INSET = 34;
+  const labelY =
+    slot >= BAND_LABEL_INSET + 24
+      ? bandTopY + BAND_LABEL_INSET
+      : bandTopY + slot * 0.5;
+  // Description tucked under the label, clamped so it never crosses the inner
+  // stroke (bandBotY). Hidden implicitly by the caller when empty.
+  const descOffset = Math.min(34, Math.max(22, bandBotY - labelY - 6));
 
   return (
     <g>
@@ -410,7 +433,7 @@ const RingView: React.FC<RingViewProps> = ({
         strokeDashoffset={dashOffset}
         strokeLinecap="round"
         transform={`rotate(-90 ${CENTER_X} ${CENTER_Y})`}
-        opacity={isInnermost ? 1 : 0.85}
+        opacity={1}
       />
       {/* Band label (+ optional description). SOLID fills only. */}
       <g

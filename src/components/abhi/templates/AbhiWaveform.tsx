@@ -416,9 +416,11 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
           <div
             style={{
               position: "absolute",
-              left: cx - clusterW * 1.45,
+              // Canvas-relative band with safe side margins so a long transcript
+              // never clips the right edge (replaces the cluster-relative width).
+              left: px(80),
+              right: px(80),
               top: transcriptTop,
-              width: clusterW * 2.9,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -462,11 +464,13 @@ export const AbhiWaveform: React.FC<Partial<AbhiWaveformProps>> = (props) => {
                     key={`t-${i}`}
                     style={{
                       color: wColor,
-                      marginRight: px(8),
                       transition: "none",
                     }}
                   >
+                    {/* Trailing real space = a line-break opportunity so a long
+                        transcript wraps inside the chip instead of overflowing. */}
                     {w}
+                    {i < transcriptWords.length - 1 ? " " : ""}
                   </span>
                 );
               })}

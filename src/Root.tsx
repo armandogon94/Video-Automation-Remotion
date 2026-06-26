@@ -74,6 +74,8 @@ import { ConcentricHierarchyRadialCallout9x16, concentricHierarchyRadialCallout9
 import { MetricBarsComparisonCard9x16, metricBarsComparisonCard9x16Schema } from "./compositions/MetricBarsComparisonCard9x16";
 import { StatCardSequenceWithUnderlines9x16, statCardSequenceWithUnderlines9x16Schema } from "./compositions/StatCardSequenceWithUnderlines9x16";
 import { AppScreenCarousel9x16, appScreenCarousel9x16Schema } from "./compositions/AppScreenCarousel9x16";
+import { SceneSequencer9x16, sceneSequencer9x16Schema } from "./compositions/SceneSequencer9x16";
+import { AbhiWaveformTranscript9x16, abhiWaveformTranscript9x16Schema } from "./compositions/AbhiWaveformTranscript9x16";
 import { BrollListicle9x16, brollListicle9x16Schema } from "./compositions/BrollListicle9x16";
 import { KineticMacroTypeOpener9x16, kineticMacroTypeOpenerSchema } from "./compositions/KineticMacroTypeOpener9x16";
 // Wave-6 — 16:9 horizontal templates
@@ -2646,6 +2648,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="MetricBarsComparisonCard9x16" component={MetricBarsComparisonCard9x16} schema={metricBarsComparisonCard9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={metricBarsComparisonCard9x16Schema.parse({})} />
         <Composition id="StatCardSequenceWithUnderlines9x16" component={StatCardSequenceWithUnderlines9x16} schema={statCardSequenceWithUnderlines9x16Schema} durationInFrames={246} fps={30} width={1080} height={1920} defaultProps={statCardSequenceWithUnderlines9x16Schema.parse({})} />
         <Composition id="AppScreenCarousel9x16" component={AppScreenCarousel9x16} schema={appScreenCarousel9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={appScreenCarousel9x16Schema.parse({})} />
+        {/* Backlog 2026-06-25: SceneSequencer meta-comp + AbhiWaveform transcript variant */}
+        <Composition id="SceneSequencer9x16" component={SceneSequencer9x16} schema={sceneSequencer9x16Schema} durationInFrames={375} fps={30} width={1080} height={1920} defaultProps={sceneSequencer9x16Schema.parse({})} />
+        <Composition id="AbhiWaveformTranscript9x16" component={AbhiWaveformTranscript9x16} schema={abhiWaveformTranscript9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={abhiWaveformTranscript9x16Schema.parse({})} />
 
         <Composition
           id="KineticMacroTypeOpener9x16"
