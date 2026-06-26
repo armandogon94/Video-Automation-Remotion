@@ -576,3 +576,18 @@ to per-band staggered Y (labelY = CENTER_Y - radius + inset).
   (would drop midu.dev from the gallery). Backlog/decisions live in .claude/NEXT-STEPS.md.
 - Gave the user a paste-ready Codex prompt to frame-by-frame audit both galleries ->
   docs/codex-review/VISUAL-AUDIT-FROM-CODEX.md (to fold in next).
+
+
+## 2026-06-26 — merged worktree -> main; added rileybrown.ai (reference, 0 templates)
+- MERGED branch claude/recursing-tu-dac74b -> main (fast-forward to 21f2341): banked the
+  whole session (CodingFab + 4 templates, SceneSequencer, AbhiWaveform variant, source-map,
+  3-reviewer audit fixes). main's pre-session WIP stashed at stash@{0} (recoverable).
+- NEW reference creator rileybrown.ai (@rileybrown.ai, TikTok, Vibecode.dev cofounder) — the
+  candidate-pool "must-track English builder lane." 18 TikToks scraped, 144 frames, videos
+  deleted. 18-agent analysis: he is a product-demo/talking-head VLOGGER, not a motion-graphics
+  creator — 83% talking-head, 89% screen-rec, 0% procedural motion-graphic. ZERO new buildable
+  templates (all 4 layouts COVERED by SpeakerOverlayScene/EditorBlock/SplitScreenInterview/
+  DiagramExplainer). Kept as persona/coverage/topic reference. Honest outcome: confirms
+  coverage of the builder-demo lane, does not expand the library. Docs: references/creators/
+  rileybrown.ai/ANALYSIS.md + docs/research/rileybrown/SYNTHESIS.md.
+- IG retries motiondarwin/zenzuke still throttled (motiondarwin returned only a profile URL).
