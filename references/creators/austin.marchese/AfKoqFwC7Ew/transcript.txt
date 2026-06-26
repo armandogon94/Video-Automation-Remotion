@@ -1,0 +1,458 @@
+[0.00s] Skill number one is web scraper. The
+[1.80s] reality is that AI outputs are only as
+[3.68s] good as the data you put in. So, to help
+[5.56s] us get better data, we're going to fix
+[7.12s] Claude's ability to search the internet
+[8.64s] because it currently has two major
+[10.48s] problems. The first is that it can't get
+[12.44s] data from a lot of modern websites
+[14.28s] because they use JavaScript. And the
+[16.00s] second is that Claude uses keyword
+[17.36s] searching, but to get better data, you
+[19.64s] want to use semantic search, which
+[21.44s] understands the meaning and intent
+[23.00s] behind a user's search rather than just
+[25.52s] matching keywords. To create the skill,
+[27.68s] we're going to use two plugins, Fire
+[29.56s] Call to access modern web pages and exit
+[31.80s] to run semantic search. Once those two
+[33.68s] plugins are set up, which are linked
+[35.00s] below, I run this prompt to create a
+[37.04s] skill called web scraping. You can see
+[38.92s] the prompt on screen for how to create
+[40.48s] this skill, and this is what I call a
+[42.40s] utility skill. Anytime I use Claude,
+[44.40s] this skill can get triggered and it
+[45.76s] enhances every other skill I create.
+[48.36s] Now, I have access to data all across
+[49.96s] the internet that I previously wouldn't
+[51.32s] have access to with Claude. Now, that's
+[53.08s] just the first of six skills I'll walk
+[55.12s] you through today that you can
+[56.24s] immediately apply to whatever you're
+[58.00s] working on. Skill number two is ingest
+[60.12s] source. In skill number one, we enhance
+[61.80s] the data that we have access to, but the
+[63.36s] problem with that is that we're not
+[64.72s] storing any of the data, so we can't
+[66.68s] access it later. And that means that
+[68.12s] each new session starts from scratch.
+[69.88s] So, let's not do that and instead build
+[71.76s] our own knowledge base with a ingest
+[74.04s] source skill. On screen is a prompt to
+[76.12s] help you create this, but what exactly
+[77.72s] does this do? This skill will take any
+[79.40s] source you attach to it that's a PDF, a
+[81.00s] link, whatever, pull the concepts from
+[83.12s] it, and ingest it into your project for
+[85.04s] future reference. And the key with this
+[86.72s] is we aren't just ingesting raw data
+[88.40s] because that isn't very useful We're
+[90.64s] pre-analyzing data so that it makes it
+[92.16s] really easy to find specific
+[93.92s] information. To visualize how this
+[95.52s] works, imagine you had a textbook. If
+[97.12s] you don't pre-analyze the data, Claude
+[99.12s] has to look through the whole thing to
+[100.52s] find something that's valuable. But if
+[102.12s] you pre-analyze it, think of it like
+[103.64s] creating a table of contents. Claude
+[105.76s] knows exactly where to look. And
+[107.28s] throughout this video, I'm going to use
+[108.24s] a personal trainer example just because
+[110.08s] it's something that everyone can
+[111.24s] immediately apply. So, if you want to
+[112.64s] use these first two skills, you could
+[114.08s] say, "Find the top fitness research in
+[116.08s] the past 3 years and pull all of the
+[118.04s] historical data using the web scraper
+[119.96s] skill. Then using just source to save
+[122.04s] all the information to my project. It
+[123.52s] will then ingest the data that you just
+[125.40s] researched into your project for future
+[127.12s] reference, so it doesn't have to look
+[128.76s] for it again. Now, when you ask, "What
+[130.32s] should I do as a 36-year-old getting
+[132.36s] back into cardio?" Claude has a specific
+[134.76s] answer based on the information you
+[136.20s] provided. So, we've set up a foundation,
+[138.12s] but now we have to set up a process to
+[140.24s] make the system improve over time. But
+[142.08s] before we get into any of that, we've
+[143.32s] covered the massive change in how we
+[145.16s] have to think about your data. And
+[146.64s] there's another massive shift happening
+[148.16s] right now with AI video, which is
+[149.76s] exactly where today's video sponsor,
+[151.44s] Cantina, comes in. Everyone watched the
+[153.40s] first wave of AI content with Sora.
+[155.40s] Short-form AI-generated content built to
+[157.56s] go viral with strangers. That came and
+[160.20s] went, and personally, I don't think
+[161.68s] that's the future of AI content. I
+[163.00s] believe it's in character creation,
+[164.32s] where you're building out an AI persona
+[166.60s] that resonates with people. And you can
+[168.24s] create personalized content that's just
+[170.32s] for those people. Think about using
+[171.60s] these characters for inside jokes with
+[173.28s] friends, not viral clips for algorithms.
+[176.20s] And Cantina figured this out. It's a
+[177.76s] mobile-first platform where you build AI
+[180.00s] characters that talk, perform, and hold
+[182.32s] real conversations one-on-one. Just
+[184.16s] write out the personality and the voice
+[185.68s] you want the character to have, which
+[186.84s] could be human or non-human, and then
+[189.00s] your character shows up in a video
+[190.76s] message in under a minute. This is
+[192.36s] original characters and intellectual
+[194.12s] property that you own. So, for me, I
+[195.96s] built one that imitates an old Italian
+[197.92s] character that me and my girlfriend
+[199.32s] always imitate, and I showed it to her,
+[201.08s] and she was dying. This is just an
+[202.64s] inside joke that I'm essentially able to
+[204.76s] create a personality that's a reusable
+[206.92s] meme that resonates with people in my
+[208.72s] life. In my case, it's not about going
+[210.68s] viral, it's about creating something
+[212.32s] that's fun with the people I love. It
+[214.00s] could work for a number of different
+[215.16s] things, right? A fitness coach checking
+[216.80s] in with a client by name, a creator
+[218.84s] building a recurring cast for inside
+[220.96s] joke content. The list goes on and on.
+[223.24s] It's all built on the same engine, and
+[224.60s] ultimately, you get to elect the
+[226.00s] personality that you create. They're
+[227.68s] actually built by Sean Parker, the
+[229.80s] creator of Napster, which was one of the
+[231.64s] most impactful businesses in the music
+[233.60s] industry. And now he's betting on what
+[235.64s] comes next for AI video content and
+[237.88s] interactive social media. Cantina is
+[240.24s] early and creators who experiment now
+[242.20s] get the opportunity to own a new
+[243.60s] category. To get started, click the
+[245.04s] first link in the description and create
+[246.72s] your first character today. Now we've
+[248.28s] gone through the first two skills, which
+[249.60s] is about getting better information.
+[251.04s] Skill number three is about improving
+[252.64s] your system. As you use Claude, you've
+[254.56s] likely found yourself running into the
+[256.16s] same issue multiple times and it's
+[257.76s] pretty frustrating, so we want to avoid
+[259.36s] this. And one thing I always say to
+[260.52s] people I work with is you should never
+[262.12s] fix a problem more than twice. If it
+[264.20s] happens once, okay, it might be a
+[265.76s] one-off issue, but if it happens twice,
+[268.16s] it's time to fix it. And the beauty with
+[269.84s] AI is that it can learn based on past
+[271.80s] experiences and build on its past
+[274.08s] training data, so it doesn't make the
+[275.76s] same mistake again. And this tweaking of
+[278.20s] trying to improve the output has existed
+[280.16s] since ChatGPT came out, but manually
+[282.36s] trying to tweak prompts so the output is
+[284.28s] better is just way too much work. And
+[286.40s] what happens is you just don't end up
+[287.76s] doing it. So the key is making it really
+[290.32s] easy for you to improve your system. And
+[292.36s] that's why you need a improved system
+[293.96s] skill. On screen is a prompt to help you
+[295.72s] create this and there's a lot going on
+[297.08s] here. So how does this actually work?
+[298.52s] Well, there's five modes. Mode one is
+[300.40s] audit. This scans your knowledge base
+[302.20s] for any outdated piece of information.
+[304.12s] Mode two, skill review, will review your
+[305.84s] skills and recent chat history to
+[308.12s] identify ways to improve them the next
+[310.40s] time they run. Mode three is experience.
+[312.60s] This is a way to bring into the system
+[314.36s] your own lived experience, which in my
+[316.72s] eyes is the biggest differentiator. Mode
+[318.88s] four is historical review. This looks at
+[321.04s] all of your recent Claude sessions for
+[322.68s] learnings that you might have missed.
+[324.40s] And mode five, foundation. This reviews
+[326.56s] your entire setup and interviews you to
+[328.68s] see if there's anything you should add
+[330.28s] so the AI knows more about your goals.
+[332.40s] For a personal training example, this is
+[334.00s] what it could look like after week one
+[335.80s] of using it. You run improve system.
+[337.36s] Here's my feedback on this past week and
+[339.12s] then you add feedback about your
+[340.76s] experience. You run improve system.
+[342.88s] Review my fitness knowledge base. Flag
+[345.00s] any research that agrees or disagrees
+[347.24s] with what has been working for me and
+[349.20s] share the original source. After doing
+[351.12s] this, when you go and ask what should I
+[352.60s] do this week, it'll have a sharper
+[354.52s] answer based on its previous training
+[356.24s] data. Now, that's the compounding stage.
+[358.04s] But, how do we know if outputs are
+[359.72s] actually any good? That's where the next
+[361.32s] two skills come in, which is the
+[362.56s] evaluation layer. Skill four, ask the
+[365.08s] board. This skill will help you create
+[366.88s] your own board of advisors to help you
+[368.56s] make better, more confident decisions.
+[370.96s] This is specifically about cloning
+[372.32s] experts and the idea here is simple. You
+[374.44s] want to clone professional experts so
+[375.92s] you can make decisions with confidence.
+[377.80s] For example, if you're working on a
+[379.08s] business, maybe you want to clone Alex
+[380.60s] Hormozi, Elon Musk, Mark Cuban. If
+[382.56s] you're working on content, maybe Mr.
+[384.28s] Beast. You're creating your own board of
+[386.24s] advisors to help you with your
+[387.56s] decision-making process. So, step one of
+[389.76s] this is identify the experts that you
+[391.44s] want in your project. If you don't know
+[393.12s] who would be a good expert to have on
+[394.60s] your board, here is a prompt that can
+[396.60s] help you get there. Generally, biased
+[398.88s] towards experts who have an extensive
+[400.76s] online profile because that serves as
+[402.96s] the training data. For example, if you
+[404.92s] wanted to clone an AI expert, this
+[406.96s] channel would be a great place to start.
+[408.88s] Step two, ingest their training data
+[411.08s] using the ingest source skill from skill
+[413.24s] number two. Step three is you create a
+[415.16s] skill called ask the board, so Claude
+[417.32s] knows to loop through each board member
+[419.36s] when you ask specific questions. Here's
+[421.40s] a prompt to actually use this. Step four
+[423.36s] is go ahead and ask your board a
+[424.56s] question. So, you would type {slash} ask
+[426.40s] the board and whatever question you
+[428.16s] have. So, let's say on your fitness
+[429.48s] board you had Andrew Huberman and Joe
+[431.20s] Rogan. You could type {slash} ask the
+[433.08s] board, I'm 36, getting back into cardio,
+[435.40s] want to add muscle without losing
+[436.84s] endurance, what should my first four
+[438.68s] weeks look like? And so then you would
+[440.04s] have like Huberman giving you this
+[441.52s] in-depth scientific answer and then
+[443.16s] Rogan giving you conspiracy theories and
+[445.28s] jujitsu advice. Jokes aside, you get the
+[447.52s] idea and it's a massive game-changer.
+[449.24s] And if this sounds a little bit
+[450.20s] complicated, I built a plugin called
+[452.12s] buildpartner.ai, which has a whole board
+[454.56s] of advisors preloaded so you don't have
+[456.60s] to do this. That's linked in the
+[457.72s] description and you just call {slash}
+[459.56s] expert-advice
+[461.08s] and based on whatever question you're
+[462.64s] asking, it'll route it to a specific
+[464.76s] expert. Within that, there also is a
+[466.68s] {slash} improve system skill if you want
+[468.68s] that as well. Skill number five is
+[470.60s] internal focus group. This idea is
+[472.60s] inspired from Amol, who's from
+[474.64s] Anthropic's growth team. Here's Amol
+[476.28s] talking about how he cloned his manager
+[479.08s] to help him become a better employee.
+[481.04s] >> I do that for myself as well. So,
+[483.56s] I basically
+[485.24s] um you know, one of my manager, Ami
+[487.68s] Vora, was I think a podcast guest of
+[489.68s] yours. Right. So, I say, "Hey, based on
+[491.88s] what you know of Ami, both publicly,
+[493.60s] she's written extensively about product,
+[495.40s] and then internally, and then our
+[497.68s] discussions, what what is every based on
+[500.96s] everything that I've done or not done
+[502.32s] this week, what feedback do you have for
+[504.28s] me as Ami?" And like I get that every
+[506.40s] week.
+[506.80s] >> So, he described cloning his boss inside
+[508.92s] Claude so he could get her clone's
+[511.00s] feedback before showing anything to a
+[513.00s] real person. And that's exactly what
+[514.68s] internal focus group does. This is a
+[516.44s] skill that lets you run any idea or
+[518.20s] final product past a group of people who
+[520.68s] mirror your target audience. Unlike the
+[522.96s] ask the board skill, which is asking
+[524.56s] experts for advice, this is asking the
+[527.04s] actual people who will get the final
+[528.60s] product. So, how can you actually set
+[530.16s] this up? Well, step one is you identify
+[531.92s] the real people who are on your focus
+[534.24s] group. The goal of the people in this
+[535.52s] group is that they emulate the people
+[537.40s] that will be receiving the final product
+[539.16s] that you're creating. And the key here
+[540.72s] is being specific. It's not person A,
+[542.84s] it's Brian from college. Step two is you
+[545.52s] build the internal focus group skill
+[547.60s] using the prompt on the screen. Each
+[549.40s] person will get its own agent with its
+[551.08s] own context, voice, and biases. And over
+[553.36s] time, as you learn more about these
+[555.04s] people and get real feedback from them,
+[557.44s] you will ingest more information to
+[559.24s] enhance their clone over time. And then
+[561.04s] step three, once you've actually created
+[562.72s] them, ask your focus group a question to
+[565.08s] get feedback before it ever goes live.
+[567.24s] And what that looks like is {slash}
+[568.80s] internal focus group, run this project
+[570.72s] proposal through our focus group to get
+[573.12s] feedback prior to my presentation. I do
+[575.32s] this a ton myself. I have an audience
+[577.08s] focus group that is the exact group of
+[578.72s] people that I want my content to
+[580.28s] resonate with and so I'll run it through
+[582.32s] them to make sure that it hits. And this
+[584.28s] skill alone has transformed my entire
+[586.48s] business, but it's not just the skill.
+[589.32s] It's actually the side effect that comes
+[591.12s] from it. In order to create the skill,
+[592.88s] it forces you to identify who you're
+[594.72s] actually building for. You can't create
+[596.60s] your focus group unless you know who's
+[598.52s] in the focus group. And if you can't
+[600.00s] actually do that, then you're missing
+[601.32s] the most important thing when knowing
+[603.16s] how to build what you're building. the
+[605.20s] target audience. So if you're able to
+[606.84s] successfully create this skill, you know
+[608.72s] who you're building for, which is
+[610.36s] required to have a successful product.
+[612.52s] Now, before we get to the last skill,
+[613.88s] which will transform how we actually
+[615.64s] build the final product, if this is your
+[617.60s] first video, welcome to channel. But if
+[619.56s] this is your second or more, here is our
+[621.32s] anti-slop agreement. The visuals, the
+[623.36s] testing, the time I put into this, this
+[625.00s] is all for humans. It's not for AI
+[627.12s] clankers and robots scraping it. So all
+[629.24s] I ask is that you subscribe as part of
+[630.60s] this agreement to help this content
+[631.96s] reach more people so I can keep doing
+[633.48s] it. Also, every couple of weeks I give a
+[635.40s] Claude Max subscription. So comment
+[637.32s] below with what you're building to
+[638.80s] enter. Skill six is modern engineering.
+[641.72s] Skills one through five loaded your
+[643.08s] system and pressure tested the work.
+[645.04s] Skill six is the one that actually turns
+[647.12s] it into something that you can build
+[648.48s] successfully. And there's a broader
+[649.84s] concept with this skill that most people
+[651.52s] don't realize. Everyone watching this is
+[653.88s] becoming an engineer and I call you a
+[655.72s] modern engineer. So I actually went to
+[657.48s] school for mechanical engineering. I
+[659.00s] graduated with a 4.0 and after that I
+[661.00s] self-taught myself software engineering.
+[662.72s] So I've spent years building things on
+[664.12s] both the physical and digital side. And
+[666.08s] the thing that connects everything I've
+[667.56s] ever built, technical or non-technical,
+[670.12s] is a similar process. One, you plan what
+[672.64s] you're doing. Two, you define what done
+[674.72s] actually looks like. Three, you work
+[676.64s] through clear delivery phases. Four, you
+[678.60s] review the work and you troubleshoot if
+[680.36s] needed. And then five is you mark it as
+[682.28s] done and you move to the next thing. And
+[683.68s] if you apply the same engineering
+[685.20s] approach to anything you do in the AI
+[686.84s] world, you'll be amazed at how effective
+[688.52s] it is to build successfully. To help you
+[690.72s] walk through each individual step, a
+[692.68s] plug-in that's helpful is called
+[693.88s] Compound Engineering. This comes with a
+[695.44s] bunch of skills out of the box, and
+[697.24s] there's other plug-ins like Superpower
+[698.68s] that you may have heard of. They do
+[699.88s] similar things. But, what matters is the
+[701.56s] actual process. So, a skill is {slash}
+[703.84s] brainstorm is the process of
+[705.60s] brainstorming ideas to solve the problem
+[707.84s] at hand. You shouldn't assume that your
+[709.36s] initial idea is the best solution. Then
+[711.52s] there's plan, which will help you turn
+[712.64s] an idea into a clear structured plan.
+[714.96s] Then there's work that actually executes
+[716.64s] the plan for you. Then there's code
+[718.24s] review, which reviews the output and
+[720.00s] solution as if it's a senior employee.
+[721.88s] And then there's debug, which will help
+[723.24s] you find the root cause of any issue you
+[725.36s] run into. And this process of going
+[727.24s] through each step will work whether
+[729.04s] you're writing code, writing a proposal,
+[731.28s] or planning a product launch. And this
+[733.20s] mindset is so much better than just
+[734.72s] yoloing for three clear reasons. The
+[736.92s] first is that AI defaults to solving the
+[738.52s] immediate thing in front of it as
+[740.28s] efficiently as possible. And this means
+[742.12s] that it doesn't care about the big
+[743.28s] picture, which is something you do. The
+[745.20s] second is that reviewing bad AI output
+[747.32s] takes more time than creating a proper
+[749.36s] plan would have ever taken. And the
+[751.16s] third is this engineering approach
+[753.00s] flexes a muscle that will enable you to
+[755.44s] build progressively more complex
+[757.40s] solutions, which is a skill that will
+[759.92s] differentiate you in the AI era. Walking
+[762.20s] through each step for the personal
+[763.60s] trainer example, here's how you could
+[765.24s] use it. Step one, you would use
+[766.80s] brainstorm and say, "I want to build a
+[768.60s] proof of concept web app that allows me
+[770.48s] to log my workout that I can access on
+[772.76s] my phone. Interview me to come up with
+[774.56s] ideas for features." Step two, plan.
+[777.84s] "Based on what we just discussed, can
+[779.72s] you create a delivery plan that biases
+[781.84s] towards the simplest solution? Assume I
+[784.28s] will be the only person to use it to
+[785.96s] start." Step three, you then take that
+[787.72s] plan and then you execute it. So,
+[789.36s] {slash} work. "Complete the plan
+[791.16s] outlined here. Make sure to verify that
+[792.88s] the app works before saying it's done."
+[794.84s] That last part about verifying forces
+[797.16s] the AI to think about the verification
+[799.40s] approach, which will make the product
+[801.28s] that you actually then review that much
+[802.92s] better. Step four, code review. "Review
+[805.36s] the code and flag any issues that may
+[807.20s] exist. Simplify the explanation so I can
+[809.88s] understand it. Then, if you run into an
+[811.72s] issue while you're using it, step five
+[813.12s] would be {slash} debug, fix the issue.
+[815.48s] Take a screenshot, copy and paste it,
+[817.56s] let AI do what AI does best, which is
+[820.32s] solve problems. So, that is the six
+[822.20s] skills in the exact order that I
+[823.84s] actually use them. Three skills to train
+[825.80s] your system, two to evaluate the work,
+[827.84s] and one to actually ship it. If you
+[829.48s] start following this process, you will
+[830.96s] start shipping much higher quality work
+[833.08s] at a much faster rate. Now, if you like
+[834.96s] this video, you will love this video
+[836.40s] about the nine Claude Code plugins that
+[838.64s] will enhance your Claude Code setup to
+[840.64s] build 10x faster. It builds on a lot of
+[842.72s] what I covered here. I'll see you over
+[844.24s] there. Peace.

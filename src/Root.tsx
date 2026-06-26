@@ -71,6 +71,8 @@ import { ModelNameChipComparison9x16, modelNameChipComparison9x16Schema } from "
 import { RingTopologyHopCounter9x16, ringTopologyHopCounter9x16Schema } from "./compositions/RingTopologyHopCounter9x16";
 import { RotatingVectorDial9x16, rotatingVectorDial9x16Schema } from "./compositions/RotatingVectorDial9x16";
 import { ConcentricHierarchyRadialCallout9x16, concentricHierarchyRadialCallout9x16Schema } from "./compositions/ConcentricHierarchyRadialCallout9x16";
+import { LiquidGlassShowcase9x16, liquidGlassShowcase9x16Schema } from "./compositions/LiquidGlassShowcase9x16";
+import { PromptCardPedagogy9x16, promptCardPedagogy9x16Schema } from "./compositions/PromptCardPedagogy9x16";
 import { MetricBarsComparisonCard9x16, metricBarsComparisonCard9x16Schema } from "./compositions/MetricBarsComparisonCard9x16";
 import { StatCardSequenceWithUnderlines9x16, statCardSequenceWithUnderlines9x16Schema } from "./compositions/StatCardSequenceWithUnderlines9x16";
 import { AppScreenCarousel9x16, appScreenCarousel9x16Schema } from "./compositions/AppScreenCarousel9x16";
@@ -2643,6 +2645,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ModelNameChipComparison9x16" component={ModelNameChipComparison9x16} schema={modelNameChipComparison9x16Schema} durationInFrames={180} fps={30} width={1080} height={1920} defaultProps={modelNameChipComparison9x16Schema.parse({})} />
         <Composition id="RingTopologyHopCounter9x16" component={RingTopologyHopCounter9x16} schema={ringTopologyHopCounter9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={ringTopologyHopCounter9x16Schema.parse({})} />
         <Composition id="RotatingVectorDial9x16" component={RotatingVectorDial9x16} schema={rotatingVectorDial9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={rotatingVectorDial9x16Schema.parse({})} />
+        {/* Liquid-glass atom family (austin.marchese + nateherk study) — added 2026-06-26 */}
+        <Composition id="LiquidGlassShowcase9x16" component={LiquidGlassShowcase9x16} schema={liquidGlassShowcase9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={liquidGlassShowcase9x16Schema.parse({})} />
+        <Composition id="PromptCardPedagogy9x16" component={PromptCardPedagogy9x16} schema={promptCardPedagogy9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={promptCardPedagogy9x16Schema.parse({})} />
         {/* CodingFab (@CodingFab) — added 2026-06-25 */}
         <Composition id="ConcentricHierarchyRadialCallout9x16" component={ConcentricHierarchyRadialCallout9x16} schema={concentricHierarchyRadialCallout9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={concentricHierarchyRadialCallout9x16Schema.parse({})} />
         <Composition id="MetricBarsComparisonCard9x16" component={MetricBarsComparisonCard9x16} schema={metricBarsComparisonCard9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={metricBarsComparisonCard9x16Schema.parse({})} />

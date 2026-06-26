@@ -1,0 +1,506 @@
+[0.00s] Today we're talking about how to
+[0.96s] actually build 10 times faster with
+[2.60s] Claude Code. Most people think it's
+[3.88s] better prompts, a smarter model, or
+[5.64s] installing more plugins. But none of
+[7.60s] that is the actual unlock. The unlock is
+[9.76s] six simple power phrases you type into
+[12.28s] Claude that change how every project
+[13.88s] starts, scales, and runs without you.
+[16.20s] And in this video, I'll walk you through
+[17.56s] all six, the exact thing to type into
+[19.60s] Claude, and at the end, I'll share a
+[21.28s] cautionary phrase that 99% of people get
+[24.12s] wrong, which costs them time and money.
+[26.28s] Power phrase number one is launch sub
+[28.24s] agents. Before I explain how this single
+[29.84s] phrase can 10x your productivity, let me
+[32.00s] outline an issue everyone watching this
+[33.96s] has run into. You ask Claude to do
+[35.48s] something, you wait 10 minutes, you
+[37.32s] review the output, you ask it again,
+[39.08s] then you wait again, and you do this
+[40.32s] over and over again. Now, there are a
+[41.80s] number of reasons why this happens,
+[42.96s] which we'll address throughout this
+[43.96s] video, but one of the biggest reasons is
+[45.96s] you're running one Claude session at a
+[47.84s] time, sequentially, like a single-lane
+[50.60s] highway. And the whole time you're
+[51.64s] sitting there waiting, you could have
+[52.92s] had five Clauds doing five different
+[54.92s] tasks in parallel, like a five-lane
+[57.12s] highway. This is what Boris Cherney, the
+[58.40s] creator of Claude Code, swears by.
+[60.16s] Multiple Clauds at once, each focused on
+[62.28s] one task end-to-end. And that's why
+[64.00s] power phrase one is launch sub agents.
+[66.20s] Sub agents are separate Claude sessions
+[68.00s] running in parallel. Each has its own
+[69.52s] context window, prompt, and permissions.
+[71.52s] And my favorite part is you don't have
+[73.00s] to set them up manually. You'll just say
+[74.60s] launch sub agents, and Claude splits the
+[76.76s] work for you. And yes, Claude can do
+[78.48s] this without you saying launch sub
+[79.80s] agents, but Claude out of the box
+[81.48s] underutilizes sub agents. There are a
+[83.20s] number of business reasons why they
+[85.12s] would do this, but for the sake of this,
+[86.76s] the main agent just thinks this is easy,
+[89.16s] I'll just do it myself, and keeps
+[91.04s] working in its own context when a sub
+[93.16s] agent would have served you better. So,
+[94.72s] knowing when to force the issue is a
+[95.92s] critical skill. But what kind of task
+[97.60s] should you use this on? There are three
+[99.00s] things that I use them on in my own
+[100.60s] business, as well as in my client's
+[102.32s] seven- and eight-figure businesses. The
+[103.84s] first scenario is multiple perspectives.
+[106.04s] Five sub agents analyzing the same thing
+[108.12s] in parallel give you a diverse opinion.
+[110.44s] If you ask the same thing five times in
+[112.56s] one single chat, the model anchors on
+[114.72s] its previous's response, and it all
+[116.68s] converges to the same thing. In
+[118.32s] practice, for a non-technical output,
+[120.32s] you could use something like this prompt
+[121.84s] to analyze a social media post across
+[123.68s] three different lenses. Or for a
+[125.20s] technical output, you could review your
+[126.68s] code like this, where each sub-agent
+[129.04s] look at the same input through a
+[130.84s] different lens. For both of these, each
+[132.80s] sub-agent runs with its assigned task
+[135.00s] without seeing the others, meaning the
+[136.36s] results of the individual sub-agents
+[138.44s] won't impact the others, which is a
+[140.12s] massive unlock. Now, scenario two is it
+[141.88s] opens the door for new possibilities.
+[143.40s] Having agents at your disposal opens a
+[145.00s] door to complete tasks that you would
+[146.32s] have never done before. For example, to
+[147.76s] help me find buildpartner.ai domain, I
+[149.88s] launched 10 different sub-agents to
+[151.60s] check 10,000 plus domains. Each agent
+[154.40s] focus on different groups. This is
+[156.20s] something that I just would have never
+[157.56s] done because it would have taken too
+[158.96s] long for a single agent to do, and it
+[160.68s] just would have been too much back and
+[161.92s] forth. So, it opens up the realm of
+[163.12s] possibilities of things that you would
+[164.60s] consider doing. Now, scenario three is
+[166.32s] you can just work quicker. If your tasks
+[168.00s] are independent of each other, just
+[169.48s] launch sub-agents. To get started with
+[171.20s] all of this, it's as simple as writing
+[172.52s] this at the end of your prompt. Launch
+[174.20s] five sub-agents to handle this. And this
+[175.92s] is one of my favorite of all the power
+[177.24s] phrases because of how lazy you can be
+[179.08s] with it. There's one clear thing you
+[180.68s] have to avoid. No matter how many
+[182.32s] sub-agents you launch, if you aren't
+[184.16s] crystal clear about what they should be
+[186.32s] doing, you're going to be disappointed
+[188.00s] with the output. And that brings us to
+[189.12s] power phrase number two, which is the
+[190.80s] only thing that will let these
+[191.92s] sub-agents be extremely powerful. Phrase
+[194.52s] two, write me an implementation spec.
+[196.96s] The creator of Claude Code is on record
+[198.56s] for saying that before you build
+[200.00s] anything, you need to create a plan or a
+[202.36s] spec so the AI knows how to build it.
+[204.92s] And you may have heard this before, but
+[206.00s] let me address one misconception you may
+[207.80s] be thinking. Doesn't Claude already have
+[209.68s] plan mode for this? And sort of, right?
+[211.84s] So, plan mode, which you can get to by
+[213.52s] hitting shift tab in Claude Code, helps
+[215.64s] you create the spec, but it doesn't
+[217.72s] replace it. As Andrej Karpathy, the
+[219.48s] former head of AI at Tesla, put it, I
+[221.24s] actually don't even like the plan mode.
+[222.72s] I I would I mean, obviously it's very
+[224.44s] useful, but I think there's something
+[225.52s] more general here where you have to work
+[227.08s] with your agent to design a spec that is
+[228.80s] very detailed, and And it's a maybe
+[231.32s] basically the docs, and then get the
+[233.16s] agents to write them.
+[234.12s] >> Okay, so that's from Karpathy. Now, why
+[236.04s] is creating a spec so important?
+[237.88s] Everyone watching this has had this
+[239.12s] happen. Type in a Claude, you wait 10
+[241.16s] minutes, you review the output, and it
+[242.60s] isn't even close to what you wanted. And
+[244.52s] this happens because unless you're
+[245.92s] extremely specific, Claude has to make
+[248.76s] assumptions. And statistically, those
+[250.36s] assumptions are just unlikely to be
+[252.20s] correct. So, to show this, let's say
+[253.48s] there are three steps in a build, and
+[255.04s] there are five potential options at each
+[256.84s] step in the process. The total number of
+[258.40s] combinations is 5 * 5 * 5, so there are
+[261.24s] 125 potential ways to build it. Now, if
+[263.60s] you build a proper spec before Claude
+[265.44s] does anything outlining these three
+[267.24s] steps and how to build it, there's now 1
+[269.36s] * 1 * 1 option. There's only one
+[272.00s] possible solution, and Claude will get
+[274.08s] it right almost every single time.
+[275.96s] That's a simplified example, but in
+[277.20s] reality, you may be building something
+[278.60s] with thousands of options and hundreds
+[280.44s] of steps. So, without a proper spec,
+[282.60s] it's statistically impossible for Claude
+[284.96s] to get it right on the first try. And it
+[286.40s] literally doesn't matter how good these
+[287.88s] models get. It doesn't know what you
+[290.08s] you don't tell it. In practice, here's
+[291.60s] what this could look like. Write me an
+[292.60s] implementation spec to build a daily
+[294.68s] overview automation. Claude will then
+[296.24s] write a spec doc for how it plans to do
+[298.20s] it. You can then review it, and now you
+[299.96s] can be confident that it'll build the
+[301.44s] right thing. If you want a more robust
+[303.04s] prompt, you can type this in or just
+[304.60s] take a screenshot of it and drag it into
+[306.52s] Claude. The most important line of this
+[308.12s] is for each step, show me the key
+[310.28s] decisions you'd make. This forces Claude
+[312.40s] to break down the build so you can
+[314.00s] override decisions before it builds
+[315.80s] anything. Now, something you may be
+[316.84s] thinking to yourself is, how do you know
+[318.24s] what should be in the spec? And how do I
+[320.12s] know if that's even the best strategy?
+[321.92s] And we'll cover that in power phrase
+[322.96s] number three, but before that, I'm
+[324.40s] moving pretty quickly, and if you want a
+[326.56s] more in-depth breakdown, you can do it
+[328.72s] at your own pace. I have a free 5-day
+[330.60s] email series that covers the AI system I
+[332.96s] use to help build a $25 million-plus
+[335.28s] startup. Over 4,000 people just like
+[337.04s] yourself have gone through it and have
+[338.48s] absolutely loved it, but if you don't
+[339.96s] like it, you can unsubscribe at any
+[341.44s] time. So, to check that out, click the
+[342.72s] first link in the description. Again, it
+[344.12s] is entirely free. Power phrase number
+[345.76s] three is interview me. So, you've
+[347.32s] created the spec, which sounds great in
+[348.72s] theory, but there are some real
+[349.80s] limitations. You have AI write the spec
+[351.96s] for you and then you realize you don't
+[353.40s] know what the you're looking at.
+[355.12s] You know what you want to build at a
+[356.84s] high level, but you don't know the
+[358.28s] details that make or break the project.
+[360.48s] But, I think you do know the details.
+[362.44s] You just don't know the right questions
+[364.16s] to ask and that's why power phrase three
+[365.84s] is interview me. Instead of you trying
+[367.12s] to use AI to give it enough context to
+[369.40s] write a perfect spec from scratch,
+[371.28s] Claude flips the switch. Claude then
+[373.04s] asks you the questions that you didn't
+[374.68s] know to ask. And the reality is when
+[376.20s] Claude's outputs aren't great, it
+[377.36s] usually boils down to a thinking
+[379.16s] problem. And by having Claude interview,
+[381.04s] very quickly you'll realize, "Man, I
+[382.92s] never thought about that. This Claude
+[384.72s] thing, it's pretty smart, huh?" And this
+[386.48s] will save you hours of building the
+[388.12s] wrong thing. Here's a prompt you can use
+[389.76s] and within it there are a couple of key
+[391.36s] meta points you have to consider. The
+[393.04s] first is work with me to identify the
+[395.20s] core problem we're solving, who it is
+[397.24s] and isn't for. I cannot stress how
+[398.92s] important this is. One of the reasons
+[400.40s] Anthropic, the creator of Claude, has
+[402.32s] been able to grow so quickly is they
+[404.64s] have a clear focus on who they are
+[406.24s] initially building for and who they are
+[408.04s] not building for. For them, they were
+[410.00s] building specifically for developers.
+[411.88s] And you need to think about this in the
+[412.84s] same way because that impacts the final
+[414.76s] product. The second is work through any
+[416.84s] key decisions together. This invokes
+[418.68s] Claude to ask questions about each step.
+[420.72s] You may not know all the steps to
+[421.92s] building a thing, which is totally fine,
+[423.60s] but Claude does. And work through those
+[425.76s] steps with Claude and if you don't know
+[427.32s] the answer, just say, "Use your best
+[429.52s] judgment." That's basically the same as
+[431.24s] just yoloing it, but at least you now
+[433.24s] understand what impacts the actual final
+[435.52s] product. The third is summarize it back
+[437.36s] to me as an implementation spec. The
+[439.08s] interview me pulls the info out of you
+[441.08s] and then I'll create a spec from it. You
+[443.00s] go from a blank page to a complete spec
+[445.36s] in less than five minutes. Now, the trap
+[447.00s] with interview me is it only works if
+[448.72s] you actually think before you answer.
+[450.52s] And don't just rush through it saying
+[451.68s] yes or no because you might as well just
+[453.64s] have Claude auto answer for you then.
+[455.72s] Sit with each question and answer with
+[457.08s] full context. And the pro tip here, use
+[459.12s] Hex or WhisperFlow to record your voice
+[461.08s] and have it write the answer for you, so
+[463.04s] it feels a little bit more like a real
+[465.00s] interview. Now you've gotten the spec,
+[466.24s] the interview, and parallel sub-agents
+[467.96s] launched. You're moving extremely fast,
+[469.68s] but there's a massive problem that
+[471.00s] catches everyone off guard. And that's
+[472.64s] where power phrase number four, verify
+[474.68s] before you build, comes in.
+[476.16s] Unfortunately, Claude hallucinates,
+[477.80s] tells you task is complete when the
+[479.68s] thing isn't actually complete or it
+[481.24s] doesn't work as you want it. Boris, the
+[482.88s] creator of Claude Code, is on record for
+[484.52s] saying, "Give Claude a way to verify its
+[486.44s] work. If it has a feedback loop, it will
+[488.56s] two to three X the quality of the final
+[490.60s] result." But Boris actually took it one
+[491.88s] step further. He said the real move is
+[493.52s] to give Claude a tool to see the output
+[495.92s] of its work. Then tell Claude about that
+[498.00s] tool. Once it can actually see its own
+[499.56s] output, it can self-correct. So, if
+[501.32s] you're building a website, give Claude
+[502.64s] the ability to open a browser and check
+[504.52s] the work. If you're creating a report,
+[505.88s] give Claude a way to check it against
+[507.60s] your brand guidelines. The verification
+[509.52s] rule tells Claude what to verify, the
+[511.64s] tool tells Claude how to verify it. So,
+[513.84s] to actually verify before you build,
+[515.68s] take a three-layer approach. Layer one
+[517.80s] is update your Claude MD. Have Claude
+[519.84s] add one line to your Claude MD file.
+[521.72s] Before you do any work, mention how you
+[523.76s] could verify that work. The Claude.md
+[525.80s] file gets inserted at the start of every
+[527.68s] prompt you write, so now Claude will
+[529.76s] bias towards telling you its
+[531.04s] verification plan first before anything
+[533.60s] is built. Layer two is enable the
+[535.32s] necessary tools. Ask Claude, "Based on
+[537.52s] what I'm building, what are some tools
+[538.88s] that could help with verification?" And
+[540.28s] these tools can be both external or
+[542.00s] internal and technical or non-technical.
+[544.20s] Two examples, the first one, an external
+[546.40s] technical example. Let's say you're
+[547.68s] deploying an app to Hostinger and you
+[549.92s] want to make sure that it's live. You
+[551.20s] can set up the Hostinger MCP to verify
+[553.36s] the deploy was successful. And in the
+[554.80s] other example, an internal non-technical
+[556.88s] example. Let's say you're writing a
+[558.08s] social media post. You can make a brand
+[560.36s] voice validator skill that checks output
+[562.76s] against your voice. And I'll cover later
+[564.28s] in this video of the best way to create
+[565.88s] these skills. Now layer three is
+[567.60s] understand your human validation zones.
+[570.00s] Murphy's law states, "Anything that can
+[572.12s] go wrong will go wrong." And in the age
+[573.92s] of AI, this has never been more true. AI
+[576.28s] agents doing the majority of the work
+[577.76s] now means that humans are removed from
+[579.80s] the loop for almost everything that
+[582.00s] relates to execution. So, you can just
+[584.04s] guarantee that things will happen that
+[585.96s] you didn't want to happen. So, to
+[587.64s] actually verify agents outputs, you have
+[589.60s] to identify where cost of error is high.
+[591.52s] Those then become your human validation
+[593.72s] zones. Let's say you have an app and the
+[595.16s] website itself that the users interact,
+[597.00s] let's consider that low cost of error.
+[599.00s] But the payment system behind all of it,
+[600.92s] that's high cost of error. So, you would
+[602.44s] identify that payments is a human
+[604.16s] validation zone, which you would then
+[605.64s] require to sign off on on any changes.
+[608.00s] And then on the other hand, the low cost
+[609.48s] of error, the website itself, you're
+[611.00s] okay with building fast and breaking
+[613.00s] things there. Now, there's a whole
+[614.60s] rabbit hole on how to handle those human
+[616.36s] validation zones, but the simplest move
+[618.32s] is to require human sign off on changes,
+[620.52s] remove permissions entirely. I go a bit
+[622.56s] deeper into this in this video, but the
+[624.76s] 80/20, you can update your Claude MD to
+[626.92s] say this. Now, to integrate all three
+[628.60s] layers that I just covered as quickly as
+[630.12s] possible, type this into your Claude
+[631.76s] code. This is the way to 80/20 the whole
+[633.40s] verification process. Now, the first
+[635.08s] four power phrases set the foundation,
+[636.56s] but the last two are the most important
+[638.80s] ones that you can't ignore. But before
+[640.88s] we get to those, if this is your first
+[642.48s] video, welcome the channel. If it's your
+[644.40s] second or more, here is our anti-slop
+[646.60s] agreement. The visuals, the testing, the
+[648.20s] time I put into this is for humans, you
+[650.92s] watching this, not for AI Claude or
+[652.64s] robots. So, all I ask is that you
+[654.48s] subscribe as part of this agreement so
+[656.12s] that I can keep making videos for humans
+[658.24s] and not AI robots. Also, I do want to
+[660.72s] congratulate Floki Crypto for winning
+[663.24s] our Claude Max giveaway. For everyone
+[665.12s] else watching, comment below with what
+[666.72s] you're building to enter the next
+[668.16s] giveaway. Power phrase number five.
+[669.96s] Based on this conversation, build me a
+[672.16s] skill. So, now you've got sub-agent
+[673.96s] specs, interview, verify. You're
+[675.60s] shipping clean work fast. But here's a
+[677.44s] problem you'll notice within a week.
+[678.88s] You're going to start doing things
+[680.20s] repeatedly. And that's where you're
+[681.44s] going to need the phrase, based on this
+[682.76s] conversation, build me a skill. To
+[684.64s] summarize what a Claude skill is, it's a
+[686.72s] folder with instructions that Claude can
+[688.64s] call automatically. Think of it like a
+[690.52s] set of directions that allows Claude to
+[692.20s] do the same thing every single time. But
+[694.28s] here's where most people get this wrong.
+[695.68s] They sit down and they think abstractly.
+[697.60s] They say, "What skill should I build?"
+[699.12s] And either they never build one because
+[700.64s] they just can't think of anything, or
+[702.00s] they build one and they never use it,
+[703.44s] which is why you should never build
+[704.92s] skills abstractly. You have to build
+[706.80s] them from conversations that you've
+[708.28s] already had. When you say, "Based on
+[710.20s] this conversation, build me a skill,"
+[712.04s] you're forcing the skill to come from
+[713.84s] something you just did. The use case is
+[715.72s] already validated because you literally
+[717.52s] just did the work manually. Claude is
+[719.68s] just packaging it up to make it
+[721.32s] repeatable for the next time. So once
+[722.96s] you do this, you've created a skill, but
+[724.24s] there's one move that'll 10x its
+[725.72s] quality. Anthropic just published an
+[727.32s] article on how they use skills
+[729.04s] internally. And the best thing you can
+[730.40s] do to these skills is add a gotchas
+[732.48s] section. What exactly is this? Well,
+[734.04s] when you first make a skill, you're
+[735.28s] going to realize that it's not perfect.
+[737.36s] And the small issues that come up when
+[738.76s] you're using it, these are what we call
+[740.40s] gotchas. These are edge cases, stylistic
+[742.48s] quirks, anything you had to go back and
+[744.08s] forth to get the final output correct.
+[745.96s] To enhance your skill over time, you'll
+[747.24s] include these gotchas as you use it so
+[749.12s] that it doesn't make the same mistake
+[750.52s] twice. You can say, "Based on this
+[751.92s] conversation, enhance any skill I use to
+[754.28s] include a gotchas section so we don't
+[756.56s] make this mistake again." The biggest
+[758.08s] takeaway from all of this is instead of
+[759.76s] asking, "What skill should I create?"
+[761.84s] you have to say, "Should I turn this
+[763.88s] process into a skill?" Concrete beats
+[766.04s] abstract every time. The faster you can
+[767.96s] identify gotchas and update the skill,
+[770.12s] the faster it'll improve. Tightening
+[771.88s] that feedback loop is what makes skills
+[773.76s] compound. And that's why this next power
+[775.36s] phrase is the most powerful, yet the
+[777.36s] most dangerous of all of the phrases.
+[779.64s] Power phrase number six, automate this.
+[782.36s] As they say in Spider-Man, with great
+[784.36s] power comes great responsibility. And
+[786.16s] this power phrase is one that I'm the
+[788.24s] most skeptical of. There are two
+[789.84s] scenarios to consider when setting up
+[791.32s] automation with AI. The ideal, which it
+[793.60s] works all the time perfectly. And then
+[795.52s] the not ideal, it breaks and the output
+[797.92s] isn't exactly what you want. And the
+[799.40s] reality is, unlike a lot of the YouTube
+[801.68s] AI productivity hype boys, almost
+[803.88s] nothing is the ideal scenario. You'll
+[805.84s] end up with a lot of non-ideal
+[808.00s] automations. So, each one adds
+[810.20s] operational debt that you have to
+[811.68s] manage. So, the reality is you should be
+[813.40s] thinking about augmentation, which is
+[815.00s] using AI to streamline your processes,
+[817.16s] not just automating them entirely. So,
+[819.72s] when should you automate this and when
+[821.52s] should you augment it? First, you need
+[823.04s] to run what I call the taste test. Ask
+[825.12s] yourself, does this task require taste
+[827.52s] to judge a good or bad output? Or is it
+[829.80s] entirely quantifiable? If it requires
+[831.52s] taste, then it has to be augmented. If
+[833.72s] it doesn't require taste, then it's a
+[835.32s] potential automation candidate. Then,
+[837.00s] once you do that, run the 80/20 output
+[839.24s] analysis. If the output was 80% as good,
+[841.88s] would I be okay with it? If yes,
+[843.76s] automate it. If no, augment it. For the
+[846.04s] 80/20 output analysis, here's a list of
+[848.28s] things that I'm okay with 80% as good.
+[850.40s] And then on the flip side, here is what
+[851.92s] I refuse to lose any quality on. So,
+[854.08s] these two filters are things that 99% of
+[856.64s] people don't do. Unfortunately, what
+[858.40s] happens instead of doing this, people
+[860.08s] create a ton of different automations
+[862.08s] that do nothing besides waste tokens and
+[864.60s] produce AI slop at scale. Now, Claude
+[866.64s] has a bunch of features that help with
+[868.00s] both automation and augmentation, which
+[869.96s] I'm going to be making a whole video on,
+[871.44s] which you'll be able to find in the
+[872.56s] description once that's ready. But, on
+[874.32s] screen you can see three features the
+[876.08s] creator of Claude code calls the most
+[878.12s] powerful features: hook, schedule, and
+[880.20s] loops. If you bring this into Claude,
+[881.68s] it'll give you a starting point for how
+[883.44s] to think about automation and
+[885.08s] augmentation. Now, please, please,
+[887.04s] please be mindful anytime you say
+[889.36s] automate this. As someone who loves
+[891.28s] productivity and spends every day
+[893.28s] thinking about this, trust me, be
+[894.92s] careful using this phrase. Now, that is
+[896.72s] the last of all six of the power phrases
+[898.92s] that we covered today. Now, if you like
+[900.40s] this video, you'll love this one where I
+[902.12s] build on the exact concepts we covered.
+[904.12s] I show you how to take these phrases and
+[905.84s] turn them into a system that will give
+[907.28s] you a competitive advantage for the next
+[909.28s] 5 to 10 years. I'll see you in the next
+[911.12s] one. Peace.

@@ -591,3 +591,19 @@ to per-band staggered Y (labelY = CENTER_Y - radius + inset).
   coverage of the builder-demo lane, does not expand the library. Docs: references/creators/
   rileybrown.ai/ANALYSIS.md + docs/research/rileybrown/SYNTHESIS.md.
 - IG retries motiondarwin/zenzuke still throttled (motiondarwin returned only a profile URL).
+- ⚠️ **GOTCHA (2026-06-26): Workflow `agentType:'Explore'` (and the default workflow subagent)
+  run on `claude-haiku-4-5`, NOT the session Opus model.** Confirmed via run metadata. For any
+  VISION-critical fan-out (analyzing contact sheets / frames for motion craft), pin `model:'opus'`
+  on the `agent()` call — Haiku under-detects subtle craft. Caught when austin.marchese's catalog
+  (Haiku) missed 18 craft details that Codex xhigh caught; re-ran Reviewer #1 on Opus
+  (`docs/research/austin-anim/MY-CATALOG-OPUS.md`). Also feed Opus the raw `frames/m-XXXX.jpg`
+  (higher-res) in addition to the tiled sheets for the subtle calls.
+- ✅ **Liquid-glass atom family SHIPPED (2026-06-26)** from the austin.marchese + nateherk study
+  (3-reviewer consensus: both creators = ONE liquid-glass system, austin warm / nate cool; 0 net-new
+  templates → an ATOM layer, not duplicate comps). New: `src/components/liquidglass/{tokens,
+  GlowPulseOverlay,LitSphereGlyph,ArcLightWipe,ClauseHighlightPhrase}.tsx` + comps
+  `LiquidGlassShowcase9x16` + `PromptCardPedagogy9x16` (Root.tsx); FloatingCaption gained optional
+  `glowColor`+`rotationDegrees`. tsc 0, render-QA'd (`output/qa-liquidglass/`). nate cool variant =
+  `theme="cool"` token (no separate build). Signature craft to preserve when extending: two-stage
+  border-settle→glow-bloom (separate easing), clause-highlight arrives ~6-10f AFTER text (second-read),
+  LitSphereGlyph is OPT-IN per card. Reverify: `LG_THEMES` in tokens.ts before recommending colors.

@@ -1,0 +1,405 @@
+[0.00s] I listened to Dario and Daniela, the
+[1.56s] co-founders of Anthropic, speak at a
+[3.80s] Claude conference in San Francisco, and
+[5.92s] I learned something that I wasn't
+[7.40s] expecting. Most people are building the
+[9.60s] wrong things with Claude. So, I dug
+[11.44s] deeper, and after studying everything
+[13.00s] the Anthropic founders have recently
+[14.60s] said, I uncovered four rules for how
+[16.72s] they actually decide what to build. And
+[18.52s] it turns out that these rules apply to
+[19.84s] you whether you're building a side
+[21.12s] project or your dream business. The
+[22.84s] first rule is you have to recalibrate
+[24.68s] what's possible. If you look at
+[25.84s] Anthropic's product release schedule,
+[27.36s] they are shipping faster than almost any
+[29.36s] company ever. You can see each release
+[31.12s] highlighted here, and this isn't normal.
+[33.12s] Most companies will do one of these
+[34.52s] releases every quarter if they're lucky,
+[36.60s] and they're doing this almost every
+[37.80s] single day. So, how do they actually do
+[39.44s] this and decide what's worth building?
+[41.08s] Well, they've successfully recalibrated
+[42.80s] three key factors that help them decide
+[44.96s] what they can and can't build. The first
+[47.16s] is cost. Can you afford to build it?
+[49.32s] Before AI, a lot of builds died because
+[51.56s] you had this great idea, but you had to
+[53.40s] hire someone, or it just cost too much
+[55.36s] to build for the opportunity. But, the
+[57.16s] math has now changed. Listen how Dario
+[59.12s] framed this new reality in a recent
+[60.76s] interview.
+[61.32s] >> Software is going to become cheap, maybe
+[63.64s] essentially free. The premise that you
+[66.96s] need to amortize a piece of software you
+[69.80s] build across millions of users, that may
+[72.12s] start to be false.
+[73.32s] >> The calculus has entirely changed for
+[74.96s] what you should build because you don't
+[76.68s] need millions of users for it to be
+[78.32s] successful. That means the bar for what
+[80.28s] should be built is a lot lower, meaning
+[82.28s] you should build a lot more. The second
+[83.96s] factor that they recalibrated is domain
+[85.84s] expertise. Essentially, do you know how
+[87.92s] to build what you want to build? Here's
+[89.40s] a clip from Daniela at Stanford, who is
+[91.32s] one of the co-founders of Anthropic, and
+[93.04s] it's also Dario's sister, if you're
+[94.48s] wondering that, because I was also.
+[96.56s] >> I didn't think I could build a website,
+[98.04s] right? And now using Claude, I'm like,
+[99.40s] "Oh man, that's so easy." Like, I just
+[100.80s] click a couple buttons and Claude like
+[102.04s] build a website for me.
+[103.08s] >> AI has made it so that anyone can get to
+[104.72s] level one understanding in almost any
+[106.48s] domain, which opens up a whole realm of
+[107.84s] possibilities for what individuals can
+[109.60s] actually build. And the third factor is
+[111.24s] a time constraint. [music] Do you
+[112.44s] actually have enough time to build it? A
+[113.88s] lot like cost, the total time required
+[115.68s] to deliver features is entirely
+[117.44s] collapsing. And as a result, the
+[118.76s] Anthropic team can now elect to ship
+[120.48s] more features and products that they may
+[122.52s] have never built before. For example,
+[123.92s] Claude Co-work, one of their biggest
+[125.36s] products, here's Dario talking about how
+[127.12s] long it took to build it.
+[128.40s] >> This was a a version of our tool, Claude
+[130.76s] Code, for non-coding. This was built in
+[133.00s] a week and a half, almost entirely with
+[136.04s] Claude Opus.
+[136.68s] >> So, they're building quicker and more
+[137.88s] things, but does the data back it up?
+[139.40s] According to their internal data, 27% of
+[141.96s] Claude-assisted work that would have
+[143.44s] never been completed without Claude. So,
+[145.12s] how can you do this with whatever you're
+[146.64s] working on? Well, run a shelf audit.
+[148.96s] Every person watching this video has a
+[150.32s] mental shelf of ideas that you've parked
+[152.80s] because of one of these three factors,
+[154.68s] right? The time, the skill, or the cost.
+[156.44s] Now, a lot of these items on the
+[157.96s] proverbial shelf are very doable, and
+[160.04s] you just haven't thought to look, or you
+[161.88s] haven't recalibrated what is actually
+[163.88s] possible. Now, before you start building
+[165.64s] everything on the shelf, rule number two
+[167.32s] could actually kill a lot of the ideas
+[169.40s] that you have. Rule two, kill anything
+[171.36s] you can't verify. Simply put, for
+[173.00s] certain projects, if you can't verify
+[175.08s] it, you can't release it. At Anthropic,
+[176.80s] the most extreme example of this
+[178.32s] happened earlier this year. They had to
+[179.68s] hold back one of their most capable
+[180.92s] models, Claude Mythos, because they
+[182.68s] weren't certain that it was reliable and
+[184.12s] secure enough. Daniela spoke about this
+[185.80s] recently at Stanford.
+[186.84s] >> But, we're just not confident enough
+[188.68s] yet. It's irresponsible of us to release
+[191.40s] it until we are confident that all of
+[193.72s] the patching that needs to be done has
+[194.96s] been done.
+[196.00s] >> So, the filter isn't does this work in
+[198.12s] testing? It's can I prove this works
+[200.48s] consistently? Now, are you going to ship
+[202.00s] an AI model that could change the
+[203.48s] trajectory of humanity? Probably not.
+[205.32s] Maybe, maybe, but probably not. But,
+[207.04s] this concept a thousand percent holds
+[208.52s] true to you. For example, if you're
+[209.76s] building an email response automation or
+[211.80s] a financial analysis tool, can you prove
+[213.84s] it works consistently? I had to learn
+[215.32s] this the hard way. I built an email
+[216.92s] drafting automation tool for one of my
+[218.60s] clients, and none of the emails were
+[220.32s] done properly. I couldn't verify that it
+[221.92s] was doing things correctly, so I
+[223.20s] probably should have never built it.
+[224.40s] Now, you don't have to run everything
+[226.16s] through this lens, but you need to when
+[227.92s] the cost of error is high. What this
+[229.48s] means is, if there is an error, what is
+[231.72s] the cost of this error? In Anthropic's
+[233.92s] case for Mythos, the cost of error was
+[236.08s] extremely high. And I'll dive into this
+[237.76s] cost of error concept later in this
+[239.12s] video as well. So, if the cost of error
+[240.44s] is high, before you actually do
+[241.72s] anything, here are the two things you
+[243.20s] have to consider. First, define how
+[245.08s] you'll verify before you build. Figure
+[246.80s] out what the final output needs to be to
+[248.68s] confirm that it actually works. If you
+[250.32s] can't figure out what is needed to
+[251.76s] verify before you start building it, how
+[253.68s] will you know it works at the end of
+[255.44s] building? Step two is set a way for
+[257.36s] Claude to verify its own work as it
+[259.60s] builds. This is a tip from Boris Cherny,
+[261.24s] the creator of Claude Code, where he
+[262.64s] tweeted, "The most important thing to
+[263.96s] get great results out of Claude Code is
+[266.12s] to give Claude a way to verify its work.
+[268.40s] If Claude has a feedback loop, it will
+[269.96s] two to three x quality of the final
+[271.72s] result." If you do these two things, and
+[273.44s] you'll build outputs that actually
+[274.88s] provide value, not stuff that looks cool
+[276.92s] and breaks the second it's running
+[278.32s] because the cost of error is just too
+[280.12s] high. So, to help with this, here's a
+[281.44s] prompt you can add to the end of
+[283.08s] anything you do to force Claude to think
+[285.32s] about how to verify the output. You can
+[286.88s] also add this to your Claude.md file, so
+[289.24s] it's a general rule across your entire
+[291.08s] project. Before we get to rules three
+[292.44s] and four for how Anthropic actually
+[294.32s] decides what to build, we're going
+[295.80s] through a lot of concepts quickly here.
+[297.76s] So, if you want something that you can
+[298.80s] go at your own pace, I have a free
+[300.48s] five-day email course that walks through
+[302.28s] a lot of these concepts, as well as the
+[304.24s] AI system that I used as a COO of a $25
+[307.32s] million startup. To get that, click the
+[309.20s] first link in the description. It's
+[310.72s] entirely free, and based on over 5,000
+[312.80s] people who have gone through it, I'm
+[314.20s] confident you'll love it. Rule number
+[315.36s] three is know who you're building for
+[317.00s] and who you're not building for. Most
+[318.60s] people try and do everything for
+[320.08s] everyone. And the result is they build a
+[322.12s] bunch of stuff that is just sort of
+[323.92s] valuable when they should have focused
+[326.16s] and provide value on a specific group of
+[328.20s] people. There's two high-level concepts
+[329.96s] you need to understand for this rule.
+[331.08s] The first is your ICP, and the second is
+[333.60s] your audience anti-goal. An ICP stands
+[335.80s] for your ideal customer profile. Who are
+[337.60s] you building this for? And for people
+[338.84s] watching this video, the answer can be
+[340.32s] just you. That's totally fine. And
+[341.96s] second is And an audience anti-goal is
+[344.28s] the customer you are explicitly not
+[346.60s] building for. And what has helped
+[347.88s] Anthropic be so successful is they have
+[349.84s] clearly defined both of these. First,
+[351.60s] listen to what Daniela said at Code with
+[353.44s] Claude about their ICP.
+[354.96s] >> I think in many ways developers are the
+[357.72s] most important users of Claude.
+[360.48s] >> And here's Dario talking about what
+[362.04s] they're not building or their audience
+[364.12s] anti-goal.
+[364.80s] >> We don't make, you know, models that
+[366.28s] generate images and videos and and for
+[368.24s] many reasons.
+[369.16s] >> who they're building for, which is
+[370.44s] developers, and they know what they're
+[371.96s] not building, image and video generation
+[373.92s] for creatives and consumers. If you look
+[376.20s] on the other hand, right, Open AI,
+[377.60s] they've gone for general consumers,
+[379.12s] image generation, video generation,
+[381.00s] enterprise, social media, essentially
+[383.32s] trying to do everything at once. And
+[385.20s] this is likely why Anthropic has been
+[386.80s] able to grow much faster than Open AI.
+[388.76s] Listen to Steve Ballmer, the then CEO of
+[390.76s] Microsoft, talk about who they were
+[392.60s] building for.
+[393.40s] >> Developers, developers, developers,
+[395.48s] developers, developers, developers,
+[397.88s] developers, developers, developers,
+[399.84s] developers, developers, developers,
+[402.00s] developers, developers.
+[403.00s] >> Developers, developers, developers,
+[404.60s] developers. The tenacity is amazing. Not
+[407.56s] to mention the sweat stains. I may have
+[409.16s] to hop on my bike before the next
+[410.72s] YouTube video I make so that I can just
+[412.52s] freaking bleed that intensity. But
+[414.20s] anyway, the filter is clear. They know
+[416.16s] who they're building for and who they're
+[417.76s] not building for. And by drawing that
+[419.60s] line in the sand, every decision in
+[421.60s] terms of what you're building becomes
+[423.08s] faster and more effective. And the added
+[424.88s] benefit of this is something that most
+[426.32s] people miss. When you pick one customer,
+[428.16s] your builds start to compound and
+[429.84s] complement each other over time. Each
+[431.48s] new build sharpens the relationship with
+[433.28s] that one audience. The next build is
+[435.20s] easier and more valuable than the last.
+[437.12s] For Anthropic, they built for
+[438.24s] developers, which gets more developers
+[439.84s] to use it, which helps train their
+[441.00s] Claude model, which then makes it better
+[442.56s] for developers. They then use that same
+[444.24s] Claude model to build Claude Code, which
+[446.36s] helps developers. And this clearly
+[448.04s] worked, right? Anthropic grew 80x in Q1
+[450.68s] 2026 against a 10x plan. 8 0, that's a
+[454.20s] lot of x's. Now, here's where it gets
+[455.76s] interesting for me and you. This concept
+[457.36s] scales down to whatever you're working
+[458.88s] on. You just have to understand who
+[460.04s] you're building for and how it helps
+[461.44s] them. Let's say you're building for
+[462.40s] yourself and you stay laser focused on
+[464.28s] what you need. You shouldn't chase shiny
+[466.12s] objects that solve problems that you
+[467.52s] don't actually have. If you're building
+[468.76s] for a specific audience, focus on that
+[470.88s] audience. For me, this is my audience
+[473.32s] that I look at every single day. That
+[474.92s] ends up being 30 to 50-year-old males
+[477.24s] who live in the United States. Honestly,
+[479.00s] shout out everyone watching this. You
+[480.16s] guys are legends. And if you're unsure
+[481.36s] who you're building for, a good starting
+[482.92s] point could be identify who you aren't
+[484.44s] building for and say your anti-audience
+[486.12s] goal. At the end of the day, the most
+[487.44s] successful people I know only work on
+[489.32s] things that complement each other thing
+[491.32s] that they're working on. And that's
+[492.32s] because there's no waste of time and
+[493.88s] effort. And that's what Anthropic did
+[495.68s] and that's what you should do as well.
+[497.08s] So, that's the first three rules that
+[498.40s] Anthropic follows when deciding what and
+[500.20s] who to build for. And before we get to
+[501.56s] rule number four, which dives into how
+[503.08s] to build what we're working on. If this
+[504.56s] is your first video, welcome to the
+[505.92s] channel. But if it's your second or
+[507.08s] more, here is our anti-slop agreement.
+[509.00s] The visuals, the testing, the time I put
+[510.76s] into this, this is all for humans, not
+[512.96s] for AI clanker robots. So, all I ask is
+[515.60s] that you subscribe as part of this
+[517.00s] agreement to help this content reach
+[518.68s] more people. Also, every couple of weeks
+[520.56s] I give away a Claude Max subscription.
+[522.60s] So, comment below with what you're
+[523.92s] building to enter. Rule number four is
+[525.36s] build middle and middle, not end to end.
+[527.68s] Most people when they think about AI,
+[529.08s] they're thinking about end to end. They
+[530.80s] prompt it, they walk away, and they hope
+[532.68s] something good comes out on the other
+[534.16s] side. Anthropic is looking at it a
+[535.76s] different way, middle to middle. Every
+[537.40s] task you start has three parts. A start
+[539.12s] where you frame the problem, a middle
+[540.44s] where the work gets done, and then an
+[541.76s] end where you deliver the actual final
+[543.52s] product. End to end is when AI takes all
+[545.88s] three parts, the start, the middle, and
+[547.76s] the end. The human in general is just
+[549.24s] gone. Middle to middle is where AI only
+[551.40s] takes the middle. A person starts, AI
+[553.60s] does the middle, and a person reviews at
+[555.88s] the end. In a morbid example, here's
+[558.16s] Dario explaining a use case they refused
+[560.60s] to support, a classic end-to-end
+[562.72s] example.
+[563.40s] >> If you have a large army of drones or
+[566.88s] robots that can operate without any
+[569.04s] human oversight, where there aren't
+[570.60s] human soldiers to make the decisions
+[572.80s] about who to target, who to shoot at,
+[575.60s] that that presents concerns. And we need
+[577.84s] to have a conversation about about how
+[580.20s] that's overseen, and we haven't had that
+[581.80s] conversation yet. And so, we feel
+[583.84s] strongly that, you know, for for, you
+[585.92s] know,
+[587.24s] those two use cases should uh should not
+[589.68s] be allowed.
+[590.20s] >> Autonomous weapons are end-to-end. AI
+[592.08s] decides who to target, AI fires, AI
+[594.12s] delivers the outcome. I know that's an
+[595.40s] extreme example, but it's where the cost
+[597.16s] of error, losing a human life, is too
+[599.40s] high. They drew the line and they
+[600.96s] refused to build for use cases like
+[602.56s] this. Now, the same logic shows up in
+[604.40s] smaller stakes. Listen to how Dario
+[606.04s] explained the math that makes
+[607.52s] middle-to-middle actually work.
+[609.12s] >> Comparative advantage is surprisingly
+[610.96s] powerful, right? Even if you're only
+[612.40s] doing like,
+[613.84s] you know, 5% of the task, like, you
+[616.24s] know, that 5% gets super amplified and
+[619.12s] leveraged because it's like you're only
+[620.32s] doing 5% of the task, the AI does the
+[622.64s] other 95%, and so you become, you know,
+[625.56s] 20 20 times more productive.
+[627.32s] >> The 95% is the middle. Claude takes
+[629.92s] that, and the 5% is the stuff that
+[631.64s] matters, the start and the end. The
+[633.36s] decision at the front, the judgment on
+[634.96s] the back. That's what stays human, and
+[636.36s] it gets 20x more leverage because the
+[638.44s] middle just got cheap and more
+[639.96s] effective. And if you look at two of
+[641.36s] Claude's most successful products,
+[642.84s] Claude Code and Claude Co-work, these
+[644.76s] are tools that are optimized for
+[646.28s] middle-to-middle workflows. Interface
+[648.08s] assumes that you're at both ends of the
+[649.68s] work for most of the use cases, and
+[651.64s] that's exactly how I use it. I'm at the
+[653.44s] start of every interaction, and then I'm
+[654.92s] reviewing the final output. So, how can
+[656.68s] you use this concept when evaluating
+[658.36s] which Claude projects to build? Well,
+[659.96s] before you start building anything,
+[661.12s] think about the three parts of the
+[662.44s] process. The start, what decision or
+[664.28s] framing do you need to bring before
+[665.92s] Claude actually does any work? The
+[667.56s] middle, what routine work do you want to
+[669.40s] hand off? And the end, where do you
+[670.96s] review, judge, and sign off on the final
+[673.12s] output? If Claude is doing all three
+[674.40s] parts, you've built end-to-end, and this
+[676.12s] will likely produce low-quality work. My
+[678.12s] recommendation would be to redesign it
+[679.60s] so you're at the start and end. And just
+[681.28s] this mental tweak of thinking about
+[682.76s] things middle-to-middle makes everything
+[684.60s] easier because the output doesn't
+[686.24s] actually have to be perfect. You can
+[687.96s] take it and make it perfect at the end.
+[689.84s] So, if you follow the four rules I
+[691.04s] covered here, you will get amazing
+[692.92s] results with whatever you're building.
+[694.16s] And look no further than the success
+[695.88s] that Anthropic has had. Now, if you like
+[697.64s] this video, you'll love this video where
+[699.28s] I break down how Anthropic's own
+[701.24s] engineers actually prompt Claude code.
+[703.40s] That's a tactical layer underneath all
+[705.04s] of this, which will streamline whatever
+[706.72s] you're building. I'll see you over
+[707.64s] there. Peace.

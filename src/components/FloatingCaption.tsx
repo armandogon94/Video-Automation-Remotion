@@ -288,6 +288,14 @@ export const floatingCaptionSchema = z.object({
   windowSize: z.number().default(6),
   /** Minimum gap (ms) between consecutive windows. */
   windowGapMs: z.number().default(60),
+  /** Optional themed GLOW color for the text (liquid-glass study, 2026-06-26).
+   *  When set, replaces the default black drop-shadow with a colored neon glow
+   *  (austin/nate liquid-glass caption look). Omitted → unchanged classic shadow. */
+  glowColor: z.string().optional(),
+  /** Optional slight rotation (deg) of the caption block — austin's tilted
+   *  kinetic lines. Omitted → 0 (component default) → byte-identical to prior
+   *  behavior, and keeps existing inline call sites valid (no required field). */
+  rotationDegrees: z.number().optional(),
 });
 
 export type FloatingCaptionProps = z.infer<typeof floatingCaptionSchema>;
@@ -380,6 +388,8 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
   fontSize,
   windowSize = 6,
   windowGapMs = 60,
+  glowColor,
+  rotationDegrees = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -439,6 +449,7 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
             justifyContent: "center",
             gap: "6px 14px",
             textAlign: placement.textAlign,
+            transform: rotationDegrees ? `rotate(${rotationDegrees}deg)` : undefined,
           }}
         >
           {active.words.map((w, i) => {
@@ -542,7 +553,9 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
                   // boxed active word drops the shadow (it has its own chip).
                   textShadow: boxOn
                     ? "none"
-                    : "0 2px 8px rgba(0,0,0,0.65), 0 0 2px rgba(0,0,0,0.9)",
+                    : glowColor
+                      ? `0 0 12px ${glowColor}, 0 0 26px ${glowColor}, 0 2px 8px rgba(0,0,0,0.6)`
+                      : "0 2px 8px rgba(0,0,0,0.65), 0 0 2px rgba(0,0,0,0.9)",
                 }}
               >
                 {w.text}

@@ -1,0 +1,401 @@
+[0.00s] Boris Cherny, the creator of Claude
+[1.60s] code, just said something that should
+[3.00s] change how you use AI forever. He said,
+[5.00s] "I don't prompt Claude anymore. My job
+[6.52s] is to write loops." Then I found a tweet
+[8.16s] from Peter Steinberg, the creator of
+[9.88s] Open Claude, saying the exact same
+[11.40s] thing. You shouldn't be prompting coding
+[13.24s] agents anymore. You should be designing
+[15.00s] loops that prompt your agents. There's
+[16.52s] endless AI hype out there, but when two
+[18.08s] people who literally build the tools
+[19.68s] that we're using tell you to stop
+[21.12s] prompting and start building loops, I
+[23.52s] listen. So, I went deep on loop
+[25.04s] engineering and realized something. It's
+[26.80s] actually really simple. Most
+[28.96s] people just overcomplicate it. So, in
+[30.48s] this video, I'm breaking loop
+[31.52s] engineering down into three parts. Part
+[33.40s] one, what a loop actually is and when to
+[35.92s] use them. Part two, the four things
+[38.36s] every successful loop needs. And part
+[40.48s] three, the most important part, how you
+[42.36s] will build your first loop today, even
+[44.36s] if you have no technical experience. So,
+[46.16s] part one, what actually is a loop and
+[48.00s] how does it compare to a normal prompt?
+[49.56s] Unlike a normal prompt, which runs once
+[51.68s] and then stops, a loop is a prompt that
+[54.08s] runs over and over again until a
+[56.16s] specific task or goal is complete.
+[58.16s] Listen to how Boris thinks about his
+[59.88s] day-to-day now.
+[60.68s] >> Now, what's actually leveled up, I think
+[62.12s] again, to the next level of abstraction,
+[63.88s] where I don't prompt Claude anymore. I
+[66.04s] have loops that are running. They're the
+[67.92s] ones that are prompting Claude and kind
+[69.16s] of figuring out what to do. My job is to
+[71.00s] write loops.
+[71.92s] >> So, it's clear. Instead of prompting
+[73.16s] Claude 100 times to complete a task, you
+[75.04s] should now be thinking about how to
+[76.00s] create loops to accomplish clear goals.
+[78.12s] This sounds great, but when should you
+[79.28s] actually use it? Well, there's a
+[80.48s] four-condition test that I run when
+[82.56s] determining if I should create a loop or
+[84.64s] not. The first condition is, does the
+[86.04s] task repeat? For any one-time task, just
+[88.04s] use a prompt. Second is, is there a
+[89.92s] clear definition of done? When I was the
+[91.52s] COO of a $25 million tech startup,
+[93.92s] whatever task we were doing, we wanted
+[95.72s] to have a clear definition of how we
+[97.48s] would quantify if the task was done. And
+[99.92s] a lot like humans doing tasks, the most
+[101.64s] successful loops have a clear definition
+[103.56s] of done and a way to verify the results.
+[106.00s] Now, this is an art and not necessarily
+[107.52s] a science, and we'll cover that in a
+[109.16s] bit. Three is, can you afford to be
+[111.20s] wasteful? So, loops will automatically
+[113.28s] prompt itself until a task is complete.
+[115.36s] So, it can use a lot of tokens. Now,
+[117.08s] there's ways to limit this, which we
+[118.36s] will cover, but if you're always running
+[120.16s] into token limit issues, you want to be
+[122.04s] a bit more strategic using this. And
+[124.08s] four is, does the loop have all the
+[125.84s] necessary tools to complete a task? For
+[128.04s] example, if you're making a website,
+[129.64s] does it have the ability to check that
+[131.20s] the website is live and accessible to
+[133.04s] anyone? These tools will be used in the
+[134.60s] verification and the implementation
+[136.40s] process. If the answer is yes to all
+[138.32s] four of these conditions, you now have a
+[140.20s] candidate for building a loop. Here is a
+[141.92s] prompt to audit your workspace and rank
+[144.16s] your loop candidates using this four
+[146.08s] condition test. The prompt's on screen,
+[148.00s] and you know what loops are, and you
+[149.96s] conceptually understand when to use
+[151.76s] them. But, how do you build a loop that
+[153.56s] actually works? Part two is the four
+[155.72s] building blocks for successful loops.
+[157.84s] The first block is the trigger. This is
+[159.88s] what starts your loop. Every loop needs
+[161.68s] a trigger. This is the thing that kicks
+[163.16s] it off. And there are a lot of ways to
+[164.44s] set this up, but these are the three
+[165.64s] simplest ways. The first is actually
+[167.40s] {slash} loop. If you type {slash} loop
+[169.64s] into Claude, it will let you
+[170.92s] automatically run something at a set
+[172.76s] interval. For example, {slash} loop
+[174.44s] every six hours, check today's weather
+[176.52s] and notify me if I need to change my
+[178.68s] plans based on my calendar. This is nice
+[180.48s] because it's very simple, but it's
+[181.52s] running on your local machine. So, if
+[182.92s] you close your laptop, it'll just stop.
+[184.48s] The second is {slash} schedule. This
+[185.96s] lets you run something automatically in
+[187.72s] the cloud at any time or day in whatever
+[190.16s] cadence you want. So, you can run the
+[191.56s] prompt that I had just mentioned for the
+[193.00s] loops, but instead have it run at 8:00
+[194.88s] a.m. every day, and it'll run remotely
+[196.68s] instead of on your machine. And the
+[197.92s] third is custom loop orchestration
+[199.84s] skills. It's a mouthful, but this is
+[201.84s] actually how I run all of my loops. I
+[203.60s] create a single loop orchestration skill
+[205.68s] that I run that kicks off the entire
+[207.48s] loop. It has all of the settings
+[208.92s] configured about what the goal is, how
+[210.72s] to complete the loop, how to verify it.
+[212.32s] In that same weather example I
+[213.56s] mentioned, I would have a single skill
+[215.44s] that would be {slash} check weather
+[217.40s] loop, and I would just type that into my
+[219.32s] terminal, and I would hit enter. Here's
+[220.76s] a prompt to help you create that custom
+[222.68s] loop orchestration skill. Block one is a
+[224.60s] trigger, and the next block is about
+[226.20s] actually doing the work. And I know
+[227.68s] we're going through these concepts
+[228.64s] pretty quickly, so I put together a free
+[230.24s] 5-day email series where I walk through
+[232.24s] a lot of the concepts we cover in this
+[233.72s] video. That's linked below and based on
+[235.64s] over 6,000 people that have gone through
+[237.24s] it, I'm highly confident that you're
+[238.68s] going to love it. But, if you don't, you
+[240.12s] can unsubscribe at any time. Block two
+[242.04s] is the execution skills. I have
+[243.84s] extensive videos on my channel about
+[245.32s] Claude skills, but in short, it is a
+[247.36s] save set of instructions that allows
+[249.72s] Claude to run the same thing every
+[251.44s] single time. Simply put, it's like a
+[252.92s] prompt that you have saved that you can
+[254.36s] easily rerun instead of having to type
+[256.12s] it. In the first block, we created a
+[257.40s] {slash} check weather loop and
+[259.32s] orchestration skill that runs the whole
+[261.16s] loop. Execution skills are different.
+[263.00s] These are the things that actually do
+[264.36s] the task. Each one is a single
+[266.56s] specialized job the orchestration calls.
+[269.00s] Of the four building blocks I'm going to
+[270.28s] cover, this is the most important. In my
+[272.28s] eyes, the rule is simple. You don't
+[274.08s] build a loop without battle-tested
+[276.20s] skills behind it. The reason for this is
+[278.12s] these skills know exactly how you want
+[280.20s] to get a task done. Back to the check
+[282.20s] weather loop. Say you didn't have a
+[284.16s] {slash} analyze workout skill, AI would
+[286.68s] just say, "It's raining, cancel your
+[288.56s] run." But, if I had a {slash} analyze
+[290.44s] workout skill that documented that I
+[291.88s] actually love running in the rain, the
+[293.80s] response would be entirely different.
+[295.44s] And this is why I use skill-driven loop
+[297.72s] development. Any loop I create has to
+[299.88s] have existing skills that I've already
+[301.92s] battle-tested. Here's a prompt to
+[303.32s] identify which skills make sense for
+[305.00s] your workspace. This will look at the
+[306.72s] current skills that you've already
+[308.04s] established and suggest loops based on
+[310.72s] those skills. This strategy is so
+[312.68s] important and it comes into play in the
+[314.12s] next block. Block number three is the
+[315.92s] goal and the verification. Every loop
+[317.76s] needs two things tied together. A goal,
+[320.12s] what you want done, and a verification,
+[322.20s] the rule that confirms you completed the
+[324.04s] goal. These go together, right? You
+[325.32s] can't have a goal unless you're able to
+[327.00s] verify the goal was complete. So, here's
+[328.84s] how you can do this for both technical
+[330.36s] and non-technical tasks. The technical
+[332.40s] example is a lot more straightforward.
+[334.44s] The goal could be launch a website to
+[336.00s] this domain and make sure it loads in
+[337.64s] under 2 seconds. To verify, AI could hit
+[339.80s] that specific domain, make sure it can
+[341.64s] see the content that it expects,
+[343.64s] calculate the load time, and then make
+[345.76s] sure that the {slash} engineer review
+[347.88s] skill approves all the changes. AI will
+[350.28s] then know exactly what's needed and then
+[352.12s] can verify the results and repeat in a
+[354.16s] loop until it's complete. So that's for
+[356.20s] technical tasks, but what about for
+[357.48s] non-technical things? Well, this is
+[359.00s] where it becomes a bit of an art, not a
+[360.96s] science. You need to bridge the abstract
+[363.76s] to verifiable. Look at the end of the
+[365.60s] technical example that I just mentioned.
+[367.40s] The slash engineer review skill has to
+[369.44s] approve the changes. How does a loop
+[371.24s] actually know if code is good or not?
+[373.20s] Well, AI is very good at writing code,
+[375.72s] so it could just say approved or not
+[377.76s] approved. The skill engineer review is
+[380.52s] set up to bridge the abstract if code is
+[383.16s] good to something verifiable, approved
+[385.72s] or not approved. And we used it in a
+[387.44s] technical example, but this is actually
+[388.96s] the key to creating loops for
+[390.32s] non-technical tasks. You have to figure
+[392.28s] out a way to verify the final result,
+[394.56s] even if it's not quantifiable. So for
+[396.40s] example, let's say you have a slash
+[397.88s] draft emails loop. The goal could be for
+[400.36s] any unread email draft response. The
+[402.64s] verification could be make sure all
+[404.72s] emails that don't have a response have a
+[406.68s] draft, and that draft has been verified
+[408.84s] by the slash email review skill, the
+[410.84s] slash writing voice skill, and the slash
+[413.04s] fact checker skill. You've now
+[414.52s] established key things you want to
+[416.04s] verify that are inherently abstract, but
+[418.64s] you've created a bridge to make them
+[420.28s] verifiable. And yes, quantifiable tasks
+[422.24s] are easier, no question. But if you
+[423.64s] choose the right non-technical task that
+[425.64s] you already have skills for, those can
+[428.04s] easily become quantifiable. And this is
+[430.00s] exactly why skill-driven loop
+[431.68s] development matters so much because once
+[433.84s] you have a skill, you can actually
+[435.88s] convert it to include a verification
+[438.28s] element. And this verification element
+[439.92s] could be at the end of the output from
+[441.52s] that skill, you could say approved or
+[443.32s] not approved, or a score from 1 to 10,
+[446.28s] etc. Here is a prompt that I've run in
+[448.32s] the past to help me convert a normal
+[450.12s] skill to a skill that can help with
+[451.88s] verification. And one pro tip here with
+[453.92s] the goals and the verification and all
+[455.76s] of this, if you can have different AI
+[457.36s] analyze the output, you'll be able to
+[458.92s] get a less biased opinion. One easy way
+[461.24s] you can do this in Claude is you could
+[463.00s] use the Codex plugin or you can have
+[464.80s] Claude spin up sub agents to analyze the
+[466.96s] work. Here's a prompt to enforce
+[468.36s] separate agent verification within your
+[470.24s] loop orchestration skills. Block four,
+[472.76s] the output and the memory. The output is
+[474.48s] obvious, right? A loop produces
+[475.88s] something, a document, updates code
+[477.68s] base, live site, Telegram messages,
+[480.00s] whatever you want the loop to produce.
+[481.60s] The non-obvious thing here that most
+[483.32s] people miss is the memory. Every loop
+[485.08s] starts from scratch unless you record
+[486.76s] what happened. And no memory means that
+[488.48s] there's no improvement and you'll end up
+[490.12s] wasting tokens because you keep hitting
+[491.96s] the same issues over and over again.
+[493.88s] Adadi Asmani has one line that sticks
+[495.72s] with me. The agent forgets, the repo
+[497.56s] doesn't. And from Anthropic docs, they
+[499.16s] say, "Provide a place to write notes, as
+[501.68s] simple as a markdown file." And so you
+[503.68s] really don't need to overthink this
+[504.72s] thing, but you need to document what the
+[506.56s] results of the loop are. Just use this
+[508.44s] prompt, which will update any of your
+[510.20s] loop orchestration skills, to write any
+[512.20s] lessons learned and run history in a
+[514.56s] specific document. Here you can see the
+[516.00s] prompt. It'll create an output and
+[517.60s] memory files. Now we know the four key
+[520.04s] building blocks, a trigger, execution
+[521.76s] skills, goals and verification, and
+[523.56s] output and memory. And before we apply
+[525.20s] this to build our first loop end-to-end,
+[527.28s] if this is your first video of mine,
+[529.04s] welcome the channel. But if this is your
+[530.36s] second or more, here is our anti-slop
+[532.60s] agreement. The visuals, the testing, the
+[534.12s] hours of research that went into this,
+[535.44s] this is entirely built for humans like
+[537.28s] you, not for AI robot scrapers. So all I
+[540.32s] ask is you subscribe as part of this
+[541.80s] agreement to help this content reach
+[543.40s] more people so I can keep doing these
+[545.08s] videos. Also, every video I give away a
+[546.92s] Claude Max subscription. So comment
+[548.64s] below with what you're building to
+[549.68s] enter. This video's winner is the goat,
+[552.04s] Bob Dobbs, who's working on a home
+[554.24s] management app. All right, that's enough
+[556.04s] of that. Let's go to part three, build
+[558.08s] your first loop today. The key here is
+[559.96s] you need to start small and follow
+[561.20s] skill-driven loop development. Ask
+[562.84s] yourself, what is the smallest thing
+[564.20s] you've already done and proved works
+[566.32s] that you can create a loop for. Once
+[567.84s] you've identified that, use the four
+[569.32s] condition test that I mentioned earlier,
+[571.16s] which again, quickly you can see on
+[572.88s] screen. And if it passes all that, it's
+[574.52s] time to create a loop. So if you already
+[576.12s] have an idea, here is a prompt to build
+[578.24s] out a loop with all of the concepts that
+[580.44s] I've mentioned in this video. Baked into
+[582.00s] that is everything that I've covered.
+[583.48s] Now, if you have no idea what to build,
+[585.80s] here is a prompt that leans on
+[587.56s] skill-driven loop development to
+[589.52s] identify candidates from your past
+[591.52s] session history. For either of these
+[593.16s] prompts and for any prompt that I
+[594.56s] covered in this or previous videos,
+[596.48s] screenshot it and then just send it into
+[598.40s] Claude and that's essentially the same
+[599.80s] as writing the prompt. And the best part
+[601.40s] of what this will create, which is a
+[602.84s] skill, is you don't have to think about
+[604.60s] using /loop or /goal to establish goals.
+[607.52s] You just get the loop orchestration
+[608.92s] skill that abstracts all of this
+[610.40s] complexity away from you. You just type
+[612.08s] that into Claude, hit enter, and then
+[613.80s] monitor the results. When you do this,
+[615.84s] one of my favorite features is that
+[617.60s] you'll notice both of these prompts have
+[619.64s] one important guardrail. I call it loop
+[621.56s] training mode. So, the first couple
+[622.88s] times you use a new loop, you want to
+[624.76s] make sure the loop pauses at every step
+[627.12s] until you approve the process. The
+[628.88s] reason for this is you want to verify
+[630.56s] that it's actually doing what you want
+[632.40s] it to be doing and it's not just burning
+[634.48s] through all of your tokens. When you
+[636.00s] have this loop training mode set up, the
+[638.04s] output could look something like this.
+[639.44s] Quick check before I burn the tokens.
+[641.32s] Then it waits for your approval and
+[642.52s] continues on the process. After you've
+[644.40s] done this and you know that the loop is
+[646.36s] doing what you want it to do, you can
+[648.04s] just turn testing mode off by running
+[650.08s] this prompt. And this is really
+[651.36s] important because you're going to get a
+[652.52s] deeper understanding of the process and
+[654.36s] ultimately these tokens aren't free, so
+[656.16s] this will save you money and it will
+[658.00s] save you time because you'll know the
+[659.88s] output is what you want. Now, before you
+[661.28s] go crazy with all these loops, I have
+[663.04s] one rule of thumb. If a goal is less
+[665.24s] quantifiable, then you need to break
+[667.44s] down loops into much smaller goals where
+[670.16s] the output is at key checkpoints in the
+[672.52s] process. Think of AI like an intern. If
+[674.48s] you just said, "Plan a corporate party,"
+[676.56s] it could do anything, but you would
+[678.56s] probably want to have key checkpoints at
+[681.00s] what date to pick, where the venue is,
+[683.44s] and the theme of the party. And as
+[685.04s] somebody who throws an annual Christmas
+[686.68s] party, that's the party of the year in
+[688.24s] New York City, I I know how to throw a
+[689.56s] party, it needs a theme. But anyway,
+[691.20s] those decisions shape the entire party.
+[693.72s] It's the same with loops. What are the
+[695.40s] key moments where if the loop picks the
+[697.28s] wrong direction, the rest of the loop is
+[699.88s] entirely shot? Those are your human
+[702.44s] verification checkpoints. Ultimately,
+[704.48s] the more of these key verification
+[706.28s] checkpoints that you don't actually
+[708.08s] verify, the more the AI can go off
+[710.32s] course. So, be very mindful of that,
+[712.24s] specifically for non-measurable tasks.
+[714.80s] With all that, my favorite thing about
+[716.28s] loop engineering is the problem-solving
+[718.24s] muscle it'll force you to flex. So, go
+[720.72s] pick something small and build a loop
+[722.52s] orchestration skill for it. Now, if you
+[724.24s] like this video, you will love this
+[725.68s] video where I do a deep dive on the only
+[727.92s] Claude skills you need to 10x your
+[729.84s] output. The topics I cover there will
+[731.32s] help your loops go from good to great.
+[733.36s] I'll see you in the next one. Peace.

@@ -6,6 +6,42 @@
 
 ---
 
+## 🌙 austin.marchese animation study — IN PROGRESS OVERNIGHT (2026-06-26 ~2am)
+
+**Trigger:** user flagged @austin.marchese (anchor `TP73qyFWDcY`) as a nateherk animation cousin;
+asked for ≥25 videos analyzed by 3 reviewers (me + Codex GPT-5.5 xhigh + Antigravity/Gemini Flash).
+
+- ✅ **29 videos** scraped → frames + 223 contact sheets (sources deleted; `jdLFeBkiy3M` dead).
+- ✅ **Reviewer #1 — RE-RUN ON OPUS** (`docs/research/austin-anim/MY-CATALOG-OPUS.md`; was Haiku, user
+  flagged the weak model): CONFIRMS austin = reskinned nate, **0 new-template gaps (NOT overturned)**,
+  but stricter than Haiku — surfaced **2 source-verified NET-NEW atoms** (`LitSphereGlyph` lit-3D-orb,
+  `ArcLightWipe` swoosh transition — both grep-confirmed absent in `src/`), **dropped** ScrambleResolveText
+  (AnimatedText9x16 already has mulberry32 scramble), +10 craft details beyond Codex's 18. Build plan
+  refreshed → `docs/research/austin-anim/BUILD-SPEC.md`.
+- ✅ **Reviewer #2 (Codex xhigh): DONE 29/29** (capped at 16, finished via 4:12 AM cron after the
+  4:07 reset; crons retired). **2-of-3 consensus** `docs/research/austin-anim/CODEX-CONSENSUS.md`:
+  AGREES austin = reskinned nate, **0 new-template gaps, ZERO divergence**; adds **18 subtle-craft
+  details** + elevates **PromptCardPedagogy** (its #1 most-replicable, 11+ videos).
+- ⏳ **Reviewer #3 (Gemini Flash):** headless `agy` is BROKEN (generic greeting / stall). USER runs
+  `docs/research/austin-anim/ANTIGRAVITY-PROMPTS.md` (29 + nate) in the Antigravity IDE tomorrow.
+
+**✅ BUILT (2026-06-26) — liquid-glass atom layer (tsc clean + render-QA'd):** `src/components/liquidglass/`
+= `tokens.ts` (brand/warm/cool themes, glassCardStyle, glassGlow) + `GlowPulseOverlay` (two-stage
+border-settle→glow-bloom) + `LitSphereGlyph` (lit 3D orb, opt-in, `?`-anticipation) + `ArcLightWipe`
+(swoosh transition) + `ClauseHighlightPhrase` (focus-box + inline-select). `FloatingCaption` got
+`glowColor` + `rotationDegrees` (optional, backward-compat). 2 registered comps:
+`LiquidGlassShowcase9x16` + `PromptCardPedagogy9x16` (render QA: `output/qa-liquidglass/*-sheet.png`).
+Dropped ScrambleResolveText (AnimatedText9x16 already has scramble). NOT new templates — an ATOM layer.
+
+**nate cool-teal variant:** already covered — pass `theme="cool"` to any liquid-glass atom (tokens carry
+nate's cyan/teal). No separate nate build needed; nate's AGY pass is still optional (bonus block in
+ANTIGRAVITY-PROMPTS.md). Optional follow-up: adopt GlowPulseOverlay across existing card comps.
+
+**Resume:** "continue austin build" once Codex MDs (`docs/research/austin-anim/ANALYSIS-FROM-CODEX-*.md`)
++ Gemini MDs exist → triangulate → build the 3 additive pieces → render/QA → ANALYSIS/CREATORS → commit.
+
+---
+
 ## DONE this pass (2026-06-25 second session)
 - ✅ **#3 SceneSequencer9x16** — net-new multi-scene orchestrator (hero/comparison/stat/
   bullets/cta via <Series> + transitions + progress bar). Registered, rendered, QA'd.
