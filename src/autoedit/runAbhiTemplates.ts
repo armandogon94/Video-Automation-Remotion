@@ -19,12 +19,13 @@ const META: Record<string, { bgProps: Record<string, unknown>; demoProps: Record
 
 async function main(): Promise<void> {
   const only = process.argv[2];
+  const onlySet = only ? new Set(only.split(",").map((s) => s.trim()).filter(Boolean)) : null;
   fs.mkdirSync(OUT_DIR, { recursive: true });
   await ensureBrowser();
   console.log("[abhi] bundling…");
   const serveUrl = await bundle({ entryPoint: path.join(PROJECT_ROOT, "src/index.ts") });
 
-  const keys = Object.keys(META).filter((k) => !only || k === only);
+  const keys = Object.keys(META).filter((k) => !onlySet || onlySet.has(k));
   const results: { name: string; file: string; dur: number }[] = [];
   for (const key of keys) {
     const m = META[key];

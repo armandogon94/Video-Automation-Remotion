@@ -46,6 +46,11 @@ const uiMockupSchema = z.object({
   altText: z.string().optional(),
   /** Halo color (Igor's signature is a soft blue/violet glow). */
   glowColor: z.string().default("#3FB8FF"),
+  /** Title-bar label shown on the floating screen panel (Igor's reference
+   *  shows an app/window chrome around the mockup, e.g. a style picker).
+   *  Keeps the focal element reading as a UI/screen mockup rather than a raw
+   *  brand image even when only a placeholder source is supplied. */
+  screenLabel: z.string().default("Studio Compositor"),
 });
 
 const presenterSchema = z.object({
@@ -96,7 +101,13 @@ const CAPTION_START_FRAME = 24;
 // Layout constants
 // ─────────────────────────────────────────────────────────────────────────────
 
-const UI_MOCKUP_MAX_WIDTH_PX = 1100;
+/** Floating screen-mockup panel — a fixed landscape (16:9) card so a square or
+ *  portrait source crops into a screen instead of ballooning into a giant
+ *  centered brand image. This is what makes the composition read as a studio
+ *  compositor (large floating UI/screen mockup) rather than a brand card. */
+const SCREEN_PANEL_WIDTH_PX = 1120;
+const SCREEN_PANEL_HEIGHT_PX = 630;
+const SCREEN_TITLEBAR_HEIGHT_PX = 44;
 const UI_MOCKUP_RIGHT_INSET_PX = 80;
 const PIP_EDGE_INSET_PX = 24;
 /** Perspective tilt — Igor's reference is ~5° rotateY. We apply -5° so the
@@ -146,9 +157,8 @@ const UiMockupLayer: React.FC<UiMockupLayerProps> = ({
   );
 
   // CSS perspective tilt is held statically — the entrance animation is the
-  // translate+fade only. The glow halo is a drop-shadow on the wrapper so it
-  // hugs any transparent edges of the underlying mockup image instead of
-  // boxing the whole rect.
+  // translate+fade only. The glow halo is a drop-shadow on the wrapper so the
+  // floating screen panel reads as Igor's signature chrome.
   const filter = `drop-shadow(0 0 ${GLOW_BLUR_RADIUS_PX}px ${mockup.glowColor}${GLOW_ALPHA_HEX})`;
   const transform = `translateX(${translateX}px) perspective(${PERSPECTIVE_PX}px) rotateY(${ROTATE_Y_DEG}deg)`;
 
@@ -163,22 +173,95 @@ const UiMockupLayer: React.FC<UiMockupLayerProps> = ({
         transform: `translateY(-50%) ${transform}`,
         transformOrigin: "center right",
         opacity,
-        maxWidth: UI_MOCKUP_MAX_WIDTH_PX,
+        width: SCREEN_PANEL_WIDTH_PX,
+        height: SCREEN_PANEL_HEIGHT_PX,
         filter,
         pointerEvents: "none",
+        // The mockup is framed as a window-chrome screen card so a square or
+        // portrait source crops into a landscape screen instead of ballooning
+        // into a giant centered brand image — this is the "large floating UI
+        // mockup" focal element that makes the comp read as a compositor.
+        borderRadius: 14,
+        overflow: "hidden",
+        background: "#0E1116",
+        border: `1px solid ${mockup.glowColor}55`,
+        boxShadow: "0 18px 48px rgba(0,0,0,0.55)",
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box",
       }}
     >
-      <Img
-        src={mockup.src}
-        alt={mockup.altText ?? ""}
+      {/* Title bar — traffic-light dots + screen label (window chrome). */}
+      <div
         style={{
-          display: "block",
-          width: "100%",
-          height: "auto",
-          maxWidth: UI_MOCKUP_MAX_WIDTH_PX,
-          borderRadius: 12,
+          height: SCREEN_TITLEBAR_HEIGHT_PX,
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          paddingLeft: 18,
+          paddingRight: 18,
+          background: "rgba(255,255,255,0.05)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
         }}
-      />
+      >
+        <div style={{ display: "flex", gap: 8 }}>
+          <span
+            style={{
+              width: 12,
+              height: 12,
+              borderRadius: "50%",
+              background: "#FF5F57",
+            }}
+          />
+          <span
+            style={{
+              width: 12,
+              height: 12,
+              borderRadius: "50%",
+              background: "#FEBC2E",
+            }}
+          />
+          <span
+            style={{
+              width: 12,
+              height: 12,
+              borderRadius: "50%",
+              background: "#28C840",
+            }}
+          />
+        </div>
+        <span
+          style={{
+            color: "rgba(255,255,255,0.72)",
+            fontSize: 18,
+            fontWeight: 600,
+            letterSpacing: "0.01em",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {mockup.screenLabel}
+        </span>
+      </div>
+
+      {/* Screen body — the mockup image clipped into the landscape screen. */}
+      <div style={{ flex: 1, minHeight: 0, position: "relative" }}>
+        <Img
+          src={mockup.src}
+          alt={mockup.altText ?? ""}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center top",
+            display: "block",
+          }}
+        />
+      </div>
     </div>
   );
 };

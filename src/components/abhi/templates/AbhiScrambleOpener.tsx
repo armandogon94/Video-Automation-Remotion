@@ -21,6 +21,9 @@
  *   • after   the accent rule wipes in L→R under the pre-line; the sub-line types on
  *             ~1 char / 2–3f with a blinking block caret.
  *   • ambient radial glow blooms behind the hero word over 14f, then breathes ±4%.
+ *   • an orbital layer (faint concentric rings + colored particle dots/chips that
+ *     slowly rotate around the hero center) fades in with the scramble and fades
+ *     back out as the word locks — the same swirl the source holds over the word.
  *
  * Canvas 1080×1920 @30fps. STYLE-SPEC measures are % of 720w → px = specPx720 × 1.5.
  */
@@ -58,6 +61,8 @@ export const abhiScrambleOpenerSchema = z.object({
   terminalLine: z.string().default("with one command."),
   /** Show the central padlock that holds over the word during the scramble. */
   showLock: z.boolean().default(true),
+  /** Show the orbital ring + particle layer that swirls behind the scramble. */
+  showOrbit: z.boolean().default(true),
   /** Hero-word cap-height as % of 720w (spec 7–12). px@1080 = pct/100*1080. */
   heroSizePct: z.number().default(11),
   /** Resolve duration in frames (spec ~60f / 2s). The word locks L→R over this. */
@@ -239,6 +244,25 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
   const breathe = 1 + 0.04 * Math.sin((frame / fps) * Math.PI * 2 * 0.66);
   const glowStrength = (isDark ? 0.34 : 0.16) * bloomIn;
 
+  // ── Orbital ring + particle swirl behind the hero (matches the source) ──
+  // Fades in with the scramble, holds, then fades back out as the word locks —
+  // mirroring the lock's lifecycle so the whole "encrypted" motif resolves away.
+  // Keyframes kept strictly increasing even for short resolveFrames overrides.
+  const orbitMid = (start - 2 + finishFrame + 8) / 2;
+  const orbitFadeIn = Math.min(start + 6, orbitMid - 0.5);
+  const orbitFadeOut = Math.max(finishFrame - 6, orbitMid + 0.5);
+  const orbitOpacity = p.showOrbit
+    ? interpolate(
+        frame,
+        [start - 2, orbitFadeIn, orbitFadeOut, finishFrame + 8],
+        [0, 1, 1, 0],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+      )
+    : 0;
+  const orbitAngle = (frame / fps) * 18; // slow CW rotation, deg
+  // Particle hues sampled from the source: accent red + violet + cool blue.
+  const orbitHues = [accent, "#7C6CF0", "#5A8DEE"];
+
   // ── Kicker pill surface (DARK warm-glass / LIGHT frosted white) ──
   const pillFill = isDark ? hexA("#2D1413", 0.55) : hexA("#FFFFFF", 0.72);
   const pillBorder = hexA(accent, isDark ? 0.5 : 0.35);
@@ -261,6 +285,20 @@ export const AbhiScrambleOpener: React.FC<Partial<AbhiScrambleOpenerProps>> = (
           )} 0%, ${hexA(accent, glowStrength * 0.4)} 30%, transparent 64%)`,
         }}
       />
+
+      {/* ── Orbital ring + particle swirl behind the hero (source motif) ── */}
+      {p.showOrbit && orbitOpacity > 0 && (
+        <OrbitLayer
+          cx={marginX + width * 0.28}
+          cy={heroCenterY}
+          width={width}
+          height={height}
+          angle={orbitAngle}
+          opacity={orbitOpacity}
+          hues={orbitHues}
+          isDark={isDark}
+        />
+      )}
 
       {/* ── Kicker pill (mono, accent dot), top-left ── */}
       {p.kicker.trim() !== S && (
@@ -543,3 +581,83 @@ const LockGlyph: React.FC<{ size: number; color: string }> = ({
     />
   </svg>
 );
+
+/** Faint concentric rings + colored particle dots/chips slowly orbiting the
+ *  hero center — the "encrypted swirl" the source holds over the scramble.
+ *  Fully deterministic (seeded via `rand`) so headless renders match Studio. */
+const OrbitLayer: React.FC<{
+  cx: number;
+  cy: number;
+  width: number;
+  height: number;
+  angle: number;
+  opacity: number;
+  hues: string[];
+  isDark: boolean;
+}> = ({ cx, cy, width, height, angle, opacity, hues, isDark }) => {
+  const ringInk = isDark ? hexA("#F2F2F4", 0.1) : hexA("#1A1A1A", 0.08);
+  const radii = [0.18, 0.3, 0.42].map((r) => r * width);
+  const PARTICLES = 22;
+  return (
+    <AbsoluteFill style={{ opacity }}>
+      <svg
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        style={{ display: "block" }}
+      >
+        <g transform={`rotate(${angle} ${cx} ${cy})`}>
+          {/* concentric ring outlines */}
+          {radii.map((r, ri) => (
+            <circle
+              key={`ring-${ri}`}
+              cx={cx}
+              cy={cy}
+              r={r}
+              fill="none"
+              stroke={ringInk}
+              strokeWidth={1.5}
+            />
+          ))}
+          {/* orbiting particles — dots, with a few rotated chips near center */}
+          {Array.from({ length: PARTICLES }).map((_, i) => {
+            const ringIdx = i % radii.length;
+            const baseR = radii[ringIdx];
+            // jitter radius/angle deterministically so dots don't sit on a grid
+            const ang = rand(i, 1) * Math.PI * 2;
+            const rr = baseR * (0.86 + rand(i, 2) * 0.28);
+            const x = cx + Math.cos(ang) * rr;
+            const y = cy + Math.sin(ang) * rr;
+            const hue = hues[Math.floor(rand(i, 3) * hues.length)];
+            const isChip = rand(i, 4) > 0.78 && ringIdx === 0;
+            const sz = (isChip ? 9 : 4) + rand(i, 5) * 5;
+            const a = 0.5 + rand(i, 6) * 0.45;
+            if (isChip) {
+              return (
+                <rect
+                  key={`p-${i}`}
+                  x={x - sz / 2}
+                  y={y - sz / 2}
+                  width={sz}
+                  height={sz}
+                  rx={2}
+                  fill={hexA(hue, a)}
+                  transform={`rotate(${rand(i, 7) * 90} ${x} ${y})`}
+                />
+              );
+            }
+            return (
+              <circle
+                key={`p-${i}`}
+                cx={x}
+                cy={y}
+                r={sz / 2}
+                fill={hexA(hue, a)}
+              />
+            );
+          })}
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
+};

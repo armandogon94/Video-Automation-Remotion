@@ -3332,6 +3332,7 @@ export const RemotionRoot: React.FC = () => {
               src: staticFile(`brand/logos/${BRAND_LOGO_FILENAMES.avatarLetters}`),
               altText: "UI mockup placeholder",
               glowColor: "#3FB8FF",
+              screenLabel: "Studio Compositor",
             },
             presenter: {
               src: staticFile(`brand/logos/${BRAND_LOGO_FILENAMES.avatar}`),

@@ -229,36 +229,42 @@ function defaultPositions(
     ];
     return positions.slice(0, count);
   }
-  // 3-circle-stacked: triangle
-  //   top:          (540, 760)
-  //   bottom-left:  (340, 1100)
-  //   bottom-right: (740, 1100)
+  // 3-circle-stacked: triangle.
+  // Scaled down (r 280→235) and shifted up/in so all circles AND their outer
+  // labels stay inside a ~56px safe-area margin on the 1080×1920 canvas. The
+  // SVG is offset by SVG_TOP (500), so a circle at cy=1010 has its bottom edge
+  // at 500+1010+235 = 1745 < 1864 (= 1920-56). Bottom labels sit centered well
+  // inside the horizontal safe area (e.g. "VELOCIDAD" at x=290, not x=110, so
+  // its left edge clears the margin instead of clipping off-frame).
+  //   top:          (540, 700)  r=235
+  //   bottom-left:  (330, 1010) r=235
+  //   bottom-right: (750, 1010) r=235
   const positions: CirclePos[] = [
     {
       cx: 540,
-      cy: 760,
-      r: 280,
+      cy: 700,
+      r: 235,
       driftSign: -1,
       labelX: 540,
-      labelY: 440,
+      labelY: 410,
       labelAlign: "middle",
     },
     {
-      cx: 340,
-      cy: 1100,
-      r: 280,
+      cx: 330,
+      cy: 1010,
+      r: 235,
       driftSign: -1,
-      labelX: 110,
-      labelY: 1280,
+      labelX: 290,
+      labelY: 1300,
       labelAlign: "middle",
     },
     {
-      cx: 740,
-      cy: 1100,
-      r: 280,
+      cx: 750,
+      cy: 1010,
+      r: 235,
       driftSign: 1,
-      labelX: 970,
-      labelY: 1280,
+      labelX: 790,
+      labelY: 1300,
       labelAlign: "middle",
     },
   ];

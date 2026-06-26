@@ -192,7 +192,7 @@ const Icon: React.FC<{ icon: IconKey; color: string; size: number; strokePx: num
 export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) => {
   const p = abhiFeatureRowsSchema.parse(props);
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
+  const { fps, width, height, durationInFrames } = useVideoConfig();
   const dark = p.mode === "dark";
 
   // px helper: spec % of 720w → 1080 px.
@@ -444,7 +444,12 @@ export const AbhiFeatureRows: React.FC<Partial<AbhiFeatureRowsProps>> = (props) 
 
       {/* ── Footer green ✓ pill (pops in last, just under the rows) ── */}
       {hasFooterPill ? (() => {
-        const pillStart = ROW_START + n * STAGGER + 4;
+        // The source holds the CTA chip back until the row cascade has long
+        // settled, only blooming it near the end (~70% of the scene). Anchor to
+        // duration so the chip lands late like the source, but never before the
+        // cascade fully resolves (floor = last row landed + a beat).
+        const cascadeDone = ROW_START + (n - 1) * STAGGER + 12;
+        const pillStart = Math.max(cascadeDone + 8, Math.round(durationInFrames * 0.7));
         const pillSpring = spring({
           frame: frame - pillStart,
           fps,

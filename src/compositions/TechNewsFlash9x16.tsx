@@ -299,8 +299,13 @@ const CosmicGradientBackdrop: React.FC<{ accentColor: string }> = ({
 };
 
 /**
- * TopProgressSweep — thin accent bar pinned to the very top edge whose width
+ * TopProgressSweep — thin accent bar inset to the top-left safe area whose width
  * grows with overall playback progress (the source's top "loading" line).
+ *
+ * The bar is inset by 18px on all sides so it lands INSIDE the CosmicGradientBackdrop's
+ * rounded inset frame (`margin:18, borderRadius:28`) rather than bleeding flush into the
+ * top-left corner. Its rounded caps + the inset keep the glow from clipping off the edge,
+ * which a visual-QA audit flagged as a stray red strip in the top-left corner.
  */
 const TopProgressSweep: React.FC<{ accentColor: string }> = ({ accentColor }) => {
   const frame = useCurrentFrame();
@@ -313,11 +318,13 @@ const TopProgressSweep: React.FC<{ accentColor: string }> = ({ accentColor }) =>
     <div
       style={{
         position: "absolute",
-        top: 0,
-        left: 0,
+        top: 18,
+        left: 18,
         height: 6,
-        width: `${pct * 100}%`,
+        // Span within the 18px-inset frame (full width = 100% - 36px) scaled by progress.
+        width: `calc((100% - 36px) * ${pct})`,
         background: accentColor,
+        borderRadius: 3,
         boxShadow: `0 0 14px ${accentColor}`,
       }}
     />

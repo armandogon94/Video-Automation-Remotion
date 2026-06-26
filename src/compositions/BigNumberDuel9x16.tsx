@@ -122,14 +122,20 @@ export type BigNumberDuel9x16Props = z.infer<typeof bigNumberDuel9x16Schema>;
 // ─── Layout constants ──────────────────────────────────────────────
 const SECTION_LABEL_Y = 200;
 
-const COLUMN_WIDTH = 520;
+// Two fixed columns separated by a clear center gutter so the two figures
+// can NEVER touch (and the "vs" divider always has breathing room around it).
+// Canvas is 1080 wide; the gutter is centered on x=540 where "vs" sits.
+const CENTER_GUTTER = 120; // clear horizontal channel down the middle
+const COLUMN_WIDTH = (1080 - CENTER_GUTTER) / 2 - 20; // 460 — leaves 20px outer margin each side
 const COLUMN_HEIGHT = 900;
 const COLUMN_TOP = (1920 - COLUMN_HEIGHT) / 2; // 510
-const LEFT_COLUMN_LEFT = 30;
-const RIGHT_COLUMN_LEFT = 1080 - 30 - COLUMN_WIDTH; // 530
+const LEFT_COLUMN_LEFT = 20;
+const RIGHT_COLUMN_LEFT = 1080 - 20 - COLUMN_WIDTH; // 600 — symmetric right margin
 
-const NUMBER_BASE_SIZE = 220;
-const NUMBER_MAX_WIDTH = COLUMN_WIDTH - 20;
+const NUMBER_BASE_SIZE = 200;
+// Hard cap on the figure block (prefix + number + suffix). Kept comfortably
+// inside the column so the rendered string never bleeds into the gutter.
+const NUMBER_MAX_WIDTH = COLUMN_WIDTH - 24;
 const LABEL_FONT_SIZE = 42;
 const TAGLINE_FONT_SIZE = 28;
 
@@ -143,11 +149,16 @@ const ENTER_DURATION_SECONDS = 0.4;
 
 // ─── Helpers ───────────────────────────────────────────────────────
 
-/** Auto-shrink the number font when the rendered string is wide. */
-function fitNumberFontSize(rendered: string, base: number, maxChars: number): number {
-  if (rendered.length <= maxChars) return base;
-  const ratio = maxChars / rendered.length;
-  return Math.max(120, Math.round(base * ratio));
+/**
+ * Auto-shrink the number font when the FULL figure (prefix + number + suffix)
+ * is wide. `glyphCount` is the total visible character count including any
+ * prefix/suffix — prefix/suffix render smaller, but counting them keeps a safe
+ * margin so the figure never spills into the center gutter.
+ */
+function fitNumberFontSize(glyphCount: number, base: number, maxChars: number): number {
+  if (glyphCount <= maxChars) return base;
+  const ratio = maxChars / glyphCount;
+  return Math.max(110, Math.round(base * ratio));
 }
 
 // ─── Side column ───────────────────────────────────────────────────
@@ -214,9 +225,11 @@ const DuelColumn: React.FC<{
     thousands: true,
   });
 
-  // Wide figures auto-shrink so they don't overflow the column.
+  // Wide figures auto-shrink so they don't overflow the column / touch the
+  // gutter. Count prefix + figure + suffix so "$0.25" (5 glyphs) shrinks too —
+  // the previous fitter saw only "0.25" (4) and let the "$" bleed center.
   const numberLen = renderedNumber.length + (side.prefix ? 1 : 0) + (side.suffix ? 1 : 0);
-  const numberFontSize = fitNumberFontSize(renderedNumber, NUMBER_BASE_SIZE, 5);
+  const numberFontSize = fitNumberFontSize(numberLen, NUMBER_BASE_SIZE, 4);
   const prefixSize = Math.round(numberFontSize * 0.55);
   const suffixSize = Math.round(numberFontSize * 0.65);
 

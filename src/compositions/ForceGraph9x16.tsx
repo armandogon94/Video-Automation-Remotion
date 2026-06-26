@@ -444,9 +444,15 @@ export const ForceGraph9x16: React.FC<ForceGraph9x16Props> = ({
                   y1={e.source.y}
                   x2={e.target.x}
                   y2={e.target.y}
-                  stroke={resolvedMuted}
-                  strokeOpacity={0.4}
-                  strokeWidth={2}
+                  // Edges must read clearly as connections so the graph looks
+                  // like a NETWORK, not a loose bubble cluster. `muted` at 0.4
+                  // alpha on the near-black dark paper blended to ~background and
+                  // vanished after the 1080→~400px downscale. Use the saturated
+                  // accent (the adamrosler AS-graph uses prominent role-colored
+                  // edges) with a thicker stroke that survives the downscale.
+                  stroke={resolvedAccent}
+                  strokeOpacity={0.55}
+                  strokeWidth={4}
                   strokeDasharray={length}
                   strokeDashoffset={dashOffset}
                   strokeLinecap="round"

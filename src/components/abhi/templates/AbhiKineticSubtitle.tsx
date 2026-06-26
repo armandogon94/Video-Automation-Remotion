@@ -81,6 +81,23 @@ export const abhiKineticSubtitleSchema = z.object({
    */
   punchYPct: z.number().default(29),
 
+  // ── STACKED diagonal STAMP (overlay) ─────────────────────────────────
+  /**
+   * Stamp text below the punch stack (e.g. "OBSOLETE"). The source SLAMS this in
+   * BIG then settles to a small outlined diagonal stamp. "" = no stamp.
+   */
+  stampText: z.string().default("OBSOLETE"),
+  /** Stamp ink token (resolveColor): accent/ink/green/red/#hex. */
+  stampColor: z.string().default("accent"),
+  /** Stamp settle rotation in degrees (source tilts up-right ≈ -8°). */
+  stampRotateDeg: z.number().default(-8),
+  /** Stamp cap-height as % of 720w when settled (spec ~3.5–4.5). */
+  stampSizePct: z.number().default(4.0),
+  /** Vertical center of the settled stamp as % of frame height (source ~74%). */
+  stampYPct: z.number().default(74),
+  /** Frame the stamp SLAMS in (after the punch words have landed). */
+  stampStart: z.number().default(72),
+
   // ── Shared overrides ─────────────────────────────────────────────────
   /** Success green (stacked "green" token + landing bloom on positive words). */
   successColor: z.string().default("#47B16A"),
@@ -362,7 +379,91 @@ const StackedPunch: React.FC<{
           );
         })}
       </div>
+      <DiagonalStamp
+        p={p}
+        frame={frame}
+        fps={fps}
+        px={px}
+        resolveColor={resolveColor}
+      />
     </AbsoluteFill>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DIAGONAL STAMP — outlined box that SLAMS in BIG (overshoot) then settles small
+// to a slight diagonal, beneath the stacked punch words (source: "OBSOLETE").
+// ─────────────────────────────────────────────────────────────────────────────
+const DiagonalStamp: React.FC<{
+  p: AbhiKineticSubtitleProps;
+  frame: number;
+  fps: number;
+  px: (n: number) => number;
+  resolveColor: (token: string) => string;
+}> = ({ p, frame, fps, px, resolveColor }) => {
+  const text = p.stampText.trim();
+  if (text.length === 0) return null;
+
+  const start = p.stampStart;
+  const color = resolveColor(p.stampColor);
+  const sizePx = (p.stampSizePct / 100) * PX;
+
+  // Slam: scale OVERSHOOTS big on entry (≈2.5×) then settles to 1 with a tiny
+  // bounce; rotation eases from near-flat into the diagonal settle angle.
+  const sp = spring({
+    frame: frame - start,
+    fps,
+    config: { damping: 140, mass: 0.8, stiffness: 210 },
+    durationInFrames: 11,
+  });
+  const scl = interpolate(sp, [0, 0.4, 0.72, 1], [2.5, 0.92, 1.04, 1]);
+  const rot = interpolate(sp, [0, 1], [-2, p.stampRotateDeg]);
+  const op = interpolate(frame, [start, start + 3], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  // Impact bloom on the slam, then settle to a faint idle glow.
+  const bloom = interpolate(
+    frame,
+    [start + 1, start + 6, start + 18],
+    [0, 1, 0.35],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: `${p.stampYPct}%`,
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        style={{
+          opacity: op,
+          transform: `translateY(-50%) scale(${scl}) rotate(${rot}deg)`,
+          transformOrigin: "50% 50%",
+          border: `${Math.max(2, px(4))}px solid ${color}`,
+          borderRadius: px(8),
+          padding: `${px(8)}px ${px(18)}px`,
+          fontFamily: FONT_STACKS.sans,
+          fontWeight: 900,
+          fontSize: sizePx,
+          lineHeight: 1.0,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color,
+          whiteSpace: "nowrap",
+          boxShadow: `0 0 ${px(22) * bloom}px ${hexA(color, 0.5 * bloom)}`,
+          textShadow: `0 0 ${px(14) * bloom}px ${hexA(color, 0.5 * bloom)}`,
+        }}
+      >
+        {text}
+      </div>
+    </div>
   );
 };
 
