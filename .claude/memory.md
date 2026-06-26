@@ -557,3 +557,22 @@ Skipped as non-atomic (honest): GameProgressWalkthrough (footage), ProductExplai
 (sequencer), ComparisonFeatureExplainer + InteractiveUICarousel (covered by existing combos).
 GOTCHA confirmed again: a build agent stacked ConcentricHierarchy ring labels at center; fixed
 to per-band staggered Y (labelY = CENTER_Y - radius + inset).
+
+
+## 2026-06-25 (2nd session) — backlog wave: SceneSequencer + polish, 125->127 comps
+- NEW SceneSequencer9x16: self-contained multi-scene orchestrator (hero/comparison/stat/
+  bullets/cta via <Series> + per-scene transitions + progress bar). The "one props array ->
+  full multi-scene Short" capability. Registered/rendered/QA'd.
+- NEW AbhiWaveformTranscript9x16 wrapper (showTranscript variant). GOTCHA fixed in
+  AbhiWaveform.tsx: transcript word spans had no inter-word whitespace, so a long transcript
+  could not line-break and overflowed — fix = breakable space between words + canvas-relative
+  chip (left/right px(80)). showTranscript default false so 73 consumers unaffected.
+- ConcentricHierarchyRadialCallout9x16: rings now bold/visible; dropped redundant in-band
+  descriptions so the 4 ring labels are single-line + non-overlapping (3rd iteration — the
+  concentric ring-tops are only ~60-70px apart, so label+description blocks inherently
+  overlapped; labels-only fits).
+- 4 CodingFab cross-creator notes added -> gallery scores them NEW 8-9/10 (was bare NEW).
+- Skipped (documented): ADAPTED gallery badge (cosmetic/debatable) + DiagramExplainer relabel
+  (would drop midu.dev from the gallery). Backlog/decisions live in .claude/NEXT-STEPS.md.
+- Gave the user a paste-ready Codex prompt to frame-by-frame audit both galleries ->
+  docs/codex-review/VISUAL-AUDIT-FROM-CODEX.md (to fold in next).
