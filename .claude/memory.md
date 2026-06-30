@@ -607,3 +607,13 @@ to per-band staggered Y (labelY = CENTER_Y - radius + inset).
   `theme="cool"` token (no separate build). Signature craft to preserve when extending: two-stage
   border-settle→glow-bloom (separate easing), clause-highlight arrives ~6-10f AFTER text (second-read),
   LitSphereGlyph is OPT-IN per card. Reverify: `LG_THEMES` in tokens.ts before recommending colors.
+- ⚖️ **video-use evaluation (2026-06-30): harvest-ideas-keep-stack.** browser-use/video-use is an AI
+  video EDITOR (Claude Code skill, ffmpeg + paid ElevenLabs) that *consumes* Remotion/Hyperframes —
+  a peer to our auto-edit pipeline (D1-D5/WS-C), NOT a Remotion competitor and NOT a framework to
+  migrate templates into (it has no template library by design). Our moat = branded template library +
+  local/free (faster-whisper, no paid API). Docs: `docs/research/video-use/{ANALYSIS,FFMPEG-RULES-AUDIT}.md`.
+  HARVESTED (all committed): 30ms audio fades (renderFromPlan), packTranscript.ts (takes_packed.md),
+  selfEvalRender.ts (QA pass), optional EditSegment.grade. Our pipeline is production-correct vs their
+  12 ffmpeg rules (cuts at detected silence; captions/overlays in Remotion). Do NOT vendor it in (young
+  single-maintainer repo + paid dep). Open follow-ups in NEXT-STEPS (multi-source grade, wire self-eval,
+  transcript-semantic LLM cutting). If revisiting: re-check their repo maturity (was ~2mo old, ~16 commits).

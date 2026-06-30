@@ -1,8 +1,29 @@
-# NEXT STEPS — resume backlog (updated 2026-06-25, second pass)
+# NEXT STEPS — resume backlog (updated 2026-06-30)
 
-> Branch `claude/recursing-tu-dac74b` (worktree), NOT merged to `main`.
-> Latest: tsc 0 · CROSS-CREATOR-COMPARE.html = 59 pairings · **127 registered comps** ·
-> 0 leaked bundles. Resume any item with "continue with NEXT-STEPS #N".
+> Branch `claude/recursing-tu-dac74b` (worktree). Resume any item with "continue with NEXT-STEPS #N".
+> Latest: tsc 0 · liquid-glass atom family shipped (austin/nate) · video-use harvest landed.
+
+---
+
+## 🌙 video-use harvest — DONE overnight (2026-06-30)
+
+Analyzed browser-use/video-use (it's an AI video EDITOR that *uses* Remotion/Hyperframes, NOT a
+competitor — full memo `docs/research/video-use/ANALYSIS.md` + `FFMPEG-RULES-AUDIT.md`). Verdict:
+harvest-ideas-keep-stack. Landed (each tsc-clean + tested + atomic commit):
+- ✅ **30ms audio fades at every cut** — `renderFromPlan.ts` both paths (09172e4).
+- ✅ **packed-transcript generator** — `src/autoedit/packTranscript.ts` + tests (8538971); CLI →
+  takes_packed.md from faster-whisper JSON. The reading substrate for future LLM editing.
+- ✅ **capped self-eval render QA** — `src/autoedit/selfEvalRender.ts` + tests (40005f4):
+  ffprobe duration check + before|after cut contact sheet + checklist.
+- ✅ **optional per-segment grade** — `EditSegment.grade` + `GRADE_FILTERS` (a99e141), single-source path.
+
+**Open follow-ups (do ATTENDED — touch render/cut flow):**
+1. Multi-source per-segment grade (add `grade?` to the reel-assembly beat shape; same filter insertion).
+2. Wire `selfEvalRender` into the render orchestration (auto-QA, cap 3 passes).
+3. Transcript-semantic cutting + strategy-confirm gate (the `SuggestStrategy`/ADR-003 §5 LLM pass —
+   now unblocked by packTranscript). Design-level.
+4. (optional) reels-vs-reels pilot: fork video-use `transcribe.py` → faster-whisper (keep free), then
+   edit the same `output/footage/claude-cowork/IMG_36*.MOV` both ways and compare.
 
 ---
 
