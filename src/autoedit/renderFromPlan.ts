@@ -204,9 +204,15 @@ export function buildTrimConcatFilter(
       `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
-    // Audio: same trim window.
+    // Audio: same trim window, with a 30ms fade in/out at each segment boundary
+    // (video-use rule #3, 2026-06-26) so concat joins don't pop. Fade duration is
+    // clamped to half the segment for very short keeps so the in/out don't overlap.
+    const aDur = end - start;
+    const aFade = Math.min(0.03, aDur / 2);
+    const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
     aParts.push(
-      `[0:a]atrim=start=${start}:end=${end},asetpts=PTS-STARTPTS[a${i}]`,
+      `[0:a]atrim=start=${start}:end=${end},asetpts=PTS-STARTPTS,` +
+        `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade}[a${i}]`,
     );
     aLabels.push(`[a${i}]`);
   });
@@ -598,9 +604,15 @@ export function buildMultiSourceConcatFilter(
         `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
-    // Audio: same trim window; resample to a uniform rate so concat accepts them.
+    // Audio: same trim window; 30ms fade in/out at each beat boundary (video-use
+    // rule #3, 2026-06-26) so multi-source joins don't pop; resample to a uniform
+    // rate so concat accepts them. Fade clamped to half-beat for very short beats.
+    const aDur = b.endSec - b.startSec;
+    const aFade = Math.min(0.03, aDur / 2);
+    const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
     parts.push(
       `[${i}:a]atrim=start=${b.startSec}:end=${b.endSec},asetpts=PTS-STARTPTS,` +
+        `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
         `aresample=48000[a${i}]`,
     );
     aLabels.push(`[a${i}]`);
