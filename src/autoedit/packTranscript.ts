@@ -1,0 +1,176 @@
+/**
+ * packTranscript — turn faster-whisper word-JSON into a phrase-level "packed
+ * transcript" (takes_packed.md), the token-efficient TEXT-FIRST reading view.
+ *
+ * WHY THIS EXISTS (harvested from browser-use/video-use, 2026-06-26)
+ * -----------------------------------------------------------------
+ * The video-use analysis (docs/research/video-use/ANALYSIS.md) identified the
+ * "packed transcript" as the one derived artifact worth stealing: instead of
+ * handing an LLM raw word-JSON (verbose) or making it watch frames (impossible
+ * headless, token-heavy), you give it phrase-level lines with [start-end] codes:
+ *
+ *   ## IMG_3629  (duration: 173.9s, 12 phrases)
+ *     [007.54-013.98] Por ahora solo está en versión de prueba ...
+ *     [014.602-018.20] y disponible para un grupo reducido ...
+ *
+ * That is enough to reason about cuts with word-boundary precision at ~1/10 the
+ * tokens of raw JSON. This is the right substrate for our DEFERRED LLM editing
+ * pass (the SuggestStrategy / ADR-003 §5 seam) — it does NOT change any current
+ * render behavior; it is a pure read-side helper over transcripts we already emit
+ * (src/transcribe → output/.../transcripts/<name>.json).
+ *
+ * Our faster-whisper JSON has no speaker diarization (single-speaker talking-head
+ * content), so phrases break on a SILENCE GAP between consecutive words
+ * (>= gapSeconds, default 0.5s) — the same boundary video-use uses, minus the
+ * speaker-change axis we don't have.
+ */
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
+import { z } from "zod";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Input shape — a subset of our transcript JSON (src/transcribe output).
+// We only need the flat `words` array; other fields are tolerated + ignored.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const packWordSchema = z.object({
+  text: z.string(),
+  startSeconds: z.number(),
+  endSeconds: z.number(),
+});
+export type PackWord = z.infer<typeof packWordSchema>;
+
+const transcriptFileSchema = z.object({
+  duration: z.number().optional(),
+  words: z.array(packWordSchema),
+});
+
+export interface PackedPhrase {
+  startSeconds: number;
+  endSeconds: number;
+  text: string;
+  wordCount: number;
+}
+
+export interface PackedSource {
+  /** Display name (file stem, e.g. "IMG_3629"). */
+  name: string;
+  /** Source duration in seconds, if known. */
+  durationSeconds?: number;
+  phrases: PackedPhrase[];
+}
+
+export interface PackOptions {
+  /** Silence gap (seconds) between consecutive words that starts a new phrase. */
+  gapSeconds?: number;
+}
+
+const DEFAULT_GAP_SECONDS = 0.5;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Core: group words into phrases on silence gaps
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Group consecutive words into phrases, breaking when the gap from one word's
+ * end to the next word's start is >= `gapSeconds`. Each phrase keeps the start of
+ * its first word and the end of its last word. Pure; no I/O.
+ */
+export function packWords(words: PackWord[], opts: PackOptions = {}): PackedPhrase[] {
+  const gap = opts.gapSeconds ?? DEFAULT_GAP_SECONDS;
+  const phrases: PackedPhrase[] = [];
+  let bucket: PackWord[] = [];
+
+  const flush = (): void => {
+    if (bucket.length === 0) return;
+    const first = bucket[0];
+    const last = bucket[bucket.length - 1];
+    phrases.push({
+      startSeconds: first.startSeconds,
+      endSeconds: last.endSeconds,
+      text: bucket.map((w) => w.text.trim()).join(" ").replace(/\s+/g, " ").trim(),
+      wordCount: bucket.length,
+    });
+    bucket = [];
+  };
+
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    if (bucket.length > 0) {
+      const prev = bucket[bucket.length - 1];
+      if (w.startSeconds - prev.endSeconds >= gap) flush();
+    }
+    bucket.push(w);
+  }
+  flush();
+  return phrases;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Formatting → markdown
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Zero-padded SSS.ss timecode, e.g. 7.54 → "007.54", 173.887 → "173.89". */
+function fmtTime(seconds: number): string {
+  return seconds.toFixed(2).padStart(6, "0");
+}
+
+/** One `[start-end] text` line per phrase (the LLM's reading view). */
+export function formatPhrases(phrases: PackedPhrase[], indent = "  "): string {
+  return phrases
+    .map((p) => `${indent}[${fmtTime(p.startSeconds)}-${fmtTime(p.endSeconds)}] ${p.text}`)
+    .join("\n");
+}
+
+/** Render the full takes_packed.md across one or more sources. */
+export function packedSourcesToMarkdown(sources: PackedSource[]): string {
+  const head =
+    "# takes_packed.md — phrase-level transcript (read view)\n\n" +
+    "> Phrases break on silence gaps >= 0.5s. Times are SSS.ss seconds in the SOURCE file.\n" +
+    "> Generated by src/autoedit/packTranscript.ts (harvested from video-use).\n";
+  const blocks = sources.map((s) => {
+    const dur = s.durationSeconds !== undefined ? `duration: ${s.durationSeconds.toFixed(1)}s, ` : "";
+    return `## ${s.name}  (${dur}${s.phrases.length} phrases)\n${formatPhrases(s.phrases)}`;
+  });
+  return [head, ...blocks].join("\n\n") + "\n";
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// File I/O
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Read one transcript JSON file → a PackedSource. */
+export function packTranscriptFile(jsonPath: string, opts: PackOptions = {}): PackedSource {
+  const raw = JSON.parse(readFileSync(jsonPath, "utf8")) as unknown;
+  const parsed = transcriptFileSchema.parse(raw);
+  return {
+    name: basename(jsonPath).replace(/\.json$/i, ""),
+    durationSeconds: parsed.duration,
+    phrases: packWords(parsed.words, opts),
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CLI: tsx src/autoedit/packTranscript.ts <file.json|dir> [...] [--gap 0.5]
+// Prints takes_packed.md to stdout (redirect to write a file).
+// ─────────────────────────────────────────────────────────────────────────────
+
+function isMain(): boolean {
+  const entry = process.argv[1] ?? "";
+  return entry.endsWith("packTranscript.ts") || entry.endsWith("packTranscript.js");
+}
+
+if (isMain()) {
+  const args = process.argv.slice(2);
+  const gapIdx = args.indexOf("--gap");
+  const gapSeconds = gapIdx >= 0 ? Number(args[gapIdx + 1]) : DEFAULT_GAP_SECONDS;
+  const files = args.filter((a, i) => !a.startsWith("--") && (gapIdx < 0 || i !== gapIdx + 1));
+  if (files.length === 0) {
+    process.stderr.write(
+      "usage: tsx src/autoedit/packTranscript.ts <transcript.json> [more.json ...] [--gap 0.5]\n",
+    );
+    process.exit(1);
+  }
+  const sources = files.map((f) => packTranscriptFile(f, { gapSeconds }));
+  process.stdout.write(packedSourcesToMarkdown(sources));
+}
