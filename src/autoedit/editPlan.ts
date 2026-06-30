@@ -79,6 +79,25 @@ export const spanModeSchema = z.enum(["speaker", "broll"]);
 export type SpanMode = z.infer<typeof spanModeSchema>;
 
 /**
+ * Per-segment CREATIVE color grade preset (harvested from browser-use/video-use,
+ * 2026-06-26 — see docs/research/video-use/ANALYSIS.md). OPTIONAL on a segment:
+ * when omitted, the segment uses ONLY the global HLG→SDR corrective LUT (the prior
+ * behavior is unchanged). When set, the named `eq`/`hue` chain below is applied to
+ * that segment's video BEFORE concat. Uses universally-available ffmpeg filters
+ * (no extra LUT files), so it stays local/free.
+ */
+export const segmentGradeSchema = z.enum(["warm-cinematic", "neutral-punch", "cool", "mono"]);
+export type SegmentGrade = z.infer<typeof segmentGradeSchema>;
+
+/** ffmpeg per-segment grade filter chains, keyed by `SegmentGrade`. */
+export const GRADE_FILTERS: Record<SegmentGrade, string> = {
+  "warm-cinematic": "eq=contrast=1.06:saturation=1.10:gamma_r=1.04:gamma_b=0.97",
+  "neutral-punch": "eq=contrast=1.10:saturation=1.06",
+  cool: "eq=contrast=1.04:saturation=1.05:gamma_b=1.04:gamma_r=0.98",
+  mono: "hue=s=0,eq=contrast=1.08",
+};
+
+/**
  * A KEPT segment of the source video (silence-trim removed the gaps between
  * segments). `source*` = where it lives in the ORIGINAL file (what ffmpeg cuts);
  * `edit*` = where it lands on the trimmed output timeline (what overlays/captions
@@ -95,6 +114,9 @@ export const editSegmentSchema = z.object({
   editEndFrame: z.number(),
   /** Camera mode for this span. */
   mode: spanModeSchema,
+  /** Optional per-segment creative grade (see segmentGradeSchema). Omitted →
+   *  global correction only (unchanged behavior); keeps existing plans valid. */
+  grade: segmentGradeSchema.optional(),
 });
 export type EditSegment = z.infer<typeof editSegmentSchema>;
 

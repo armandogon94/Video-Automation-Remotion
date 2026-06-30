@@ -40,6 +40,7 @@ import fs from "fs";
 import path from "path";
 
 import type { EditPlan, EditPlanWord, EditSegment } from "./editPlan.js";
+import { GRADE_FILTERS } from "./editPlan.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Public option / result shapes
@@ -200,8 +201,11 @@ export function buildTrimConcatFilter(
     const start = seg.source.startSeconds;
     const end = seg.source.endSeconds;
     // Video: trim by source seconds, reset PTS so concat sees a 0-based stream.
+    // Optional per-segment creative grade (eq/hue) applied here, BEFORE concat, so
+    // each kept span can carry its own look (video-use harvest). Omitted → no-op.
+    const gradeF = seg.grade ? `,${GRADE_FILTERS[seg.grade]}` : "";
     vParts.push(
-      `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS[v${i}]`,
+      `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS${gradeF}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
     // Audio: same trim window, with a 30ms fade in/out at each segment boundary
