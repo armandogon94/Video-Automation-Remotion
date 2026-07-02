@@ -153,7 +153,7 @@ export const ChunkedPhraseCaption: React.FC<ChunkedPhraseCaptionProps> = ({
       wordTimings.length === 0
         ? []
         : nonOverlappingGroups(
-            wordTimings as unknown as Parameters<typeof nonOverlappingGroups>[0],
+            wordTimings,
             style.windowSize,
             style.windowGapMs,
             style.trailingHoldMs,

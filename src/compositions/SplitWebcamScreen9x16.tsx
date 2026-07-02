@@ -49,7 +49,7 @@ import type {
 import { EditorialCaption } from "../components/captions/EditorialCaption";
 import { BrandBreadcrumb } from "../components/BrandBreadcrumb";
 import { getToolAccentForSurface, resolveColors, getPalette } from "../brand";
-import { findKeyword, type AlignedWord } from "../timing/align";
+import { findKeyword } from "../timing/align";
 
 // Layout constants — vertical seam at the 50% mark (y = 960), with a 40px accent band
 // straddling it (940..980).
@@ -71,10 +71,9 @@ const CALLOUT_FONT_SIZE = 130;
  */
 function resolveCalloutStart(callout: SplitCallout, wordTimings: WordTiming[]): number {
   if (!callout.keyword) return callout.fallbackStartSeconds;
-  // wordTimings shape (from schemas.ts) is structurally compatible with AlignedWord
-  // for findKeyword's purposes — it only reads text/startSeconds/endSeconds/startFrame/endFrame.
-  const aligned = wordTimings as unknown as AlignedWord[];
-  const hit = findKeyword(callout.keyword, aligned);
+  // findKeyword accepts any word-timing shape (align.ts is generic over TimedWord),
+  // so wordTimings passes straight through without a cast (FABLE §6.2).
+  const hit = findKeyword(callout.keyword, wordTimings);
   return hit ? hit.startSeconds : callout.fallbackStartSeconds;
 }
 

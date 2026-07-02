@@ -410,7 +410,7 @@ export const FloatingCaption: React.FC<FloatingCaptionProps> = ({
       wordTimings.length === 0
         ? []
         : nonOverlappingGroups(
-            wordTimings as unknown as Parameters<typeof nonOverlappingGroups>[0],
+            wordTimings,
             windowSize,
             windowGapMs,
             0,
