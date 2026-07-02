@@ -1,7 +1,13 @@
 # File Map — AI Video Factory
 
-> Complete inventory of every project file with purpose and status.
-> Use this to quickly understand the codebase in a new session.
+> Inventory of project files with purpose and status.
+> **⚠️ Partially dated (originally April 2026).** This file predates the bulk of the
+> composition library and the auto-edit subsystem, so its `src/` inventory is INCOMPLETE — it
+> does not list `src/autoedit/`, `src/brand/`, `src/timing/`, `src/animation/`, `src/matting/`,
+> `src/Root.tsx`, or the ~119 composition files and their sub-families. For the authoritative
+> current structure use the "Project Structure" tree in **`CLAUDE.md`** (regenerated
+> 2026-07-02) or run `ls -R src`. The per-file notes below are still useful where present;
+> where a "status" reads "planned"/"not wired", cross-check against the code before trusting it.
 
 ---
 
@@ -81,7 +87,7 @@
 
 | File | Purpose |
 |------|---------|
-| `transcribe.py` | faster-whisper wrapper — outputs JSON to stdout with word-level timestamps. Supports `--output-srt`. **NOT yet wired into the pipeline.** |
+| `transcribe.py` | faster-whisper wrapper — outputs JSON to stdout with word-level timestamps. Supports `--output-srt`. **Wired into the pipeline since 2026-05-15** (called from `src/pipeline/pipeline.ts` stage 1.5 when `--whisper`, the default). |
 
 ### `src/ffmpeg/` — Video Post-Processing (TypeScript)
 

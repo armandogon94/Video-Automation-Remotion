@@ -1,7 +1,14 @@
-# NEXT STEPS — resume backlog (updated 2026-06-30)
+# NEXT STEPS — resume backlog (updated 2026-06-30; merge-state corrected 2026-07-02)
 
-> Branch `claude/recursing-tu-dac74b` (worktree). Resume any item with "continue with NEXT-STEPS #N".
+> **All work below is merged to `main`.** The `claude/recursing-tu-dac74b` branch was
+> fast-forward-merged on 2026-06-26; there is no unmerged branch. Resume any item with
+> "continue with NEXT-STEPS #N".
 > Latest: tsc 0 · liquid-glass atom family shipped (austin/nate) · video-use harvest landed.
+>
+> **The active backlog is now `FABLE.md`** (repo root, 2026-07-02) — a deep technical + product
+> review with an ordered fix plan (export-layer bugs, quality gates, then this creator-study
+> backlog). Treat FABLE.md's phases as the primary priority order; the items below are the
+> older creator-study backlog and largely lower-priority than FABLE's Phase 1–3.
 
 ---
 
@@ -82,15 +89,18 @@ ANTIGRAVITY-PROMPTS.md). Optional follow-up: adopt GlowPulseOverlay across exist
 ---
 
 ## STILL OPEN
-### #4 — Fold in the Codex visual audit  ⟵ do when the MD lands
-A Codex (gpt-5.5 high) frame-by-frame audit of CROSS-CREATOR-COMPARE.html + ABHI-COMPARE.html
-is being run; it writes `docs/codex-review/VISUAL-AUDIT-FROM-CODEX.md`. When present: read it,
-ground-truth each finding (Codex has false-positived before), fix real issues, re-render +
-re-QA + commit. This is the highest-value next action.
+### #4 — Fold in the Codex visual audit  ✅ MD HAS LANDED (verify + close)
+The Codex (gpt-5.5 high) frame-by-frame audit of CROSS-CREATOR-COMPARE.html + ABHI-COMPARE.html
+was run and its output exists: `docs/codex-review/VISUAL-AUDIT-FROM-CODEX.md` (plus
+`VISUAL-AUDIT-FROM-GEMINI-FLASH.md`, `VISUAL-AUDIT-FROM-GEMINI-PRO.md`, and a
+`VISUAL-AUDIT-RESPONSE.md` that indicates it was already processed). Remaining action is to
+confirm the response captured every real finding and close the item — not "wait for the MD to
+land." (`FABLE.md` §14 is a newer, more thorough visual pass; prefer it for visual defects.)
 
-### #0 — Merge `claude/recursing-tu-dac74b` → `main` (your call)
-All of this + last session's work is on the branch; `main` is behind. Also `git worktree remove`
-the two stale locked worktrees (agent-a590da53…, agent-ab34076a…).
+### #0 — Merge `claude/recursing-tu-dac74b` → `main`  ✅ DONE (2026-06-26)
+This is complete. The branch was fast-forward-merged into `main` on 2026-06-26 (recorded in
+`memory.md`); `main` is NOT behind. Do not attempt to re-merge an already-merged branch. Stale
+worktrees under `.claude/worktrees/` (if any remain) can be removed with `git worktree remove`.
 
 ### #1 tail — cross-creator source-map (low yield, optional)
 9 rows still on resolver fallback (two adversarial passes already; diminishing returns):

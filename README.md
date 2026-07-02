@@ -89,7 +89,7 @@ sequenceDiagram
 | Post-Processing | [FFmpeg](https://ffmpeg.org) | Resize, subtitles, normalize, watermark |
 | Pipeline | TypeScript + [tsx](https://github.com/privatenumber/tsx) + [execa](https://github.com/sindresorhus/execa) | Orchestration |
 | CLI | [Commander.js](https://github.com/tj/commander.js) | Command-line interface |
-| Testing | [Vitest](https://vitest.dev) + [pytest](https://pytest.org) | JS + Python tests |
+| Testing | [Vitest](https://vitest.dev) | Auto-edit logic tests (`src/**/*.test.ts`) |
 
 ---
 
@@ -98,9 +98,9 @@ sequenceDiagram
 ### Prerequisites
 
 - **macOS** with Apple Silicon (M1/M2/M3/M4)
-- **Node.js 22+** (LTS)
+- **Node.js 24** (dev machine runs v24.14.0)
 - **Python 3.11+**
-- **FFmpeg** (`brew install ffmpeg`)
+- **FFmpeg 8.x** (`brew install ffmpeg`)
 - **uv** (Python package manager: `curl -LsSf https://astral.sh/uv/install.sh | sh`)
 
 ### Installation
@@ -110,10 +110,7 @@ sequenceDiagram
 git clone https://github.com/your-username/ai-video-factory.git
 cd ai-video-factory
 
-# Install all dependencies
-make install
-
-# Or manually:
+# Install dependencies
 npm install
 uv sync
 ```
@@ -121,12 +118,10 @@ uv sync
 ### Verify Setup
 
 ```bash
-make check
-# Output:
-# Node.js: v22.x.x
-# Python: Python 3.11.x
-# uv: uv 0.x.x
-# FFmpeg: ffmpeg version 6.x
+node --version    # v24.x
+python3 --version # Python 3.11.x
+uv --version      # uv 0.x.x
+ffmpeg -version   # ffmpeg version 8.x
 ```
 
 ---
@@ -158,11 +153,11 @@ npm run dev
 
 ### Render a Single Composition
 
+Use the Remotion CLI directly (there is no `npm run render` script — the `package.json`
+`render` entry points at a file that does not exist):
+
 ```bash
-npm run render -- \
-  --comp ExplainerVideo \
-  --props ./data.json \
-  --out ./output/video.mp4
+npx remotion render src/index.ts ExplainerVideo ./output/video.mp4 --props=./data.json
 ```
 
 ### List Available Voices
@@ -282,28 +277,31 @@ Edge-TTS provides **45 neural voices** across 20+ Spanish-speaking regions:
 
 ## Project Structure
 
+> Abridged. The `CLAUDE.md` "Project Structure" tree is the authoritative, full inventory.
+
 ```
 ai-video-factory/
 ├── src/
-│   ├── compositions/          # Remotion video templates
-│   │   ├── ExplainerVideo.tsx
-│   │   ├── TalkingHead.tsx
-│   │   ├── Listicle.tsx
-│   │   └── QuoteCard.tsx
-│   ├── components/            # Shared React components
-│   ├── pipeline/              # TypeScript orchestration
-│   │   ├── generate.ts        # CLI entry point
-│   │   └── pipeline.ts        # Pipeline steps
-│   ├── tts/                   # Edge-TTS wrapper
-│   ├── transcribe/            # faster-whisper wrapper
-│   └── ffmpeg/                # FFmpeg command builders
-├── templates/                 # Video template configs (JSON)
-├── tests/                     # Vitest + pytest suites
-├── output/                    # Generated videos (gitignored)
-├── Makefile                   # Development commands
-├── package.json
-├── pyproject.toml
-└── docker-compose.dev.yml     # Local dev only (optional Redis)
+│   ├── Root.tsx               # Registers all 130 Remotion compositions
+│   ├── index.ts              # registerRoot entrypoint
+│   ├── compositions/         # 119 .tsx templates (9:16 + 16:9 variants) + scenes/
+│   ├── components/           # Shared components + families (abhi/, overlays/, liquidglass/, …)
+│   ├── autoedit/             # Silence-trim → EDL → caption/overlay render subsystem
+│   ├── brand/                # Brand colors, palettes, fonts (source of truth)
+│   ├── timing/ · animation/  # Caption alignment, easing, motion helpers
+│   ├── matting/              # Optional RVM background-matting tool (Python)
+│   ├── pipeline/             # generate.ts (CLI), pipeline.ts, templates.ts, voices.ts
+│   ├── tts/generate.py       # Edge-TTS wrapper
+│   ├── transcribe/transcribe.py  # faster-whisper wrapper
+│   └── ffmpeg/commands.ts    # FFmpeg command builders
+├── templates/                # 9 template configs (JSON) — display-only; real defaults in pipeline.ts
+├── scripts/                  # Scraping, keyframe extraction, gallery builders, render drivers
+├── docs/ · references/       # Research/ADRs · scraped creator studies
+├── hyperframes/              # Archived bake-off challenger (Remotion won — see BAKEOFF.md)
+├── output/                   # Generated videos + reports (gitignored)
+├── *.html                    # Root gallery/compare pages (INDEX.html is the entry point)
+├── package.json · pyproject.toml
+└── docker-compose.dev.yml    # Local dev only (rarely used)
 ```
 
 ---
@@ -336,23 +334,22 @@ The pipeline automatically handles:
 ### Run Tests
 
 ```bash
-make test          # All tests
-make test-js       # Vitest only (Remotion compositions)
-make test-py       # Pytest only (TTS, transcription)
+npm test           # Vitest — auto-edit logic tests (src/**/*.test.ts)
 ```
 
-### Local Docker Services (Optional)
-
-```bash
-# Start Redis for future BullMQ integration
-docker compose -f docker-compose.dev.yml up -d
-```
+> There is currently **no Python test suite** (`tests/python/` does not exist and
+> `uv run pytest` collects zero tests). Earlier docs claimed a pytest suite; that was
+> aspirational. The `Makefile` targets (`make test`, `make test-py`, etc.) are stale
+> VPS-era leftovers — use the npm script above.
 
 ### Lint
 
 ```bash
-make lint
+npm run lint
 ```
+
+> Note: the lint setup is not fully wired yet (there is no committed ESLint flat config), so
+> this script may not run cleanly as-is. It is on the fix backlog (`FABLE.md` Phase 3).
 
 ---
 
@@ -372,7 +369,7 @@ The generated audio is transcribed locally using the `small` model (~88% accurac
 
 ### 4. Post-Processing (FFmpeg)
 
-The raw video is processed through FFmpeg for subtitle burning (ASS format for styled captions), multi-platform resizing, audio normalization, and thumbnail extraction. Apple Silicon hardware acceleration via VideoToolbox is used when available.
+The raw video is processed through FFmpeg for subtitle burning (ASS format for styled captions), multi-platform resizing, audio normalization, and thumbnail extraction. Encoding uses the `libx264` software encoder (VideoToolbox hardware acceleration is not currently wired in).
 
 ---
 
@@ -387,21 +384,26 @@ The raw video is processed through FFmpeg for subtitle burning (ASS format for s
 
 ## Roadmap
 
-- [ ] Remotion compositions with Zod prop validation
-- [ ] CLI with Commander.js
-- [ ] Pipeline orchestration (tsx + execa)
-- [ ] Edge-TTS integration with word timestamps
-- [ ] faster-whisper transcription wrapper
-- [ ] FFmpeg command builders
-- [ ] Multi-platform export pipeline
-- [ ] Template: Explainer
-- [ ] Template: Talking Head
-- [ ] Template: Listicle
-- [ ] Template: Quote Card
-- [ ] Vitest snapshot tests for compositions
-- [ ] Pytest tests for Python wrappers
+Shipped:
+
+- [x] Remotion compositions with Zod prop validation (130 registered compositions)
+- [x] CLI with Commander.js
+- [x] Pipeline orchestration (tsx + execa)
+- [x] Edge-TTS integration with word timestamps
+- [x] faster-whisper transcription wrapper (wired into the pipeline)
+- [x] FFmpeg command builders
+- [x] Multi-platform export pipeline
+- [x] Templates: Explainer, Talking Head, Listicle, Quote Card (+ ~125 more)
+- [x] Auto-edit subsystem (silence-trim → EDL → caption/overlay render)
+- [x] Vitest tests for the auto-edit logic
+
+Backlog (see `FABLE.md` for the detailed fix plan and priorities):
+
+- [ ] Export-layer correctness fixes (crop math, 48 kHz audio) — highest priority
+- [ ] Real quality gates (vitest config, working ESLint, ffmpeg-builder tests)
+- [ ] Pytest coverage for the Python wrappers (none exists yet)
+- [ ] LLM-assisted transcript editing pass
 - [ ] Batch video generation from CSV/JSON
-- [ ] N8N webhook trigger integration
 - [ ] Background music mixing
 
 ---

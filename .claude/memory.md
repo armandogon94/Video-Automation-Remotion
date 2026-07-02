@@ -617,3 +617,37 @@ to per-band staggered Y (labelY = CENTER_Y - radius + inset).
   12 ffmpeg rules (cuts at detected silence; captions/overlays in Remotion). Do NOT vendor it in (young
   single-maintainer repo + paid dep). Open follow-ups in NEXT-STEPS (multi-source grade, wire self-eval,
   transcript-semantic LLM cutting). If revisiting: re-check their repo maturity (was ~2mo old, ~16 commits).
+
+
+## 2026-07-02 — FABLE.md review + documentation truth-up (docs-only pass)
+- **FABLE.md** landed at the repo root: a deep technical + product review (5 review agents +
+  orchestrator, ~40 source files read, 3 ffmpeg bugs empirically reproduced) with an ordered
+  fix plan. Headline findings: the multi-platform EXPORT layer is the real product bug surface
+  (square crashes from 9:16 masters; reels/tiktok from 16:9 keep a ~607px center strip; 96kHz
+  AAC in every export), the quality gates are partly fake (no vitest.config, broken lint,
+  broken `npm run render`, no pytest suite), and the docs described an April codebase. FABLE.md
+  itself is the active backlog now.
+- **This pass corrected the STALE DOCS only (no code touched):**
+  - `CLAUDE.md` — regenerated the "Project Structure" tree from the real repo (it was ~60%
+    fiction: listed files that never existed — `src/pipeline/config.ts`, `src/tts/voices.py`,
+    `src/transcribe/formats.py`, `src/ffmpeg/resize.ts`+`subtitles.ts`, `tests/`,
+    `vitest.config.ts` — and omitted the entire `src/autoedit/` subsystem, `src/brand`,
+    `src/timing`, `src/animation`, `src/matting`, `Root.tsx`, and ~119 composition files).
+    Fixed Node 22→24, ffmpeg 6→8, removed the "VideoToolbox HW accel" claim (grep: 0 hits),
+    removed the broken `npm run render` from commands, added `npm run autoedit`, updated the
+    key-decisions log, flagged the VPS-era root leftovers as legacy contradictions.
+  - `BAKEOFF.md` — recorded the VERDICT: **Remotion wins, bake-off closed** (revealed
+    preference: 130 comps + autoedit on Remotion vs 2 commits on Hyperframes). Hyperframes
+    retired to reference status (not deleted).
+  - `README.md` — corrected Node version, testing claims (no pytest suite / no `tests/`),
+    removed the broken `npm run render`, noted the bake-off outcome.
+  - `.env.example` — rewritten honestly: the code reads NO project env vars (only `HOME` for the
+    uv path + Python TLS-cert vars in the matting tool); no dotenv loader; all the old vars were
+    decorative and are now marked NOT IMPLEMENTED.
+  - `.claude/` memory reconciled: `constraints-gotchas.md` removed the false "no git repo yet"
+    and "whisper not wired" claims; `scratchpad.md`/`NEXT-STEPS.md` corrected the merge-state
+    (the recursing-tu branch was fast-forward-merged 2026-06-26 — NOT unmerged); `file-map.md`
+    + `pipeline-architecture.md` fixed (whisper is wired, not "planned"); `OVERNIGHT-PLAN.md`
+    banner-marked COMPLETED/ARCHIVED.
+- **The CODE fixes in FABLE.md (Phases 1–4, the export/autoedit/test work) are NOT done** — only
+  the documentation was truthed-up in this pass. FABLE.md's fix plan is the remaining backlog.

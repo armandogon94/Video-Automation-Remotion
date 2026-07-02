@@ -27,9 +27,11 @@
 
 ## Pipeline Gotchas
 
-- **Audio file persistence** — `public/audio.mp3` persists between runs; this can cause unwanted reuse. Consider cleaning up or generating unique filenames.
-- **Word timing approximation** — TTS generates approximate word timings from sentence boundaries. For ACCURATE word timing, integrate faster-whisper transcription (currently NOT wired in).
+- **Audio file persistence** — `public/audio.mp3` persists between runs; this can cause unwanted reuse. It is git-tracked but overwritten by every run, so it churns the working tree. Consider cleaning up or generating unique filenames.
+- **Whisper IS wired in (since 2026-05-15).** Word timing accuracy has two modes: with `--whisper` (default) the pipeline transcribes `audio.mp3` with faster-whisper and uses per-word timestamps (`src/pipeline/pipeline.ts` stage 1.5 → `src/transcribe/transcribe.py`); with `--no-whisper` it falls back to Edge-TTS's approximate word timings (sentence boundaries spread evenly — see the Edge-TTS gotcha above). Do NOT re-add "whisper is planned/not wired" — it is implemented.
 - **Python output format** — Python scripts output JSON to stdout; TypeScript parses via `JSON.parse(result.stdout)`.
+- **`public/` is copied into EVERY webpack bundle.** Remotion's `bundle()` copies the entire `public/` dir (it had grown to ~1.3 GB — `public/matte` + accumulated staged auto-edit clips). Keep it lean: mattes under `public/matte` are referenced by compositions via `staticFile()` and must stay; staged auto-edit intermediates under `public/autoedit/` must not accumulate.
+- **Renders and scraping must not run concurrently.** A render fetches fonts from Google Fonts; if the network is saturated by a scrape the font fetch breaks and captions render wrong.
 
 ## FFmpeg Gotchas
 
@@ -38,6 +40,8 @@
 
 ## General Gotchas
 
-- **No git repo yet** — the project has no `.git/` directory. You may need to `git init` and make initial commits.
-- **Python virtual environment** — `uv` creates `.venv/` automatically; activate with `source .venv/bin/activate` for manual Python calls.
-- **`main.py` at project root** — unused stub from `uv init`; can be deleted.
+- **This IS a git repo.** (An old note here claimed "no git repo yet — you may need to `git init`" — that was false and dangerous; do NOT `git init`.) The repo is on branch `main`; the overnight/liquid-glass/video-use work was fast-forward-merged into `main` on 2026-06-26 (recorded in `memory.md`). There is no unmerged feature branch to worry about.
+- **Node 24 is required** (`node --version` → v24.14.0). The `.claude/tech-stack.md` table is the authoritative version list; if CLAUDE.md and tech-stack.md ever disagree, tech-stack.md is more likely current.
+- **Worktree hygiene** — never leave a merged worktree lying under `.claude/worktrees/`. `vitest`, `tsc`, and glob-based tools will pick up its copied files (e.g. duplicate `*.test.ts`) and double-count or mis-report. Remove merged worktrees with `git worktree remove`.
+- **Python virtual environment** — `uv` creates `.venv/` automatically; activate with `source .venv/bin/activate` for manual Python calls. If the project directory was moved, the `.venv` shebangs can point at the old path — rebuild with `rm -rf .venv && uv sync`.
+- **`main.py` at project root** — unused stub from `uv init`; a delete candidate (VPS-era leftover, not part of the pipeline).

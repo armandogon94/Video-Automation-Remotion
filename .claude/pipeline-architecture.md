@@ -51,19 +51,28 @@ Pipeline Orchestrator (pipeline.ts)
 
 ## Data Flow: Script Text → Word Timings → Captions
 
-### Current Flow (Approximate Timing)
-```
-Script text → Edge-TTS → SentenceBoundary events → Split words evenly within sentence → wordTimings[]
-```
+There are two modes; **whisper is the default and is fully implemented** (this was previously
+documented as a "planned improvement" — it landed 2026-05-15).
 
-Each word timing has: `{ text, startFrame, endFrame, startSeconds, endSeconds }`
-
-### Planned Improvement (Accurate Timing)
+### Default: accurate timing via faster-whisper (`--whisper`, on by default)
 ```
 Audio.mp3 → faster-whisper (word_timestamps=True) → per-word timestamps → wordTimings[]
 ```
+Implemented in `src/pipeline/pipeline.ts` (stage 1.5) which shells out to
+`src/transcribe/transcribe.py` and parses its JSON stdout. `timingSource` is recorded as
+`"whisper"`.
 
-This would replace or supplement the TTS word timings with accurate audio-based timings.
+### Fallback: approximate timing from Edge-TTS (`--no-whisper`)
+```
+Script text → Edge-TTS → SentenceBoundary events → Split words evenly within sentence → wordTimings[]
+```
+Used only when whisper is disabled (fast iteration). `timingSource` is `"tts-approximate"`.
+
+Each word timing has: `{ text, startFrame, endFrame, startSeconds, endSeconds }`.
+
+> Known follow-up (see `FABLE.md` §4.10): captions currently use whisper's *recognized* text;
+> aligning it back to the authored script (`src/timing/align.ts` exists for this) is a pending
+> fix, not reflected in the flow above yet.
 
 ---
 
