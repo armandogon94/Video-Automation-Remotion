@@ -53,6 +53,18 @@ export interface SuggestOverlaysOptions {
   calloutHoldFrames?: number;
   /** Max overlays to emit (keeps the densest, highest-confidence). Default 24. */
   maxOverlays?: number;
+  /**
+   * Max spoken gap (SECONDS) between two consecutive ordinals for them to belong
+   * to the SAME enumeration (FABLE §4.9 / Task 2.6). A larger gap starts a new
+   * candidate group; only groups with ≥2 members emit a bullet-list overlay.
+   * Default 8s.
+   */
+  maxOrdinalGapSeconds?: number;
+  /**
+   * Hard cap (SECONDS) on an enumeration overlay's span, so one enumeration can
+   * never blanket most of the video. Default 15s.
+   */
+  maxEnumSpanSeconds?: number;
 }
 
 /**
@@ -77,11 +89,17 @@ const EMPHASIS_WORDS = new Set([
   "recuerda", "cuidado", "mejor", "peor",
 ]);
 
-/** Ordinal / enumeration markers (EN + ES). R2. */
+/**
+ * Ordinal / enumeration markers (EN + ES). R2. Deliberately EXCLUDES the
+ * ultra-common Spanish connectives `luego`, `despues`, `siguiente` (FABLE §4.9 /
+ * Task 2.6): they appear constantly in ordinary Spanish speech, so treating them
+ * as enumeration markers made almost every Spanish talking-head trigger one giant
+ * bogus bullet-list overlay. Kept: true ordinals + explicit sequence words.
+ */
 const ORDINAL_WORDS = new Set([
   "first", "second", "third", "fourth", "fifth", "next", "then", "finally",
-  "primero", "segundo", "tercero", "cuarto", "quinto", "luego", "despues",
-  "finalmente", "siguiente",
+  "primero", "segundo", "tercero", "cuarto", "quinto",
+  "finalmente",
 ]);
 
 /**
@@ -157,7 +175,36 @@ const DEFAULTS: Required<SuggestOverlaysOptions> = {
   cooldownFrames: 45,
   calloutHoldFrames: 24,
   maxOverlays: 24,
+  maxOrdinalGapSeconds: 8,
+  maxEnumSpanSeconds: 15,
 };
+
+/** An emitted overlay's suppression window on the edit timeline (frames). */
+interface Interval {
+  fromFrame: number;
+  toFrame: number;
+}
+
+/** True if `frame` falls inside any emitted-overlay interval. */
+function insideAny(frame: number, intervals: Interval[]): boolean {
+  return intervals.some((iv) => frame >= iv.fromFrame && frame < iv.toFrame);
+}
+
+/**
+ * Derive fps from the word timings (each carries BOTH frames and seconds). Used
+ * to convert the second-based enumeration span cap into frames without threading
+ * an fps argument through the `SuggestStrategy` seam. Falls back to 30 when no
+ * word has a positive time (e.g. everything at t=0). Prefers a word at/after
+ * `nearFrame` so the ratio reflects the local timeline.
+ */
+function fpsFromWords(words: EditPlanWord[], nearFrame: number): number {
+  const usable = words.filter((w) => w.startSeconds > 0 && w.startFrame > 0);
+  if (usable.length === 0) return 30;
+  const anchor =
+    usable.find((w) => w.startFrame >= nearFrame) ?? usable[usable.length - 1];
+  const fps = anchor.startFrame / anchor.startSeconds;
+  return Number.isFinite(fps) && fps > 0 ? fps : 30;
+}
 
 /**
  * Rule-based suggester. Single forward scan with priority R2 > R1 > R4 > R3 and
@@ -168,22 +215,41 @@ const DEFAULTS: Required<SuggestOverlaysOptions> = {
 export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
   const o = { ...DEFAULTS, ...opts };
   const beats: Beat[] = [];
-  let cooldownUntil = -Infinity;
+  // Emitted enumeration windows: single-word rules are suppressed only INSIDE
+  // these intervals, NOT globally before/after them (FABLE §4.9 / Task 2.6).
+  const enumIntervals: Interval[] = [];
 
-  // ── R2 first: collect enumeration runs (ordinal word + the ~6 words after) ──
+  // ── R2: group CONSECUTIVE ordinals that cluster in time into enumerations ──
+  // Ordinals more than `maxOrdinalGapSeconds` apart belong to DIFFERENT groups
+  // (an ordinal here and another 60s later is not one list). Only a group with
+  // ≥2 ordinals within the gap budget emits a bullet-list, and its span is capped
+  // at `maxEnumSpanSeconds`. This stops scattered connectives from producing one
+  // giant overlay that blankets the whole video.
   const ordinalIdxs = words
     .map((w, i) => (isOrdinalBeat(w.text) ? i : -1))
     .filter((i) => i >= 0);
 
-  if (ordinalIdxs.length >= 2) {
-    const first = ordinalIdxs[0];
-    const last = ordinalIdxs[ordinalIdxs.length - 1];
-    const items = ordinalIdxs.map((idx) => {
+  const groups: number[][] = [];
+  for (const idx of ordinalIdxs) {
+    const cur = groups[groups.length - 1];
+    if (
+      cur &&
+      words[idx].startSeconds - words[cur[cur.length - 1]].startSeconds <=
+        o.maxOrdinalGapSeconds
+    ) {
+      cur.push(idx);
+    } else {
+      groups.push([idx]);
+    }
+  }
+
+  for (const group of groups) {
+    if (group.length < 2) continue; // a lone ordinal is not an enumeration
+    const first = group[0];
+    const last = group[group.length - 1];
+    const items = group.map((idx) => {
       // Take the ordinal + up to the next 5 words (until the next ordinal) as the item.
-      const stop = Math.min(
-        idx + 6,
-        ordinalIdxs.find((j) => j > idx) ?? words.length,
-      );
+      const stop = Math.min(idx + 6, group.find((j) => j > idx) ?? words.length);
       const text = words
         .slice(idx, stop)
         .map((w) => w.text)
@@ -192,7 +258,12 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
       return { text };
     });
     const fromFrame = words[first].startFrame;
-    const toFrame = words[Math.min(last + 5, words.length - 1)].endFrame;
+    const rawToFrame = words[Math.min(last + 5, words.length - 1)].endFrame;
+    // Cap the span so one enumeration can never blanket most of the video.
+    const spanCapFrames = Math.round(
+      o.maxEnumSpanSeconds * fpsFromWords(words, fromFrame),
+    );
+    const toFrame = Math.min(rawToFrame, fromFrame + spanCapFrames);
     beats.push({
       type: "BuildingBulletListOverSpeaker",
       anchor: "left",
@@ -200,14 +271,17 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
       toFrame,
       props: { items, numbered: true },
       confidence: 0.7,
-      reason: `R2 enumeration: ${ordinalIdxs.length} ordinal markers detected`,
+      reason: `R2 enumeration: ${group.length} clustered ordinal markers`,
     });
-    // Block single-word rules from firing INSIDE the enumeration span.
-    cooldownUntil = toFrame;
+    enumIntervals.push({ fromFrame, toFrame });
   }
 
-  // ── R1 / R4 / R3 single-word scan (skips anything inside an R2 span) ──
+  // ── R1 / R4 / R3 single-word scan (skips only beats INSIDE an R2 span) ──
+  let cooldownUntil = -Infinity;
   for (const w of words) {
+    // Interval-based enumeration suppression (only inside an emitted list span),
+    // plus the short post-overlay cooldown for stacked single-word beats.
+    if (insideAny(w.startFrame, enumIntervals)) continue;
     if (w.startFrame < cooldownUntil) continue;
 
     let beat: Beat | null = null;

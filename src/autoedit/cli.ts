@@ -124,6 +124,7 @@ program
   .option("--caption-style <style>", "FloatingCaption preset: editorial-cyan|hormozi-pop|classic|… (with --render)", "editorial-cyan")
   .option("--handle <handle>", "Brand handle chip ('' hides it) (with --render)")
   .option("--slug <slug>", "Output slug for staged clip + final MP4 (with --render); defaults to the source filename")
+  .option("--no-self-eval", "Skip the post-render self-eval QA pass (duration check + cut contact sheet)")
   .parse();
 
 async function main(): Promise<void> {
@@ -171,7 +172,9 @@ async function main(): Promise<void> {
       thresholdDb: parseFloat(opts.silenceDb),
       minSilenceSeconds: parseFloat(opts.minSilence),
     });
-    const keeps = keepSegmentsFromSilences(silences, durationSeconds);
+    const keeps = keepSegmentsFromSilences(silences, durationSeconds, {
+      log: (m) => log("silence", m),
+    });
     segments = toEditSegments(keeps, fps);
     const trimmedFrames = sourceDurationFrames - (segments[segments.length - 1]?.editEndFrame ?? 0);
     log(
@@ -232,6 +235,8 @@ async function main(): Promise<void> {
       slug,
       captionStyle,
       handle: opts.handle,
+      // commander maps `--no-self-eval` → opts.selfEval === false.
+      selfEval: opts.selfEval !== false,
       log: (m) => log("render", m),
     });
     log("render", `staged clip  → ${result.stagedClipPath}`);
