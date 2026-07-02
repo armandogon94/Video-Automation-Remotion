@@ -726,7 +726,10 @@ export function buildMultiSourceConcatFilter(
     parts.push(
       `[${i}:v]trim=start=${b.startSec}:end=${b.endSec},setpts=PTS-STARTPTS,` +
         `${colorFix}${gradeF}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
-        `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
+        // setsar=1 normalizes the sample aspect ratio across differently-shaped
+        // sources — without it, concat rejects a portrait+landscape reel with a
+        // SAR-mismatch error (FABLE follow-up: pre-existing multi-aspect crash).
+        `crop=${width}:${height},setsar=1,fps=${fps},format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
     // Audio: same trim window; 30ms fade in/out at each beat boundary (video-use
