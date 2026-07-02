@@ -127,7 +127,7 @@ const SUPPORTING_TITLE_FONT_SIZE_PX = 32;
  *  gold + a cyan). Hero gets index 0; supporting cards index by position. */
 const DEFAULT_ACCENTS = [
   BRAND.colors.keywordOrange, // "TNF orange"
-  "#D4AF37", // brand gold
+  BRAND.colors.accent, // brand gold
   "#5BC0E8", // cyan
 ] as const;
 

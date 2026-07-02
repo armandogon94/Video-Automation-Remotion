@@ -38,6 +38,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { BRAND } from "../brand";
 import { FONT_STACKS } from "../brand/fonts";
 import { ArcLightWipe } from "../components/liquidglass/ArcLightWipe";
 import { ClauseHighlightPhrase } from "../components/liquidglass/ClauseHighlightPhrase";
@@ -96,7 +97,7 @@ const FRAME_W = 1080;
 const FRAME_H = 1920;
 
 // Deep-navy backdrop with a faint warm-center radial so the glass rims separate.
-const BG_DEEP_NAVY = "#0F1B2D";
+const BG_DEEP_NAVY = BRAND.colors.backgroundDark;
 
 // Staggered entrance frames (30fps, 150f total).
 const CARD_START = 6; // glass card rim settle → bloom → pulse

@@ -251,6 +251,32 @@ export type AppScreenCarousel9x16Props = z.infer<
   typeof appScreenCarousel9x16Schema
 >;
 
+/**
+ * Content-driven total duration = first-screen delay + one beat per screen
+ * (+ one outro beat when an outro headline is present). Mirrors the component's
+ * own `delayFrames + totalBeats × perScreenFrames` timeline so
+ * `calculateMetadata` fits the full carousel instead of truncating at a literal.
+ */
+export function computeAppScreenCarouselFrames(
+  props: Pick<
+    AppScreenCarousel9x16Props,
+    | "screens"
+    | "screenDwellSeconds"
+    | "screenWipeSeconds"
+    | "firstScreenDelaySeconds"
+    | "outroHeadline"
+  >,
+  fps: number,
+): number {
+  const delayFrames = Math.round(props.firstScreenDelaySeconds * fps);
+  const dwellFrames = Math.max(1, Math.round(props.screenDwellSeconds * fps));
+  const wipeFrames = Math.max(1, Math.round(props.screenWipeSeconds * fps));
+  const perScreenFrames = dwellFrames + wipeFrames;
+  const hasOutro = props.outroHeadline.trim().length > 0;
+  const totalBeats = Math.max(1, props.screens.length) + (hasOutro ? 1 : 0);
+  return delayFrames + totalBeats * perScreenFrames;
+}
+
 // ─── Inline brand resolution (mirrors src/brand; kept self-contained) ────────
 
 type PaletteMode = "cream" | "dark";

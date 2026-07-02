@@ -51,7 +51,7 @@ import {
   Easing,
 } from "remotion";
 import { z } from "zod";
-import { BRAND, FONT_STACKS } from "../brand";
+import { BRAND, CREAM_PALETTE, FONT_STACKS } from "../brand";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Schema — EVERY field has a .default(); "" is the empty/override sentinel.
@@ -147,11 +147,11 @@ const SLOT_BG = "rgba(8,14,26,0.66)";
 const LABEL_TEXT = BRAND.colors.textLight; // "#FFFFFF"
 const CAPTION_TEXT = "rgba(255,255,255,0.66)";
 
-// Brand palette (explicit — solid hex only; never background-clip:text).
-const BRAND_NAVY = "#1B3A6E";
-const BRAND_GOLD = "#D4AF37";
-const BRAND_DEEP_NAVY = "#0F1B2D";
-const BRAND_CREAM = "#FAF7F2";
+// Brand palette (from the brand token — solid hex only; never background-clip:text).
+const BRAND_NAVY = BRAND.colors.primary;
+const BRAND_GOLD = BRAND.colors.accent;
+const BRAND_DEEP_NAVY = BRAND.colors.backgroundDark;
+const BRAND_CREAM = CREAM_PALETTE.paper;
 
 /**
  * Reading-order fallback labels. When a cell ships no `label`, the placeholder

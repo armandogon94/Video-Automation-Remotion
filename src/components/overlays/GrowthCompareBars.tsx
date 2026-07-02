@@ -18,13 +18,13 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { FONT_STACKS } from "../../brand";
+import { BRAND, FONT_STACKS } from "../../brand";
 
-// ─── Brand constants ───────────────────────────────────────────────────────────
-const NAVY = "#1B3A6E";
-const GOLD = "#D4AF37";
+// ─── Brand constants (from the brand token; CYAN/WHITE are non-brand accents) ───
+const NAVY = BRAND.colors.primary;
+const GOLD = BRAND.colors.accent;
 const CYAN = "#5BC0E8";
-const DEEP_NAVY = "#0F1B2D";
+const DEEP_NAVY = BRAND.colors.backgroundDark;
 const WHITE = "#FFFFFF";
 
 // ─── Bar item schema ───────────────────────────────────────────────────────────

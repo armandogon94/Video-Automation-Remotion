@@ -106,6 +106,20 @@ export type ModelNameChipComparison9x16Props = z.infer<
   typeof modelNameChipComparison9x16Schema
 >;
 
+/**
+ * Content-driven total duration = one window per model. Mirrors the component's
+ * own `modelCount × framesPerModel` schedule so `calculateMetadata` holds every
+ * model on screen instead of truncating extra models at a literal length.
+ */
+export function computeModelNameChipComparisonFrames(
+  props: Pick<ModelNameChipComparison9x16Props, "models" | "perModelSeconds">,
+  fps: number,
+): number {
+  const modelCount = Math.max(1, props.models.length);
+  const framesPerModel = Math.max(1, Math.round(props.perModelSeconds * fps));
+  return modelCount * framesPerModel;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Layout constants (1080×1920).
 // ─────────────────────────────────────────────────────────────────────────────

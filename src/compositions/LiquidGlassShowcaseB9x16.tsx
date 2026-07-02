@@ -42,6 +42,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, Easing, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { BRAND } from "../brand";
 import { FONT_STACKS } from "../brand/fonts";
 import { RibbonParallax } from "../components/liquidglass/RibbonParallax";
 import { SoftDepthFieldVignette } from "../components/liquidglass/SoftDepthFieldVignette";
@@ -116,7 +117,7 @@ const FRAME_H = 1920;
 
 // Deep-navy backdrop UNDER the ribbon drift so the blurred blobs read against a
 // dark body (the ribbons are alpha'd; without a dark base they would wash grey).
-const BG_DEEP_NAVY = "#0F1B2D";
+const BG_DEEP_NAVY = BRAND.colors.backgroundDark;
 
 // Staggered entrance frames (30fps, 150f total). The atoms themselves are
 // background/static; only the LIST text animates, so all timing lives here.

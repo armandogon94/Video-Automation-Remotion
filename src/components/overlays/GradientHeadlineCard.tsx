@@ -8,7 +8,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { FONT_STACKS } from "../../brand";
+import { BRAND, FONT_STACKS } from "../../brand";
 
 // ---------------------------------------------------------------------------
 // Schema
@@ -42,9 +42,9 @@ export type GradientHeadlineCardProps = z.infer<
 // Brand palette (inline to keep the component self-contained)
 // ---------------------------------------------------------------------------
 
-const NAVY = "#1B3A6E";
-const DEEP_NAVY = "#0F1B2D";
-const GOLD = "#D4AF37";
+const NAVY = BRAND.colors.primary;
+const DEEP_NAVY = BRAND.colors.backgroundDark;
+const GOLD = BRAND.colors.accent;
 const WHITE = "#FFFFFF";
 
 // ---------------------------------------------------------------------------
