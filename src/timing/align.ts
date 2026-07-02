@@ -11,6 +11,16 @@
  *   3. Big-overlay drift (use `findKeyword` to anchor overlays to spoken words, not hardcoded seconds)
  *
  * No Remotion / HyperFrames imports — pure logic.
+ *
+ * TYPES NOTE (FABLE §6.2): `nonOverlappingGroups`, `findKeyword`, and `CaptionGroup`
+ * are generic over `W extends TimedWord` so callers can pass a plain `WordTiming[]`
+ * (structurally identical to `TimedWord`) with NO cast. These four `as unknown as`
+ * casts are now REDUNDANT and a follow-up may delete them:
+ *   - src/components/captions/EditorialCaption.tsx:293
+ *   - src/components/captions/ChunkedPhraseCaption.tsx:156
+ *   - src/components/FloatingCaption.tsx:413
+ *   - src/compositions/SplitWebcamScreen9x16.tsx:76
+ * (Verified: with the casts removed, the raw `wordTimings` calls typecheck.)
  */
 
 // ─── Types ──────────────────────────────────────────────────────────
@@ -40,8 +50,17 @@ export interface AlignedWord extends TimedWord {
   source: "whisper" | "interpolated" | "tts-fallback";
 }
 
-export interface CaptionGroup {
-  words: AlignedWord[];
+/**
+ * A caption window. Generic over the word type so it can hold either fully
+ * `AlignedWord`s (with a `source`) or any structurally-timed word (e.g. the
+ * compositions' `WordTiming`, which is exactly `TimedWord`). Defaults to
+ * `TimedWord` — the minimal shape the renderers actually read off `words`
+ * (text + frame boundaries; never `source`). Defaulting to the base (not
+ * `AlignedWord`) is what lets caption callers annotate `useMemo<CaptionGroup[]>`
+ * while passing plain `WordTiming[]` WITHOUT an `as unknown as` cast.
+ */
+export interface CaptionGroup<W extends TimedWord = TimedWord> {
+  words: W[];
   startSeconds: number;
   endSeconds: number;
   startFrame: number;
@@ -187,8 +206,14 @@ export function alignScriptToWhisper(
  *
  * Matching is normalized (case-insensitive, accent-insensitive, punctuation-stripped).
  * If `keyword` is a multi-word phrase, all words must appear consecutively.
+ *
+ * Generic over the word type: only `text`/`startSeconds`/`endSeconds`/`startFrame`/
+ * `endFrame` (i.e. the `TimedWord` base) are read, so any structurally-timed word
+ * array works — callers passing plain `WordTiming[]` no longer need a cast. The
+ * return type mirrors the input element type, so callers passing `AlignedWord[]`
+ * still get `AlignedWord | null` (with `source` preserved) with no widening.
  */
-export function findKeyword(keyword: string, aligned: AlignedWord[]): AlignedWord | null {
+export function findKeyword<W extends TimedWord = AlignedWord>(keyword: string, aligned: W[]): W | null {
   const target = normalize(keyword);
   if (target === "") return null;
   // Multi-word keyword: split, find consecutive match.
@@ -208,16 +233,19 @@ export function findKeyword(keyword: string, aligned: AlignedWord[]): AlignedWor
       }
     }
     if (ok) {
-      // Return a synthesized AlignedWord spanning the phrase
+      // Return a synthesized word spanning the phrase. Spread `first` so any
+      // extra fields the concrete word type carries (e.g. `AlignedWord.source`)
+      // survive — this reproduces the old `source: first.source` exactly while
+      // keeping the result a valid `W`.
       const first = aligned[i];
       const last = aligned[i + targetTokens.length - 1];
       return {
+        ...first,
         text: keyword,
         startSeconds: first.startSeconds,
         endSeconds: last.endSeconds,
         startFrame: first.startFrame,
         endFrame: last.endFrame,
-        source: first.source,
       };
     }
   }
@@ -299,15 +327,20 @@ export function anchorOverlays(
  *   trailingHoldMs   — how long the LAST word of a group stays on screen after its endSeconds
  *                      (default 0 — group hides immediately when last word ends). The previous
  *                      bug shipped 400ms here, causing every transition to double-paint.
+ *
+ * Generic over the word type: only `startSeconds`/`endSeconds` are read, and each
+ * slice is passed through verbatim into `CaptionGroup.words`. Callers passing plain
+ * `WordTiming[]` therefore need no cast and get back `CaptionGroup<WordTiming>[]`,
+ * whose `.words` are their original word objects (all their fields intact).
  */
-export function nonOverlappingGroups(
-  aligned: AlignedWord[],
+export function nonOverlappingGroups<W extends TimedWord = AlignedWord>(
+  aligned: W[],
   groupSize: number = 6,
   minGapMs: number = 60,
   trailingHoldMs: number = 0,
   fps: number = 30,
-): CaptionGroup[] {
-  const groups: CaptionGroup[] = [];
+): CaptionGroup<W>[] {
+  const groups: CaptionGroup<W>[] = [];
   const gap = minGapMs / 1000;
   const hold = trailingHoldMs / 1000;
 
