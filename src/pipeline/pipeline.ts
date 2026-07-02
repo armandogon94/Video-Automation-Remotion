@@ -9,6 +9,7 @@ import { bundleOnce as bundle } from "../autoedit/bundleOnce";
 import { renderMedia, selectComposition, ensureBrowser } from "@remotion/renderer";
 import { exportMultiPlatform, normalizeAudio, extractThumbnail } from "../ffmpeg/commands.js";
 import { BRAND } from "../brand/index.js";
+import { alignScriptToWhisper, type TTSWord, type WhisperWord } from "../timing/align.js";
 
 export interface PipelineConfig {
   script: string;
@@ -66,6 +67,22 @@ function getUvPath(): string {
   return "uv";
 }
 
+/** Probe a media file's duration in seconds via ffprobe. Returns 0 if it can't be read. */
+async function probeDurationSeconds(input: string): Promise<number> {
+  try {
+    const { stdout } = await execa("ffprobe", [
+      "-v", "error",
+      "-show_entries", "format=duration",
+      "-of", "default=noprint_wrappers=1:nokey=1",
+      input,
+    ]);
+    const seconds = Number.parseFloat(stdout.trim());
+    return Number.isFinite(seconds) && seconds > 0 ? seconds : 0;
+  } catch {
+    return 0;
+  }
+}
+
 export async function runPipeline(config: PipelineConfig): Promise<PipelineResult> {
   const {
     script, voice, template, platforms, outputDir, fps, rate, pitch,
@@ -96,8 +113,12 @@ export async function runPipeline(config: PipelineConfig): Promise<PipelineResul
   log("TTS", `Generated ${ttsData.wordCount} words → ${audioFile}`);
 
   // ─── Stage 1.5: Whisper transcription (accurate word timings) ────
-  let wordTimings = ttsData.words || [];
-  let timingSource: "tts-approximate" | "whisper" = "tts-approximate";
+  // The AUTHORED script words (from TTS) carry the correct text; whisper carries accurate
+  // timing but can mis-recognize brand names / anglicisms ("Claude" → "cloud"). We align
+  // the two so captions show the AUTHORED text with whisper's timing (FABLE §4.10).
+  const scriptWords: TTSWord[] = ttsData.words || [];
+  let wordTimings: unknown[] = scriptWords;
+  let timingSource: "tts-approximate" | "whisper-aligned" = "tts-approximate";
 
   if (useWhisper) {
     log("Whisper", `Transcribing audio with ${whisperModel} model (first run ~500MB download)...`);
@@ -111,10 +132,17 @@ export async function runPipeline(config: PipelineConfig): Promise<PipelineResul
       ], { cwd: projectRoot });
 
       const whisperData = JSON.parse(whisperResult.stdout);
-      if (whisperData.words && whisperData.words.length > 0) {
-        wordTimings = whisperData.words;
-        timingSource = "whisper";
-        log("Whisper", `Replaced ${ttsData.wordCount} TTS timings with ${whisperData.wordCount} whisper-derived timings`);
+      const whisperWords: WhisperWord[] = whisperData.words || [];
+      if (whisperWords.length > 0 && scriptWords.length > 0) {
+        // Authored script text + whisper timing.
+        wordTimings = alignScriptToWhisper(scriptWords, whisperWords, fps);
+        timingSource = "whisper-aligned";
+        log("Whisper", `Aligned ${scriptWords.length} authored script words to ${whisperData.wordCount} whisper timings`);
+      } else if (whisperWords.length > 0) {
+        // No script words to align to — fall back to whisper's own text + timing.
+        wordTimings = whisperWords;
+        timingSource = "whisper-aligned";
+        log("Whisper", `No authored script words — using ${whisperData.wordCount} whisper-derived timings verbatim`);
       } else {
         log("Whisper", "Empty word list — falling back to TTS approximate timings");
       }
@@ -139,11 +167,23 @@ export async function runPipeline(config: PipelineConfig): Promise<PipelineResul
   fs.copyFileSync(audioFile, publicAudioPath);
   const remotionAudioRef = "audio.mp3"; // relative to public/
 
-  // Calculate duration from word timings
-  const lastWord = wordTimings[wordTimings.length - 1];
-  const audioDuration = lastWord ? lastWord.endSeconds + 0.5 : 10;
+  // Calculate duration. Whisper runs with VAD so its last word ends at the last SPEECH —
+  // any outro/breathing/music tail in the mp3 beyond +0.5s would be truncated from the video
+  // while still present in the audio (FABLE §4.11). Take the max of the caption-derived
+  // duration and the real audio duration from ffprobe.
+  const lastWord = wordTimings[wordTimings.length - 1] as
+    | { endSeconds: number }
+    | undefined;
+  const captionDuration = lastWord ? lastWord.endSeconds + 0.5 : 10;
+  const probedAudioSeconds = await probeDurationSeconds(audioFile);
+  const audioDuration = Math.max(captionDuration, probedAudioSeconds);
   const durationInFrames = Math.ceil(audioDuration * fps);
-  log("Pipeline", `Audio duration: ${audioDuration.toFixed(1)}s (${durationInFrames} frames) · timing source: ${timingSource}`);
+  log(
+    "Pipeline",
+    `Audio duration: ${audioDuration.toFixed(1)}s ` +
+      `(captions ${captionDuration.toFixed(1)}s, ffprobe ${probedAudioSeconds.toFixed(1)}s, ` +
+      `${durationInFrames} frames) · timing source: ${timingSource}`,
+  );
 
   // ─── Stage 2: Remotion Render ────────────────────────────
   log("Render", `Bundling Remotion project...`);
@@ -176,7 +216,15 @@ export async function runPipeline(config: PipelineConfig): Promise<PipelineResul
     // SplitWebcamScreen9x16 has a single palette variant — ignore --palette here.
     "split-webcam-screen": "SplitWebcamScreen9x16",
   };
-  const compositionId = compositionMap[template] || "ExplainerVideo";
+  const compositionId = compositionMap[template];
+  if (!compositionId) {
+    // Fail loudly instead of silently rendering ExplainerVideo (FABLE §4.18).
+    const validTemplates = Object.keys(compositionMap).join(", ");
+    throw new Error(
+      `Unknown template "${template}". Valid templates are: ${validTemplates}. ` +
+        `Pass one of these to --template.`,
+    );
+  }
 
   // Build input props based on template
   const inputProps = buildProps(template, {

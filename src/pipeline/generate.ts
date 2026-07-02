@@ -77,7 +77,7 @@ try {
     template: opts.template,
     platforms: opts.platforms.split(",").map((s: string) => s.trim()),
     outputDir: path.resolve(opts.output),
-    fps: parseInt(opts.fps),
+    fps: parseInt(opts.fps, 10),
     rate: opts.rate,
     pitch: opts.pitch,
     useWhisper: opts.whisper !== false,
