@@ -1,11 +1,50 @@
 # Bake-off — Remotion vs. Hyperframes
 
+## VERDICT (2026-07-02): Remotion wins. Bake-off closed.
+
+**Decision:** **Remotion is the primary — and only — production rendering engine.** Hyperframes
+is retired to reference status. The rest of this document (the original head-to-head workflow)
+is kept for historical context and in case anyone ever wants to resurrect the challenger.
+
+**How it was decided — by revealed preference, not a visual head-to-head.** The original plan
+(below) was "run the same script through both, judge visually side-by-side." That comparison
+was never actually run. In the meantime the decision made itself:
+
+- **Investment was 100% Remotion.** Since the bake-off was set up (2026-05-15) the Remotion
+  side grew to **130 registered compositions**, the entire **auto-edit subsystem**
+  (`src/autoedit/`), the creator-replica families, and the **liquid-glass atom family**.
+  Hyperframes received **2 commits total** (2026-05-29, 2026-06-01) and has not been touched
+  since — it has **no installed `node_modules`**, so its documented commands cannot even run
+  today.
+- **The library IS the product.** The branded, creator-replica Remotion template library is
+  the moat. Re-platforming ~100k lines of TSX onto HTML+GSAP is not a real option, and the
+  auto-edit pipeline (overlay registry, EDL props, `calculateMetadata`) is architecturally
+  Remotion-only.
+- **Carry cost with zero payoff.** Keeping the challenger duplicates brand assets, duplicates
+  caption styling across templates, and forces every doc to explain two engines and two Node
+  setups — for a comparison nobody is going to run.
+- **Risk of retiring it ≈ zero.** Everything shared (Edge-TTS, faster-whisper,
+  `src/ffmpeg/commands.ts`, the brand) lives OUTSIDE `hyperframes/` and stays. The
+  `hyperframes/` tree remains committed as a reference; nothing about it is deleted by this
+  decision.
+
+**What this means going forward:**
+- Build all new templates and features in Remotion (`src/`).
+- Do not add features to `hyperframes/`; treat it as a frozen reference.
+- If the visual head-to-head is ever genuinely wanted, run ONE real script through the (fixed)
+  Remotion pipeline first, then spin Hyperframes back up (`cd hyperframes && npm install`)
+  before comparing.
+
+---
+
+## Original bake-off workflow (historical — kept for reference)
+
 > Run the same Spanish script through both engines, compare the outputs.
 
-This project carries **two independent rendering engines**:
+This project carried **two independent rendering engines**:
 
-- **Remotion** (incumbent) — React/TSX components, lives in `src/`.
-- **Hyperframes** (challenger) — plain HTML + GSAP, lives in `hyperframes/`.
+- **Remotion** (incumbent, now the winner) — React/TSX components, lives in `src/`.
+- **Hyperframes** (challenger, now retired) — plain HTML + GSAP, lives in `hyperframes/`.
 
 They share everything else (Edge-TTS for audio, faster-whisper for word timings, FFmpeg for post-processing, the Armando Inteligencia brand assets). Whichever engine you pick later is the variable being tested. Same script in, two MP4s out, judge visually.
 
@@ -121,14 +160,15 @@ After the two runs finish, look for:
 
 ---
 
-## Picking a winner (when ready)
+## Picking a winner — DONE
 
-If after a few real videos one engine consistently wins, the loser can be removed:
+The winner has been picked: **Remotion** (see the VERDICT at the top of this file, 2026-07-02).
 
-- **If Remotion wins:** delete `hyperframes/` entirely. Remove the `hyperframes` reference from `.gitignore` and `README.md`.
-- **If Hyperframes wins:** delete `src/Root.tsx`, `src/compositions/`, `src/components/` (keep `src/brand/`, `src/tts/`, `src/transcribe/`, `src/ffmpeg/`, `src/pipeline/` if you want to keep the Edge-TTS + Whisper Python tooling). The pipeline orchestrator at `src/pipeline/pipeline.ts` would then either be deleted or rewritten to drive Hyperframes directly.
-
-No need to decide today. Just collect data.
+The original removal recipe was: "If Remotion wins, delete `hyperframes/` entirely and remove
+its references from `.gitignore` and `README.md`." We chose the softer path — **retire, don't
+delete**: `hyperframes/` stays committed as a frozen reference (it is small and self-contained),
+new work goes to Remotion only, and the docs no longer present this as an open question. If a
+future cleanup wants the tree fully gone, the removal recipe above still applies.
 
 ---
 

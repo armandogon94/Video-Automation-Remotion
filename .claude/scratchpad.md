@@ -196,5 +196,19 @@ npm run lint                                        # lint current index.html
 
 
 ---
-## ▶ RESUME POINTER (2026-06-25)
-Open backlog for next token window: **`.claude/NEXT-STEPS.md`**. All session work is on branch `claude/recursing-tu-dac74b` (not merged to main). Top item: decide whether to merge the branch. Say "continue with NEXT-STEPS #N" to resume.
+## ▶ RESUME POINTER (updated 2026-07-02)
+**All of the overnight / liquid-glass / video-use work IS merged to `main`** — the
+`claude/recursing-tu-dac74b` branch was fast-forward-merged on 2026-06-26 (see `memory.md`).
+There is NO unmerged branch and nothing to "decide about merging" — ignore the older pointer
+below that said the work was unmerged.
+
+Active plan: **`FABLE.md`** at the repo root is the current backlog (a deep technical + product
+review + ordered fix plan, 2026-07-02). `.claude/NEXT-STEPS.md` holds the older creator-study
+backlog. Start a new session by reading this scratchpad, then `FABLE.md`.
+
+<details><summary>Historical pointer (2026-06-25, now stale — kept for the record)</summary>
+
+Open backlog for next token window: `.claude/NEXT-STEPS.md`. All session work was on branch
+`claude/recursing-tu-dac74b` (since merged). Say "continue with NEXT-STEPS #N" to resume.
+
+</details>

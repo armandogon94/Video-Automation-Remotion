@@ -1,7 +1,13 @@
 # OVERNIGHT AUTONOMOUS RUN — 2026-06-25 (user asleep, no questions)
 
-Worktree: /Users/armandogonzalez/Downloads/Claude/Deep Research Claude Code/10-Video-Automation-Remotion/.claude/worktrees/recursing-tu-dac74b
-Branch: claude/recursing-tu-dac74b
+> **✅ COMPLETED 2026-06-25 — ARCHIVED.** This was a one-off plan for a single overnight run;
+> it ran to completion (all goal boxes below are checked) and the results were merged to `main`
+> on 2026-06-26. This file is a historical record, NOT a live to-do. The `recursing-tu-dac74b`
+> worktree/branch referenced below has since been merged. For the current backlog see
+> `FABLE.md` (repo root) and `.claude/NEXT-STEPS.md`.
+
+Worktree: /Users/armandogonzalez/Downloads/Claude/Deep Research Claude Code/10-Video-Automation-Remotion/.claude/worktrees/recursing-tu-dac74b (merged; may no longer exist)
+Branch: claude/recursing-tu-dac74b (merged to main 2026-06-26)
 
 ## GOAL
 1. Find EVERY creator video we have NOT yet analyzed (deep back-catalog, not just recent), download + frame-analyze them, and replicate any GENUINELY NEW motion-graphic pattern as a Remotion template — until there are no more unanalyzed videos with new patterns.
