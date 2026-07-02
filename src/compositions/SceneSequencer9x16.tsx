@@ -46,13 +46,13 @@ import {
   Easing,
 } from "remotion";
 import { z } from "zod";
-import { resolveColors, getPalette, FONT_STACKS, type PaletteMode } from "../brand";
+import { BRAND, CREAM_PALETTE, resolveColors, getPalette, FONT_STACKS, type PaletteMode } from "../brand";
 
-// ─── Brand constants ────────────────────────────────────────────────
-const BRAND_NAVY = "#1B3A6E";
-const BRAND_GOLD = "#D4AF37";
-const BRAND_DEEP_NAVY = "#0F1B2D";
-const BRAND_CREAM = "#FAF7F2";
+// ─── Brand constants (sourced from the brand token — never re-literal hexes) ──
+const BRAND_NAVY = BRAND.colors.primary;
+const BRAND_GOLD = BRAND.colors.accent;
+const BRAND_DEEP_NAVY = BRAND.colors.backgroundDark;
+const BRAND_CREAM = CREAM_PALETTE.paper;
 
 const FRAME_W = 1080;
 const FRAME_H = 1920;
@@ -228,13 +228,24 @@ export const sceneSequencer9x16Schema = z.object({
 export type SceneSequencer9x16Props = z.infer<typeof sceneSequencer9x16Schema>;
 
 /**
- * Total composition duration for the DEFAULT scene reel — used as the
- * Composition `durationInFrames` in Root.tsx (5 × 75 = 375 frames ≈ 12.5s).
+ * Total composition duration = Σ per-scene `durationInFrames`. Mirrors the
+ * component's own `safeScenes` fallback so `calculateMetadata` in Root.tsx
+ * yields a length that always fits the content (no truncation in Studio or
+ * direct `npx remotion render`).
  */
-export const SCENE_SEQUENCER_DEFAULT_TOTAL_FRAMES = DEFAULT_SCENES.reduce(
-  (sum, s) => sum + s.durationInFrames,
-  0,
-);
+export function computeSceneSequencerFrames(
+  scenes: SceneSequencer9x16Props["scenes"],
+): number {
+  const safeScenes = scenes.length > 0 ? scenes : DEFAULT_SCENES;
+  return safeScenes.reduce((sum, s) => sum + s.durationInFrames, 0);
+}
+
+/**
+ * Total composition duration for the DEFAULT scene reel (5 × 75 = 375 frames
+ * ≈ 12.5s). Retained for callers that want the default-props length directly.
+ */
+export const SCENE_SEQUENCER_DEFAULT_TOTAL_FRAMES =
+  computeSceneSequencerFrames(DEFAULT_SCENES);
 
 // ─── Resolved color bundle shared by every scene renderer ───────────
 interface ResolvedColors {
@@ -792,7 +803,7 @@ export const SceneSequencer9x16: React.FC<SceneSequencer9x16Props> = ({
 
   // Guard against an empty scenes array so Series always has ≥1 child.
   const safeScenes = scenes.length > 0 ? scenes : DEFAULT_SCENES;
-  const totalFrames = safeScenes.reduce((sum, s) => sum + s.durationInFrames, 0);
+  const totalFrames = computeSceneSequencerFrames(scenes);
 
   return (
     <AbsoluteFill style={{ background: resolvedPaper }}>

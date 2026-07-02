@@ -32,11 +32,22 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { FONT_STACKS } from "../../brand";
+import { BRAND, FONT_STACKS } from "../../brand";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Schema
 // ─────────────────────────────────────────────────────────────────────────────
+
+/** Side / corner anchor positions. NEVER center. */
+const anchorSchema = z.enum([
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right",
+  "left",
+  "right",
+  "lower-third",
+]);
 
 export const countUpStatSchema = z.object({
   /** The final numeric value the counter reaches. */
@@ -50,17 +61,7 @@ export const countUpStatSchema = z.object({
   /** Decimal places to show (0 = integer, 1 = one decimal, etc.). */
   decimals: z.number().int().min(0).max(4).default(0),
   /** Side / corner anchor. NEVER center. */
-  anchor: z
-    .enum([
-      "top-left",
-      "top-right",
-      "bottom-left",
-      "bottom-right",
-      "left",
-      "right",
-      "lower-third",
-    ])
-    .default("bottom-left"),
+  anchor: anchorSchema.default("bottom-left"),
   /** Frame the entrance animation starts. */
   enterFrame: z.number().default(0),
   /** Frames to hold the chip fully visible after the entrance settles. */
@@ -68,7 +69,7 @@ export const countUpStatSchema = z.object({
   /** Optional explicit frame to begin the fade-out. Derived when omitted. */
   exitFrame: z.number().optional(),
   /** Numeral color (brand gold or cyan). */
-  accentColor: z.string().default("#D4AF37"),
+  accentColor: z.string().default(BRAND.colors.accent),
 });
 
 export type CountUpStatProps = z.infer<typeof countUpStatSchema>;
@@ -77,7 +78,7 @@ export type CountUpStatProps = z.infer<typeof countUpStatSchema>;
 // Anchor helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
-type AnchorKey = z.infer<typeof countUpStatSchema.shape.anchor>;
+type AnchorKey = z.infer<typeof anchorSchema>;
 
 function anchorStyle(anchor: AnchorKey): React.CSSProperties {
   const inset = "7%";

@@ -94,8 +94,8 @@ const TITLE_FONT_SIZE_PX = 44; // mid-point of spec range 36–48
  *  warm gold + a cyan). Index modulo 3 in row order. */
 const DEFAULT_ACCENTS = [
   BRAND.colors.keywordOrange, // "TNF orange"
-  "#D4AF37",
-  "#5BC0E8",
+  BRAND.colors.accent, // brand gold
+  "#5BC0E8", // cyan (non-brand creator-parity accent)
 ] as const;
 
 /** Per-row timing windows (frames). Mirrors the brief exactly:

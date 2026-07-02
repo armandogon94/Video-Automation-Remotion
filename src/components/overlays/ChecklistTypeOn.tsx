@@ -7,7 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { FONT_STACKS } from "../../brand";
+import { BRAND, FONT_STACKS } from "../../brand";
 
 // ---------------------------------------------------------------------------
 // Schema
@@ -41,11 +41,11 @@ export type ChecklistTypeOnProps = z.infer<typeof checklistTypeOnSchema>;
 // only exports FONT_STACKS — colours are spec-mandated constants)
 // ---------------------------------------------------------------------------
 
-const NAVY = "#1B3A6E";
-const GOLD = "#D4AF37";
+const NAVY = BRAND.colors.primary;
+const GOLD = BRAND.colors.accent;
 const CYAN = "#5BC0E8";
 const WHITE = "#FFFFFF";
-const DEEP_NAVY = "#0F1B2D";
+const DEEP_NAVY = BRAND.colors.backgroundDark;
 
 // ---------------------------------------------------------------------------
 // Anchor → CSS position helper

@@ -33,12 +33,12 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { FONT_STACKS } from "../../brand";
+import { BRAND, FONT_STACKS } from "../../brand";
 
-// ─── Brand palette (kept local; no BRAND import required by spec) ────────────
-const NAVY = "#1B3A6E";
-const GOLD = "#D4AF37";
-const DEEP_NAVY = "#0F1B2D";
+// ─── Brand palette (from the brand token; WHITE is a non-brand text color) ────
+const NAVY = BRAND.colors.primary;
+const GOLD = BRAND.colors.accent;
+const DEEP_NAVY = BRAND.colors.backgroundDark;
 const WHITE = "#FFFFFF";
 
 // ─── Schema ──────────────────────────────────────────────────────────────────

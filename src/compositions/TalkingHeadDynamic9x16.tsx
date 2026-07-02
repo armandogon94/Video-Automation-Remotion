@@ -73,16 +73,16 @@ import {
 import { z } from "zod";
 import { EditorialCaption } from "../components/captions/EditorialCaption";
 import { BrandBreadcrumb } from "../components/BrandBreadcrumb";
-import { getToolAccentForSurface, resolveColors, getPalette } from "../brand";
+import { BRAND, CREAM_PALETTE, getToolAccentForSurface, resolveColors, getPalette } from "../brand";
 import { FONT_STACKS } from "../brand/fonts";
 
-// ─── Brand palette (literal hexes — used ONLY by the empty/placeholder branch so
-//     the gallery/standalone render reads as a finished layout even with no
-//     footage supplied. Real-media paths are unaffected). ──────────────────────
-const BRAND_NAVY = "#1B3A6E";
-const BRAND_GOLD = "#D4AF37";
-const BRAND_DEEP_NAVY = "#0F1B2D";
-const BRAND_CREAM = "#FAF7F2";
+// ─── Brand palette (from the brand token — used ONLY by the empty/placeholder
+//     branch so the gallery/standalone render reads as a finished layout even
+//     with no footage supplied. Real-media paths are unaffected). ─────────────
+const BRAND_NAVY = BRAND.colors.primary;
+const BRAND_GOLD = BRAND.colors.accent;
+const BRAND_DEEP_NAVY = BRAND.colors.backgroundDark;
+const BRAND_CREAM = CREAM_PALETTE.paper;
 
 // ─── Shared word-timing + breadcrumb schemas (mirrored from schemas.ts so this
 //     file stays self-contained, matching the prior convention). ───────────────

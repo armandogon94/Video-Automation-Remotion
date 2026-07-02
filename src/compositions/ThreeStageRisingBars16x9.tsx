@@ -125,7 +125,7 @@ const HEIGHT_LEVEL_FRACTION: Record<"small" | "medium" | "large", number> = {
  *  warm gold + a cyan). Index modulo 3 in tower order. */
 const DEFAULT_ACCENTS = [
   BRAND.colors.keywordOrange, // "TNF orange"
-  "#D4AF37", // warm gold
+  BRAND.colors.accent, // brand gold
   "#5BC0E8", // cyan
 ] as const;
 

@@ -45,13 +45,13 @@ import {
   Easing,
 } from "remotion";
 import { z } from "zod";
-import { resolveColors, getPalette, FONT_STACKS, type PaletteMode } from "../brand";
+import { BRAND, resolveColors, getPalette, FONT_STACKS, type PaletteMode } from "../brand";
 
 // ─── Palette + constants ────────────────────────────────────────────
 // CodingFab's most-recognizable underline accent. Used as the default per-stat
 // underline color; the brand gold/navy remain the spine for all other chrome.
 const CODINGFAB_CYAN = "#00D9A3";
-const BRAND_GOLD = "#D4AF37";
+const BRAND_GOLD = BRAND.colors.accent;
 
 const FRAME_W = 1080;
 const FRAME_H = 1920;
@@ -168,6 +168,23 @@ export const statCardSequenceWithUnderlines9x16Schema = z.object({
 export type StatCardSequenceWithUnderlines9x16Props = z.infer<
   typeof statCardSequenceWithUnderlines9x16Schema
 >;
+
+/**
+ * Content-driven total duration = title card + one card per stat. Mirrors the
+ * component's own `titleFrames + stats.length × statFrames` math so
+ * `calculateMetadata` never truncates a 5-stat sequence in Studio/direct render.
+ */
+export function computeStatCardSequenceFrames(
+  props: Pick<
+    StatCardSequenceWithUnderlines9x16Props,
+    "stats" | "secondsPerStat" | "titleSeconds"
+  >,
+  fps: number,
+): number {
+  const titleFrames = Math.round(props.titleSeconds * fps);
+  const statFrames = Math.max(1, Math.round(props.secondsPerStat * fps));
+  return titleFrames + Math.max(1, props.stats.length) * statFrames;
+}
 
 // ─── Number formatting ──────────────────────────────────────────────
 function formatFigure(value: number, decimals: number): string {
