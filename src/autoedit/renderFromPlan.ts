@@ -273,7 +273,10 @@ export function buildTrimConcatFilter(
   // lives per-segment (above), so the post-concat chain is scale-only.
   const scale =
     `[vcat]scale=${width}:${height}:force_original_aspect_ratio=increase,` +
-    `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[vout]`;
+    // setsar=1 is defensive here (single-source segments share one input's SAR,
+    // so this path doesn't hit the mismatch) — it keeps the output SAR square and
+    // matches the multi-source chain. See buildMultiSourceConcatFilter.
+    `crop=${width}:${height},setsar=1,fps=${fps},format=yuv420p,${SETPARAMS_BT709}[vout]`;
 
   const parts = [...vParts, ...aParts, vConcat, scale];
   if (hasAudio) {

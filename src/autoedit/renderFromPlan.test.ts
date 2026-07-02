@@ -135,6 +135,27 @@ describe("buildMultiSourceConcatFilter — Task 2.3 (per-beat grade) + 2.4 (audi
   });
 });
 
+describe("SAR normalization — mixed-aspect reel concat (FABLE follow-up)", () => {
+  // A landscape beat scaled-to-cover a portrait canvas yields a non-1:1 SAR
+  // (e.g. 10240:10239), while a portrait beat yields 1:1; ffmpeg `concat` rejects
+  // the mismatch. Every per-input chain must carry setsar=1.
+  it("buildMultiSourceConcatFilter: setsar=1 in EVERY per-input video chain", () => {
+    const b = (i: number): ReelBeat & { isHdr: boolean } => ({
+      sourceFile: `/clip${i}.mp4`,
+      startSec: 0,
+      endSec: 3,
+      isHdr: false,
+    });
+    const { filter } = buildMultiSourceConcatFilter([b(0), b(1), b(2)], 1080, 1920, 30, "");
+    expect((filter.match(/setsar=1/g) ?? []).length).toBe(3);
+  });
+
+  it("buildTrimConcatFilter: setsar=1 in the post-concat scale chain (defensive)", () => {
+    const { filter } = buildTrimConcatFilter([seg(0, 0, 2)], 1080, 1920, 30, false, "");
+    expect(filter.slice(filter.indexOf("[vcat]"))).toContain("setsar=1");
+  });
+});
+
 describe("buildCombinedTranscript — Task 2.9 boundary clamp", () => {
   const w = (text: string, s: number, e: number): EditPlanWord => ({
     text,
