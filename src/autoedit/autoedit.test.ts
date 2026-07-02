@@ -45,13 +45,14 @@ describe("parseSilenceDetect", () => {
 });
 
 describe("keepSegmentsFromSilences", () => {
-  it("inverts silences into kept talking spans, clamping to duration", () => {
+  it("inverts silences into kept talking spans, clamping to duration (no padding)", () => {
     const keeps = keepSegmentsFromSilences(
       [
         { startSeconds: 2.5, endSeconds: 3.2 },
         { startSeconds: 8.0, endSeconds: 9.0 },
       ],
       12,
+      { padSeconds: 0 },
     );
     expect(keeps).toEqual([
       { startSeconds: 0, endSeconds: 2.5 },
@@ -60,9 +61,58 @@ describe("keepSegmentsFromSilences", () => {
     ]);
   });
 
-  it("clamps Infinity ends to the media duration", () => {
-    const keeps = keepSegmentsFromSilences([{ startSeconds: 5, endSeconds: Infinity }], 10);
+  it("clamps Infinity ends to the media duration (no padding)", () => {
+    const keeps = keepSegmentsFromSilences([{ startSeconds: 5, endSeconds: Infinity }], 10, {
+      padSeconds: 0,
+    });
     expect(keeps).toEqual([{ startSeconds: 0, endSeconds: 5 }]);
+  });
+
+  it("pads each kept edge into the adjacent silence (default 50ms) so fades land in silence", () => {
+    const keeps = keepSegmentsFromSilences(
+      [
+        { startSeconds: 2.5, endSeconds: 3.2 },
+        { startSeconds: 8.0, endSeconds: 9.0 },
+      ],
+      12,
+    );
+    // First keep: no left room (starts at 0), pads right into the 0.7s gap.
+    // Middle keep: pads both edges 50ms into the surrounding gaps.
+    // Last keep: pads left 50ms, no right room (ends at media duration).
+    expect(keeps.length).toBe(3);
+    expect(keeps[0].startSeconds).toBe(0);
+    expect(keeps[0].endSeconds).toBeCloseTo(2.55, 6);
+    expect(keeps[1].startSeconds).toBeCloseTo(3.15, 6);
+    expect(keeps[1].endSeconds).toBeCloseTo(8.05, 6);
+    expect(keeps[2].startSeconds).toBeCloseTo(8.95, 6);
+    expect(keeps[2].endSeconds).toBe(12);
+  });
+
+  it("padded spans never overlap and clamp at the media edges", () => {
+    const keeps = keepSegmentsFromSilences(
+      [{ startSeconds: 4, endSeconds: 5 }],
+      9,
+    );
+    // [0,4]+pad → [0,4.05] ; [5,9]+pad → [4.95,9]. No overlap; edges clamped.
+    expect(keeps[0].startSeconds).toBe(0);
+    expect(keeps[keeps.length - 1].endSeconds).toBe(9);
+    for (let i = 1; i < keeps.length; i++) {
+      expect(keeps[i].startSeconds).toBeGreaterThanOrEqual(keeps[i - 1].endSeconds);
+    }
+  });
+
+  it("clamps pad to half the gap under a tiny minSilence (padded keeps still don't overlap)", () => {
+    // Two keeps separated by only a 0.06s silence → half-gap is 0.03s < 0.05
+    // default pad, so the pad is clamped to 0.03 on the touching edges.
+    const keeps = keepSegmentsFromSilences(
+      [{ startSeconds: 2.0, endSeconds: 2.06 }],
+      5,
+    );
+    // keep0 [0,2] pads right by min(0.05, 0.03) = 0.03 → 2.03
+    // keep1 [2.06,5] pads left by 0.03 → 2.03 (they meet, do not overlap)
+    expect(keeps[0].endSeconds).toBeCloseTo(2.03, 5);
+    expect(keeps[1].startSeconds).toBeCloseTo(2.03, 5);
+    expect(keeps[1].startSeconds).toBeGreaterThanOrEqual(keeps[0].endSeconds - 1e-9);
   });
 });
 
@@ -85,6 +135,40 @@ describe("toEditSegments", () => {
   });
 });
 
+describe("toEditSegments — cumulative drift (FABLE §4.3 / Task 2.2)", () => {
+  it("quantizes from cumulative seconds so per-segment rounding does not accumulate", () => {
+    const fps = 30;
+    // 25 keeps of 1.03s each. round(1.03*30)=31, so the OLD per-segment code gave
+    // 25*31 = 775; the correct cumulative answer is round(25*1.03*30) = 773.
+    const keeps = Array.from({ length: 25 }, (_, i) => ({
+      startSeconds: i * 1.03,
+      endSeconds: (i + 1) * 1.03,
+    }));
+    const segs = toEditSegments(keeps, fps);
+    const lastEnd = segs[segs.length - 1].editEndFrame;
+    expect(lastEnd).toBe(Math.round(25 * 1.03 * fps)); // 773, not 775
+    // Every boundary is within half a frame of the true cumulative position.
+    let cum = 0;
+    for (const s of segs) {
+      expect(Math.abs(s.editStartFrame / fps - cum)).toBeLessThan(1 / (2 * fps));
+      cum += s.source.endSeconds - s.source.startSeconds;
+    }
+  });
+
+  it("is contiguous (each segment starts where the previous ended)", () => {
+    const segs = toEditSegments(
+      Array.from({ length: 10 }, (_, i) => ({
+        startSeconds: i * 0.7,
+        endSeconds: i * 0.7 + 0.5,
+      })),
+      30,
+    );
+    for (let i = 1; i < segs.length; i++) {
+      expect(segs[i].editStartFrame).toBe(segs[i - 1].editEndFrame);
+    }
+  });
+});
+
 describe("shiftWordsToEditTimeline", () => {
   it("drops words in trimmed gaps and shifts kept words left", () => {
     const segs = toEditSegments(
@@ -103,6 +187,19 @@ describe("shiftWordsToEditTimeline", () => {
     expect(out.map((w) => w.text)).toEqual(["kept-a", "kept-b"]);
     // kept-b was at source frame 180; segment 2 maps source 150 → edit 60, shift = -90
     expect(out[1].startFrame).toBe(90);
+  });
+
+  it("clamps a word straddling a cut to the segment's edit end (FABLE §4.14 / Task 2.9)", () => {
+    // One segment [0,2)s → edit end frame 60. A word starting at 1.9s but ending
+    // at 2.6s (past the cut) must be clamped so its end never bleeds past frame 60.
+    const segs = toEditSegments([{ startSeconds: 0, endSeconds: 2 }], 30);
+    const words: EditPlanWord[] = [
+      { text: "straddle", startSeconds: 1.9, endSeconds: 2.6, startFrame: 57, endFrame: 78 },
+    ];
+    const out = shiftWordsToEditTimeline(words, segs, 30);
+    expect(out.length).toBe(1);
+    expect(out[0].endFrame).toBeLessThanOrEqual(segs[0].editEndFrame);
+    expect(out[0].endFrame).toBe(60);
   });
 });
 
@@ -160,6 +257,64 @@ describe("suggestOverlays (rule-based)", () => {
       expect(o.reason.length).toBeGreaterThan(0);
       expect(o.confidence).toBeGreaterThanOrEqual(0);
     }
+  });
+
+  // FABLE §4.9 / Task 2.6 — Spanish-hostile enumeration heuristic.
+  const fps = 30;
+  const mkAt = (text: string, sec: number): EditPlanWord => ({
+    text,
+    startSeconds: sec,
+    endSeconds: sec + 0.4,
+    startFrame: Math.round(sec * fps),
+    endFrame: Math.round(sec * fps) + 12,
+  });
+
+  it("does NOT build an enumeration from scattered Spanish connectives", () => {
+    // `luego`/`después`/`siguiente` are common connectives, no longer ordinals,
+    // and are spread far apart — must NOT produce a bullet-list overlay.
+    const words = [
+      mkAt("Hablamos", 0),
+      mkAt("luego", 2),
+      mkAt("de", 2.4),
+      mkAt("esto", 2.8),
+      mkAt("y", 20),
+      mkAt("después", 21),
+      mkAt("vemos", 21.5),
+      mkAt("lo", 45),
+      mkAt("siguiente", 46),
+      mkAt("$100", 60), // a real stat beat, far from any (non-)ordinal
+    ];
+    const overlays = suggestOverlays(words);
+    const types = overlays.map((o) => o.type);
+    expect(types).not.toContain("BuildingBulletListOverSpeaker");
+    // The stat beat is still emitted (not globally suppressed).
+    expect(types).toContain("YellowGlowWordCallout");
+  });
+
+  it("builds ONE enumeration for clustered primero/segundo/tercero within 8s, sparing an earlier stat", () => {
+    const words = [
+      mkAt("$50", 0), // stat BEFORE the cluster — must survive
+      mkAt("Tenemos", 5),
+      mkAt("primero", 6),
+      mkAt("la", 6.5),
+      mkAt("estrategia", 7),
+      mkAt("segundo", 9),
+      mkAt("el", 9.5),
+      mkAt("proceso", 10),
+      mkAt("tercero", 12),
+      mkAt("el", 12.5),
+      mkAt("resultado", 13),
+    ];
+    const overlays = suggestOverlays(words);
+    const enums = overlays.filter((o) => o.type === "BuildingBulletListOverSpeaker");
+    expect(enums.length).toBe(1);
+    // Span covers only the cluster (starts at ~frame 180 = 6s), not the video head.
+    expect(enums[0].fromFrame).toBe(Math.round(6 * fps));
+    // The $50 stat at t=0 is BEFORE the enumeration span and must NOT be suppressed.
+    const stat = overlays.find(
+      (o) => o.type === "YellowGlowWordCallout" && o.fromFrame < enums[0].fromFrame,
+    );
+    expect(stat).toBeTruthy();
   });
 });
 

@@ -54,6 +54,19 @@ export interface SilenceDetectOptions {
 
 const DEFAULT_THRESHOLD_DB = -30;
 const DEFAULT_MIN_SILENCE_S = 0.5;
+/**
+ * Edge padding (seconds) grown into the silence on EACH side of a kept span.
+ *
+ * `silencedetect`'s `silence_start` is the instant audio drops below the noise
+ * floor — i.e. the END of audible speech — and `silence_end` is where speech
+ * RESUMES. A kept span therefore begins exactly on a word ONSET and ends exactly
+ * on a word TAIL. The 30ms afade in/out applied per segment (renderFromPlan.ts)
+ * would then ramp over the first/last 30ms of real speech. Padding each edge into
+ * the adjacent silence gives those fades silent headroom (FABLE §4.4 / Task 2.1;
+ * corrects FFMPEG-RULES-AUDIT.md rule 7's wrong "N/A" verdict). Clamped so padding
+ * can never overlap a neighboring keep or run past the media edges.
+ */
+const DEFAULT_PAD_S = 0.05;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Pure parser — the unit-testable core
@@ -98,19 +111,46 @@ export function parseSilenceDetect(stderr: string): SilenceInterval[] {
   return intervals;
 }
 
+/** Options for {@link keepSegmentsFromSilences}. */
+export interface KeepSegmentsOptions {
+  /**
+   * Drop kept spans shorter than this (seconds) BEFORE padding — avoids
+   * 2-frame slivers between back-to-back silences. Default 0.2. Dropped spans
+   * are logged (FABLE §4.15) so a vanished short word ("sí", "ok") is at least
+   * visible rather than silently deleted.
+   */
+  minKeepSeconds?: number;
+  /**
+   * Edge padding (seconds) grown into the adjacent silence on each side of a
+   * kept span AFTER the min-keep filter, so the per-segment 30ms afades land in
+   * silence instead of on word onsets/tails (FABLE §4.4 / Task 2.1). Default
+   * 0.05. Clamped to the media edges and to half the gap to the neighboring
+   * keep, so padded keeps can never overlap.
+   */
+  padSeconds?: number;
+  /** Optional logger for dropped-span diagnostics. Default: console.log. */
+  log?: (msg: string) => void;
+}
+
 /**
  * Invert silence intervals into KEEP spans across [0, durationSeconds].
  *
  * Clamps any `Infinity` end to `durationSeconds`, drops spans shorter than
- * `minKeepSeconds` (avoids 2-frame slivers between back-to-back silences), and
- * merges/sorts defensively so callers can pass unsorted, overlapping silences.
+ * `minKeepSeconds` (logging how many were dropped), merges/sorts defensively so
+ * callers can pass unsorted/overlapping silences, and finally grows a small
+ * `padSeconds` edge back into the adjacent silence on each side of every kept
+ * span (clamped so padded keeps can never overlap or exceed the media).
  */
 export function keepSegmentsFromSilences(
   silences: SilenceInterval[],
   durationSeconds: number,
-  minKeepSeconds = 0.2,
+  options: KeepSegmentsOptions = {},
 ): KeepSpan[] {
   if (durationSeconds <= 0) return [];
+
+  const minKeepSeconds = options.minKeepSeconds ?? 0.2;
+  const padSeconds = Math.max(0, options.padSeconds ?? DEFAULT_PAD_S);
+  const log = options.log ?? ((m: string) => console.log(m));
 
   // Normalize: clamp to [0, duration], sort, merge overlaps.
   const clamped = silences
@@ -132,19 +172,47 @@ export function keepSegmentsFromSilences(
   }
 
   // Walk the gaps between silences — those are the kept spans.
-  const keeps: KeepSpan[] = [];
+  const rawKeeps: KeepSpan[] = [];
   let cursor = 0;
   for (const s of merged) {
     if (s.startSeconds > cursor) {
-      keeps.push({ startSeconds: cursor, endSeconds: s.startSeconds });
+      rawKeeps.push({ startSeconds: cursor, endSeconds: s.startSeconds });
     }
     cursor = Math.max(cursor, s.endSeconds);
   }
   if (cursor < durationSeconds) {
-    keeps.push({ startSeconds: cursor, endSeconds: durationSeconds });
+    rawKeeps.push({ startSeconds: cursor, endSeconds: durationSeconds });
   }
 
-  return keeps.filter((k) => k.endSeconds - k.startSeconds >= minKeepSeconds);
+  // Drop sub-minKeep slivers FIRST (before padding would inflate them past the
+  // threshold), and surface the count so a vanished short word is visible.
+  const kept = rawKeeps.filter(
+    (k) => k.endSeconds - k.startSeconds >= minKeepSeconds,
+  );
+  const droppedCount = rawKeeps.length - kept.length;
+  if (droppedCount > 0) {
+    log(
+      `silence-trim: dropped ${droppedCount} sub-${minKeepSeconds}s kept span(s) ` +
+        `(short words between two pauses can vanish — see FABLE §4.15)`,
+    );
+  }
+
+  if (padSeconds === 0) return kept;
+
+  // Grow each edge into the adjacent silence, clamped to the media and to half
+  // the gap to the neighboring keep (so no two padded keeps ever overlap).
+  return kept.map((k, i) => {
+    const prevEnd = i > 0 ? kept[i - 1].endSeconds : 0;
+    const nextStart = i < kept.length - 1 ? kept[i + 1].startSeconds : durationSeconds;
+    const leftRoom = Math.max(0, (k.startSeconds - prevEnd) / 2);
+    const rightRoom = Math.max(0, (nextStart - k.endSeconds) / 2);
+    const padLeft = Math.min(padSeconds, leftRoom, k.startSeconds);
+    const padRight = Math.min(padSeconds, rightRoom, durationSeconds - k.endSeconds);
+    return {
+      startSeconds: Math.max(0, k.startSeconds - padLeft),
+      endSeconds: Math.min(durationSeconds, k.endSeconds + padRight),
+    };
+  });
 }
 
 import {
@@ -167,14 +235,22 @@ export function toEditSegments(
   mode: SpanMode = "speaker",
 ): EditSegment[] {
   const segments: EditSegment[] = [];
-  let editCursorFrame = 0;
+  // Accumulate the edit-timeline position in SECONDS and quantize the cumulative
+  // value ONCE per boundary (FABLE §4.3 / Task 2.2). ffmpeg concatenates segments
+  // whose real durations are `endSeconds - startSeconds` (sample-accurate audio),
+  // but the OLD code computed each segment's edit length independently as
+  // `round(end·fps) - round(start·fps)` and summed those — each contributing up to
+  // ±1 frame of error that random-walked across N cuts, drifting captions/overlays
+  // from the audio by the end of a long edit. Quantizing the CUMULATIVE seconds
+  // bounds every boundary's error to ±0.5 frame regardless of N (no accumulation).
+  let editCursorSeconds = 0;
 
   keeps.forEach((k, i) => {
+    const lengthSeconds = Math.max(0, k.endSeconds - k.startSeconds);
     const sourceStartFrame = Math.round(k.startSeconds * fps);
     const sourceEndFrame = Math.round(k.endSeconds * fps);
-    const lengthFrames = Math.max(0, sourceEndFrame - sourceStartFrame);
-    const editStartFrame = editCursorFrame;
-    const editEndFrame = editStartFrame + lengthFrames;
+    const editStartFrame = Math.round(editCursorSeconds * fps);
+    const editEndFrame = Math.round((editCursorSeconds + lengthSeconds) * fps);
 
     segments.push({
       id: `seg-${i}`,
@@ -189,7 +265,7 @@ export function toEditSegments(
       mode,
     });
 
-    editCursorFrame = editEndFrame;
+    editCursorSeconds += lengthSeconds;
   });
 
   return segments;
@@ -236,7 +312,22 @@ export async function detectSilences(
       { reject: false },
     );
     // ffmpeg writes the analysis to stderr regardless of exit status.
-    return parseSilenceDetect(result.stderr ?? "");
+    const intervals = parseSilenceDetect(result.stderr ?? "");
+
+    // A genuinely-failed run (corrupt file, no audio stream, bad path) exits
+    // non-zero and emits no silence lines. Returning `[]` there silently means
+    // "keep everything" — an untrimmed edit ships with no warning. Surface it
+    // loudly instead (FABLE §4.8 / Task 2.5). A clip with zero silences exits 0,
+    // so a legitimate no-silence result is untouched.
+    if (result.exitCode !== 0 && intervals.length === 0) {
+      const stderrTail = (result.stderr ?? "").split(/\r?\n/).slice(-6).join("\n");
+      throw new Error(
+        `silencedetect failed for "${inputPath}" (ffmpeg exit ${result.exitCode}, no silence data). ` +
+          `Check the file is a valid media file with an audio stream. ffmpeg stderr tail:\n${stderrTail}`,
+      );
+    }
+
+    return intervals;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     throw new Error(

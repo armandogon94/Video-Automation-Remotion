@@ -50,14 +50,27 @@ export function shiftWordsToEditTimeline(
     );
     if (!seg) continue; // word fell inside a trimmed gap
 
-    const shiftFrames = seg.editStartFrame - seg.source.startFrame;
-    const shiftSeconds = shiftFrames / fps;
+    // Shift in SECONDS off the segment's edit-timeline start (FABLE §4.3 / Task
+    // 2.2): the segment's edit frames are now quantized from cumulative seconds
+    // (silenceTrim.toEditSegments), so shifting pre-rounded frames would re-import
+    // the drift we just removed. Derive frames from the shifted seconds instead.
+    const shiftSeconds = seg.editStartFrame / fps - seg.source.startSeconds;
+    let newStartSeconds = w.startSeconds + shiftSeconds;
+    let newEndSeconds = w.endSeconds + shiftSeconds;
+
+    // Clamp the word END at the segment's edit boundary (FABLE §4.14 / Task 2.9):
+    // a word straddling a cut otherwise keeps its full source duration and its
+    // karaoke highlight bleeds into the next segment's first word.
+    const segEditEndSeconds = seg.editEndFrame / fps;
+    if (newEndSeconds > segEditEndSeconds) newEndSeconds = segEditEndSeconds;
+    if (newEndSeconds < newStartSeconds) newEndSeconds = newStartSeconds;
+
     out.push({
       text: w.text,
-      startSeconds: w.startSeconds + shiftSeconds,
-      endSeconds: w.endSeconds + shiftSeconds,
-      startFrame: w.startFrame + shiftFrames,
-      endFrame: w.endFrame + shiftFrames,
+      startSeconds: newStartSeconds,
+      endSeconds: newEndSeconds,
+      startFrame: Math.round(newStartSeconds * fps),
+      endFrame: Math.min(seg.editEndFrame, Math.round(newEndSeconds * fps)),
     });
   }
 

@@ -14,6 +14,7 @@ export {
   type SilenceInterval,
   type KeepSpan,
   type SilenceDetectOptions,
+  type KeepSegmentsOptions,
 } from "./silenceTrim.js";
 export {
   suggestOverlays,

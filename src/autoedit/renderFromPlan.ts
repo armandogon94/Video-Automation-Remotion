@@ -39,8 +39,14 @@ import { execa } from "execa";
 import fs from "fs";
 import path from "path";
 
-import type { EditPlan, EditPlanWord, EditSegment } from "./editPlan.js";
+import type {
+  EditPlan,
+  EditPlanWord,
+  EditSegment,
+  SegmentGrade,
+} from "./editPlan.js";
 import { GRADE_FILTERS } from "./editPlan.js";
+import { selfEvalRender } from "./selfEvalRender.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Public option / result shapes
@@ -72,6 +78,13 @@ export interface RenderFromPlanOptions {
   onProgress?: (progress: number) => void;
   /** Logger; defaults to console.log with a [render] tag. */
   log?: (msg: string) => void;
+  /**
+   * Run one capped `selfEvalRender` QA pass after the render (duration check +
+   * cut contact sheet). Default true; pass false (`--no-self-eval`) to skip it.
+   * One mandatory pass + a loud log — the 3-pass loop is the future orchestrator's
+   * job (FABLE Task 2.11).
+   */
+  selfEval?: boolean;
 }
 
 export interface RenderFromPlanResult {
@@ -159,11 +172,17 @@ const SETPARAMS_BT709 =
 
 /**
  * Escape a filesystem path for use inside an ffmpeg filtergraph option value
- * wrapped in single quotes (`lut3d=file='...'`). Only `\` and `'` are special
- * inside single quotes; spaces and `/` pass through untouched.
+ * wrapped in single quotes (`lut3d=file='...'`).
+ *
+ * Inside ffmpeg single quotes a backslash is LITERAL and a `'` TERMINATES the
+ * quote — so the old `\\'` idiom was wrong (FABLE §4.16 / Task 2.10). The correct
+ * ffmpeg idiom to embed an apostrophe is `'\''` (close-quote, escaped-quote,
+ * reopen-quote): every `'` in the path becomes `'\''`, and the call sites keep
+ * wrapping the whole value in the outer single quotes. Spaces and `/` pass through
+ * untouched. Example: `a'b` → `a'\''b`, wrapped → `'a'\''b'`.
  */
 function escapeFilterArg(p: string): string {
-  return p.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+  return p.split("'").join("'\\''");
 }
 
 /**
@@ -184,6 +203,15 @@ export function hdrColorFixFilter(isHdr: boolean, lutPath: string): string {
     : "";
 }
 
+/**
+ * Uniform audio-normalization tail appended to every per-segment/per-beat audio
+ * chain: force 48kHz stereo `fltp`. Without it, ffmpeg's `concat` silently
+ * negotiates a mixed set of mono/stereo trims down to the LOWEST common layout —
+ * one mono take drags the WHOLE reel to mono with no error (FABLE §4.6 / Task
+ * 2.4). Also normalizes the sample format so `concat` accepts the inputs.
+ */
+const AUDIO_NORMALIZE = "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo";
+
 export function buildTrimConcatFilter(
   segments: EditSegment[],
   width: number,
@@ -191,48 +219,67 @@ export function buildTrimConcatFilter(
   fps: number,
   isHdr = false,
   lutPath = "",
+  hasAudio = true,
 ): { filter: string; hasAudio: boolean } {
   const vParts: string[] = [];
   const aParts: string[] = [];
   const vLabels: string[] = [];
   const aLabels: string[] = [];
 
+  // HDR→SDR corrective LUT, applied PER SEGMENT before the creative grade (FABLE
+  // §4.7 / Task 2.3). The grade presets (eq/hue) are display-referred SDR chains;
+  // running them on HLG-encoded bt2020 pixels (the old post-concat ordering) gave
+  // a source-dependent look. colorFix→grade grades in bt709 SDR space, matching
+  // the multi-source path and video-use's own extract→concat→grade order.
+  const colorFix = hdrColorFixFilter(isHdr, lutPath);
+
   segments.forEach((seg, i) => {
     const start = seg.source.startSeconds;
     const end = seg.source.endSeconds;
-    // Video: trim by source seconds, reset PTS so concat sees a 0-based stream.
-    // Optional per-segment creative grade (eq/hue) applied here, BEFORE concat, so
-    // each kept span can carry its own look (video-use harvest). Omitted → no-op.
-    const gradeF = seg.grade ? `,${GRADE_FILTERS[seg.grade]}` : "";
+    // Video: trim by source seconds, reset PTS so concat sees a 0-based stream,
+    // then colorFix (HLG→SDR LUT) BEFORE the optional per-segment creative grade
+    // so the grade lands in SDR space. `colorFix` already carries a trailing comma
+    // (or is ""); the grade chain is a bare filter, so join them with a comma only
+    // when a grade is present. Grade omitted → no-op.
+    const gradeChain = seg.grade ? GRADE_FILTERS[seg.grade] : "";
+    const colorChain = [colorFix ? colorFix.replace(/,$/, "") : "", gradeChain]
+      .filter((s) => s.length > 0)
+      .join(",");
+    const colorPrefix = colorChain ? `,${colorChain}` : "";
     vParts.push(
-      `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS${gradeF}[v${i}]`,
+      `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS${colorPrefix}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
-    // Audio: same trim window, with a 30ms fade in/out at each segment boundary
-    // (video-use rule #3, 2026-06-26) so concat joins don't pop. Fade duration is
-    // clamped to half the segment for very short keeps so the in/out don't overlap.
-    const aDur = end - start;
-    const aFade = Math.min(0.03, aDur / 2);
-    const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
-    aParts.push(
-      `[0:a]atrim=start=${start}:end=${end},asetpts=PTS-STARTPTS,` +
-        `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade}[a${i}]`,
-    );
-    aLabels.push(`[a${i}]`);
+    if (hasAudio) {
+      // Audio: same trim window, with a 30ms fade in/out at each segment boundary
+      // (video-use rule #3) so concat joins don't pop, then normalize to 48kHz
+      // stereo fltp so mixed mono/stereo takes don't downmix the reel. Fade
+      // clamped to half the segment for very short keeps so in/out don't overlap.
+      const aDur = end - start;
+      const aFade = Math.min(0.03, aDur / 2);
+      const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
+      aParts.push(
+        `[0:a]atrim=start=${start}:end=${end},asetpts=PTS-STARTPTS,` +
+          `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
+          `${AUDIO_NORMALIZE}[a${i}]`,
+      );
+      aLabels.push(`[a${i}]`);
+    }
   });
 
   const n = segments.length;
   const vConcat = `${vLabels.join("")}concat=n=${n}:v=1:a=0[vcat]`;
-  const aConcat = `${aLabels.join("")}concat=n=${n}:v=0:a=1[aout]`;
-
-  const colorFix = hdrColorFixFilter(isHdr, lutPath);
-  // Downscale + center-crop to fill the canvas, then normalize fps.
+  // Downscale + center-crop to fill the canvas, then normalize fps. colorFix now
+  // lives per-segment (above), so the post-concat chain is scale-only.
   const scale =
-    `[vcat]${colorFix}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
+    `[vcat]scale=${width}:${height}:force_original_aspect_ratio=increase,` +
     `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[vout]`;
 
-  const filter = [...vParts, ...aParts, vConcat, scale, aConcat].join(";");
-  return { filter, hasAudio: true };
+  const parts = [...vParts, ...aParts, vConcat, scale];
+  if (hasAudio) {
+    parts.push(`${aLabels.join("")}concat=n=${n}:v=0:a=1[aout]`);
+  }
+  return { filter: parts.join(";"), hasAudio };
 }
 
 /**
@@ -255,6 +302,31 @@ async function detectHdr(sourcePath: string): Promise<boolean> {
       sourcePath,
     ]);
     return /b67|arib|smpte2084|bt2020/i.test(stdout);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * True if `sourcePath` has at least one audio stream. Screen recordings and some
+ * exports have none — mapping a hardcoded `[0:a]` at them makes ffmpeg fail with a
+ * cryptic "Stream specifier ':a' matches no streams" (FABLE §4.8 / Task 2.5).
+ * Returns false on any probe error (build a video-only graph, which is safe).
+ */
+async function hasAudioStream(sourcePath: string): Promise<boolean> {
+  try {
+    const { stdout } = await execa("ffprobe", [
+      "-v",
+      "error",
+      "-select_streams",
+      "a",
+      "-show_entries",
+      "stream=index",
+      "-of",
+      "csv=p=0",
+      sourcePath,
+    ]);
+    return stdout.trim().length > 0;
   } catch {
     return false;
   }
@@ -298,19 +370,28 @@ export async function trimAndStageBaseClip(
   const staticRef = path.posix.join("autoedit", `${slug}.mp4`);
 
   const isHdr = await detectHdr(plan.sourceVideo);
-  const { filter } = buildTrimConcatFilter(
+  const sourceHasAudio = await hasAudioStream(plan.sourceVideo);
+  const { filter, hasAudio } = buildTrimConcatFilter(
     segments,
     width,
     height,
     plan.fps,
     isHdr,
     hlgLutPath(projectRoot),
+    sourceHasAudio,
   );
 
   log(
     `ffmpeg: trim ${segments.length} segment(s) → ${width}×${height}@${plan.fps}fps` +
-      `${isHdr ? " (HDR bt2020/HLG → bt709 SDR)" : ""} → ${absPath}`,
+      `${isHdr ? " (HDR bt2020/HLG → bt709 SDR)" : ""}` +
+      `${hasAudio ? "" : " (no audio stream → -an)"} → ${absPath}`,
   );
+
+  // Video mapping + codec are always present; audio mapping/codec only when the
+  // source actually has an audio stream (else `-an` for a clean video-only clip).
+  const audioArgs = hasAudio
+    ? ["-map", "[aout]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000"]
+    : ["-an"];
 
   await execa("ffmpeg", [
     "-y",
@@ -320,8 +401,7 @@ export async function trimAndStageBaseClip(
     filter,
     "-map",
     "[vout]",
-    "-map",
-    "[aout]",
+    ...audioArgs,
     "-c:v",
     "libx264",
     "-crf",
@@ -331,10 +411,6 @@ export async function trimAndStageBaseClip(
     "-pix_fmt",
     "yuv420p",
     ...SDR_TAG_ARGS,
-    "-c:a",
-    "aac",
-    "-b:a",
-    "192k",
     "-movflags",
     "+faststart",
     absPath,
@@ -493,6 +569,15 @@ export async function renderEditedVideo(
     },
   });
 
+  // ── QA: one capped self-eval pass (duration check + cut contact sheet) ──────
+  if (opts.selfEval !== false) {
+    await runSelfEval(
+      outputPath,
+      { fps: plan.fps, editDurationFrames: durationInFrames, segments: plan.segments },
+      log,
+    );
+  }
+
   const elapsedSeconds = (Date.now() - started) / 1000;
   log(`done → ${outputPath} (${elapsedSeconds.toFixed(1)}s)`);
 
@@ -504,6 +589,32 @@ export async function renderEditedVideo(
     durationInFrames,
     elapsedSeconds,
   };
+}
+
+/**
+ * Run one `selfEvalRender` pass over a finished mp4 and log the result loudly.
+ * `selfEvalRender` only reads `fps`, `editDurationFrames`, and `segments`, so a
+ * minimal EditPlan-shaped view suffices (the multi-source path synthesizes one
+ * from the beats' cumulative frames). Never throws — QA is advisory, so a probe
+ * failure is logged, not fatal (FABLE Task 2.11: one mandatory pass + loud log).
+ */
+async function runSelfEval(
+  outputPath: string,
+  planLike: Pick<EditPlan, "fps" | "editDurationFrames" | "segments">,
+  log: (msg: string) => void,
+): Promise<void> {
+  try {
+    const evalResult = await selfEvalRender(outputPath, planLike as EditPlan, {
+      passNumber: 1,
+    });
+    log(
+      evalResult.durationOk
+        ? `self-eval OK (Δ ${evalResult.durationDeltaSeconds.toFixed(3)}s) — report: ${evalResult.reportPath}`
+        : `self-eval DURATION MISMATCH (Δ ${evalResult.durationDeltaSeconds.toFixed(3)}s) — inspect ${evalResult.reportPath}`,
+    );
+  } catch (err) {
+    log(`self-eval skipped (${err instanceof Error ? err.message : String(err)})`);
+  }
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -532,6 +643,12 @@ export interface ReelBeat {
   endSec: number;
   /** Optional label for logging/debug (e.g. "hook", "cta"). */
   label?: string;
+  /**
+   * Optional per-beat creative grade (same presets as EditSegment.grade). Applied
+   * AFTER this beat's HLG→SDR colorFix, so it grades in SDR space (FABLE §4.7 /
+   * Task 2.3 — closes the documented multi-source-grade gap). Omitted → no grade.
+   */
+  grade?: SegmentGrade;
 }
 
 /** A beat paired with its probed HDR flag (one ffprobe per source). */
@@ -571,6 +688,8 @@ export interface RenderMultiSourceOptions {
   onProgress?: (progress: number) => void;
   /** Logger; defaults to console.log with a [reel] tag. */
   log?: (msg: string) => void;
+  /** Run one capped self-eval QA pass after render. Default true. */
+  selfEval?: boolean;
 }
 
 export interface RenderMultiSourceResult extends RenderFromPlanResult {
@@ -600,24 +719,27 @@ export function buildMultiSourceConcatFilter(
 
   beats.forEach((b, i) => {
     const colorFix = hdrColorFixFilter(b.isHdr, lutPath);
-    // Video: trim this input's range, reset PTS, per-source color fix, then
+    // Video: trim this input's range, reset PTS, per-source HDR color fix, then the
+    // optional per-beat creative grade (grades in SDR space — FABLE §4.7), then
     // scale+crop to fill the canvas and normalize fps (same chain as single-source).
+    const gradeF = b.grade ? `${GRADE_FILTERS[b.grade]},` : "";
     parts.push(
       `[${i}:v]trim=start=${b.startSec}:end=${b.endSec},setpts=PTS-STARTPTS,` +
-        `${colorFix}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
+        `${colorFix}${gradeF}scale=${width}:${height}:force_original_aspect_ratio=increase,` +
         `crop=${width}:${height},fps=${fps},format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
     // Audio: same trim window; 30ms fade in/out at each beat boundary (video-use
-    // rule #3, 2026-06-26) so multi-source joins don't pop; resample to a uniform
-    // rate so concat accepts them. Fade clamped to half-beat for very short beats.
+    // rule #3, 2026-06-26) so multi-source joins don't pop; normalize to 48kHz
+    // stereo fltp so mixed mono/stereo beats don't silently downmix the reel to
+    // mono (FABLE §4.6 / Task 2.4). Fade clamped to half-beat for very short beats.
     const aDur = b.endSec - b.startSec;
     const aFade = Math.min(0.03, aDur / 2);
     const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
     parts.push(
       `[${i}:a]atrim=start=${b.startSec}:end=${b.endSec},asetpts=PTS-STARTPTS,` +
         `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
-        `aresample=48000[a${i}]`,
+        `${AUDIO_NORMALIZE}[a${i}]`,
     );
     aLabels.push(`[a${i}]`);
   });
@@ -694,6 +816,8 @@ async function stageMultiSourceClip(
     "aac",
     "-b:a",
     "192k",
+    "-ar",
+    "48000",
     "-movflags",
     "+faststart",
     absPath,
@@ -719,17 +843,24 @@ export function buildCombinedTranscript(
 
   beats.forEach((b, i) => {
     const beatLenSeconds = b.endSec - b.startSec;
+    const beatEndOnTimeline = offsetSeconds + beatLenSeconds;
     const words = wordsPerBeat[i] ?? [];
     for (const w of words) {
       if (w.startSeconds < b.startSec || w.startSeconds >= b.endSec) continue;
       const newStartSeconds = w.startSeconds - b.startSec + offsetSeconds;
-      const newEndSeconds = w.endSeconds - b.startSec + offsetSeconds;
+      // Clamp the word END at this beat's rebased end (FABLE §4.14 / Task 2.9): a
+      // word straddling a beat boundary otherwise keeps its full source duration
+      // and its caption bleeds into the next beat's first word.
+      const newEndSeconds = Math.min(
+        beatEndOnTimeline,
+        w.endSeconds - b.startSec + offsetSeconds,
+      );
       out.push({
         text: w.text,
         startSeconds: newStartSeconds,
-        endSeconds: newEndSeconds,
+        endSeconds: Math.max(newStartSeconds, newEndSeconds),
         startFrame: Math.round(newStartSeconds * fps),
-        endFrame: Math.round(newEndSeconds * fps),
+        endFrame: Math.round(Math.max(newStartSeconds, newEndSeconds) * fps),
       });
     }
     offsetSeconds += beatLenSeconds;
@@ -823,6 +954,36 @@ export async function renderMultiSourcePlan(
       }
     },
   });
+
+  // ── QA: one capped self-eval pass. Synthesize a BoundarySpec from the beats'
+  //     cumulative edit frames so the cut contact sheet lands at each beat join. ──
+  if (opts.selfEval !== false) {
+    const boundarySegments: EditSegment[] = [];
+    let cursorSeconds = 0;
+    beats.forEach((b, i) => {
+      const lenSeconds = b.endSec - b.startSec;
+      const editStartFrame = Math.round(cursorSeconds * fps);
+      const editEndFrame = Math.round((cursorSeconds + lenSeconds) * fps);
+      boundarySegments.push({
+        id: `beat-${i}`,
+        source: {
+          startSeconds: b.startSec,
+          endSeconds: b.endSec,
+          startFrame: Math.round(b.startSec * fps),
+          endFrame: Math.round(b.endSec * fps),
+        },
+        editStartFrame,
+        editEndFrame,
+        mode: "speaker",
+      });
+      cursorSeconds += lenSeconds;
+    });
+    await runSelfEval(
+      outputPath,
+      { fps, editDurationFrames: durationInFrames, segments: boundarySegments },
+      log,
+    );
+  }
 
   const elapsedSeconds = (Date.now() - started) / 1000;
   log(`done → ${outputPath} (${elapsedSeconds.toFixed(1)}s)`);
