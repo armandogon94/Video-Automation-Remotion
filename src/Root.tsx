@@ -74,6 +74,9 @@ import { ConcentricHierarchyRadialCallout9x16, concentricHierarchyRadialCallout9
 import { LiquidGlassShowcase9x16, liquidGlassShowcase9x16Schema } from "./compositions/LiquidGlassShowcase9x16";
 import { LiquidGlassShowcaseB9x16, liquidGlassShowcaseB9x16Schema } from "./compositions/LiquidGlassShowcaseB9x16";
 import { PromptCardPedagogy9x16, promptCardPedagogy9x16Schema } from "./compositions/PromptCardPedagogy9x16";
+import { FeedbackLoopCycle16x9, feedbackLoopCycle16x9Defaults, feedbackLoopCycle16x9Schema } from "./compositions/FeedbackLoopCycle16x9";
+import { FeedbackLoopCycle9x16, feedbackLoopCycle9x16Defaults, feedbackLoopCycle9x16Schema } from "./compositions/FeedbackLoopCycle9x16";
+import { calcFeedbackLoopDuration } from "./compositions/FeedbackLoopCycleCore";
 import { MetricBarsComparisonCard9x16, metricBarsComparisonCard9x16Schema } from "./compositions/MetricBarsComparisonCard9x16";
 import { StatCardSequenceWithUnderlines9x16, statCardSequenceWithUnderlines9x16Schema, computeStatCardSequenceFrames, type StatCardSequenceWithUnderlines9x16Props } from "./compositions/StatCardSequenceWithUnderlines9x16";
 import { AppScreenCarousel9x16, appScreenCarousel9x16Schema, computeAppScreenCarouselFrames, type AppScreenCarousel9x16Props } from "./compositions/AppScreenCarousel9x16";
@@ -2695,6 +2698,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="LiquidGlassShowcase9x16" component={LiquidGlassShowcase9x16} schema={liquidGlassShowcase9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={liquidGlassShowcase9x16Schema.parse({})} />
         <Composition id="LiquidGlassShowcaseB9x16" component={LiquidGlassShowcaseB9x16} schema={liquidGlassShowcaseB9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={liquidGlassShowcaseB9x16Schema.parse({})} />
         <Composition id="PromptCardPedagogy9x16" component={PromptCardPedagogy9x16} schema={promptCardPedagogy9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={promptCardPedagogy9x16Schema.parse({})} />
+        {/* FeedbackLoopCycle — circular feedback-loop diagram (austin.marchese new-video study 2026-07-06). Content-driven duration: intro + N×(pop+arc) + hold. */}
+        <Composition id="FeedbackLoopCycle16x9" component={FeedbackLoopCycle16x9} schema={feedbackLoopCycle16x9Schema} durationInFrames={195} fps={30} width={1920} height={1080} calculateMetadata={({ props }) => ({ durationInFrames: calcFeedbackLoopDuration(props.stations, props.holdSeconds ?? 2, 30) })} defaultProps={feedbackLoopCycle16x9Defaults} />
+        <Composition id="FeedbackLoopCycle9x16" component={FeedbackLoopCycle9x16} schema={feedbackLoopCycle9x16Schema} durationInFrames={195} fps={30} width={1080} height={1920} calculateMetadata={({ props }) => ({ durationInFrames: calcFeedbackLoopDuration(props.stations, props.holdSeconds ?? 2, 30) })} defaultProps={feedbackLoopCycle9x16Defaults} />
         {/* CodingFab (@CodingFab) — added 2026-06-25 */}
         <Composition id="ConcentricHierarchyRadialCallout9x16" component={ConcentricHierarchyRadialCallout9x16} schema={concentricHierarchyRadialCallout9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={concentricHierarchyRadialCallout9x16Schema.parse({})} />
         <Composition id="MetricBarsComparisonCard9x16" component={MetricBarsComparisonCard9x16} schema={metricBarsComparisonCard9x16Schema} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={metricBarsComparisonCard9x16Schema.parse({})} />

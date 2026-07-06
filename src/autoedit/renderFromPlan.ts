@@ -468,9 +468,16 @@ export function buildSceneProps(
     register: mapRegister(ct.register),
   };
 
+  // Forward the plan's EDIT-time window + anchor to the scene. fromFrame/toFrame
+  // drive the scene's per-overlay <Sequence> (without them every overlay
+  // self-animated from scene frame 0 — the "99 at t=0" bug); anchor rides in
+  // props so molecules that accept it place themselves per the plan (an
+  // explicit props.anchor from the suggester still wins via the spread).
   const overlays = plan.overlayTrack.map((o) => ({
     type: o.type,
-    props: o.props,
+    props: { anchor: o.anchor, ...o.props },
+    fromFrame: o.fromFrame,
+    toFrame: o.toFrame,
     ...(o.behindSpeaker !== undefined ? { behindSpeaker: o.behindSpeaker } : {}),
   }));
 
@@ -685,8 +692,16 @@ export interface RenderMultiSourceOptions {
   /** Brand handle chip; "" hides it. Defaults to the scene default. */
   handle?: string;
   /** Optional over-speaker overlays ({type, props, behindSpeaker?}) timed to
-   *  EDIT-time frames (the assembled timeline). Passed straight to the scene. */
-  overlays?: { type: string; props: Record<string, unknown>; behindSpeaker?: boolean }[];
+   *  EDIT-time frames (the assembled timeline). Passed straight to the scene.
+   *  `fromFrame`/`toFrame` mount the overlay inside a scene <Sequence> so its
+   *  enter animation starts at its beat (omit both for always-on demo overlays). */
+  overlays?: {
+    type: string;
+    props: Record<string, unknown>;
+    behindSpeaker?: boolean;
+    fromFrame?: number;
+    toFrame?: number;
+  }[];
   /** Progress callback (0..1) for the Remotion render. */
   onProgress?: (progress: number) => void;
   /** Logger; defaults to console.log with a [reel] tag. */
