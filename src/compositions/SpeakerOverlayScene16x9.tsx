@@ -35,7 +35,7 @@
  * so the comp renders with no props (placeholder backdrop + empty caption).
  */
 import React from "react";
-import { AbsoluteFill, OffthreadVideo, staticFile, useVideoConfig } from "remotion";
+import { AbsoluteFill, OffthreadVideo, Sequence, staticFile, useVideoConfig } from "remotion";
 import { z } from "zod";
 import { BRAND, FONT_STACKS } from "../brand";
 import { FloatingCaption, floatingCaptionSchema } from "../components/FloatingCaption";
@@ -61,6 +61,14 @@ const sceneOverlaySchema = z.object({
   type: z.string(),
   props: z.record(z.string(), z.unknown()).default({}),
   behindSpeaker: z.boolean().optional(),
+  /** EDIT-time window (frames). When present, the overlay mounts inside a
+   *  <Sequence from={fromFrame}> so its internal enter animation starts AT its
+   *  planned beat instead of scene frame 0 (the EditPlan overlayTrack contract —
+   *  without this every suggested overlay fired at t=0 and was gone before its
+   *  word was spoken). Absent → always mounted (legacy demo drivers).
+   *  `.optional()` — NEW fields (Remotion defaultProps z.input & z.infer gotcha). */
+  fromFrame: z.number().optional(),
+  toFrame: z.number().optional(),
 });
 
 export const speakerOverlayScene16x9Schema = z.object({
@@ -124,12 +132,28 @@ const OverlayLayer: React.FC<{ overlays: SceneOverlay[]; keyPrefix: string }> = 
   <>
     {overlays.map((o, i) => {
       const Overlay = OVERLAY_REGISTRY[o.type];
-      return Overlay ? (
-        <Overlay
-          key={`${keyPrefix}-${o.type}-${i}`}
-          {...(o.props as Record<string, unknown>)}
-        />
-      ) : null;
+      if (!Overlay) return null;
+      const key = `${keyPrefix}-${o.type}-${i}`;
+      const node = <Overlay {...(o.props as Record<string, unknown>)} />;
+      // Timed overlays (EditPlan path): a Sequence rebases useCurrentFrame()
+      // so the molecule's own enter/hold/exit run inside [fromFrame, toFrame).
+      // layout="none" — molecules position themselves via AbsoluteFill.
+      return o.fromFrame !== undefined ? (
+        <Sequence
+          key={key}
+          from={o.fromFrame}
+          durationInFrames={
+            o.toFrame !== undefined
+              ? Math.max(1, o.toFrame - o.fromFrame)
+              : undefined
+          }
+          layout="none"
+        >
+          {node}
+        </Sequence>
+      ) : (
+        <React.Fragment key={key}>{node}</React.Fragment>
+      );
     })}
   </>
 );
