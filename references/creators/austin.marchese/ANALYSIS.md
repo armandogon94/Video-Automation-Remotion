@@ -83,3 +83,32 @@ shape as the rileybrown.ai pass (coverage confirmation), but here with a real re
   1 synthesis agent → 3 adversarial-verify agents (1 failed StructuredOutput) → spec phase (0 specs,
   since 0 verified gaps). Raw result: task output `wm4rm0qu3` / `docs/research/austin-anim/`.
 - Codex + Gemini reviewers append their per-video MDs under `docs/research/austin-anim/`.
+
+---
+
+## 2026-07-06 re-check (+2 new uploads since the 2026-06-26 study)
+
+**Channel diff:** `yt-dlp --flat-playlist` vs the 29 analyzed IDs → 2 genuinely NEW uploads
+(everything else in the diff is pre-study back-catalog, out of scope by design; `jdLFeBkiy3M`
+is live again after being dead at study time):
+
+| id | title | dur | verdict |
+|---|---|---|---|
+| `HGCHgD4uGgY` | 8 Claude Loops to Build 10x Faster | 17:11 | Same liquid-glass system. ONE uncataloged layout: **dashed circular feedback-loop diagram** (4 glass station chips on an ellipse, sequential pop-ins, dashed arcs drawing between stations with arrowheads, over blurred+dimmed footage, ~t=450–470). → **BUILT** as `FeedbackLoopCycle16x9`/`9x16` (shared core + thin wrappers). |
+| `2fc0NX9vIJ8` | How to Build A Self-Improving System with Claude Code | 16:46 | Same system. No new layouts. Physical whiteboard/marker cutaways (not a template — real-world footage). |
+
+**Craft notes (no new atoms):** the red/pink clause-highlight + strikethrough emphasis inside
+prompt cards is the `warm` theme of our existing `ClauseHighlightPhrase` (token, not a fork);
+sentence captions with an inline red keyword = our editorial register; numbered-chip rows,
+quote cards, comment cards, logo chips, red screenshot-callout boxes all already covered.
+The 2026-06-26 three-reviewer verdict (**austin = nateherk reskinned warm, atom layer not
+template layer**) HOLDS for both new videos.
+
+**Pipeline dogfood (2026-07-06):** cut a 22 s clean talking-head window from `2fc0NX9vIJ8`
+(t=292–314, videos KEPT under `<id>/video.mp4` for this purpose) and ran it through
+`npm run autoedit -- --render` (whisper EN → silence-trim → suggestOverlays →
+SpeakerOverlayScene16x9). Result: captions + handle chip production-clean over his footage;
+the run EXPOSED AND FIXED a critical EDL bug — overlay `fromFrame/toFrame` were dropped and
+every suggested overlay fired at scene t=0 instead of its beat (fixed in commit `9ec50d2`;
+the "99" stat callout now pops exactly on the spoken word). Outputs:
+`output/autoedit/austin-pipeline-test2-edit.mp4`, plan at `output/austin-test/editplan2.json`.

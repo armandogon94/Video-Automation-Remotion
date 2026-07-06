@@ -617,3 +617,18 @@ to per-band staggered Y (labelY = CENTER_Y - radius + inset).
   12 ffmpeg rules (cuts at detected silence; captions/overlays in Remotion). Do NOT vendor it in (young
   single-maintainer repo + paid dep). Open follow-ups in NEXT-STEPS (multi-source grade, wire self-eval,
   transcript-semantic LLM cutting). If revisiting: re-check their repo maturity (was ~2mo old, ~16 commits).
+
+## 2026-07-06 — austin.marchese re-check + pipeline dogfood (Fable session)
+
+- **Channel diff vs 2026-06-26 study:** +2 new uploads (`HGCHgD4uGgY` "8 Claude Loops…",
+  `2fc0NX9vIJ8` "Self-Improving System…"). Three-reviewer verdict HOLDS (reskinned nateherk,
+  atom layer not templates). One uncataloged layout → built `FeedbackLoopCycle16x9/9x16`
+  (shared core + thin aspect wrappers, content-driven duration, idle glow after build — per
+  FABLE V17 lesson). New videos KEPT at `references/creators/austin.marchese/<id>/video.mp4`.
+- **Dogfood milestone:** first real end-to-end autoedit run on third-party talking-head
+  footage (22s clip, whisper EN, ~30s render). Found + FIXED a CRITICAL EDL bug (`9ec50d2`):
+  overlay `fromFrame/toFrame/anchor` were dropped and scenes mounted overlays untimed →
+  every suggested overlay fired at t=0. Scenes now mount timed overlays in `<Sequence>`.
+  Full findings ledger: FABLE.md (root, V1–V24 + phased fix plan for Opus).
+- **Gotcha reaffirmed:** overlay molecules self-animate from local frame 0 — any NEW scene
+  consuming `overlayTrack` MUST wrap them in `<Sequence from={fromFrame}>`.
