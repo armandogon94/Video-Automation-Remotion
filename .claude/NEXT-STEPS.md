@@ -124,3 +124,11 @@ NOTE: scraping must NOT run concurrent with renders (breaks Remotion font fetch)
 - Render N comps (bundle once, cross-creator TARGETS): `npx tsx src/autoedit/runCrossCreatorReplicas.ts "Comp1,Comp2"`
 - Render a single non-TARGET comp: `npx remotion render src/index.ts <CompId> output/showcase/<CompId>.mp4 --log=error`
 - Typecheck: `npx tsc --noEmit`
+
+---
+## ▶ ACTIVE (2026-07-06): autoedit dogfood loop — for Opus
+The talking-head→edited-video dogfood loop is now a standing process:
+**`docs/research/autoedit-dogfood/DOGFOOD-PLAYBOOK.md`** (runbook, rubric, fixtures,
+Round-1 results, ordered §7 build queue). Round 1 fixed 2 bugs (V24 overlay timing `9ec50d2`;
+whisper es-prompt hallucination) and logged the gap queue (overlay density first).
+Resume with: "run dogfood round 2 per the playbook".

@@ -37,7 +37,16 @@ def transcribe(
     )
 
     print(f"Transcribing '{input_path}'...", file=sys.stderr)
-    prompt = initial_prompt or "Transcripción en español con puntuación correcta."
+    # Only bias with the Spanish punctuation prompt for Spanish audio. Forcing it
+    # for other languages makes whisper HALLUCINATE the prompt itself as the
+    # transcript (observed 2026-07-06: an English clip transcribed as
+    # "Transcripción en español con puntuación correcta." — 6 words for 23s).
+    default_prompt = (
+        "Transcripción en español con puntuación correcta."
+        if language.startswith("es")
+        else None
+    )
+    prompt = initial_prompt or default_prompt
     segments, info = model.transcribe(
         input_path,
         language=language,
