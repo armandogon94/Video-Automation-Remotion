@@ -1418,6 +1418,12 @@ Phase N", any tasks skipped and why). **Commit:** `docs(memory): record FABLE fi
 
 # 12. BAKE-OFF RECOMMENDATION — Remotion wins; archive Hyperframes
 
+> **SUPERSEDED by owner decision 2026-07-06:** Armando ruled to KEEP BOTH engines as living
+> options (see BAKEOFF.md header + DOGFOOD-PLAYBOOK.md §9.5). Task 5.10's removal step is
+> CANCELLED; the "what would change my mind" run (§12.5, one real script through both
+> engines) is now a standing attended task instead. The analysis below stands as the record
+> of why Remotion is the default.
+
 **Recommendation: declare Remotion the winner and remove `hyperframes/` (preserved under a
 git tag), exactly via BAKEOFF.md:128's own "If Remotion wins" recipe.** (Task 5.10.)
 
@@ -1981,6 +1987,29 @@ Task V.1's style list is now exact: apply the scrim to those five; don't touch t
   reviewers + freezedetect). Remaining unverified: audio listen-through (§4.4 fades),
   QuoteCard + ExplainerVideoVertical renders (folded into Task V.14), platform-export
   frame diffs.
+
+# 14.5 POST-REVIEW ADDENDUM (2026-07-06) — V24, found by DOGFOODING and already FIXED
+
+### V24 [CRITICAL — VERIFIED + FIXED in `9ec50d2`] EDL overlays fired at scene t=0 instead of their planned beat
+- **How found:** ran a real austin.marchese talking-head clip through the full
+  `npm run autoedit -- --render` pipeline (the product's core promise). The planner correctly
+  scheduled `YellowGlowWordCallout "99"` for frames 384–422, but the render showed the yellow
+  "99" at frame ~30 (12 s BEFORE the word was spoken) and nothing at frame 400.
+- **Root cause (three-part):** `buildSceneProps` (renderFromPlan.ts) dropped `fromFrame`,
+  `toFrame` AND `anchor` when mapping the plan to scene props; both SpeakerOverlayScene
+  variants mounted overlays with NO `<Sequence>` timing; overlay molecules self-animate from
+  `useCurrentFrame()` with `enterFrame` default 0 — so every suggested overlay entered at
+  scene frame 0 and exited ~24 frames later, for every EDL render ever made. All demo drivers
+  masked it (they pass `enterFrame` manually). This also refines V19: the demo invisibility
+  was this same class.
+- **Fix shipped:** `sceneOverlaySchema` gains optional `fromFrame/toFrame` (Zod-v4 convention
+  respected); `OverlayLayer` wraps timed overlays in `<Sequence from … layout="none">`;
+  `buildSceneProps` forwards window + anchor; `RenderMultiSourceOptions.overlays` typed for
+  windows. Verified by re-render: frame 30 clean, callout pops exactly on the spoken word.
+  tsc clean, 22/22 tests.
+- **For Opus:** Task 3.1's tests should now ALSO assert `buildSceneProps` forwards
+  `fromFrame/toFrame/anchor` (regression lock for this bug), and Task V.12/5.8 (scene-pair
+  merge) must preserve the Sequence-mounting behavior in the shared core.
 
 # APPENDIX A — Findings the review VERIFIED AS CLEAN (do not "fix" these)
 

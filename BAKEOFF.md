@@ -1,10 +1,21 @@
 # Bake-off — Remotion vs. Hyperframes
 
-## VERDICT (2026-07-02): Remotion wins. Bake-off closed.
+## OWNER OVERRIDE (2026-07-06, Armando): KEEP BOTH ENGINES.
 
-**Decision:** **Remotion is the primary — and only — production rendering engine.** Hyperframes
-is retired to reference status. The rest of this document (the original head-to-head workflow)
-is kept for historical context and in case anyone ever wants to resurrect the challenger.
+Armando's ruling supersedes the verdict below: **Hyperframes stays as a living creative
+option, not a retired reference.** His reasoning: the "Remotion wins" call reflects
+*investment bias* (Hyperframes got 2 commits and zero real feature work while Remotion got
+everything), not a fair test — the same-script side-by-side this document describes NEVER
+actually ran, and he wants per-video choice ("this one came out better in X"). Standing
+task (attended, low priority): give Hyperframes a fair shake — `npm install` it, run ONE
+real script through BOTH engines per this doc's workflow, present side-by-side. Remotion
+remains the DEFAULT engine meanwhile. Do not delete `hyperframes/`.
+
+## Prior verdict (2026-07-02, superseded above): Remotion wins.
+
+**Decision (superseded):** Remotion is the primary production rendering engine. Hyperframes
+was to be retired to reference status. The rest of this document (the original head-to-head
+workflow) is kept — it is now again the ACTIVE recipe for the pending fair-shake run.
 
 **How it was decided — by revealed preference, not a visual head-to-head.** The original plan
 (below) was "run the same script through both, judge visually side-by-side." That comparison
