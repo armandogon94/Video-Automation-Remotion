@@ -203,3 +203,63 @@ handle chip correct in all four; no spacing/word-break bugs in any caption style
 - Commit message convention: `dogfood(roundN): <what changed> — scores <clip>=x/18,…`.
 - Keep downloads and renders strictly sequential (font-fetch conflict).
 - The strips/stills you view go in the session scratchpad, not the repo.
+
+---
+
+## 9. OWNER DECISIONS — Armando, 2026-07-06 (authoritative; supersede any conflicting note)
+
+1. **Caption default: `hormozi-pop`** (his pick pending a side-by-side vs box-highlight —
+   both are the contrast-safe pair; offer him one A/B still per new round).
+2. **Graphic density: austin rhythm — one beat every 8–15 s.** This is the rubric #2 target.
+3. **Handle chip `@armandointeligencia`: ALL videos but INTERMITTENT, not persistent.**
+   It should pop in/out at moments (e.g. ~3 s appearances a few times + at the CTA), not sit
+   in the corner the whole video. → NEW TASK: give the scene's HandleChip windowed
+   appearances (`handleWindows?: {fromFrame,toFrame}[]`, default = auto: ~3 s every ~45 s +
+   final 4 s; Sequence-mounted like overlays). Until built, keep persistent chip.
+4. **Whisper: `medium` default for Spanish** (DONE — cli.ts default changed);
+   `large-v3` allowed but watch for repetition loops; `condition_on_previous_text=False`
+   now forced in transcribe.py (his own observed loop bug — that flag was the cause).
+5. **Hyperframes: KEEP BOTH ENGINES.** He explicitly wants Remotion AND Hyperframes as
+   creative options ("this video came out better with X"). The June "Remotion wins" verdict
+   is understood as REVEALED-PREFERENCE NEGLECT, not proven inferiority — Hyperframes never
+   got real investment and the same-script side-by-side never ran. → Do NOT delete
+   `hyperframes/`. NEW TASK (low priority, attended): give Hyperframes a fair shake — 
+   `npm install` it, render ONE real script through both engines, present side-by-side.
+6. **Worktree cleanup: approved per Fable's recommendation** — copy the gallery-referenced
+   renders from the worktree's `output/` into the main checkout's `output/` (disk-only,
+   gitignored), verify the root gallery HTMLs resolve, THEN `git worktree remove` +
+   delete fully-merged branches (tag first for traceability: everything must stay
+   recoverable). ⚠️ Do this in a DEDICATED session; the worktree currently hosts the
+   127.0.0.1:8765 review server and active render env — restart both from main after.
+7. **Creator scrapes: KEEP.** Total is only 1.4 GB (22 source mp4s + frames). They are the
+   reference library for exactly the before/after comparisons he asks for. Sign-off = keep.
+8. **Palettes: keep BOTH** (brand navy/gold AND the E-15 cream/ink/red news look) for
+   variety; he'll prune later if one stops earning its place. Document both in CLAUDE.md
+   as intentional.
+9. **HARD RULE — the first second:** every video MUST open with a visual hook already on
+   screen at t=0 (text hook or graphic), and that first frame should be USABLE AS THE
+   COVER/THUMBNAIL (TikTok/Reels/YouTube take frame 1 by default). → encode as a
+   selfEvalRender check ("frame 0 contains non-caption visual") AND as a planner rule
+   (hook overlay/title card starts at frame 0, not frame 15).
+
+## 10. Motion-analysis honesty + the deep-motion protocol (owner question 2026-07-06)
+
+Armando asked whether 24-frame strips were enough. Straight answer recorded here:
+- SHORT comps (4–5 s): 24 frames = 5 fps sampling + `freezedetect` over EVERY frame +
+  dense re-extracts on suspects → build/freeze/overflow/collision coverage is solid.
+- LONG videos (reels 65 s, production master 42 s, creator videos 15–17 min): strips were
+  ~1 fps → structure verified, but easing personality / micro-timing / letter-level motion
+  were NOT fully assessed. The austin "0 new templates" verdict is structural (frames),
+  not kinetic.
+
+**Deep-motion protocol (cheap, run by Opus; only where it matters):**
+1. Motion-locate pass (no tokens burned on frames): 
+   `ffprobe -f lavfi "movie=IN.mp4,select=gt(scene\,0.12)" -show_entries frame=pkt_pts_time`
+   (scene-change moments) + `freezedetect` inversion (non-static spans) → a list of
+   animated windows with timestamps.
+2. For each window that matters (creator-replication targets first: austin's card builds,
+   wipes, punches): extract at 10–15 fps for 2–3 s (`select='not(mod(n,2))'` @30fps, tile
+   8xN) and READ the strip — that sampling shows easing curves frame-to-frame.
+3. Grade replicas vs source at the SAME sampling rate, side-by-side.
+Priority list for this protocol: austin's punch-in/out tweens, GlowPulse bloom curve,
+ArcLightWipe sweep, card enter springs, our SidePanelCards vs his card builds.

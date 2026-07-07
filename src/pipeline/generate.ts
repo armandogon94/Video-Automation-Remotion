@@ -24,7 +24,7 @@ program
   .option("--pitch <pitch>", "Pitch adjustment (e.g. +10Hz)", "+0Hz")
   .option("--whisper", "Use faster-whisper for accurate word timings (default: on)", true)
   .option("--no-whisper", "Skip whisper transcription — use approximate TTS timings only")
-  .option("--whisper-model <size>", "Whisper model: tiny|base|small|medium|large-v3", "small")
+  .option("--whisper-model <size>", "Whisper model: tiny|base|small|medium|large-v3 (owner default medium — better Spanish brand names)", "medium")
   .option("--language <code>", "Audio language code for whisper", "es")
   // ─── Vertical-9x16 template options ────────────────────────────────
   .option("--palette <mode>", "Palette mode for cream/dark templates: cream|dark", "cream")

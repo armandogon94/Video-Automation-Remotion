@@ -153,6 +153,25 @@ re-records only the second half of a sentence); ordering when he records B-roll 
 between takes; whether the review gate should be markdown-file-based (works today) or a
 tiny local web UI (nicer, more code). Take a position.
 
+## 5.5 Owner decisions of 2026-07-06 (constraints on your recommendations)
+
+Armando ruled on several open questions AFTER most of this briefing was written — his
+decisions override anything contrary above or in FABLE.md. Authoritative list:
+`docs/research/autoedit-dogfood/DOGFOOD-PLAYBOOK.md` §9. Highlights that affect YOU:
+- **Hyperframes stays.** He wants BOTH engines as creative options and suspects (correctly)
+  that the "Remotion wins" verdict reflects investment bias, not a fair test. Do not
+  recommend deletion; DO consider designing the fair side-by-side (same script, both
+  engines) as part of your review.
+- **Sampling honesty:** my 220-video motion QA used 5 fps strips on short comps (plus
+  freezedetect on every frame) but only ~1 fps on long videos — kinetic nuance on long-form
+  and on austin's originals is UNDER-analyzed. Playbook §10 has the cheap deep-motion
+  protocol (motion-locate first, then 10–15 fps windows). Running it on austin's punch/card
+  moments is high-value work you could do or direct.
+- Caption default hormozi-pop; density = austin rhythm (8–15 s); handle chip intermittent
+  (windowed, not persistent — component change pending); whisper medium +
+  `condition_on_previous_text=False` (his own loop-bug report, now in code); both palettes
+  stay; hard rule: frame 0 must carry a thumbnail-worthy visual hook.
+
 ## 6. Deliverable I ask of you
 
 Write `docs/peer-review/GPT56-FINDINGS.md` with: (1) verdicts you CONFIRMED vs OVERTURNED

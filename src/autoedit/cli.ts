@@ -115,7 +115,7 @@ program
   .option("--fps <fps>", "Timeline FPS", "30")
   .option("--register <reg>", "Caption register: punchy|editorial|technical|none (ADR-002)", "editorial")
   .option("--position <pos>", "Caption position: bottom-center|center|top|custom", "bottom-center")
-  .option("--whisper-model <size>", "Whisper model: tiny|base|small|medium|large-v3", "small")
+  .option("--whisper-model <size>", "Whisper model: tiny|base|small|medium|large-v3 (owner default medium — better Spanish brand names; large-v3 only with loop-watch)", "medium")
   .option("--language <code>", "Audio language for whisper", "es")
   .option("--silence-db <db>", "silencedetect noise floor (dB, negative)", "-30")
   .option("--min-silence <sec>", "Minimum silence to trim (seconds)", "0.5")
