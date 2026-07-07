@@ -384,9 +384,12 @@ export const LayoutTrack: React.FC<LayoutTrackProps> = ({
 
   return (
     <AbsoluteFill>
-      {/* Framed-scene gradient backdrop (Jack's signature) — painted only when the
-          active layout calls for it. */}
-      {active.framed ? (
+      {/* Framed-scene gradient backdrop (Jack's signature) — painted when the
+          active layout calls for it, OR when an explicit `backdrop` prop is
+          supplied (inline layouts opt in via the explicit prop — this is the
+          documented `refIsFramed` contract; previously only the preset path
+          painted it, so inline punch layouts fell back to the flat scene bg). */}
+      {active.framed || backdrop !== undefined ? (
         <AbsoluteFill style={{ background: backdropBackground(backdrop) }} />
       ) : null}
 
