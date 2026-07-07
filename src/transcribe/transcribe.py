@@ -55,7 +55,11 @@ def transcribe(
         vad_filter=True,
         vad_parameters=dict(min_silence_duration_ms=500),
         initial_prompt=prompt,
-        condition_on_previous_text=True,
+        # False on purpose: True is the known trigger for repetition loops
+        # ("words get stuck") on medium/large models — Armando hit this himself
+        # (owner decision 2026-07-06). Cost: slightly less cross-segment context;
+        # worth it for loop-free transcripts at every model size.
+        condition_on_previous_text=False,
     )
 
     # Convert generator to list
