@@ -41,6 +41,9 @@ import { ChecklistTypeOn } from "./ChecklistTypeOn";
 import { ComparisonVS } from "./ComparisonVS";
 import { StatRowTriple } from "./StatRowTriple";
 import { GradientHeadlineCard } from "./GradientHeadlineCard";
+// Layout-punch content stack (austin.marchese grammar — kicker + title +
+// progressive numbered liquid-glass cards beside a side-panel speaker).
+import { SidePanelCards } from "./SidePanelCards";
 
 type LooseOverlay = React.FC<Record<string, unknown>>;
 
@@ -73,6 +76,7 @@ export const OVERLAY_REGISTRY = {
   ComparisonVS,
   StatRowTriple,
   GradientHeadlineCard,
+  SidePanelCards,
 } as unknown as Record<string, LooseOverlay>;
 
 export type OverlayType = keyof typeof OVERLAY_REGISTRY;
