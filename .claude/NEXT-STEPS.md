@@ -167,3 +167,13 @@ schema). Tests 40→97 TS + 13 py. NEXT, in order (FINDINGS §6):
 3. HUMAN: LISTEN pass on Round-2 berman cuts (output/autoedit/r2-*.selfeval/).
 4. P2 batch: V.8 safe-areas, V.1 scrims, FeedbackLoopCycle geometry (FINDINGS 2.7).
 5. DONE 2026-07-16: multi-take experiment #1 (P1.7 groundwork) — proposal vs published Cowork reel scored 1.000 order / 0.933 take-choice; decision rules + burst-transcription requirement in docs/research/autoedit-dogfood/MULTITAKE-EXPERIMENT-2026-07-16.md (job folder: output/multitake/claude-cowork/).
+
+---
+## ▶ RESUME POINTER (2026-07-16 12:00 PM — overnight loop ended at budget boundary)
+Say "resume the improvement loop waves" → (1) Round-3 fixture re-render + frame-verify
+exit fades (agent died mid-run; redo per playbook §3, 3-state gates); (2) multi-take
+experiment #2 on Ventana de Contexto PDF (Cowork methodology, burst transcription);
+(3) SOL-0716-TRIAGE queued items: EditPlan v2 renderer convergence, BrandNameChip
+dual-aspect, layout rendered-artifact proof; then a fresh Sol xhigh review of
+1ad7bc1..HEAD. Salvaged+committed this morning: word-onset snapping + coverage gate
+(076506c, 129/129 tests). All work through 076506c is pushed.

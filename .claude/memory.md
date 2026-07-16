@@ -681,3 +681,20 @@ the specific stale PID (`pgrep -fl`, check start time vs upgrade time) and kill 
 Also: the shared ~/.codex/config.toml is written by BOTH the desktop app (may use newer
 enum values like "ultra") and read by the CLI (rejects unknown variants) — version-skew
 between them breaks `codex login`; current safe value: model_reasoning_effort="xhigh".
+
+## 2026-07-16 — overnight autonomous loop: FINAL LOG (Fable, owner asleep, stop 12:05 PM)
+Waves completed: (W1) Sol-0716 triage — 17 findings, 0 refuted, 12 FIXED, 10 commits
+(per-beat join quantization, overlay single-authority + exit fades, real frame-0 stddev,
+A/V stream gate, cli confidence unification, handleWindows safety, EditPlan v2 integrity,
+Round-2 reclassified FAIL/PENDING, 3-state gates). (W2) 3 parallel agents were KILLED by
+the 4:50am session-limit blackout mid-run; the word-onset-snapping agent's finished work
+was salvaged, re-verified (129/129) and committed at 076506c. Tests over the night:
+97 → 129. All pushed.
+DIED INCOMPLETE (resume first next session): (1) Round-3 re-render of the 4 fixtures —
+r3 renders may partially exist under output/autoedit/r3-*; redo cleanly per playbook §3
+and verify exit fades on frames; (2) multi-take experiment #2 on "Ventana de Contexto PDF"
+(job folder output/multitake/ventana-pdf/ has partial wavs at most; restart from its spec
+in the 07-16 session transcript / MULTITAKE report §method); (3) EditPlan v2 renderer
+convergence + BrandNameChip dual-aspect + layout rendered-artifact proof (SOL-0716-TRIAGE
+queued table has owners). Loop mechanics note: session-limit blackouts kill agents
+mid-flight — salvage pattern: git status → gates → commit orphaned green work.
