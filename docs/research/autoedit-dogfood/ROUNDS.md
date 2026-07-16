@@ -13,3 +13,18 @@
 timing (`9ec50d2`), whisper Spanish-prompt hallucination (`src/transcribe/transcribe.py`).
 Top gaps → playbook §7: overlay density (both Berman clips 0 overlays), brand-beat emoji,
 safe-area insets. Evidence strips: session scratchpad `austin/DF-*.png`, `RESULT-*`, `FIXED-check.png`.
+
+## Inter-round engineering pass — 2026-07-15 (Fable, autonomous; GPT-5.6 P0 executed)
+
+Not a graded round — the P0 correctness wave that FINDINGS §6 required before Round 2.
+Landed (7 commits, ca337d1..7bb4b98, all pushed): whisper prompt removed + hotwords/
+glossary + confidence end-to-end + suspect-transcript warning; layout-mode camSrc fix
+(recording+audio survive punches); V24 regression tests + authoritative scheduling +
+invalid-window drops; intermittent handleWindows + selfEval frame-0/A-V gates; live
+ESLint flat gate (72e/31w logged) + venv repaired + dead render script removed; canonical
+BeatTiming (773==773 real-ffmpeg-verified) + audio-less beats via anullsrc; brand beats →
+BrandLogoPopOverSpeaker/SentimentKeyword with planner-side schema validation (brain emoji
+dead). Smoke render dogfood-berman-end2-r2: "Anthropic" chip enters f157, FADES OUT by
+f195 (exitFrame assist — no more hard cut), absent outside window; frames verified.
+Tests 40 → 80 (+13 pytest). Round 2 proper (rubric replacement per FINDINGS Challenge 4,
+then full matrix + LISTEN pass) is the next session's work.
