@@ -1,18 +1,27 @@
 /**
  * Unit tests for the PURE ffmpeg-filtergraph + transcript + scene-prop builders
- * in renderFromPlan.ts. No IO / ffmpeg / Chrome — these functions return strings
- * and plain objects, so they are cheap to assert and make the correctness fixes
- * (FABLE §4.6/§4.7/§4.14/§4.16, Tasks 2.3/2.4/2.9/2.10; GPT-5.6 Findings
- * 2.1/2.5 + the V24 regression) regression-safe.
+ * in renderFromPlan.ts. The main body needs no IO / ffmpeg / Chrome — those
+ * functions return strings and plain objects, so they are cheap to assert and
+ * make the correctness fixes (FABLE §4.6/§4.7/§4.14/§4.16, Tasks
+ * 2.3/2.4/2.9/2.10; GPT-5.6 Findings 2.1/2.2/2.3/2.5 + the V24 regression)
+ * regression-safe. One trailing describe block runs a REAL ffmpeg/ffprobe
+ * integration pass over tiny lavfi-generated clips (GPT-5.6 Findings 2.2/2.3);
+ * it self-skips when ffmpeg/ffprobe are not on PATH.
  */
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
+import { execaSync } from "execa";
+import fs from "fs";
+import os from "os";
+import path from "path";
 import {
   buildTrimConcatFilter,
   buildMultiSourceConcatFilter,
   buildCombinedTranscript,
   buildSceneProps,
+  computeBeatTimings,
   hdrColorFixFilter,
   type ReelBeat,
+  type ResolvedBeat,
 } from "./renderFromPlan.js";
 import { editPlanSchema } from "./editPlan.js";
 import type { EditPlan, EditPlanWord, EditSegment } from "./editPlan.js";
@@ -101,6 +110,89 @@ describe("buildTrimConcatFilter — Task 2.3 (grade order) + 2.4 (audio format)"
   });
 });
 
+describe("computeBeatTimings — GPT-5.6 Finding 2.2 (one canonical beat timing)", () => {
+  const beat = (startSec: number, endSec: number, label?: string): ReelBeat => ({
+    sourceFile: "/clip.mp4",
+    startSec,
+    endSec,
+    ...(label ? { label } : {}),
+  });
+
+  it("25 × 1.03s @ 30fps: last editEndFrame is 773 and every boundary is within half a frame of ideal", () => {
+    // GPT's exact stress case: the old per-input `fps` quantization staged 775
+    // frames against a 773-frame plan. Cumulative quantization → 773 everywhere.
+    const beats = Array.from({ length: 25 }, () => beat(0, 1.03));
+    const timings = computeBeatTimings(beats, 30);
+    expect(timings).toHaveLength(25);
+    expect(timings[24].editEndFrame).toBe(773);
+    // Per-boundary error vs the ideal (un-rounded) cumulative boundary: < 0.5
+    // frame at every join (allow fp epsilon for the exact-half 772.5 boundary).
+    let cum = 0;
+    for (const t of timings) {
+      cum += t.lenSeconds;
+      expect(Math.abs(t.editEndFrame - cum * 30)).toBeLessThanOrEqual(0.5 + 1e-6);
+    }
+    // Contiguity: each beat starts exactly where the previous one ended.
+    timings.forEach((t, i) => {
+      expect(t.editStartFrame).toBe(i === 0 ? 0 : timings[i - 1].editEndFrame);
+      expect(t.editEndFrame).toBeGreaterThan(t.editStartFrame);
+    });
+  });
+
+  it("a 10 ms beat throws an actionable error instead of silently vanishing", () => {
+    // GPT's sub-frame case: 10 ms @ 30fps quantizes to 0 frames. That take
+    // would disappear from the staged video — must be an explicit error.
+    expect(() => computeBeatTimings([beat(5, 5.01, "hook")], 30)).toThrow(
+      /quantizes to 0 frames/,
+    );
+    // The message names the offending beat (index, label, file, range).
+    expect(() => computeBeatTimings([beat(5, 5.01, "hook")], 30)).toThrow(
+      /beat 0 \("hook"\) \[\/clip\.mp4 5s→5\.01s\]/,
+    );
+    // Ten 10 ms beats (GPT's exact driver): fails fast on the first one.
+    const tiny = Array.from({ length: 10 }, () => beat(0, 0.01));
+    expect(() => computeBeatTimings(tiny, 30)).toThrow(/beat 0/);
+  });
+
+  it("zero-length and reversed beats throw with the beat identified", () => {
+    expect(() => computeBeatTimings([beat(2, 2)], 30)).toThrow(
+      /non-positive length/,
+    );
+    expect(() => computeBeatTimings([beat(0, 1), beat(3, 1, "cta")], 30)).toThrow(
+      /beat 1 \("cta"\).*non-positive length/,
+    );
+  });
+
+  it("mixed beats: boundaries quantize CUMULATIVELY, not per beat", () => {
+    // Two 1.015s beats: per-beat rounding would give 30 + 30 = 60 frames, but
+    // the cumulative boundary is round(2.03 · 30) = round(60.9) = 61.
+    const timings = computeBeatTimings(
+      [beat(0, 1.015), beat(2, 3.015), beat(0, 0.5)],
+      30,
+    );
+    expect(timings[0]).toMatchObject({
+      index: 0,
+      startSec: 0,
+      endSec: 1.015,
+      editStartFrame: 0,
+      editEndFrame: 30, // round(30.45)
+    });
+    expect(timings[0].lenSeconds).toBeCloseTo(1.015, 10);
+    expect(timings[1]).toMatchObject({
+      index: 1,
+      startSec: 2,
+      endSec: 3.015,
+      editStartFrame: 30,
+      editEndFrame: 61, // round(60.9) — cumulative, NOT 30+30
+    });
+    expect(timings[2]).toMatchObject({
+      index: 2,
+      editStartFrame: 61,
+      editEndFrame: 76, // round(2.53 · 30) = round(75.9)
+    });
+  });
+});
+
 describe("buildMultiSourceConcatFilter — Task 2.3 (per-beat grade) + 2.4 (audio)", () => {
   const beat = (
     i: number,
@@ -135,6 +227,85 @@ describe("buildMultiSourceConcatFilter — Task 2.3 (per-beat grade) + 2.4 (audi
     expect(v1).not.toContain("eq=");
     // Audio normalized (not bare aresample) on every beat.
     expect((filter.match(/aformat=sample_fmts=fltp/g) ?? []).length).toBe(2);
+  });
+});
+
+describe("buildMultiSourceConcatFilter — GPT-5.6 2.2 (single fps) + 2.3 (audio-less beats)", () => {
+  const rb = (i: number, over: Partial<ResolvedBeat> = {}): ResolvedBeat => ({
+    sourceFile: `/clip${i}.mp4`,
+    startSec: 0,
+    endSec: 3,
+    isHdr: false,
+    ...over,
+  });
+
+  it("exactly ONE fps= in the whole graph, applied AFTER the video concat", () => {
+    const { filter } = buildMultiSourceConcatFilter(
+      [rb(0), rb(1), rb(2)],
+      1080,
+      1920,
+      30,
+      "",
+    );
+    // One fps filter total — per-input quantization is the 775-vs-773 drift bug.
+    expect((filter.match(/fps=/g) ?? []).length).toBe(1);
+    const concatIdx = filter.indexOf("concat=n=3:v=1:a=0[vcat]");
+    expect(concatIdx).toBeGreaterThan(-1);
+    expect(filter.indexOf("fps=30")).toBeGreaterThan(concatIdx);
+    // Post-concat: single fps normalization + frame-exact cap at the canonical
+    // total (3 × 3s beats → computeBeatTimings' last editEndFrame = 270), so
+    // per-trim source-tick surplus can never leak into the staged clip.
+    expect(filter).toContain("[vcat]fps=30,trim=end_frame=270[vout]");
+    // Per-input normalization retained: scale/crop/format/setparams per beat.
+    expect((filter.match(/scale=1080:1920/g) ?? []).length).toBe(3);
+    expect((filter.match(/crop=1080:1920/g) ?? []).length).toBe(3);
+    expect((filter.match(/format=yuv420p/g) ?? []).length).toBe(3);
+    expect((filter.match(/setparams=range=tv/g) ?? []).length).toBe(3);
+    // Per-input aformat (48k stereo fltp) retained on every audio chain.
+    expect((filter.match(/aformat=sample_fmts=fltp/g) ?? []).length).toBe(3);
+  });
+
+  it("mixed reel: the silent beat gets an anullsrc lavfi input in place of its [i:a]", () => {
+    const { filter, lavfiInputs, hasAudio } = buildMultiSourceConcatFilter(
+      [rb(0), rb(1, { hasAudio: false, startSec: 0, endSec: 1.03 }), rb(2)],
+      1080,
+      1920,
+      30,
+      "",
+    );
+    expect(hasAudio).toBe(true);
+    // One synthesized-silence input, to be appended AFTER the 3 real sources.
+    expect(lavfiInputs).toEqual([
+      "anullsrc=channel_layout=stereo:sample_rate=48000",
+    ]);
+    // Input-index bookkeeping: real sources are inputs 0..2, so the silence is
+    // ffmpeg input 3 — trimmed to exactly the beat's length (1.03s).
+    expect(filter).toContain("[3:a]atrim=start=0:end=1.03,asetpts=PTS-STARTPTS");
+    // The silent beat's non-existent audio stream is NEVER referenced.
+    expect(filter).not.toContain("[1:a]");
+    // Voiced beats keep their real audio chains.
+    expect(filter).toContain("[0:a]atrim=");
+    expect(filter).toContain("[2:a]atrim=");
+    // The silence lands in the a1 slot, preserving beat order in the concat.
+    expect(filter).toContain("[a0][a1][a2]concat=n=3:v=0:a=1[aout]");
+    // Silence is normalized like every other chain (48k stereo fltp).
+    expect((filter.match(/aformat=sample_fmts=fltp/g) ?? []).length).toBe(3);
+  });
+
+  it("all beats silent → video-only graph: no [aout], no anullsrc, hasAudio=false", () => {
+    const { filter, lavfiInputs, hasAudio } = buildMultiSourceConcatFilter(
+      [rb(0, { hasAudio: false }), rb(1, { hasAudio: false })],
+      1080,
+      1920,
+      30,
+      "",
+    );
+    expect(hasAudio).toBe(false);
+    expect(lavfiInputs).toEqual([]);
+    expect(filter).not.toContain("[aout]");
+    expect(filter).not.toContain("anullsrc");
+    expect(filter).not.toContain(":a]");
+    expect(filter).toContain("[vout]");
   });
 });
 
@@ -187,6 +358,61 @@ describe("buildCombinedTranscript — Task 2.9 boundary clamp", () => {
     expect(words[1].startFrame).toBe(75);
     // total = 2 + 3 = 5s → 150 frames.
     expect(totalFrames).toBe(150);
+  });
+
+  it("uses the PROVIDED BeatTiming[]: a word at beat 2's source start lands at beat 1's editEndFrame (Finding 2.2)", () => {
+    const beats: ReelBeat[] = [
+      { sourceFile: "/a.mp4", startSec: 0, endSec: 1.03 },
+      { sourceFile: "/b.mp4", startSec: 10, endSec: 11 },
+    ];
+    // Deliberately NOT computeBeatTimings' output (that would give 31/61): if
+    // buildCombinedTranscript re-derived offsets from seconds it would place the
+    // word at frame 31 — landing at 40 proves the injected timings are used.
+    const timings = [
+      { index: 0, startSec: 0, endSec: 1.03, lenSeconds: 1.03, editStartFrame: 0, editEndFrame: 40 },
+      { index: 1, startSec: 10, endSec: 11, lenSeconds: 1, editStartFrame: 40, editEndFrame: 70 },
+    ];
+    const wordsPerBeat: EditPlanWord[][] = [[], [w("segundo", 10, 10.3)]];
+    const { words, totalFrames } = buildCombinedTranscript(beats, wordsPerBeat, 30, timings);
+    expect(words).toHaveLength(1);
+    expect(words[0].startFrame).toBe(timings[0].editEndFrame); // 40, not 31
+    expect(words[0].startFrame).toBe(timings[1].editStartFrame);
+    // totalFrames comes from the timings too, never re-summed seconds.
+    expect(totalFrames).toBe(70);
+  });
+
+  it("default timings quantize offsets at beat boundaries — no mid-reel caption drift (Finding 2.2)", () => {
+    // Beat 0 is 1.015s → canonical boundary round(30.45) = frame 30 (2.0 frames
+    // of source become 1 output frame at the join). A word 0.48s into beat 1
+    // must be measured from the QUANTIZED boundary (30/30 s → frame 44), not
+    // from the exact seconds sum (1.495s → frame 45) the old code used.
+    const beats: ReelBeat[] = [
+      { sourceFile: "/a.mp4", startSec: 0, endSec: 1.015 },
+      { sourceFile: "/b.mp4", startSec: 0, endSec: 1.015 },
+    ];
+    const wordsPerBeat: EditPlanWord[][] = [[], [w("drift", 0.48, 0.7)]];
+    const { words, totalFrames } = buildCombinedTranscript(beats, wordsPerBeat, 30);
+    expect(words[0].startFrame).toBe(44);
+    expect(totalFrames).toBe(61); // round(2.03 · 30) — matches computeBeatTimings
+  });
+
+  it("clamps a straddling word's endFrame at the beat's canonical editEndFrame", () => {
+    const beats: ReelBeat[] = [
+      { sourceFile: "/a.mp4", startSec: 0, endSec: 1.015 },
+      { sourceFile: "/b.mp4", startSec: 0, endSec: 1.015 },
+    ];
+    // Word starts inside beat 0 but its source end runs long past the beat.
+    const wordsPerBeat: EditPlanWord[][] = [[w("largo", 0.9, 2.0)], []];
+    const { words } = buildCombinedTranscript(beats, wordsPerBeat, 30);
+    expect(words[0].endFrame).toBe(30); // beat 0's editEndFrame = round(30.45)
+    expect(words[0].endSeconds).toBeCloseTo(1, 10); // 30 / 30fps
+  });
+
+  it("throws when the provided timings do not match the beats 1:1", () => {
+    const beats: ReelBeat[] = [{ sourceFile: "/a.mp4", startSec: 0, endSec: 1 }];
+    expect(() => buildCombinedTranscript(beats, [[]], 30, [])).toThrow(
+      /timings length \(0\) does not match beats length \(1\)/,
+    );
   });
 });
 
@@ -259,6 +485,27 @@ describe("buildSceneProps — V24 regression + GPT-5.6 Findings 2.1 / 2.5", () =
     expect(overlays[0].toFrame).toBe(90);
   });
 
+  it("injects exitFrame = window length so molecule outros finish before the Sequence unmount (§1.3 / Finding 2.5.1)", () => {
+    // The Berman dogfood hard cut: IconPopOverSpeaker full-size at frame 192,
+    // gone at 193 — its internal clock never knew the 38-frame window. The
+    // injected LOCAL exitFrame (Sequence rebases to frame 0) is the window
+    // length, so the outro completes exactly at unmount.
+    const plan = makePlan({
+      overlayTrack: [ov({ fromFrame: 155, toFrame: 193, props: { icon: "🧠" } })],
+    });
+    const overlays = build(plan).overlays as { props: Record<string, unknown> }[];
+    expect(overlays[0].props.exitFrame).toBe(38); // 193 - 155
+    expect(overlays[0].props.icon).toBe("🧠");
+  });
+
+  it("does NOT override an explicit props.exitFrame from the planner", () => {
+    const plan = makePlan({
+      overlayTrack: [ov({ props: { exitFrame: 25 } })], // window 30→90
+    });
+    const overlays = build(plan).overlays as { props: Record<string, unknown> }[];
+    expect(overlays[0].props.exitFrame).toBe(25);
+  });
+
   it("drops overlays with invalid windows (zero-length, reversed, negative, non-finite) and warns (Finding 2.5.3)", () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     try {
@@ -316,3 +563,204 @@ describe("hdrColorFixFilter — Task 2.10 apostrophe quoting", () => {
     expect(hdrColorFixFilter(false, "/luts/hlg.cube")).toBe("");
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REAL ffmpeg/ffprobe integration — GPT-5.6 Findings 2.2 + 2.3 end-to-end.
+// Generates tiny lavfi clips (one WITHOUT audio), runs the actual built
+// filtergraph through ffmpeg exactly as stageMultiSourceClip does, and asserts
+// the staged video frame count equals the canonical BeatTiming plan and that
+// synthesized silence keeps the audio track at full length. Self-skips when
+// ffmpeg/ffprobe are not installed.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ffmpegAvailable = (() => {
+  try {
+    execaSync("ffmpeg", ["-version"]);
+    execaSync("ffprobe", ["-version"]);
+    return true;
+  } catch {
+    return false;
+  }
+})();
+
+describe.skipIf(!ffmpegAvailable)(
+  "multi-source staging integration (real ffmpeg) — Findings 2.2 + 2.3",
+  () => {
+    let dir: string;
+    let clipA: string; // portrait, WITH audio
+    let clipB: string; // landscape, NO audio (-an)
+    let clipC: string; // square, WITH audio
+
+    const gen = (out: string, size: string, withAudio: boolean) => {
+      const videoIn = ["-f", "lavfi", "-i", `testsrc2=duration=1.5:size=${size}:rate=30`];
+      const audioIn = withAudio
+        ? ["-f", "lavfi", "-i", "sine=frequency=440:duration=1.5:sample_rate=48000"]
+        : [];
+      execaSync("ffmpeg", [
+        "-y",
+        ...videoIn,
+        ...audioIn,
+        ...(withAudio ? ["-map", "0:v", "-map", "1:a", "-c:a", "aac"] : ["-an"]),
+        "-c:v",
+        "libx264",
+        "-preset",
+        "ultrafast",
+        "-pix_fmt",
+        "yuv420p",
+        out,
+      ]);
+    };
+
+    beforeAll(() => {
+      dir = fs.mkdtempSync(path.join(os.tmpdir(), "renderfromplan-it-"));
+      clipA = path.join(dir, "a.mp4");
+      clipB = path.join(dir, "b.mp4");
+      clipC = path.join(dir, "c.mp4");
+      gen(clipA, "320x568", true);
+      gen(clipB, "640x360", false);
+      gen(clipC, "320x320", true);
+    }, 120_000);
+
+    afterAll(() => {
+      fs.rmSync(dir, { recursive: true, force: true });
+    });
+
+    /** Run ffmpeg with the built graph exactly as stageMultiSourceClip does. */
+    const stage = (
+      resolved: ResolvedBeat[],
+      out: string,
+      fps: number,
+    ): { hasAudio: boolean } => {
+      const { filter, lavfiInputs, hasAudio } = buildMultiSourceConcatFilter(
+        resolved,
+        540,
+        960,
+        fps,
+        "",
+      );
+      const inputArgs = resolved.flatMap((b) => ["-i", b.sourceFile]);
+      const lavfiArgs = lavfiInputs.flatMap((spec) => ["-f", "lavfi", "-i", spec]);
+      const audioArgs = hasAudio
+        ? ["-map", "[aout]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000"]
+        : ["-an"];
+      execaSync("ffmpeg", [
+        "-y",
+        ...inputArgs,
+        ...lavfiArgs,
+        "-filter_complex",
+        filter,
+        "-map",
+        "[vout]",
+        ...audioArgs,
+        "-c:v",
+        "libx264",
+        "-preset",
+        "ultrafast",
+        "-pix_fmt",
+        "yuv420p",
+        out,
+      ]);
+      return { hasAudio };
+    };
+
+    const probeFrames = (file: string): number =>
+      Number(
+        execaSync("ffprobe", [
+          "-v",
+          "error",
+          "-select_streams",
+          "v:0",
+          "-count_frames",
+          "-show_entries",
+          "stream=nb_read_frames",
+          "-of",
+          "csv=p=0",
+          file,
+        ]).stdout.trim(),
+      );
+
+    const probeAudioStreams = (file: string): string =>
+      execaSync("ffprobe", [
+        "-v",
+        "error",
+        "-select_streams",
+        "a",
+        "-show_entries",
+        "stream=index",
+        "-of",
+        "csv=p=0",
+        file,
+      ]).stdout.trim();
+
+    it(
+      "mixed reel (fractional beats, one audio-less source): staged frames === plan frames, audio spans the full reel",
+      () => {
+        const beats: ReelBeat[] = [
+          { sourceFile: clipA, startSec: 0, endSec: 1.03 },
+          { sourceFile: clipB, startSec: 0.2, endSec: 1.0 }, // NO audio stream
+          { sourceFile: clipC, startSec: 0, endSec: 1.03 },
+        ];
+        const fps = 30;
+        const timings = computeBeatTimings(beats, fps);
+        expect(timings.map((t) => t.editEndFrame)).toEqual([31, 55, 86]);
+
+        const resolved: ResolvedBeat[] = beats.map((b) => ({
+          ...b,
+          isHdr: false,
+          hasAudio: b.sourceFile !== clipB,
+        }));
+        const out = path.join(dir, "staged-mixed.mp4");
+        const { hasAudio } = stage(resolved, out, fps);
+        expect(hasAudio).toBe(true);
+
+        // Staged video frame count === the canonical plan's last editEndFrame
+        // (the 2.2 drift bug staged 775 vs plan 773 on GPT's stress case).
+        expect(probeFrames(out)).toBe(timings[2].editEndFrame);
+
+        // The audio-less middle beat got synthesized silence, so the audio
+        // track spans the FULL reel (Σ len = 2.86s), not 2.06s with a hole.
+        const audioDur = Number(
+          execaSync("ffprobe", [
+            "-v",
+            "error",
+            "-select_streams",
+            "a:0",
+            "-show_entries",
+            "stream=duration",
+            "-of",
+            "csv=p=0",
+            out,
+          ]).stdout.trim(),
+        );
+        expect(Math.abs(audioDur - 2.86)).toBeLessThan(0.1);
+      },
+      120_000,
+    );
+
+    it(
+      "all-silent reel: stages a clean video-only clip (no audio stream) with plan-exact frames",
+      () => {
+        const beats: ReelBeat[] = [
+          { sourceFile: clipB, startSec: 0, endSec: 1.0 },
+          { sourceFile: clipB, startSec: 0.2, endSec: 1.2 },
+        ];
+        const fps = 30;
+        const timings = computeBeatTimings(beats, fps);
+        expect(timings.map((t) => t.editEndFrame)).toEqual([30, 60]);
+
+        const resolved: ResolvedBeat[] = beats.map((b) => ({
+          ...b,
+          isHdr: false,
+          hasAudio: false,
+        }));
+        const out = path.join(dir, "staged-silent.mp4");
+        const { hasAudio } = stage(resolved, out, fps);
+        expect(hasAudio).toBe(false);
+
+        expect(probeFrames(out)).toBe(timings[1].editEndFrame);
+        expect(probeAudioStreams(out)).toBe(""); // no audio stream at all
+      },
+      120_000,
+    );
+  },
+);

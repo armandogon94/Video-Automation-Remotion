@@ -509,10 +509,25 @@ export function buildSceneProps(
       );
       return [];
     }
+    const cleanProps = sanitizeOverlayProps(o.props);
+    // Lifecycle assist (GPT-5.6 §1.3 / Finding 2.5.1, the cheap 80%): the scene's
+    // <Sequence> hard-clips at toFrame, but a molecule's INTERNAL enter+hold+exit
+    // clock knows nothing about that window — the real Berman dogfood render had
+    // IconPopOverSpeaker full-size at frame 192 and GONE at frame 193 (a hard
+    // cut, not an exit animation). Inject the window length as a LOCAL exitFrame
+    // (the Sequence rebases the molecule to frame 0), so molecules that support
+    // exitFrame (IconPopOverSpeaker, YellowGlowWordCallout, PullQuoteCard,
+    // DimSurroundingsSpotlight, …) complete their outro exactly at unmount;
+    // molecules without the prop ignore it (their Zod schemas strip unknown
+    // keys). An explicit planner-provided props.exitFrame wins.
+    const exitAssist =
+      cleanProps.exitFrame === undefined
+        ? { exitFrame: o.toFrame - o.fromFrame }
+        : {};
     return [
       {
         type: o.type,
-        props: { ...sanitizeOverlayProps(o.props), anchor: o.anchor },
+        props: { ...cleanProps, ...exitAssist, anchor: o.anchor },
         fromFrame: o.fromFrame,
         toFrame: o.toFrame,
         ...(o.behindSpeaker !== undefined
@@ -688,9 +703,10 @@ async function runSelfEval(
 // `-i` inputs (`[0]…[n-1]`), one trim per input, the per-source HDR color fix
 // applied to ITS OWN input (each clip is probed independently), all scaled to the
 // same canvas and concatenated. The combined transcript is assembled by re-basing
-// each beat's words onto the cumulative assembled timeline (offset = sum of all
-// prior beats' durations). The result is rendered through the same
-// `SpeakerOverlayScene` foundation as the single-source path.
+// each beat's words onto the cumulative assembled timeline, with offsets taken
+// from the canonical `computeBeatTimings` boundaries (GPT-5.6 Finding 2.2). The
+// result is rendered through the same `SpeakerOverlayScene` foundation as the
+// single-source path.
 
 /** One beat of a multi-source reel: a clean range cut from its OWN source file. */
 export interface ReelBeat {
@@ -710,9 +726,93 @@ export interface ReelBeat {
   grade?: SegmentGrade;
 }
 
-/** A beat paired with its probed HDR flag (one ffprobe per source). */
-interface ResolvedBeat extends ReelBeat {
+/** A beat paired with its probed source flags (one ffprobe pair per source). */
+export interface ResolvedBeat extends ReelBeat {
   isHdr: boolean;
+  /**
+   * Whether this beat's source file has an audio stream (probed via
+   * `hasAudioStream`, GPT-5.6 Finding 2.3). Optional for backward
+   * compatibility with hand-built beats: omitted → treated as `true`.
+   */
+  hasAudio?: boolean;
+}
+
+/**
+ * The ONE canonical placement of a beat on the assembled edit timeline
+ * (GPT-5.6 Finding 2.2). Staged-video frame count, transcript offsets, QA cut
+ * boundaries, and the Remotion render duration must ALL derive from this — the
+ * old code let ffmpeg quantize each beat independently (`fps` per input) while
+ * the transcript/QA/duration summed exact seconds, so the four timelines
+ * drifted (25 × 1.03 s @ 30 fps: staged video 775 frames vs plan 773).
+ */
+export interface BeatTiming {
+  /** Index into the `beats` array. */
+  index: number;
+  /** Source-time start of the kept range (copied from the beat). */
+  startSec: number;
+  /** Source-time end of the kept range (copied from the beat). */
+  endSec: number;
+  /** Beat length in seconds (endSec - startSec). */
+  lenSeconds: number;
+  /** First edit-timeline frame of this beat (inclusive). */
+  editStartFrame: number;
+  /** End edit-timeline frame of this beat (exclusive). */
+  editEndFrame: number;
+}
+
+/**
+ * Compute the canonical `BeatTiming[]` for a reel: CUMULATIVE seconds quantized
+ * per boundary — `editStartFrame_i = round(fps·Σ_{j<i} len_j)` and
+ * `editEndFrame_i = round(fps·Σ_{j<=i} len_j)` — the same scheme
+ * `silenceTrim.toEditSegments` uses for the single-source path, so per-beat
+ * rounding error never accumulates (each boundary is within half a frame of its
+ * ideal position) and consecutive beats are exactly contiguous.
+ *
+ * Throws (rather than emitting a vanishing take) when a beat is non-positive or
+ * quantizes to ZERO frames — GPT-5.6's 10 ms-beat stress case must be an
+ * explicit, actionable error, not a beat that silently disappears from the reel.
+ */
+export function computeBeatTimings(beats: ReelBeat[], fps: number): BeatTiming[] {
+  const timings: BeatTiming[] = [];
+  let cumSeconds = 0;
+  let prevEndFrame = 0;
+
+  beats.forEach((b, i) => {
+    const lenSeconds = b.endSec - b.startSec;
+    const beatDesc =
+      `beat ${i}${b.label ? ` ("${b.label}")` : ""} ` +
+      `[${b.sourceFile} ${b.startSec}s→${b.endSec}s]`;
+    if (!(lenSeconds > 0)) {
+      throw new Error(
+        `computeBeatTimings: ${beatDesc} has non-positive length ` +
+          `(${lenSeconds}s) — every beat must keep a positive source range; ` +
+          `fix its startSec/endSec or remove it from the reel.`,
+      );
+    }
+    const editStartFrame = prevEndFrame; // = round(fps · Σ_{j<i} len_j)
+    cumSeconds += lenSeconds;
+    const editEndFrame = Math.round(cumSeconds * fps);
+    if (editEndFrame === editStartFrame) {
+      throw new Error(
+        `computeBeatTimings: ${beatDesc} (${lenSeconds}s @ ${fps}fps) ` +
+          `quantizes to 0 frames (editStartFrame === editEndFrame === ` +
+          `${editStartFrame}) — a sub-frame take would silently vanish from ` +
+          `the staged video. Lengthen the beat to at least one frame ` +
+          `(≥ ${(1 / fps).toFixed(4)}s) or remove it from the reel.`,
+      );
+    }
+    timings.push({
+      index: i,
+      startSec: b.startSec,
+      endSec: b.endSec,
+      lenSeconds,
+      editStartFrame,
+      editEndFrame,
+    });
+    prevEndFrame = editEndFrame;
+  });
+
+  return timings;
 }
 
 export interface RenderMultiSourceOptions {
@@ -764,14 +864,32 @@ export interface RenderMultiSourceResult extends RenderFromPlanResult {
   beatCount: number;
   /** Edit-timeline duration in seconds. */
   durationSeconds: number;
+  /**
+   * The ONE canonical beat placement used for the staged video, transcript
+   * offsets, QA cut boundaries, and the render duration (GPT-5.6 Finding 2.2).
+   * Callers/QA must read boundaries from here, never re-derive them.
+   */
+  beatTimings: BeatTiming[];
 }
 
 /**
  * Build the `filter_complex` for a MULTI-INPUT assembly: trim one range from each
  * of `beats.length` ffmpeg inputs (`[i:v]`/`[i:a]`), apply that input's own HDR
- * color fix, scale+crop to the canvas, normalize fps, then concat all video and
- * all audio streams. Mirrors `buildTrimConcatFilter` but with one input per beat
- * instead of one input with many trims. Returns the filtergraph with `[vout]`/`[aout]`.
+ * color fix, scale+crop to the canvas, then concat all video and all audio
+ * streams; fps is normalized ONCE on the concatenated video (GPT-5.6 Finding
+ * 2.2). Mirrors `buildTrimConcatFilter` but with one input per beat instead of
+ * one input with many trims.
+ *
+ * Audio-less beats (GPT-5.6 Finding 2.3): a beat whose source has no audio
+ * stream (`hasAudio: false`) gets 48 kHz stereo silence synthesized for exactly
+ * its length via an extra `anullsrc` lavfi input, wired into the audio concat in
+ * place of its (non-existent) `[i:a]`. When NO beat has audio, the graph is
+ * video-only (no `[aout]`; caller must use `-an`).
+ *
+ * Returns the filtergraph (`[vout]` and, when `hasAudio`, `[aout]`), plus
+ * `lavfiInputs` — the anullsrc specs the caller MUST append as
+ * `-f lavfi -i <spec>` AFTER all real source inputs, in order (the filter's
+ * input indices assume exactly that ordering).
  */
 export function buildMultiSourceConcatFilter(
   beats: ResolvedBeat[],
@@ -779,16 +897,30 @@ export function buildMultiSourceConcatFilter(
   height: number,
   fps: number,
   lutPath = "",
-): { filter: string } {
+): { filter: string; lavfiInputs: string[]; hasAudio: boolean } {
+  if (beats.length === 0) {
+    throw new Error(
+      "buildMultiSourceConcatFilter: no beats provided — cannot build an empty concat graph.",
+    );
+  }
   const parts: string[] = [];
   const vLabels: string[] = [];
   const aLabels: string[] = [];
+  const lavfiInputs: string[] = [];
+
+  // Any beat with audio → the reel carries an audio track and silent beats get
+  // synthesized silence (mixed reel). NO beat with audio → video-only graph.
+  const hasAudio = beats.some((b) => b.hasAudio !== false);
 
   beats.forEach((b, i) => {
     const colorFix = hdrColorFixFilter(b.isHdr, lutPath);
     // Video: trim this input's range, reset PTS, per-source HDR color fix, then the
     // optional per-beat creative grade (grades in SDR space — FABLE §4.7), then
-    // scale+crop to fill the canvas and normalize fps (same chain as single-source).
+    // scale+crop to fill the canvas. NO per-input `fps` filter: quantizing each
+    // beat to the frame grid independently accumulates ±0.5-frame surplus per
+    // beat (25 × 1.03 s @ 30 fps staged 775 frames against a 773-frame plan —
+    // GPT-5.6 Finding 2.2). fps is normalized ONCE after the concat, so the
+    // staged frame count matches computeBeatTimings' cumulative quantization.
     const gradeF = b.grade ? `${GRADE_FILTERS[b.grade]},` : "";
     parts.push(
       `[${i}:v]trim=start=${b.startSec}:end=${b.endSec},setpts=PTS-STARTPTS,` +
@@ -796,29 +928,70 @@ export function buildMultiSourceConcatFilter(
         // setsar=1 normalizes the sample aspect ratio across differently-shaped
         // sources — without it, concat rejects a portrait+landscape reel with a
         // SAR-mismatch error (FABLE follow-up: pre-existing multi-aspect crash).
-        `crop=${width}:${height},setsar=1,fps=${fps},format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
+        `crop=${width}:${height},setsar=1,format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
-    // Audio: same trim window; 30ms fade in/out at each beat boundary (video-use
-    // rule #3, 2026-06-26) so multi-source joins don't pop; normalize to 48kHz
-    // stereo fltp so mixed mono/stereo beats don't silently downmix the reel to
-    // mono (FABLE §4.6 / Task 2.4). Fade clamped to half-beat for very short beats.
-    const aDur = b.endSec - b.startSec;
-    const aFade = Math.min(0.03, aDur / 2);
-    const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
-    parts.push(
-      `[${i}:a]atrim=start=${b.startSec}:end=${b.endSec},asetpts=PTS-STARTPTS,` +
-        `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
-        `${AUDIO_NORMALIZE}[a${i}]`,
-    );
+
+    if (!hasAudio) return; // all-silent reel: no audio chains at all.
+
+    if (b.hasAudio !== false) {
+      // Audio: same trim window; 30ms fade in/out at each beat boundary (video-use
+      // rule #3, 2026-06-26) so multi-source joins don't pop; normalize to 48kHz
+      // stereo fltp so mixed mono/stereo beats don't silently downmix the reel to
+      // mono (FABLE §4.6 / Task 2.4). Fade clamped to half-beat for very short beats.
+      const aDur = b.endSec - b.startSec;
+      const aFade = Math.min(0.03, aDur / 2);
+      const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
+      parts.push(
+        `[${i}:a]atrim=start=${b.startSec}:end=${b.endSec},asetpts=PTS-STARTPTS,` +
+          `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
+          `${AUDIO_NORMALIZE}[a${i}]`,
+      );
+    } else {
+      // GPT-5.6 Finding 2.3: this beat's source has NO audio stream — referencing
+      // `[i:a]` would abort the whole assembly ("Stream specifier ':a' matches no
+      // streams"). Synthesize 48 kHz stereo silence for exactly this beat's length
+      // instead, from an extra anullsrc lavfi input.
+      //
+      // INPUT-INDEX BOOKKEEPING: the real source files occupy ffmpeg inputs
+      // [0 .. beats.length-1] (one `-i` per beat, in beat order — video refs above
+      // stay `[i:v]`). The lavfi silence inputs are appended AFTER all of them, so
+      // the k-th silence (k = lavfiInputs.length when this beat is reached) is
+      // ffmpeg input index `beats.length + k`. stageMultiSourceClip appends
+      // `-f lavfi -i <spec>` in exactly this order.
+      const lavfiIndex = beats.length + lavfiInputs.length;
+      lavfiInputs.push("anullsrc=channel_layout=stereo:sample_rate=48000");
+      const aDur = b.endSec - b.startSec;
+      parts.push(
+        `[${lavfiIndex}:a]atrim=start=0:end=${aDur},asetpts=PTS-STARTPTS,` +
+          `${AUDIO_NORMALIZE}[a${i}]`,
+      );
+    }
     aLabels.push(`[a${i}]`);
   });
 
   const n = beats.length;
-  const vConcat = `${vLabels.join("")}concat=n=${n}:v=1:a=0[vout]`;
-  const aConcat = `${aLabels.join("")}concat=n=${n}:v=0:a=1[aout]`;
+  const vConcat = `${vLabels.join("")}concat=n=${n}:v=1:a=0[vcat]`;
+  // ONE fps normalization on the CONCATENATED video (GPT-5.6 Finding 2.2),
+  // mirroring the single-source path's post-concat `fps=` — cumulative boundary
+  // quantization instead of per-beat rounding — followed by a frame-exact cap at
+  // the canonical total. The cap matters because `trim` by SECONDS keeps every
+  // source frame whose PTS falls in the range: a 1.03 s trim of a 30 fps source
+  // physically contains 31 frames (1.0333 s of media), so tick surplus
+  // accumulates across beats (GPT's 25 × 1.03 s case staged 775 frames against
+  // the 773-frame plan) and no fps resample can shrink real media. Capping at
+  // computeBeatTimings' last editEndFrame makes the staged frame count derive
+  // from the SAME BeatTiming[] as captions/QA/render duration. (A deficit —
+  // staged shorter than plan — cannot be extended here; Remotion holds the last
+  // frame in that rare case.)
+  const totalFrames = computeBeatTimings(beats, fps)[beats.length - 1].editEndFrame;
+  const vOut = `[vcat]fps=${fps},trim=end_frame=${totalFrames}[vout]`;
 
-  return { filter: [...parts, vConcat, aConcat].join(";") };
+  const chains = [...parts, vConcat, vOut];
+  if (hasAudio) {
+    chains.push(`${aLabels.join("")}concat=n=${n}:v=0:a=1[aout]`);
+  }
+  return { filter: chains.join(";"), lavfiInputs, hasAudio };
 }
 
 /**
@@ -836,10 +1009,15 @@ async function stageMultiSourceClip(
 ): Promise<{ absPath: string; staticRef: string; resolved: ResolvedBeat[] }> {
   const { width, height } = dimensionsForAspect(aspect);
 
-  // Probe HDR per source (each clip independently — sources may differ).
+  // Probe HDR + audio per source (each clip independently — sources may differ;
+  // a screen recording without audio must NOT crash the reel — GPT-5.6 §2.3).
   const resolved: ResolvedBeat[] = [];
   for (const b of beats) {
-    resolved.push({ ...b, isHdr: await detectHdr(b.sourceFile) });
+    resolved.push({
+      ...b,
+      isHdr: await detectHdr(b.sourceFile),
+      hasAudio: await hasAudioStream(b.sourceFile),
+    });
   }
 
   const publicDir = path.join(projectRoot, "public", "autoedit");
@@ -847,7 +1025,7 @@ async function stageMultiSourceClip(
   const absPath = path.join(publicDir, `${slug}.mp4`);
   const staticRef = path.posix.join("autoedit", `${slug}.mp4`);
 
-  const { filter } = buildMultiSourceConcatFilter(
+  const { filter, lavfiInputs, hasAudio } = buildMultiSourceConcatFilter(
     resolved,
     width,
     height,
@@ -856,23 +1034,35 @@ async function stageMultiSourceClip(
   );
 
   const hdrCount = resolved.filter((b) => b.isHdr).length;
+  const silentCount = resolved.filter((b) => b.hasAudio === false).length;
   log(
     `ffmpeg: assemble ${beats.length} beat(s) from ${beats.length} source(s) → ` +
-      `${width}×${height}@${fps}fps (${hdrCount}/${beats.length} HDR→SDR) → ${absPath}`,
+      `${width}×${height}@${fps}fps (${hdrCount}/${beats.length} HDR→SDR` +
+      `${silentCount > 0 && hasAudio ? `, ${silentCount}/${beats.length} silent → anullsrc` : ""}` +
+      `${hasAudio ? "" : ", all beats silent → video-only (-an)"}) → ${absPath}`,
   );
 
-  // One -i per beat, in order.
+  // One -i per beat, in order (ffmpeg inputs 0..n-1), THEN the anullsrc silence
+  // inputs for audio-less beats (inputs n..n+k-1) — buildMultiSourceConcatFilter
+  // computed its `[idx:a]` references assuming exactly this ordering.
   const inputArgs = resolved.flatMap((b) => ["-i", b.sourceFile]);
+  const lavfiArgs = lavfiInputs.flatMap((spec) => ["-f", "lavfi", "-i", spec]);
+
+  // Audio mapping/codec only when the reel has any audio (else a clean
+  // video-only staged clip via -an), matching the single-source path.
+  const audioArgs = hasAudio
+    ? ["-map", "[aout]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000"]
+    : ["-an"];
 
   await execa("ffmpeg", [
     "-y",
     ...inputArgs,
+    ...lavfiArgs,
     "-filter_complex",
     filter,
     "-map",
     "[vout]",
-    "-map",
-    "[aout]",
+    ...audioArgs,
     "-c:v",
     "libx264",
     "-crf",
@@ -882,12 +1072,6 @@ async function stageMultiSourceClip(
     "-pix_fmt",
     "yuv420p",
     ...SDR_TAG_ARGS,
-    "-c:a",
-    "aac",
-    "-b:a",
-    "192k",
-    "-ar",
-    "48000",
     "-movflags",
     "+faststart",
     absPath,
@@ -899,44 +1083,62 @@ async function stageMultiSourceClip(
 /**
  * Re-base each beat's SOURCE-time words onto the ASSEMBLED edit timeline and merge
  * them into one ordered word list. For beat `i`, keep words whose START falls in
- * `[startSec, endSec)`, then shift so the beat's `startSec` maps to the cumulative
- * offset (sum of all prior beats' durations). Mirrors `shiftWordsToEditTimeline`'s
- * math but across multiple sources with a running offset.
+ * `[startSec, endSec)`, then shift so the beat's `startSec` maps to that beat's
+ * canonical `editStartFrame` (GPT-5.6 Finding 2.2: the offsets come from the ONE
+ * `BeatTiming[]` the staged video/QA/render duration also use — the old code
+ * summed exact seconds here while ffmpeg quantized per beat, so captions drifted
+ * from the staged pixels). Word ends are clamped at the beat's `editEndFrame`
+ * (FABLE §4.14 / Task 2.9: a straddling word must not bleed into the next beat).
+ *
+ * `timings` defaults to `computeBeatTimings(beats, fps)` for backward
+ * compatibility; `renderMultiSourcePlan` passes its precomputed array so every
+ * consumer shares identical numbers.
  */
 export function buildCombinedTranscript(
   beats: ReelBeat[],
   wordsPerBeat: EditPlanWord[][],
   fps: number,
+  timings: BeatTiming[] = computeBeatTimings(beats, fps),
 ): { words: EditPlanWord[]; totalFrames: number } {
+  if (timings.length !== beats.length) {
+    throw new Error(
+      `buildCombinedTranscript: timings length (${timings.length}) does not ` +
+        `match beats length (${beats.length}) — pass the BeatTiming[] computed ` +
+        `by computeBeatTimings for these exact beats.`,
+    );
+  }
   const out: EditPlanWord[] = [];
-  let offsetSeconds = 0;
 
   beats.forEach((b, i) => {
-    const beatLenSeconds = b.endSec - b.startSec;
-    const beatEndOnTimeline = offsetSeconds + beatLenSeconds;
+    const t = timings[i];
+    // The beat's canonical placement, in seconds, on the assembled timeline.
+    const offsetSeconds = t.editStartFrame / fps;
+    const beatEndOnTimeline = t.editEndFrame / fps;
     const words = wordsPerBeat[i] ?? [];
     for (const w of words) {
       if (w.startSeconds < b.startSec || w.startSeconds >= b.endSec) continue;
       const newStartSeconds = w.startSeconds - b.startSec + offsetSeconds;
-      // Clamp the word END at this beat's rebased end (FABLE §4.14 / Task 2.9): a
-      // word straddling a beat boundary otherwise keeps its full source duration
-      // and its caption bleeds into the next beat's first word.
       const newEndSeconds = Math.min(
         beatEndOnTimeline,
         w.endSeconds - b.startSec + offsetSeconds,
       );
+      const clampedEndSeconds = Math.max(newStartSeconds, newEndSeconds);
+      const startFrame = Math.round(newStartSeconds * fps);
+      const endFrame = Math.min(t.editEndFrame, Math.round(clampedEndSeconds * fps));
       out.push({
         text: w.text,
         startSeconds: newStartSeconds,
-        endSeconds: Math.max(newStartSeconds, newEndSeconds),
-        startFrame: Math.round(newStartSeconds * fps),
-        endFrame: Math.round(Math.max(newStartSeconds, newEndSeconds) * fps),
+        endSeconds: clampedEndSeconds,
+        startFrame,
+        endFrame: Math.max(startFrame, endFrame),
       });
     }
-    offsetSeconds += beatLenSeconds;
   });
 
-  return { words: out, totalFrames: Math.round(offsetSeconds * fps) };
+  return {
+    words: out,
+    totalFrames: timings.length > 0 ? timings[timings.length - 1].editEndFrame : 0,
+  };
 }
 
 /**
@@ -954,6 +1156,13 @@ export async function renderMultiSourcePlan(
 
   if (beats.length === 0) throw new Error("renderMultiSourcePlan: no beats provided.");
 
+  // ── Canonical beat timings (GPT-5.6 Finding 2.2) ────────────────────────────
+  // ONE cumulative quantization for everything downstream: the staged video's
+  // frame count (via the single post-concat fps filter), the transcript offsets,
+  // the QA cut boundaries, and the Remotion render duration. Throws early —
+  // before any ffmpeg work — on zero-length or sub-frame beats.
+  const beatTimings = computeBeatTimings(beats, fps);
+
   const { width, height, compositionId } = dimensionsForAspect(aspect);
 
   // ── Stage 1: trim + assemble the multi-source base clip ─────────────────────
@@ -966,6 +1175,7 @@ export async function renderMultiSourcePlan(
     beats,
     wordsPerBeat,
     fps,
+    beatTimings,
   );
   const durationInFrames = Math.max(1, totalFrames);
   log(
@@ -1025,29 +1235,22 @@ export async function renderMultiSourcePlan(
     },
   });
 
-  // ── QA: one capped self-eval pass. Synthesize a BoundarySpec from the beats'
-  //     cumulative edit frames so the cut contact sheet lands at each beat join. ──
+  // ── QA: one capped self-eval pass. The cut boundaries come straight from the
+  //     canonical BeatTiming[] (GPT-5.6 Finding 2.2) — no re-derived seconds
+  //     math — so the contact sheet lands exactly on the staged beat joins. ──
   if (opts.selfEval !== false) {
-    const boundarySegments: EditSegment[] = [];
-    let cursorSeconds = 0;
-    beats.forEach((b, i) => {
-      const lenSeconds = b.endSec - b.startSec;
-      const editStartFrame = Math.round(cursorSeconds * fps);
-      const editEndFrame = Math.round((cursorSeconds + lenSeconds) * fps);
-      boundarySegments.push({
-        id: `beat-${i}`,
-        source: {
-          startSeconds: b.startSec,
-          endSeconds: b.endSec,
-          startFrame: Math.round(b.startSec * fps),
-          endFrame: Math.round(b.endSec * fps),
-        },
-        editStartFrame,
-        editEndFrame,
-        mode: "speaker",
-      });
-      cursorSeconds += lenSeconds;
-    });
+    const boundarySegments: EditSegment[] = beatTimings.map((t) => ({
+      id: `beat-${t.index}`,
+      source: {
+        startSeconds: t.startSec,
+        endSeconds: t.endSec,
+        startFrame: Math.round(t.startSec * fps),
+        endFrame: Math.round(t.endSec * fps),
+      },
+      editStartFrame: t.editStartFrame,
+      editEndFrame: t.editEndFrame,
+      mode: "speaker" as const,
+    }));
     await runSelfEval(
       outputPath,
       { fps, editDurationFrames: durationInFrames, segments: boundarySegments },
@@ -1066,6 +1269,7 @@ export async function renderMultiSourcePlan(
     durationInFrames,
     durationSeconds: durationInFrames / fps,
     beatCount: beats.length,
+    beatTimings,
     elapsedSeconds,
   };
 }
