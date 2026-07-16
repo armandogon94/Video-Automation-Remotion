@@ -239,7 +239,7 @@ describe("buildMultiSourceConcatFilter — GPT-5.6 2.2 (single fps) + 2.3 (audio
     ...over,
   });
 
-  it("exactly ONE fps= in the whole graph, applied AFTER the video concat", () => {
+  it("per-beat frame quantization (Sol §2.3): fps+tpad+trim=end_frame on EVERY input chain; post-concat cap is a secondary invariant only", () => {
     const { filter } = buildMultiSourceConcatFilter(
       [rb(0), rb(1), rb(2)],
       1080,
@@ -247,22 +247,31 @@ describe("buildMultiSourceConcatFilter — GPT-5.6 2.2 (single fps) + 2.3 (audio
       30,
       "",
     );
-    // One fps filter total — per-input quantization is the 775-vs-773 drift bug.
-    expect((filter.match(/fps=/g) ?? []).length).toBe(1);
+    // Sol 2026-07-16 §2.3 OVERTURNED the single-post-concat-fps design: seconds
+    // trims keep every source frame in range, the surplus accumulates across
+    // joins (interior beats start 1–2 frames late), and a global tail cap only
+    // conceals it by truncating the LAST beat. Each beat's chain must therefore
+    // be forced to EXACTLY its canonical frame count BEFORE the concat.
     const concatIdx = filter.indexOf("concat=n=3:v=1:a=0[vcat]");
     expect(concatIdx).toBeGreaterThan(-1);
-    expect(filter.indexOf("fps=30")).toBeGreaterThan(concatIdx);
-    // Post-concat: single fps normalization + frame-exact cap at the canonical
-    // total (3 × 3s beats → computeBeatTimings' last editEndFrame = 270), so
-    // per-trim source-tick surplus can never leak into the staged clip.
-    expect(filter).toContain("[vcat]fps=30,trim=end_frame=270[vout]");
+    // One quantization tail per input (3 × 3s beats → 90 frames each), all
+    // BEFORE the concat.
+    const tails = [...filter.matchAll(/fps=30,tpad=stop_mode=clone:stop=-1,trim=end_frame=90/g)];
+    expect(tails).toHaveLength(3);
+    for (const t of tails) expect(t.index).toBeLessThan(concatIdx);
+    // Post-concat: NO fps resample (nothing left to fix), just the frame-exact
+    // cap at the canonical total (270) as a no-op secondary invariant.
+    expect(filter).toContain("[vcat]trim=end_frame=270[vout]");
+    expect(filter.slice(concatIdx)).not.toContain("fps=");
     // Per-input normalization retained: scale/crop/format/setparams per beat.
     expect((filter.match(/scale=1080:1920/g) ?? []).length).toBe(3);
     expect((filter.match(/crop=1080:1920/g) ?? []).length).toBe(3);
     expect((filter.match(/format=yuv420p/g) ?? []).length).toBe(3);
     expect((filter.match(/setparams=range=tv/g) ?? []).length).toBe(3);
-    // Per-input aformat (48k stereo fltp) retained on every audio chain.
+    // Per-input aformat (48k stereo fltp) retained on every audio chain, and
+    // every voiced chain is pinned to its canonical length (apad + atrim).
     expect((filter.match(/aformat=sample_fmts=fltp/g) ?? []).length).toBe(3);
+    expect((filter.match(/apad=whole_dur=3\.000000,atrim=end=3\.000000/g) ?? []).length).toBe(3);
   });
 
   it("mixed reel: the silent beat gets an anullsrc lavfi input in place of its [i:a]", () => {
@@ -279,8 +288,9 @@ describe("buildMultiSourceConcatFilter — GPT-5.6 2.2 (single fps) + 2.3 (audio
       "anullsrc=channel_layout=stereo:sample_rate=48000",
     ]);
     // Input-index bookkeeping: real sources are inputs 0..2, so the silence is
-    // ffmpeg input 3 — trimmed to exactly the beat's length (1.03s).
-    expect(filter).toContain("[3:a]atrim=start=0:end=1.03,asetpts=PTS-STARTPTS");
+    // ffmpeg input 3 — trimmed to exactly the beat's CANONICAL length (the
+    // 1.03s beat spans edit frames 90→121 = 31 frames = 1.033333s; Sol §2.3).
+    expect(filter).toContain("[3:a]atrim=start=0:end=1.033333,asetpts=PTS-STARTPTS");
     // The silent beat's non-existent audio stream is NEVER referenced.
     expect(filter).not.toContain("[1:a]");
     // Voiced beats keep their real audio chains.
@@ -761,6 +771,69 @@ describe.skipIf(!ffmpegAvailable)(
         expect(probeAudioStreams(out)).toBe(""); // no audio stream at all
       },
       120_000,
+    );
+
+    it(
+      "EVERY interior join lands on its canonical BeatTiming boundary (Sol §2.3: 25 × 1.03s unique-luma reel, mixed fps + aspect)",
+      () => {
+        // Sol's decisive reproduction: 25 unique-color 1.03s inputs. The old
+        // global-tail-cap design staged 773 total frames but interior beats
+        // started 1–2 frames late (canonical 185 → actual 186, 742 → 744) and
+        // the last beat was silently truncated to compensate. This test walks
+        // per-frame luma and asserts the transition frames EQUAL the canonical
+        // editStartFrames — the final total is only the secondary invariant.
+        const fps = 30;
+        const clips: string[] = [];
+        for (let i = 0; i < 25; i++) {
+          const g = 10 + i * 9; // distinct flat grays, luma-separable
+          const hex = g.toString(16).padStart(2, "0").repeat(3);
+          // Mixed source characteristics on purpose: one 25fps and one 60fps
+          // source, plus alternating portrait/landscape/square canvases.
+          const rate = i === 5 ? 25 : i === 10 ? 60 : 30;
+          const size = i % 3 === 0 ? "160x284" : i % 3 === 1 ? "320x180" : "160x160";
+          const f = path.join(dir, `luma-${i}.mp4`);
+          execaSync("ffmpeg", [
+            "-y", "-f", "lavfi", "-i",
+            `color=c=0x${hex}:size=${size}:rate=${rate}:duration=1.03`,
+            "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", f,
+          ]);
+          clips.push(f);
+        }
+        const beats: ReelBeat[] = clips.map((sourceFile) => ({
+          sourceFile,
+          startSec: 0,
+          endSec: 1.03,
+        }));
+        const timings = computeBeatTimings(beats, fps);
+        expect(timings[24].editEndFrame).toBe(773);
+
+        const resolved: ResolvedBeat[] = beats.map((b) => ({
+          ...b,
+          isHdr: false,
+          hasAudio: false,
+        }));
+        const out = path.join(dir, "staged-luma.mp4");
+        stage(resolved, out, fps);
+
+        // Per-frame mean luma via signalstats; a beat boundary is any frame
+        // whose YAVG jumps vs the previous frame.
+        const meta = execaSync("ffmpeg", [
+          "-nostdin", "-i", out,
+          "-vf", "signalstats,metadata=print:file=-",
+          "-f", "null", "-",
+        ]).stdout;
+        const yavgs = [...meta.matchAll(/lavfi\.signalstats\.YAVG=([0-9.]+)/g)].map(
+          (m) => Number(m[1]),
+        );
+        expect(yavgs).toHaveLength(773); // final total — secondary invariant
+        const actualStarts = [0];
+        for (let f = 1; f < yavgs.length; f++) {
+          if (Math.abs(yavgs[f] - yavgs[f - 1]) > 3) actualStarts.push(f);
+        }
+        // THE assertion: every interior join is frame-exact vs the canonical plan.
+        expect(actualStarts).toEqual(timings.map((t) => t.editStartFrame));
+      },
+      240_000,
     );
   },
 );

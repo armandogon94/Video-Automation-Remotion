@@ -212,6 +212,25 @@ export function hdrColorFixFilter(isHdr: boolean, lutPath: string): string {
  */
 const AUDIO_NORMALIZE = "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo";
 
+/**
+ * The per-segment/per-beat FRAME QUANTIZATION tail (Sol 2026-07-16 §2.3): force
+ * a video chain to EXACTLY `nFrames` frames at `fps` before concat. A seconds
+ * `trim` keeps every source frame whose PTS falls in the range (a 1.03 s trim of
+ * a 30 fps source physically contains 31 frames = 1.0333 s of media), so
+ * seconds-trimmed chains accumulate tick surplus across joins — Sol's 25 ×
+ * 1.03 s reproduction showed interior beats starting 1–2 frames late while a
+ * global tail cap concealed the drift by truncating the LAST beat. Quantizing
+ * each chain to its canonical frame count makes every interior join land
+ * exactly on its `BeatTiming`/`EditSegment` boundary:
+ *   - `fps` resamples the chain to the output frame grid;
+ *   - `tpad=stop_mode=clone:stop=-1` clones the last frame indefinitely so a
+ *     short chain (rare rounding/source-end deficit) can still reach the target;
+ *   - `trim=end_frame=nFrames` cuts the chain to the exact canonical count.
+ */
+function frameQuantizeTail(fps: number, nFrames: number): string {
+  return `fps=${fps},tpad=stop_mode=clone:stop=-1,trim=end_frame=${nFrames}`;
+}
+
 export function buildTrimConcatFilter(
   segments: EditSegment[],
   width: number,
@@ -233,35 +252,59 @@ export function buildTrimConcatFilter(
   // the multi-source path and video-use's own extract→concat→grade order.
   const colorFix = hdrColorFixFilter(isHdr, lutPath);
 
+  let totalFrames = 0;
+
   segments.forEach((seg, i) => {
     const start = seg.source.startSeconds;
     const end = seg.source.endSeconds;
+    // Canonical frame count for this segment (its edit-timeline length). The
+    // staged chain is forced to EXACTLY this many frames (Sol §2.3) so every
+    // interior concat join lands on the plan's editStartFrame — captions, QA
+    // cut boundaries, and the render duration all derive from the same numbers.
+    const nFrames = seg.editEndFrame - seg.editStartFrame;
+    if (!Number.isFinite(nFrames) || nFrames <= 0) {
+      throw new Error(
+        `buildTrimConcatFilter: segment "${seg.id}" [${start}s→${end}s] has a ` +
+          `non-positive edit length (${nFrames} frames from editStartFrame=` +
+          `${seg.editStartFrame}, editEndFrame=${seg.editEndFrame}) — a ` +
+          `zero-frame segment would silently vanish from the staged clip. Fix ` +
+          `the segment's edit frames or remove it from the plan.`,
+      );
+    }
+    totalFrames += nFrames;
+    // The canonical output length of this segment in seconds — the AUDIO chain
+    // is cut to the same length so A/V joins stay sample-aligned (Sol §2.3/§2.4).
+    const lenOut = nFrames / fps;
     // Video: trim by source seconds, reset PTS so concat sees a 0-based stream,
     // then colorFix (HLG→SDR LUT) BEFORE the optional per-segment creative grade
     // so the grade lands in SDR space. `colorFix` already carries a trailing comma
     // (or is ""); the grade chain is a bare filter, so join them with a comma only
-    // when a grade is present. Grade omitted → no-op.
+    // when a grade is present. Grade omitted → no-op. The chain ends with the
+    // frame-quantization tail (exact canonical frame count — Sol §2.3).
     const gradeChain = seg.grade ? GRADE_FILTERS[seg.grade] : "";
     const colorChain = [colorFix ? colorFix.replace(/,$/, "") : "", gradeChain]
       .filter((s) => s.length > 0)
       .join(",");
     const colorPrefix = colorChain ? `,${colorChain}` : "";
     vParts.push(
-      `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS${colorPrefix}[v${i}]`,
+      `[0:v]trim=start=${start}:end=${end},setpts=PTS-STARTPTS${colorPrefix},` +
+        `${frameQuantizeTail(fps, nFrames)}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
     if (hasAudio) {
-      // Audio: same trim window, with a 30ms fade in/out at each segment boundary
-      // (video-use rule #3) so concat joins don't pop, then normalize to 48kHz
-      // stereo fltp so mixed mono/stereo takes don't downmix the reel. Fade
-      // clamped to half the segment for very short keeps so in/out don't overlap.
-      const aDur = end - start;
-      const aFade = Math.min(0.03, aDur / 2);
-      const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
+      // Audio: trim the CANONICAL length (nFrames/fps, not the raw source
+      // seconds) so audio joins land exactly where the quantized video joins
+      // do, with a 30ms fade in/out at each segment boundary (video-use rule
+      // #3) so concat joins don't pop, then normalize to 48kHz stereo fltp so
+      // mixed mono/stereo takes don't downmix the reel. Fade clamped to half
+      // the segment for very short keeps so in/out don't overlap. `apad` +
+      // `atrim` pin the chain to exactly lenOut even on a source-end deficit.
+      const aFade = Math.min(0.03, lenOut / 2);
+      const aFadeOutSt = Math.max(0, lenOut - aFade).toFixed(3);
       aParts.push(
-        `[0:a]atrim=start=${start}:end=${end},asetpts=PTS-STARTPTS,` +
+        `[0:a]atrim=start=${start}:end=${start + lenOut},asetpts=PTS-STARTPTS,` +
           `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
-          `${AUDIO_NORMALIZE}[a${i}]`,
+          `${AUDIO_NORMALIZE},apad=whole_dur=${lenOut.toFixed(6)},atrim=end=${lenOut.toFixed(6)}[a${i}]`,
       );
       aLabels.push(`[a${i}]`);
     }
@@ -269,14 +312,18 @@ export function buildTrimConcatFilter(
 
   const n = segments.length;
   const vConcat = `${vLabels.join("")}concat=n=${n}:v=1:a=0[vcat]`;
-  // Downscale + center-crop to fill the canvas, then normalize fps. colorFix now
-  // lives per-segment (above), so the post-concat chain is scale-only.
+  // Downscale + center-crop to fill the canvas. colorFix lives per-segment
+  // (above) and fps quantization lives per-segment too (Sol §2.3), so the
+  // post-concat chain is scale-only plus a SECONDARY-INVARIANT total cap: with
+  // exact per-segment frame counts the concat already totals `totalFrames`, so
+  // the cap is a no-op guard, never a concealer of interior drift.
   const scale =
     `[vcat]scale=${width}:${height}:force_original_aspect_ratio=increase,` +
     // setsar=1 is defensive here (single-source segments share one input's SAR,
     // so this path doesn't hit the mismatch) — it keeps the output SAR square and
     // matches the multi-source chain. See buildMultiSourceConcatFilter.
-    `crop=${width}:${height},setsar=1,fps=${fps},format=yuv420p,${SETPARAMS_BT709}[vout]`;
+    `crop=${width}:${height},setsar=1,format=yuv420p,${SETPARAMS_BT709},` +
+    `trim=end_frame=${totalFrames}[vout]`;
 
   const parts = [...vParts, ...aParts, vConcat, scale];
   if (hasAudio) {
@@ -875,10 +922,10 @@ export interface RenderMultiSourceResult extends RenderFromPlanResult {
 /**
  * Build the `filter_complex` for a MULTI-INPUT assembly: trim one range from each
  * of `beats.length` ffmpeg inputs (`[i:v]`/`[i:a]`), apply that input's own HDR
- * color fix, scale+crop to the canvas, then concat all video and all audio
- * streams; fps is normalized ONCE on the concatenated video (GPT-5.6 Finding
- * 2.2). Mirrors `buildTrimConcatFilter` but with one input per beat instead of
- * one input with many trims.
+ * color fix, scale+crop to the canvas, quantize EACH beat to its canonical
+ * `BeatTiming` frame count (Sol 2026-07-16 §2.3 — see `frameQuantizeTail`),
+ * then concat all video and all audio streams. Mirrors `buildTrimConcatFilter`
+ * but with one input per beat instead of one input with many trims.
  *
  * Audio-less beats (GPT-5.6 Finding 2.3): a beat whose source has no audio
  * stream (`hasAudio: false`) gets 48 kHz stereo silence synthesized for exactly
@@ -908,19 +955,29 @@ export function buildMultiSourceConcatFilter(
   const aLabels: string[] = [];
   const lavfiInputs: string[] = [];
 
+  // The ONE canonical placement of every beat (GPT-5.6 Finding 2.2). Each beat's
+  // video chain is forced to EXACTLY its canonical frame count below (Sol
+  // 2026-07-16 §2.3), so every interior join lands on its editStartFrame.
+  const timings = computeBeatTimings(beats, fps);
+
   // Any beat with audio → the reel carries an audio track and silent beats get
   // synthesized silence (mixed reel). NO beat with audio → video-only graph.
   const hasAudio = beats.some((b) => b.hasAudio !== false);
 
   beats.forEach((b, i) => {
     const colorFix = hdrColorFixFilter(b.isHdr, lutPath);
+    // Canonical frame count + output length for THIS beat. Sol §2.3 overturned
+    // the previous global-tail-cap design: seconds-trims kept every source frame
+    // in range (1.03 s of 30 fps media = 31 frames), the surplus accumulated
+    // across joins (interior beats started 1–2 frames late), and the global
+    // `trim=end_frame` only truncated the LAST beat — concealing the drift the
+    // canonical BeatTiming[] was supposed to remove. Per-beat quantization
+    // (`frameQuantizeTail`) makes each join exact by construction.
+    const nFrames = timings[i].editEndFrame - timings[i].editStartFrame;
+    const lenOut = nFrames / fps;
     // Video: trim this input's range, reset PTS, per-source HDR color fix, then the
     // optional per-beat creative grade (grades in SDR space — FABLE §4.7), then
-    // scale+crop to fill the canvas. NO per-input `fps` filter: quantizing each
-    // beat to the frame grid independently accumulates ±0.5-frame surplus per
-    // beat (25 × 1.03 s @ 30 fps staged 775 frames against a 773-frame plan —
-    // GPT-5.6 Finding 2.2). fps is normalized ONCE after the concat, so the
-    // staged frame count matches computeBeatTimings' cumulative quantization.
+    // scale+crop to fill the canvas, then quantize to the canonical frame count.
     const gradeF = b.grade ? `${GRADE_FILTERS[b.grade]},` : "";
     parts.push(
       `[${i}:v]trim=start=${b.startSec}:end=${b.endSec},setpts=PTS-STARTPTS,` +
@@ -928,30 +985,33 @@ export function buildMultiSourceConcatFilter(
         // setsar=1 normalizes the sample aspect ratio across differently-shaped
         // sources — without it, concat rejects a portrait+landscape reel with a
         // SAR-mismatch error (FABLE follow-up: pre-existing multi-aspect crash).
-        `crop=${width}:${height},setsar=1,format=yuv420p,${SETPARAMS_BT709}[v${i}]`,
+        `crop=${width}:${height},setsar=1,format=yuv420p,${SETPARAMS_BT709},` +
+        `${frameQuantizeTail(fps, nFrames)}[v${i}]`,
     );
     vLabels.push(`[v${i}]`);
 
     if (!hasAudio) return; // all-silent reel: no audio chains at all.
 
     if (b.hasAudio !== false) {
-      // Audio: same trim window; 30ms fade in/out at each beat boundary (video-use
-      // rule #3, 2026-06-26) so multi-source joins don't pop; normalize to 48kHz
-      // stereo fltp so mixed mono/stereo beats don't silently downmix the reel to
-      // mono (FABLE §4.6 / Task 2.4). Fade clamped to half-beat for very short beats.
-      const aDur = b.endSec - b.startSec;
-      const aFade = Math.min(0.03, aDur / 2);
-      const aFadeOutSt = Math.max(0, aDur - aFade).toFixed(3);
+      // Audio: the CANONICAL length (nFrames/fps — same numbers as the quantized
+      // video chain, Sol §2.3/§2.4); 30ms fade in/out at each beat boundary
+      // (video-use rule #3, 2026-06-26) so multi-source joins don't pop;
+      // normalize to 48kHz stereo fltp so mixed mono/stereo beats don't silently
+      // downmix the reel to mono (FABLE §4.6 / Task 2.4). Fade clamped to
+      // half-beat for very short beats. `apad` + `atrim` pin the chain to
+      // exactly lenOut even when the source runs out early.
+      const aFade = Math.min(0.03, lenOut / 2);
+      const aFadeOutSt = Math.max(0, lenOut - aFade).toFixed(3);
       parts.push(
-        `[${i}:a]atrim=start=${b.startSec}:end=${b.endSec},asetpts=PTS-STARTPTS,` +
+        `[${i}:a]atrim=start=${b.startSec}:end=${b.startSec + lenOut},asetpts=PTS-STARTPTS,` +
           `afade=t=in:st=0:d=${aFade},afade=t=out:st=${aFadeOutSt}:d=${aFade},` +
-          `${AUDIO_NORMALIZE}[a${i}]`,
+          `${AUDIO_NORMALIZE},apad=whole_dur=${lenOut.toFixed(6)},atrim=end=${lenOut.toFixed(6)}[a${i}]`,
       );
     } else {
       // GPT-5.6 Finding 2.3: this beat's source has NO audio stream — referencing
       // `[i:a]` would abort the whole assembly ("Stream specifier ':a' matches no
-      // streams"). Synthesize 48 kHz stereo silence for exactly this beat's length
-      // instead, from an extra anullsrc lavfi input.
+      // streams"). Synthesize 48 kHz stereo silence for exactly this beat's
+      // CANONICAL length instead, from an extra anullsrc lavfi input.
       //
       // INPUT-INDEX BOOKKEEPING: the real source files occupy ffmpeg inputs
       // [0 .. beats.length-1] (one `-i` per beat, in beat order — video refs above
@@ -961,9 +1021,8 @@ export function buildMultiSourceConcatFilter(
       // `-f lavfi -i <spec>` in exactly this order.
       const lavfiIndex = beats.length + lavfiInputs.length;
       lavfiInputs.push("anullsrc=channel_layout=stereo:sample_rate=48000");
-      const aDur = b.endSec - b.startSec;
       parts.push(
-        `[${lavfiIndex}:a]atrim=start=0:end=${aDur},asetpts=PTS-STARTPTS,` +
+        `[${lavfiIndex}:a]atrim=start=0:end=${lenOut.toFixed(6)},asetpts=PTS-STARTPTS,` +
           `${AUDIO_NORMALIZE}[a${i}]`,
       );
     }
@@ -972,20 +1031,13 @@ export function buildMultiSourceConcatFilter(
 
   const n = beats.length;
   const vConcat = `${vLabels.join("")}concat=n=${n}:v=1:a=0[vcat]`;
-  // ONE fps normalization on the CONCATENATED video (GPT-5.6 Finding 2.2),
-  // mirroring the single-source path's post-concat `fps=` — cumulative boundary
-  // quantization instead of per-beat rounding — followed by a frame-exact cap at
-  // the canonical total. The cap matters because `trim` by SECONDS keeps every
-  // source frame whose PTS falls in the range: a 1.03 s trim of a 30 fps source
-  // physically contains 31 frames (1.0333 s of media), so tick surplus
-  // accumulates across beats (GPT's 25 × 1.03 s case staged 775 frames against
-  // the 773-frame plan) and no fps resample can shrink real media. Capping at
-  // computeBeatTimings' last editEndFrame makes the staged frame count derive
-  // from the SAME BeatTiming[] as captions/QA/render duration. (A deficit —
-  // staged shorter than plan — cannot be extended here; Remotion holds the last
-  // frame in that rare case.)
-  const totalFrames = computeBeatTimings(beats, fps)[beats.length - 1].editEndFrame;
-  const vOut = `[vcat]fps=${fps},trim=end_frame=${totalFrames}[vout]`;
+  // SECONDARY INVARIANT ONLY (Sol §2.3): each beat is already quantized to its
+  // exact canonical frame count above, so the concat totals `totalFrames` by
+  // construction and this cap is a no-op guard. It must never again be the
+  // mechanism that makes the total "right" — that design concealed interior
+  // join drift by truncating the last beat.
+  const totalFrames = timings[beats.length - 1].editEndFrame;
+  const vOut = `[vcat]trim=end_frame=${totalFrames}[vout]`;
 
   const chains = [...parts, vConcat, vOut];
   if (hasAudio) {
