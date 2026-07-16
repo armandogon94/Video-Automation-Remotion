@@ -443,11 +443,29 @@ function mapPosition(
 }
 
 /**
+ * Strip scheduling keys from a loose molecule prop bag (GPT-5.6 Finding 2.5.2).
+ * `fromFrame`/`toFrame` are authoritative at the overlay's TOP level (schema-
+ * validated, and they drive the scene's per-overlay <Sequence>); a loose
+ * `enterFrame` inside `props` would double-offset a molecule the Sequence has
+ * already rebased to local frame 0. Content props pass through untouched.
+ */
+function sanitizeOverlayProps(
+  props: Record<string, unknown>,
+): Record<string, unknown> {
+  const clean = { ...props };
+  delete clean.fromFrame;
+  delete clean.toFrame;
+  delete clean.enterFrame;
+  return clean;
+}
+
+/**
  * Build the `SpeakerOverlayScene{9x16,16x9}` input props from an EditPlan. The
  * caption is built from `captionTrack` (already edit-time-rebased word timings);
  * overlays are mapped straight from `overlayTrack` ({type, props, behindSpeaker});
  * `layoutTrack` is forwarded verbatim when present (the scene switches to layout
- * mode). The trimmed base clip is the `videoSrc` (staticFile ref).
+ * mode). The trimmed base clip is the `videoSrc` (staticFile ref) — and, in
+ * layout mode, ALSO the `camSrc` (GPT-5.6 Finding 2.1; see the layout block).
  */
 export function buildSceneProps(
   plan: EditPlan,
@@ -471,15 +489,38 @@ export function buildSceneProps(
   // Forward the plan's EDIT-time window + anchor to the scene. fromFrame/toFrame
   // drive the scene's per-overlay <Sequence> (without them every overlay
   // self-animated from scene frame 0 — the "99 at t=0" bug); anchor rides in
-  // props so molecules that accept it place themselves per the plan (an
-  // explicit props.anchor from the suggester still wins via the spread).
-  const overlays = plan.overlayTrack.map((o) => ({
-    type: o.type,
-    props: { anchor: o.anchor, ...o.props },
-    fromFrame: o.fromFrame,
-    toFrame: o.toFrame,
-    ...(o.behindSpeaker !== undefined ? { behindSpeaker: o.behindSpeaker } : {}),
-  }));
+  // props so molecules that accept it place themselves per the plan. The
+  // schema-validated top-level anchor WINS over any loose props.anchor, and
+  // scheduling keys inside props are stripped (GPT-5.6 Finding 2.5.2).
+  // Window sanity (Finding 2.5.3): the scenes silently clamp toFrame <= fromFrame
+  // to a 1-frame overlay via Math.max(1, ...) — an invalid window is a planner
+  // bug, so drop the overlay loudly here instead of rendering a 1-frame flash.
+  const overlays = plan.overlayTrack.flatMap((o) => {
+    if (
+      !Number.isFinite(o.fromFrame) ||
+      !Number.isFinite(o.toFrame) ||
+      o.fromFrame < 0 ||
+      o.toFrame <= o.fromFrame
+    ) {
+      console.warn(
+        `[buildSceneProps] dropping overlay id=${o.id} type=${o.type}: ` +
+          `invalid window fromFrame=${o.fromFrame} toFrame=${o.toFrame} ` +
+          `(need finite, non-negative frames with toFrame > fromFrame)`,
+      );
+      return [];
+    }
+    return [
+      {
+        type: o.type,
+        props: { ...sanitizeOverlayProps(o.props), anchor: o.anchor },
+        fromFrame: o.fromFrame,
+        toFrame: o.toFrame,
+        ...(o.behindSpeaker !== undefined
+          ? { behindSpeaker: o.behindSpeaker }
+          : {}),
+      },
+    ];
+  });
 
   const props: Record<string, unknown> = {
     videoSrc: stagedClipStaticRef,
@@ -493,6 +534,14 @@ export function buildSceneProps(
   // them (the scene switches into layout mode when layoutTrack is non-empty).
   if (plan.layoutTrack && plan.layoutTrack.length > 0) {
     props.layoutTrack = plan.layoutTrack;
+    // GPT-5.6 Finding 2.1 (CRITICAL): both scenes switch to layout mode purely
+    // because layoutTrack is non-empty, and layout mode reads `camSrc` while
+    // IGNORING `videoSrc`. Without camSrc the staged recording was replaced by
+    // LayoutTrack's blue placeholder "CAM" well, and — because the legacy
+    // OffthreadVideo never mounts in layout mode — the voice track vanished
+    // with it. Map the staged single-source clip to the layout camera layer;
+    // `videoSrc` stays set above for legacy (no-layout) mode.
+    props.camSrc = stagedClipStaticRef;
     if (plan.baseLayout !== undefined) props.baseLayout = plan.baseLayout;
     if (plan.backdrop !== undefined) props.backdrop = plan.backdrop;
     if (plan.foregroundMatte !== undefined)

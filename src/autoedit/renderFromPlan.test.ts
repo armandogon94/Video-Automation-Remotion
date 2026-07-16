@@ -1,18 +1,21 @@
 /**
- * Unit tests for the PURE ffmpeg-filtergraph + transcript builders in
- * renderFromPlan.ts. No IO / ffmpeg / Chrome — these functions return strings and
- * arrays, so they are cheap to assert and make the correctness fixes (FABLE
- * §4.6/§4.7/§4.14/§4.16, Tasks 2.3/2.4/2.9/2.10) regression-safe.
+ * Unit tests for the PURE ffmpeg-filtergraph + transcript + scene-prop builders
+ * in renderFromPlan.ts. No IO / ffmpeg / Chrome — these functions return strings
+ * and plain objects, so they are cheap to assert and make the correctness fixes
+ * (FABLE §4.6/§4.7/§4.14/§4.16, Tasks 2.3/2.4/2.9/2.10; GPT-5.6 Findings
+ * 2.1/2.5 + the V24 regression) regression-safe.
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   buildTrimConcatFilter,
   buildMultiSourceConcatFilter,
   buildCombinedTranscript,
+  buildSceneProps,
   hdrColorFixFilter,
   type ReelBeat,
 } from "./renderFromPlan.js";
-import type { EditPlanWord, EditSegment } from "./editPlan.js";
+import { editPlanSchema } from "./editPlan.js";
+import type { EditPlan, EditPlanWord, EditSegment } from "./editPlan.js";
 
 const seg = (
   i: number,
@@ -184,6 +187,119 @@ describe("buildCombinedTranscript — Task 2.9 boundary clamp", () => {
     expect(words[1].startFrame).toBe(75);
     // total = 2 + 3 = 5s → 150 frames.
     expect(totalFrames).toBe(150);
+  });
+});
+
+describe("buildSceneProps — V24 regression + GPT-5.6 Findings 2.1 / 2.5", () => {
+  type OverlayInstance = EditPlan["overlayTrack"][number];
+
+  const makePlan = (overrides: Record<string, unknown> = {}): EditPlan =>
+    editPlanSchema.parse({
+      sourceVideo: "/source.mov",
+      aspect: "9:16",
+      sourceDurationFrames: 300,
+      editDurationFrames: 240,
+      ...overrides,
+    });
+
+  const ov = (overrides: Partial<OverlayInstance> = {}): OverlayInstance => ({
+    id: "ov-0",
+    type: "IconPopOverSpeaker",
+    anchor: "top-right",
+    fromFrame: 30,
+    toFrame: 90,
+    props: {},
+    confidence: 0.5,
+    reason: "",
+    ...overrides,
+  });
+
+  const STAGED = "autoedit/test-clip.mp4";
+  const build = (plan: EditPlan) =>
+    buildSceneProps(plan, STAGED, 240, "editorial-cyan", undefined);
+
+  it("forwards fromFrame/toFrame per overlay to the scene (V24 entry timing)", () => {
+    const plan = makePlan({
+      overlayTrack: [ov(), ov({ id: "ov-1", fromFrame: 100, toFrame: 150 })],
+    });
+    const overlays = build(plan).overlays as Record<string, unknown>[];
+    expect(overlays).toHaveLength(2);
+    expect(overlays[0]).toMatchObject({
+      type: "IconPopOverSpeaker",
+      fromFrame: 30,
+      toFrame: 90,
+    });
+    expect(overlays[1]).toMatchObject({ fromFrame: 100, toFrame: 150 });
+  });
+
+  it("plan-level validated anchor overrides a conflicting props.anchor (Finding 2.5.2)", () => {
+    const plan = makePlan({
+      overlayTrack: [ov({ props: { anchor: "bottom-left", size: 200 } })],
+    });
+    const overlays = build(plan).overlays as { props: Record<string, unknown> }[];
+    expect(overlays[0].props.anchor).toBe("top-right");
+    // Non-scheduling content props still pass through untouched.
+    expect(overlays[0].props.size).toBe(200);
+  });
+
+  it("strips scheduling keys (fromFrame/toFrame/enterFrame) arriving inside props (Finding 2.5.2)", () => {
+    const plan = makePlan({
+      overlayTrack: [
+        ov({ props: { enterFrame: 12, fromFrame: 5, toFrame: 500, icon: "🔥" } }),
+      ],
+    });
+    const overlays = build(plan).overlays as Record<string, unknown>[];
+    const p = overlays[0].props as Record<string, unknown>;
+    expect(p).not.toHaveProperty("enterFrame");
+    expect(p).not.toHaveProperty("fromFrame");
+    expect(p).not.toHaveProperty("toFrame");
+    expect(p.icon).toBe("🔥");
+    // Top-level scheduling stays authoritative (the validated plan window).
+    expect(overlays[0].fromFrame).toBe(30);
+    expect(overlays[0].toFrame).toBe(90);
+  });
+
+  it("drops overlays with invalid windows (zero-length, reversed, negative, non-finite) and warns (Finding 2.5.3)", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      const plan = makePlan();
+      // Assigned post-parse: editPlanSchema's z.number() rejects NaN, but
+      // buildSceneProps is pure and must defend against hand-built plans too.
+      plan.overlayTrack = [
+        ov(), // valid — the only survivor
+        ov({ id: "ov-zero", fromFrame: 50, toFrame: 50 }),
+        ov({ id: "ov-rev", fromFrame: 80, toFrame: 40 }),
+        ov({ id: "ov-neg", fromFrame: -10, toFrame: 20 }),
+        ov({ id: "ov-nan", fromFrame: Number.NaN, toFrame: 60 }),
+      ];
+      const overlays = build(plan).overlays as Record<string, unknown>[];
+      expect(overlays).toHaveLength(1);
+      expect(overlays[0]).toMatchObject({ fromFrame: 30, toFrame: 90 });
+      expect(warn).toHaveBeenCalledTimes(4);
+      const warned = warn.mock.calls.map((c) => String(c[0])).join("\n");
+      for (const id of ["ov-zero", "ov-rev", "ov-neg", "ov-nan"]) {
+        expect(warned).toContain(id);
+      }
+      expect(warned).toContain("IconPopOverSpeaker");
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it("non-empty layoutTrack maps the staged clip to camSrc AND keeps videoSrc (Finding 2.1)", () => {
+    const plan = makePlan({
+      layoutTrack: [{ startFrame: 0, endFrame: 120, layout: "full-cam" }],
+    });
+    const props = build(plan);
+    expect(props.camSrc).toBe(STAGED);
+    expect(props.videoSrc).toBe(STAGED);
+    expect(props.layoutTrack).toBeDefined();
+  });
+
+  it("no layoutTrack → camSrc absent, legacy videoSrc mode untouched", () => {
+    const props = build(makePlan());
+    expect(props).not.toHaveProperty("camSrc");
+    expect(props.videoSrc).toBe(STAGED);
   });
 });
 
