@@ -72,6 +72,52 @@ export const timeSpanSchema = z.object({
 export type TimeSpan = z.infer<typeof timeSpanSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Sources — v2 source-aware plans (GPT56-FINDINGS §1.2 / §5.5)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Minimal ffprobe facts for a source file (GPT56 §5.5 `MediaProbe`). Every
+ * field is `.optional()` — a probe may be partial (e.g. hash-only cataloging
+ * before ffprobe runs), and optional-only keeps Remotion
+ * `<Composition defaultProps>` typing intact (the Zod-v4 gotcha — see
+ * OverlayInstance.behindSpeaker). Kept deliberately minimal; richer probe
+ * artifacts belong in the job folder's `sources.json` (§5.1), not the plan.
+ */
+export const mediaProbeSchema = z.object({
+  /** Container duration in seconds. */
+  durationSeconds: z.number().optional(),
+  /** Video stream frame rate. */
+  fps: z.number().optional(),
+  /** Video stream width in px. */
+  width: z.number().optional(),
+  /** Video stream height in px. */
+  height: z.number().optional(),
+  /** Whether the file has an audio stream (GPT56 §2.3 — audio-less inputs). */
+  hasAudio: z.boolean().optional(),
+});
+export type MediaProbe = z.infer<typeof mediaProbeSchema>;
+
+/**
+ * One input file a v2 (source-aware) plan can cut from (GPT56 §5.5). `id` is
+ * the stable key segments reference via `EditSegment.sourceId`; `path` is the
+ * absolute/project-relative file path (same convention as `sourceVideo`).
+ * `hash` is the content hash used for transcription caching (§5.1) and `probe`
+ * the ffprobe facts — both `.optional()` so a plan can be authored before
+ * hashing/probing has run (and per the Zod-v4 defaultProps gotcha).
+ */
+export const planSourceSchema = z.object({
+  /** Stable id, e.g. "src-0". Referenced by `EditSegment.sourceId`. */
+  id: z.string(),
+  /** Absolute or project-relative path to the source media file. */
+  path: z.string(),
+  /** Content hash of the file (transcription-cache key, GPT56 §5.1). */
+  hash: z.string().optional(),
+  /** Minimal ffprobe facts (see mediaProbeSchema). */
+  probe: mediaProbeSchema.optional(),
+});
+export type PlanSource = z.infer<typeof planSourceSchema>;
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Segment track — the kept spans after silence-trim
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -84,6 +130,21 @@ export type TimeSpan = z.infer<typeof timeSpanSchema>;
  */
 export const spanModeSchema = z.enum(["speaker", "broll"]);
 export type SpanMode = z.infer<typeof spanModeSchema>;
+
+/**
+ * WHAT a v2 segment is, editorially (GPT56 §5.5). COMPLEMENTS — does not
+ * replace — `mode`: `mode` says how the CAMERA behaves (stay on speaker vs cut
+ * away), `kind` says what the MATERIAL is (a selected take, B-roll footage, or
+ * room-tone filler between takes). A multi-take assembly needs both axes:
+ * e.g. a `broll`-kind segment cut from source file 3 while `mode` stays
+ * "speaker" on the base layout is a legal combination.
+ *   - "take"      — a selected take span from a recording (the default the
+ *                   v1→v2 migration stamps).
+ *   - "broll"     — cutaway footage material.
+ *   - "room-tone" — ambience/silence filler inserted between takes.
+ */
+export const segmentKindSchema = z.enum(["take", "broll", "room-tone"]);
+export type SegmentKind = z.infer<typeof segmentKindSchema>;
 
 /**
  * Per-segment CREATIVE color grade preset (harvested from browser-use/video-use,
@@ -124,6 +185,34 @@ export const editSegmentSchema = z.object({
   /** Optional per-segment creative grade (see segmentGradeSchema). Omitted →
    *  global correction only (unchanged behavior); keeps existing plans valid. */
   grade: segmentGradeSchema.optional(),
+  // ── v2 source-aware fields (GPT56 §5.5) ──────────────────────────────────
+  // All four are `.optional()` (NOT `.default()`) so every serialized v1 plan
+  // on disk still parses AND Remotion `<Composition defaultProps>` typing
+  // survives (the Zod-v4 gotcha — see OverlayInstance.behindSpeaker).
+  /**
+   * Which `EditPlan.sources` entry this segment cuts from (v2). References
+   * `PlanSource.id`. Absent in v1 plans, where the whole timeline implicitly
+   * reads `sourceVideo`; `migratePlanToSourceAware` fills it in.
+   */
+  sourceId: z.string().optional(),
+  /**
+   * Editorial material kind (GPT56 §5.5): take | broll | room-tone.
+   * COMPLEMENTS `mode` (camera behavior) — see segmentKindSchema. Absent in
+   * v1 plans; the migration stamps "take".
+   */
+  kind: segmentKindSchema.optional(),
+  /**
+   * Take-group provenance (GPT56 §5.2/§5.5): the clause-level group of
+   * alternative takes this segment was chosen FROM. Lets QA/review trace a
+   * cut back to its A/B/C decision. Absent for non-take material.
+   */
+  takeGroupId: z.string().optional(),
+  /**
+   * WHICH option within `takeGroupId` was selected (e.g. "opt-b"). Pairs with
+   * `takes-decisions.json` (GPT56 §5.1) so the plan is auditable against the
+   * human selection gate. Absent for non-take material.
+   */
+  takeOptionId: z.string().optional(),
 });
 export type EditSegment = z.infer<typeof editSegmentSchema>;
 
@@ -409,10 +498,33 @@ export const editPlanProvenanceSchema = z.object({
 export type EditPlanProvenance = z.infer<typeof editPlanProvenanceSchema>;
 
 export const editPlanSchema = z.object({
-  /** Schema version — bump on breaking changes to this shape. */
+  /**
+   * Schema version — bump ONLY on breaking changes to this shape.
+   *
+   * Deliberately UNCHANGED at `z.literal(1)` for the source-aware v2 additions:
+   * nothing in the codebase switches on `version` (it is assigned once in
+   * `buildEditPlan.ts` and never read), and every v2 field is additive +
+   * `.optional()`, so v1 and v2 plans are the same wire shape. The v1/v2
+   * distinction is "are `sources` present?" (see `isSourceAwarePlan`), NOT the
+   * version number. Bumping the literal to 2 would make `parse` reject every
+   * serialized v1 plan already on disk for zero benefit.
+   */
   version: z.literal(1).default(1),
-  /** Absolute or project-relative path to the SOURCE talking-head video. */
+  /**
+   * Absolute or project-relative path to the SOURCE talking-head video.
+   * v1 single-source field — still REQUIRED in v2 plans. In a migrated
+   * (source-aware) plan it MUST equal `sources[0].path`, so v1-only readers
+   * keep working against the primary source.
+   */
   sourceVideo: z.string(),
+  /**
+   * v2 (GPT56 §5.5): the input files this plan cuts from. When present,
+   * segments reference these by `sourceId`. `.optional()` (NOT `.default()`)
+   * — absent means "v1 single-source plan" (every segment implicitly reads
+   * `sourceVideo`), and a `.default()`-only field breaks Remotion
+   * `<Composition defaultProps>` typing (the Zod-v4 gotcha, ADR-003).
+   */
+  sources: z.array(planSourceSchema).optional(),
   aspect: editPlanAspectSchema,
   fps: z.number().default(30),
   /** Duration of the SOURCE video in frames (before trim). */
@@ -445,3 +557,91 @@ export const editPlanSchema = z.object({
   provenance: editPlanProvenanceSchema.default(() => editPlanProvenanceSchema.parse({})),
 });
 export type EditPlan = z.infer<typeof editPlanSchema>;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// v1 ↔ v2 helpers (pure — no IO; GPT56 §5.5 "preserve a v1 parser/migration")
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** The id given to the synthetic source a v1 plan's `sourceVideo` becomes. */
+const V1_SOURCE_ID = "src-0";
+
+/**
+ * Is this plan fully source-aware (v2)? True iff `sources` is non-empty AND
+ * every segment carries a `sourceId`. A plan with sources but a sourceId-less
+ * segment is half-migrated and NOT source-aware — run
+ * `migratePlanToSourceAware` on it before multi-source consumption.
+ */
+export function isSourceAwarePlan(plan: EditPlan): boolean {
+  return (
+    plan.sources !== undefined &&
+    plan.sources.length > 0 &&
+    plan.segments.every((seg) => seg.sourceId !== undefined)
+  );
+}
+
+/**
+ * Migrate a v1 (single-source) plan to the source-aware v2 shape (GPT56 §5.5:
+ * "`sourceVideo` becomes `sources[0]`"). Idempotent: an already-source-aware
+ * plan round-trips to an equivalent plan (same sources; sourceId/kind only
+ * filled where absent, never overwritten).
+ *
+ * - Fills `sources = [{ id: opts.sourceId ?? "src-0", path: plan.sourceVideo }]`
+ *   when the plan has no sources. When sources already exist they are kept
+ *   verbatim and `opts.sourceId` is ignored (the ids are already fixed).
+ * - Stamps `sourceId` (= sources[0].id) and `kind: "take"` on each segment,
+ *   ONLY where absent.
+ * - Preserves the v1 invariant `sourceVideo === sources[0].path` by
+ *   construction in the v1 → v2 case.
+ * - Validates the result via `editPlanSchema.parse`.
+ *
+ * @throws if an existing segment references a `sourceId` that is not in
+ *   `sources` — a dangling reference the render stage could never resolve.
+ */
+export function migratePlanToSourceAware(
+  plan: EditPlan,
+  opts?: { sourceId?: string },
+): EditPlan {
+  const sources: PlanSource[] =
+    plan.sources !== undefined && plan.sources.length > 0
+      ? plan.sources
+      : [{ id: opts?.sourceId ?? V1_SOURCE_ID, path: plan.sourceVideo }];
+
+  const knownIds = new Set(sources.map((s) => s.id));
+  const fillId = sources[0].id;
+
+  const segments = plan.segments.map((seg) => {
+    const sourceId = seg.sourceId ?? fillId;
+    if (!knownIds.has(sourceId)) {
+      throw new Error(
+        `migratePlanToSourceAware: segment "${seg.id}" references sourceId ` +
+          `"${sourceId}", which is not in plan.sources (known ids: ` +
+          `${[...knownIds].join(", ")}). Add a matching { id: "${sourceId}", ` +
+          `path: ... } entry to plan.sources, or fix the segment's sourceId.`,
+      );
+    }
+    return { ...seg, sourceId, kind: seg.kind ?? ("take" as const) };
+  });
+
+  return editPlanSchema.parse({ ...plan, sources, segments });
+}
+
+/**
+ * Resolve the `PlanSource` a segment cuts from.
+ *
+ * - v2 plan (non-empty `sources`): strict lookup by `segment.sourceId`.
+ *   Returns `undefined` for a dangling or absent sourceId — the caller must
+ *   treat that as "cannot resolve", not fall back to `sourceVideo` (that is
+ *   what `migratePlanToSourceAware` is for).
+ * - v1 plan (no `sources`): DOCUMENTED FALLBACK — synthesizes the single v1
+ *   source `{ id: "src-0", path: plan.sourceVideo }`, since every v1 segment
+ *   implicitly reads `sourceVideo` (any stray `segment.sourceId` is ignored).
+ */
+export function sourceForSegment(
+  plan: EditPlan,
+  segment: EditSegment,
+): PlanSource | undefined {
+  if (plan.sources !== undefined && plan.sources.length > 0) {
+    return plan.sources.find((s) => s.id === segment.sourceId);
+  }
+  return { id: V1_SOURCE_ID, path: plan.sourceVideo };
+}
