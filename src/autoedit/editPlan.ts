@@ -555,7 +555,56 @@ export const editPlanSchema = z.object({
    *  behind-speaker depth compositing of overlays/captions. */
   foregroundMatte: foregroundMatteSchema.optional(),
   provenance: editPlanProvenanceSchema.default(() => editPlanProvenanceSchema.parse({})),
-});
+})
+  // Referential integrity for source-aware plans (Sol 0716 §3.4: the schema
+  // previously accepted duplicate source ids, a mismatched legacy mirror, and
+  // dangling segment sourceIds — all of which make take assembly unsafe).
+  // v1 plans (no `sources`) are untouched.
+  .superRefine((plan, ctx) => {
+    const sources = plan.sources;
+    if (sources === undefined || sources.length === 0) return;
+
+    const ids = new Set<string>();
+    sources.forEach((s, i) => {
+      if (ids.has(s.id)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["sources", i, "id"],
+          message:
+            `duplicate source id "${s.id}" — source ids must be unique so ` +
+            `segment.sourceId resolves unambiguously (Sol 0716 §3.4). ` +
+            `Rename one of the colliding sources.`,
+        });
+      }
+      ids.add(s.id);
+    });
+
+    if (plan.sourceVideo !== sources[0].path) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["sourceVideo"],
+        message:
+          `sourceVideo ("${plan.sourceVideo}") must mirror sources[0].path ` +
+          `("${sources[0].path}") — the documented v1-compat invariant so ` +
+          `v1-only readers keep working (Sol 0716 §3.4). Fix sourceVideo or ` +
+          `reorder sources.`,
+      });
+    }
+
+    plan.segments.forEach((seg, i) => {
+      if (seg.sourceId !== undefined && !ids.has(seg.sourceId)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["segments", i, "sourceId"],
+          message:
+            `segment "${seg.id}" references unknown sourceId ` +
+            `"${seg.sourceId}" (known: ${[...ids].join(", ")}) — a dangling ` +
+            `reference the render stage could never resolve (Sol 0716 §3.4). ` +
+            `Add the matching source or fix the segment's sourceId.`,
+        });
+      }
+    });
+  });
 export type EditPlan = z.infer<typeof editPlanSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -566,16 +615,19 @@ export type EditPlan = z.infer<typeof editPlanSchema>;
 const V1_SOURCE_ID = "src-0";
 
 /**
- * Is this plan fully source-aware (v2)? True iff `sources` is non-empty AND
- * every segment carries a `sourceId`. A plan with sources but a sourceId-less
- * segment is half-migrated and NOT source-aware — run
- * `migratePlanToSourceAware` on it before multi-source consumption.
+ * Is this plan fully source-aware (v2)? True iff `sources` is non-empty with
+ * UNIQUE ids AND every segment carries a `sourceId` that RESOLVES to a known
+ * source (Sol 0716 §3.4: the old check accepted dangling ids, so this
+ * returned true while `sourceForSegment` returned undefined). A plan with
+ * sources but a sourceId-less segment is half-migrated and NOT source-aware —
+ * run `migratePlanToSourceAware` on it before multi-source consumption.
  */
 export function isSourceAwarePlan(plan: EditPlan): boolean {
-  return (
-    plan.sources !== undefined &&
-    plan.sources.length > 0 &&
-    plan.segments.every((seg) => seg.sourceId !== undefined)
+  if (plan.sources === undefined || plan.sources.length === 0) return false;
+  const ids = new Set(plan.sources.map((s) => s.id));
+  if (ids.size !== plan.sources.length) return false; // duplicate ids
+  return plan.segments.every(
+    (seg) => seg.sourceId !== undefined && ids.has(seg.sourceId),
   );
 }
 
@@ -589,13 +641,20 @@ export function isSourceAwarePlan(plan: EditPlan): boolean {
  *   when the plan has no sources. When sources already exist they are kept
  *   verbatim and `opts.sourceId` is ignored (the ids are already fixed).
  * - Stamps `sourceId` (= sources[0].id) and `kind: "take"` on each segment,
- *   ONLY where absent.
+ *   ONLY where absent — and ONLY when that fill is unambiguous (a genuine v1
+ *   plan, or exactly ONE source). Sol 0716 §3.4: in a MULTI-source plan a
+ *   missing `sourceId` means "take selection omitted"; silently filling it
+ *   with `sources[0]` would convert an unmade decision into "select the first
+ *   take", which is unsafe for take assembly — that half-migration now throws.
  * - Preserves the v1 invariant `sourceVideo === sources[0].path` by
  *   construction in the v1 → v2 case.
- * - Validates the result via `editPlanSchema.parse`.
+ * - Validates the result via `editPlanSchema.parse` (which also enforces
+ *   unique source ids, the legacy mirror, and resolvable segment refs).
  *
  * @throws if an existing segment references a `sourceId` that is not in
  *   `sources` — a dangling reference the render stage could never resolve.
+ * @throws if a multi-source plan has any segment WITHOUT a `sourceId` (the
+ *   ambiguous half-migration described above).
  */
 export function migratePlanToSourceAware(
   plan: EditPlan,
@@ -608,6 +667,20 @@ export function migratePlanToSourceAware(
 
   const knownIds = new Set(sources.map((s) => s.id));
   const fillId = sources[0].id;
+
+  if (sources.length > 1) {
+    const unassigned = plan.segments.filter((seg) => seg.sourceId === undefined);
+    if (unassigned.length > 0) {
+      throw new Error(
+        `migratePlanToSourceAware: ${unassigned.length} segment(s) ` +
+          `(${unassigned.map((s) => `"${s.id}"`).join(", ")}) have NO sourceId ` +
+          `in a ${sources.length}-source plan — filling them with sources[0] ` +
+          `("${fillId}") would silently turn "take selection omitted" into ` +
+          `"select the first take" (Sol 0716 §3.4). Assign each segment's ` +
+          `sourceId explicitly before migrating.`,
+      );
+    }
+  }
 
   const segments = plan.segments.map((seg) => {
     const sourceId = seg.sourceId ?? fillId;

@@ -180,17 +180,91 @@ describe("migratePlanToSourceAware", () => {
     expect(migrated.segments[1].kind).toBe("take");
   });
 
-  it("throws an actionable error naming a dangling sourceId", () => {
+  it("throws an actionable error naming a dangling sourceId (hand-built object bypassing the schema)", () => {
     const plan = makeV2TwoSourcePlan();
-    const dangling = editPlanSchema.parse({
+    // Since Sol 0716 §3.4 the SCHEMA rejects dangling refs at parse time, so
+    // build the malformed plan object directly — migrate must still defend.
+    const dangling: EditPlan = {
       ...plan,
       segments: [
         plan.segments[0],
         { ...plan.segments[1], sourceId: "src-GHOST" },
       ],
-    });
+    };
     expect(() => migratePlanToSourceAware(dangling)).toThrow(/src-GHOST/);
     expect(() => migratePlanToSourceAware(dangling)).toThrow(/seg-1/);
+  });
+
+  it("REJECTS filling an omitted take selection in a MULTI-source plan (Sol 0716 §3.4)", () => {
+    // "selection omitted" must never silently become "select the first take".
+    const plan = makeV2TwoSourcePlan();
+    const halfMigrated = editPlanSchema.parse({
+      ...plan,
+      segments: [plan.segments[0], v1Segment("seg-1", 8, 13, 150)],
+    });
+    expect(() => migratePlanToSourceAware(halfMigrated)).toThrow(/seg-1/);
+    expect(() => migratePlanToSourceAware(halfMigrated)).toThrow(
+      /selection omitted/,
+    );
+    // The unambiguous single-source fill (a genuine v1 plan) still works.
+    expect(() => migratePlanToSourceAware(makeV1Plan())).not.toThrow();
+  });
+});
+
+describe("editPlanSchema referential integrity (Sol 0716 §3.4)", () => {
+  it("rejects duplicate source ids", () => {
+    const res = editPlanSchema.safeParse({
+      ...(makeV1Plan() as object),
+      sourceVideo: "/b.mp4",
+      segments: [],
+      sources: [
+        { id: "s", path: "/b.mp4" },
+        { id: "s", path: "/c.mp4" },
+      ],
+    });
+    expect(res.success).toBe(false);
+    expect(JSON.stringify(res.error?.issues)).toContain("duplicate source id");
+  });
+
+  it("rejects a sourceVideo that does not mirror sources[0].path", () => {
+    const res = editPlanSchema.safeParse({
+      ...(makeV1Plan() as object),
+      segments: [],
+      sources: [{ id: "s0", path: "/DIFFERENT.mp4" }],
+    });
+    expect(res.success).toBe(false);
+    expect(JSON.stringify(res.error?.issues)).toContain("mirror sources[0].path");
+  });
+
+  it("rejects a segment referencing an unknown sourceId at parse time", () => {
+    const plan = makeV2TwoSourcePlan();
+    const res = editPlanSchema.safeParse({
+      ...plan,
+      segments: [plan.segments[0], { ...plan.segments[1], sourceId: "src-GHOST" }],
+    });
+    expect(res.success).toBe(false);
+    expect(JSON.stringify(res.error?.issues)).toContain("src-GHOST");
+  });
+
+  it("still parses v1 plans (no sources) without any integrity checks firing", () => {
+    expect(() => makeV1Plan()).not.toThrow();
+  });
+
+  it("isSourceAwarePlan is false for dangling or duplicate ids (hand-built objects)", () => {
+    const plan = makeV2TwoSourcePlan();
+    const dangling: EditPlan = {
+      ...plan,
+      segments: [{ ...plan.segments[0], sourceId: "src-GHOST" }],
+    };
+    expect(isSourceAwarePlan(dangling)).toBe(false); // used to be true (Sol §3.4)
+    const dupIds: EditPlan = {
+      ...plan,
+      sources: [
+        { id: "s", path: "takes/file-1.mov" },
+        { id: "s", path: "takes/file-3.mov" },
+      ],
+    };
+    expect(isSourceAwarePlan(dupIds)).toBe(false);
   });
 });
 
