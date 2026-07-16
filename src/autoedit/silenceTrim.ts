@@ -279,6 +279,118 @@ export function editDurationFrames(segments: EditSegment[]): number {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Word-onset snapping — Sol 0716 §4.2 ("They"-class mid-word joins)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Minimal SOURCE-time word span (EditPlanWord satisfies this structurally). */
+export interface WordOnsetSpan {
+  startSeconds: number;
+  endSeconds: number;
+}
+
+/** Options for {@link snapKeepsToWordOnsets}. */
+export interface SnapKeepsOptions {
+  /**
+   * Seconds of pre-voicing headroom left before a word onset when a boundary is
+   * snapped to it. Default 0.12 — the multi-take experiment measured Armando's
+   * real cuts hugging word onsets ~0.11 s before voicing
+   * (docs/research/autoedit-dogfood/MULTITAKE-EXPERIMENT-2026-07-16.md).
+   */
+  preRollSeconds?: number;
+  /**
+   * Never move a boundary by more than this (seconds). A larger disagreement
+   * means whisper timing and silencedetect disagree too much to trust the snap;
+   * the boundary is left where silence-trim put it. Default 0.35.
+   */
+  maxShiftSeconds?: number;
+  /**
+   * A snap is skipped if it would shrink a keep below this length (seconds).
+   * Default 0.2 — mirrors keepSegmentsFromSilences' min-keep floor.
+   */
+  minKeepSeconds?: number;
+}
+
+/**
+ * Post-pass over silence-trimmed KEEP spans: snap any keep boundary that falls
+ * INSIDE a transcript word's `[startSeconds, endSeconds)` to that word's start
+ * minus `preRollSeconds`.
+ *
+ * WHY (Sol 0716 §4.2 / triage #16 — the "They"-class join): silencedetect cuts
+ * on an ENERGY floor, whisper hears WORDS. When a soft word onset straddles a
+ * detected silence edge, the cut lands mid-word — the Round-2 berman join
+ * clipped "it is. They will…" so the audio carried a truncated "They" while
+ * `shiftWordsToEditTimeline` dropped it from the captions (its start sat a hair
+ * outside the kept span). Moving the boundary to just BEFORE the word onset
+ * makes the cut land in genuine silence: either the whole word survives into
+ * the keep (start boundary) or none of it bleeds through the join (end
+ * boundary) — audio and captions agree again.
+ *
+ * Guarantees (all pure, no IO, inputs never mutated):
+ *  - boundaries only ever move EARLIER (toward the word onset), each by at most
+ *    `maxShiftSeconds`, else the snap is skipped;
+ *  - snapped starts are clamped to 0 and to the previous (already-snapped)
+ *    keep's end, so keeps stay sorted and non-overlapping;
+ *  - a snap that would shrink a keep below `minKeepSeconds` is skipped;
+ *  - with no words (or no boundary inside a word) the keeps pass through
+ *    unchanged.
+ *
+ * Run this AFTER `keepSegmentsFromSilences` (on the padded keeps) and BEFORE
+ * `toEditSegments`, whenever a transcript exists (cli.ts; `--no-word-snap`
+ * disables it).
+ */
+export function snapKeepsToWordOnsets(
+  keeps: KeepSpan[],
+  words: readonly WordOnsetSpan[],
+  options: SnapKeepsOptions = {},
+): KeepSpan[] {
+  const preRoll = Math.max(0, options.preRollSeconds ?? 0.12);
+  const maxShift = Math.max(0, options.maxShiftSeconds ?? 0.35);
+  const minKeep = Math.max(0, options.minKeepSeconds ?? 0.2);
+
+  if (keeps.length === 0 || words.length === 0) return keeps.map((k) => ({ ...k }));
+
+  const sortedWords = [...words]
+    .filter((w) => w.endSeconds > w.startSeconds)
+    .sort((a, b) => a.startSeconds - b.startSeconds);
+  const wordContaining = (t: number): WordOnsetSpan | undefined =>
+    sortedWords.find((w) => t >= w.startSeconds && t < w.endSeconds);
+
+  const out: KeepSpan[] = [];
+  for (const k of keeps) {
+    let start = k.startSeconds;
+    let end = k.endSeconds;
+    const prevEnd = out.length > 0 ? out[out.length - 1].endSeconds : 0;
+
+    // START boundary inside a word → the word's head would be clipped by the
+    // cut-in. Pull the boundary back to onset − preRoll so the whole word (plus
+    // pre-voicing breath) survives into this keep.
+    const wStart = wordContaining(start);
+    if (wStart) {
+      const rawTarget = wStart.startSeconds - preRoll;
+      if (start - rawTarget <= maxShift) {
+        start = Math.max(0, prevEnd, rawTarget);
+      }
+    }
+
+    // END boundary inside a word → a truncated word-head fragment would bleed
+    // through the join. Pull the boundary back to onset − preRoll so the cut
+    // lands before voicing begins (the word then falls cleanly outside the
+    // keep — captions and audio agree it is absent).
+    const wEnd = wordContaining(end);
+    if (wEnd) {
+      const rawTarget = wEnd.startSeconds - preRoll;
+      if (end - rawTarget <= maxShift && rawTarget - start >= minKeep) {
+        end = rawTarget;
+      }
+    }
+
+    out.push({ startSeconds: start, endSeconds: end });
+  }
+
+  return out;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // ffmpeg shell — the only IO in this module
 // ─────────────────────────────────────────────────────────────────────────────
 

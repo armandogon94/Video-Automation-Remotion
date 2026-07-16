@@ -81,6 +81,81 @@ export function shiftWordsToEditTimeline(
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Transcript coverage gate — pure evaluator (triage #7; Sol 0716 §2.1)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Blocking floor for word coverage (words per second of source media). Real
+ *  raw takes from the 2026-07-16 multi-take experiment sit below the 1.5 w/s
+ *  WARNING line (long thinking pauses) but well above this: under 0.9 w/s the
+ *  transcript is missing so much speech that captions and word-onset snapping
+ *  would be built on holes. */
+export const MIN_WORDS_PER_SECOND = 0.9;
+/** Blocking ceiling for the share of low-confidence words. */
+export const MAX_LOW_CONFIDENCE_SHARE = 0.4;
+/** A word below this ASR probability counts as low-confidence (same line the
+ *  cli suspect-warning has always used). */
+export const LOW_CONFIDENCE_PROBABILITY = 0.15;
+
+export interface TranscriptCoverageResult {
+  /** words.length / durationSeconds. */
+  wordsPerSecond: number;
+  /** Share of probability-carrying words below {@link LOW_CONFIDENCE_PROBABILITY};
+   *  0 when no word carries a probability (nothing to assess). */
+  lowConfidenceShare: number;
+  /** How many words carried a probability (the share's denominator). */
+  assessedWordCount: number;
+  /** Human-readable blocking failures, each naming the measured number and the
+   *  threshold it broke. Empty ⇒ the gate passes. */
+  failures: string[];
+}
+
+/**
+ * Evaluate the BLOCKING transcript coverage gate. Pure — the cli turns a
+ * non-empty `failures` into a hard exit unless `--force-transcript` is passed.
+ *
+ * This is deliberately a lower bar than `warnIfTranscriptSuspect` (cli.ts):
+ * the warning flags "review before editing" territory (≥1.5 w/s expected,
+ * languageProbability), while these floors mark transcripts that are unsafe to
+ * cut against at all — the §6 hallucination class (6 words for 23 s) and
+ * wrong-language decodes where most words carry near-zero confidence.
+ */
+export function evaluateTranscriptCoverage(
+  words: EditPlanWord[],
+  durationSeconds: number,
+): TranscriptCoverageResult {
+  const wordsPerSecond = durationSeconds > 0 ? words.length / durationSeconds : 0;
+  const withProb = words.filter((w) => typeof w.probability === "number");
+  const lowConfidenceShare =
+    withProb.length === 0
+      ? 0
+      : withProb.filter((w) => (w.probability as number) < LOW_CONFIDENCE_PROBABILITY).length /
+        withProb.length;
+
+  const failures: string[] = [];
+  if (wordsPerSecond < MIN_WORDS_PER_SECOND) {
+    failures.push(
+      `word coverage ${wordsPerSecond.toFixed(2)} words/s (${words.length} words over ` +
+        `${durationSeconds.toFixed(1)}s) is below the ${MIN_WORDS_PER_SECOND} words/s minimum`,
+    );
+  }
+  if (lowConfidenceShare > MAX_LOW_CONFIDENCE_SHARE) {
+    failures.push(
+      `${Math.round(lowConfidenceShare * 100)}% of ${withProb.length} probability-carrying ` +
+        `words are below p=${LOW_CONFIDENCE_PROBABILITY} (maximum ${Math.round(
+          MAX_LOW_CONFIDENCE_SHARE * 100,
+        )}%)`,
+    );
+  }
+
+  return {
+    wordsPerSecond,
+    lowConfidenceShare,
+    assessedWordCount: withProb.length,
+    failures,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // buildEditPlan
 // ─────────────────────────────────────────────────────────────────────────────
 

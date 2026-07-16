@@ -9,9 +9,17 @@ import { fileURLToPath } from "node:url";
 import {
   parseSilenceDetect,
   keepSegmentsFromSilences,
+  snapKeepsToWordOnsets,
   toEditSegments,
+  type KeepSpan,
 } from "./silenceTrim.js";
-import { shiftWordsToEditTimeline, buildEditPlan } from "./buildEditPlan.js";
+import {
+  shiftWordsToEditTimeline,
+  buildEditPlan,
+  evaluateTranscriptCoverage,
+  MIN_WORDS_PER_SECOND,
+  MAX_LOW_CONFIDENCE_SHARE,
+} from "./buildEditPlan.js";
 import {
   suggestOverlays,
   isNumberBeat,
@@ -467,6 +475,188 @@ describe("R4 brand emission (GPT-5.6 finding 2.6)", () => {
       ).toBe(true);
       expect(validateBeatProps(o.type, mounted)).toBe(true);
     }
+  });
+});
+
+describe("snapKeepsToWordOnsets (Sol 0716 §4.2 — 'They'-class mid-word joins)", () => {
+  const fps = 30;
+  /** SOURCE-time words for the exact Round-2 berman join: "…it is. They will help you…" */
+  const bermanWords: EditPlanWord[] = [
+    { text: "it", startSeconds: 12.9, endSeconds: 13.1, startFrame: 387, endFrame: 393 },
+    { text: "is.", startSeconds: 13.1, endSeconds: 13.5, startFrame: 393, endFrame: 405 },
+    { text: "They", startSeconds: 13.7, endSeconds: 13.95, startFrame: 411, endFrame: 419 },
+    { text: "will", startSeconds: 13.95, endSeconds: 14.2, startFrame: 419, endFrame: 426 },
+    { text: "help", startSeconds: 14.2, endSeconds: 14.5, startFrame: 426, endFrame: 435 },
+    { text: "you", startSeconds: 14.5, endSeconds: 14.7, startFrame: 435, endFrame: 441 },
+  ];
+
+  it('recovers the omitted "They" when the cut-in lands inside it (the exact "it is. They will" join)', () => {
+    // silencedetect ate the pause AND the soft onset of "They": silence_end
+    // landed mid-word, so the second keep starts INSIDE "They" [13.7,13.95).
+    const keeps: KeepSpan[] = [
+      { startSeconds: 0, endSeconds: 13.55 },
+      { startSeconds: 13.8, endSeconds: 20 },
+    ];
+
+    // The bug shape first: captions jump "is." → "will" ("They" omitted).
+    const before = shiftWordsToEditTimeline(bermanWords, toEditSegments(keeps, fps), fps);
+    expect(before.map((w) => w.text)).toEqual(["it", "is.", "will", "help", "you"]);
+
+    const snapped = snapKeepsToWordOnsets(keeps, bermanWords);
+    // Boundary inside "They" → its start (13.7) − 0.12 pre-roll = 13.58.
+    expect(snapped[1].startSeconds).toBeCloseTo(13.58, 6);
+    expect(snapped[0]).toEqual(keeps[0]); // untouched boundaries pass through
+    // Non-overlap preserved.
+    expect(snapped[1].startSeconds).toBeGreaterThanOrEqual(snapped[0].endSeconds);
+
+    // And the join is healed: "They" survives into audio AND captions.
+    const after = shiftWordsToEditTimeline(bermanWords, toEditSegments(snapped, fps), fps);
+    expect(after.map((w) => w.text)).toEqual(["it", "is.", "They", "will", "help", "you"]);
+  });
+
+  it("pulls a cut-out that clips mid-word back to before the onset (no truncated word-head bleeds through the join)", () => {
+    // The first keep's END lands inside "They" → the rendered audio would carry
+    // a clipped "They" head that the caption plan omits.
+    const keeps: KeepSpan[] = [
+      { startSeconds: 0, endSeconds: 13.85 },
+      { startSeconds: 14.75, endSeconds: 20 }, // resumes in silence after "you"
+    ];
+    const snapped = snapKeepsToWordOnsets(keeps, bermanWords);
+    // End boundary → "They".start (13.7) − 0.12 = 13.58: cut lands in silence.
+    expect(snapped[0].endSeconds).toBeCloseTo(13.58, 6);
+    expect(snapped[1]).toEqual(keeps[1]);
+  });
+
+  it("leaves boundaries that fall in silence (outside every word) unchanged", () => {
+    const keeps: KeepSpan[] = [
+      { startSeconds: 0, endSeconds: 13.6 }, // between "is." (ends 13.5) and "They" (starts 13.7)
+      { startSeconds: 14.75, endSeconds: 20 }, // after "you" ends (14.7)
+    ];
+    expect(snapKeepsToWordOnsets(keeps, bermanWords)).toEqual(keeps);
+  });
+
+  it("skips a snap whose shift would exceed maxShiftSeconds", () => {
+    // Boundary 0.30s into a word: shift needed = 0.30 + 0.12 = 0.42 > 0.35.
+    const longWord: EditPlanWord[] = [
+      { text: "extraordinarily", startSeconds: 5.0, endSeconds: 5.9, startFrame: 150, endFrame: 177 },
+    ];
+    const keeps: KeepSpan[] = [{ startSeconds: 5.3, endSeconds: 10 }];
+    expect(snapKeepsToWordOnsets(keeps, longWord)).toEqual(keeps);
+    // A wider maxShiftSeconds allows it.
+    const wide = snapKeepsToWordOnsets(keeps, longWord, { maxShiftSeconds: 1 });
+    expect(wide[0].startSeconds).toBeCloseTo(4.88, 6);
+  });
+
+  it("clamps a snapped start at 0 and at the previous keep's (snapped) end", () => {
+    // Clamp at 0: word right at the media head.
+    const headWord: EditPlanWord[] = [
+      { text: "Hola", startSeconds: 0.05, endSeconds: 0.4, startFrame: 2, endFrame: 12 },
+    ];
+    const headKeeps = snapKeepsToWordOnsets(
+      [{ startSeconds: 0.08, endSeconds: 5 }],
+      headWord,
+    );
+    expect(headKeeps[0].startSeconds).toBe(0); // 0.05 − 0.12 clamped to 0
+
+    // Clamp at the previous keep's end: target 10.28 − 0.12 = 10.16 < 10.2.
+    const midWord: EditPlanWord[] = [
+      { text: "ahora", startSeconds: 10.28, endSeconds: 10.6, startFrame: 308, endFrame: 318 },
+    ];
+    const clamped = snapKeepsToWordOnsets(
+      [
+        { startSeconds: 8, endSeconds: 10.2 },
+        { startSeconds: 10.3, endSeconds: 15 },
+      ],
+      midWord,
+    );
+    expect(clamped[1].startSeconds).toBeCloseTo(10.2, 6);
+    expect(clamped[1].startSeconds).toBeGreaterThanOrEqual(clamped[0].endSeconds);
+  });
+
+  it("skips an end snap that would shrink the keep below minKeepSeconds", () => {
+    const word: EditPlanWord[] = [
+      { text: "sí", startSeconds: 10.25, endSeconds: 10.7, startFrame: 308, endFrame: 321 },
+    ];
+    // Snapping the end to 10.25 − 0.12 = 10.13 would leave 0.13s < 0.2 min-keep.
+    const keeps: KeepSpan[] = [{ startSeconds: 10.0, endSeconds: 10.3 }];
+    expect(snapKeepsToWordOnsets(keeps, word)).toEqual(keeps);
+  });
+
+  it("honors a custom preRollSeconds", () => {
+    const keeps: KeepSpan[] = [{ startSeconds: 0, endSeconds: 13.8 }];
+    const snapped = snapKeepsToWordOnsets(keeps, bermanWords, { preRollSeconds: 0.2, maxShiftSeconds: 0.5 });
+    expect(snapped[0].endSeconds).toBeCloseTo(13.5, 6); // 13.7 − 0.2
+  });
+
+  it("is pure: returns keeps unchanged with no words, and never mutates its inputs", () => {
+    const keeps: KeepSpan[] = [{ startSeconds: 0, endSeconds: 13.8 }];
+    const keepsCopy = JSON.parse(JSON.stringify(keeps));
+    const wordsCopy = JSON.parse(JSON.stringify(bermanWords));
+
+    expect(snapKeepsToWordOnsets([], bermanWords)).toEqual([]);
+    expect(snapKeepsToWordOnsets(keeps, [])).toEqual(keeps);
+
+    snapKeepsToWordOnsets(keeps, bermanWords);
+    expect(keeps).toEqual(keepsCopy);
+    expect(bermanWords).toEqual(wordsCopy);
+  });
+});
+
+describe("evaluateTranscriptCoverage (blocking gate — triage #7 / Sol 0716 §2.1)", () => {
+  const mkWords = (count: number, probability?: number): EditPlanWord[] =>
+    Array.from({ length: count }, (_, i) => ({
+      text: `w${i}`,
+      startSeconds: i * 0.4,
+      endSeconds: i * 0.4 + 0.3,
+      startFrame: i * 12,
+      endFrame: i * 12 + 9,
+      ...(probability !== undefined ? { probability } : {}),
+    }));
+
+  it("passes a healthy transcript (2.5 w/s, high confidence)", () => {
+    const res = evaluateTranscriptCoverage(mkWords(60, 0.9), 24);
+    expect(res.failures).toEqual([]);
+    expect(res.wordsPerSecond).toBeCloseTo(2.5, 6);
+    expect(res.lowConfidenceShare).toBe(0);
+  });
+
+  it("fails sparse coverage below 0.9 w/s, naming both measured and threshold numbers", () => {
+    // The §6 hallucination class: 6 words for 23s = 0.26 w/s.
+    const res = evaluateTranscriptCoverage(mkWords(6, 0.9), 23);
+    expect(res.failures.length).toBe(1);
+    expect(res.failures[0]).toContain("0.26 words/s");
+    expect(res.failures[0]).toContain(`${MIN_WORDS_PER_SECOND} words/s`);
+    expect(res.failures[0]).toContain("6 words");
+  });
+
+  it("fails when more than 40% of probability-carrying words are low-confidence, naming the numbers", () => {
+    const words = [...mkWords(12, 0.05), ...mkWords(8, 0.9)]; // 60% below p=0.15
+    const res = evaluateTranscriptCoverage(words, 8); // 2.5 w/s — coverage OK
+    expect(res.failures.length).toBe(1);
+    expect(res.failures[0]).toContain("60%");
+    expect(res.failures[0]).toContain(`${Math.round(MAX_LOW_CONFIDENCE_SHARE * 100)}%`);
+    expect(res.lowConfidenceShare).toBeCloseTo(0.6, 6);
+  });
+
+  it("reports BOTH failures on a transcript that is sparse and low-confidence", () => {
+    const res = evaluateTranscriptCoverage(mkWords(6, 0.01), 23);
+    expect(res.failures.length).toBe(2);
+  });
+
+  it("does not count probability-less words toward the low-confidence share", () => {
+    const words = [...mkWords(5, 0.05), ...mkWords(45)]; // only 5 carry a probability, all low
+    const res = evaluateTranscriptCoverage(words, 20); // 2.5 w/s
+    expect(res.assessedWordCount).toBe(5);
+    expect(res.lowConfidenceShare).toBe(1);
+    expect(res.failures.length).toBe(1); // low-confidence fires; coverage passes
+  });
+
+  it("exactly-at-threshold values pass (thresholds are strict)", () => {
+    // Exactly 0.9 w/s: 9 words over 10s (both exactly representable doubles).
+    expect(evaluateTranscriptCoverage(mkWords(9, 0.9), 10).failures).toEqual([]);
+    // Exactly 40% low-confidence: 4 of 10 assessed, at healthy 2.5 w/s.
+    const words = [...mkWords(4, 0.05), ...mkWords(6, 0.9)];
+    expect(evaluateTranscriptCoverage(words, 4).failures).toEqual([]);
   });
 });
 

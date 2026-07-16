@@ -102,6 +102,16 @@ length (≈2.5–3 words/s of speech expected — 6 words for 23 s = the §6 hal
 zero overlays on a 25 s clip (grammar gap §7.1); overlay windows overlapping each other;
 Spanish text from English audio.
 
+> **Blocking coverage gate (added 2026-07-16, triage #7 / Sol §2.1):** the worst of the
+> red flags above now BLOCK instead of warn — `autoedit` exits 1 before writing a plan
+> when word coverage is **< 0.9 words/s** or **> 40%** of probability-carrying words sit
+> below p=0.15, and the error prints both measured numbers. It applies to live-whisper
+> AND `--transcript` inputs. `--force-transcript` overrides for a deliberate exception
+> run, but a forced run leaves **G1 at PENDING** until the transcript is
+> reviewed/corrected, and the override must be noted in the round record. (The softer
+> ≈2.5–3 w/s expectation stays a WARNING — every real raw take in the 2026-07-16
+> multi-take experiment sits below 1.5 w/s without being hallucinated.)
+
 ### 3.4 Visual QA (NON-NEGOTIABLE — duration checks catch nothing visual)
 ```bash
 # full-arc strip (1 fps):

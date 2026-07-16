@@ -26,8 +26,14 @@ import { execa } from "execa";
 import fs from "fs";
 import path from "path";
 
-import { detectSilences, keepSegmentsFromSilences, toEditSegments } from "./silenceTrim.js";
-import { buildEditPlan } from "./buildEditPlan.js";
+import {
+  detectSilences,
+  keepSegmentsFromSilences,
+  snapKeepsToWordOnsets,
+  toEditSegments,
+  type KeepSpan,
+} from "./silenceTrim.js";
+import { buildEditPlan, evaluateTranscriptCoverage } from "./buildEditPlan.js";
 import { editPlanWordSchema, type EditPlanWord, type EditPlanAspect } from "./editPlan.js";
 import { renderEditedVideo, type CaptionStyle } from "./renderFromPlan.js";
 
@@ -194,6 +200,8 @@ program
   .option("--silence-db <db>", "silencedetect noise floor (dB, negative)", "-30")
   .option("--min-silence <sec>", "Minimum silence to trim (seconds)", "0.5")
   .option("--no-trim", "Skip silence-trim (keep the whole clip as one segment)")
+  .option("--no-word-snap", "Skip snapping cut boundaries to word onsets (snap runs after silence-trim whenever a transcript exists)")
+  .option("--force-transcript", "Proceed despite a FAILING transcript coverage gate (<0.9 words/s or >40% low-confidence words)")
   .option("--render", "Render the EditPlan to a finished MP4 (ffmpeg-trim + SpeakerOverlayScene)")
   .option("--caption-style <style>", "FloatingCaption preset: hormozi-pop (owner default, DOGFOOD-PLAYBOOK §9.1)|editorial-cyan|classic|… (with --render)", "hormozi-pop")
   .option("--handle <handle>", "Brand handle chip ('' hides it) (with --render)")
@@ -232,29 +240,22 @@ async function main(): Promise<void> {
   const sourceDurationFrames = Math.ceil(durationSeconds * fps);
   log("probe", `duration=${durationSeconds.toFixed(2)}s (${sourceDurationFrames} frames)`);
 
-  // ── 2. silence-trim ────────────────────────────────────────────────────────
-  let segments = [];
+  // ── 2. silence-trim → KEEP spans (segments built in step 3.5, after the
+  //       transcript is available for word-onset snapping) ────────────────────
+  let keeps: KeepSpan[];
   if (opts.trim === false) {
-    // --no-trim: one segment spanning the whole clip.
-    segments = toEditSegments(
-      [{ startSeconds: 0, endSeconds: durationSeconds }],
-      fps,
-    );
+    // --no-trim: one keep spanning the whole clip.
+    keeps = [{ startSeconds: 0, endSeconds: durationSeconds }];
     log("silence", "skipped (--no-trim): 1 segment for the whole clip");
   } else {
     const silences = await detectSilences(video, {
       thresholdDb: parseFloat(opts.silenceDb),
       minSilenceSeconds: parseFloat(opts.minSilence),
     });
-    const keeps = keepSegmentsFromSilences(silences, durationSeconds, {
+    keeps = keepSegmentsFromSilences(silences, durationSeconds, {
       log: (m) => log("silence", m),
     });
-    segments = toEditSegments(keeps, fps);
-    const trimmedFrames = sourceDurationFrames - (segments[segments.length - 1]?.editEndFrame ?? 0);
-    log(
-      "silence",
-      `${silences.length} silence(s) → ${segments.length} kept segment(s); trimmed ~${(trimmedFrames / fps).toFixed(2)}s of dead air`,
-    );
+    log("silence", `${silences.length} silence(s) → ${keeps.length} kept span(s)`);
   }
 
   // ── 3. transcribe (skipped when register === 'none') ───────────────────────
@@ -293,6 +294,59 @@ async function main(): Promise<void> {
     );
     warnIfTranscriptSuspect(sourceWords, durationSeconds, parsed.languageProbability);
   }
+
+  // ── 3.25 BLOCKING transcript coverage gate (triage #7; Sol 0716 §2.1) ──────
+  // The suspect-warning above is advisory; these floors mark a transcript that
+  // is unsafe to cut against at all. Applies to live-whisper AND --transcript
+  // inputs; register=none has no transcript, so nothing to gate.
+  if (register !== "none") {
+    const coverage = evaluateTranscriptCoverage(sourceWords, durationSeconds);
+    if (coverage.failures.length > 0) {
+      if (opts.forceTranscript) {
+        console.error(
+          `⚠ transcript coverage gate OVERRIDDEN by --force-transcript: ${coverage.failures.join("; ")} — G1 stays PENDING until the transcript is reviewed/corrected (DOGFOOD-PLAYBOOK §3.3)`,
+        );
+      } else {
+        throw new Error(
+          `transcript coverage gate FAILED: ${coverage.failures.join("; ")}. ` +
+            `The transcript is too sparse/uncertain to cut against — captions and word-onset snapping would be built on missing words. ` +
+            `Fix: burst-slice the source or retry with --whisper-model large-v3 / a corrected --transcript, ` +
+            `or pass --force-transcript to proceed anyway (G1 stays PENDING).`,
+        );
+      }
+    }
+  }
+
+  // ── 3.5 word-onset snap + segments (Sol 0716 §4.2 "They"-class joins) ──────
+  // Snap cut boundaries that landed INSIDE a word to that word's onset −0.12s
+  // pre-roll, so joins never clip mid-word. Runs only when a transcript exists
+  // and silence-trim actually cut something; --no-word-snap disables it.
+  if (opts.wordSnap !== false && opts.trim !== false && sourceWords.length > 0) {
+    const snapped = snapKeepsToWordOnsets(keeps, sourceWords);
+    const movedBoundaries = snapped.reduce(
+      (n, s, i) =>
+        n +
+        (s.startSeconds !== keeps[i].startSeconds ? 1 : 0) +
+        (s.endSeconds !== keeps[i].endSeconds ? 1 : 0),
+      0,
+    );
+    log(
+      "snap",
+      movedBoundaries > 0
+        ? `word-onset snap: moved ${movedBoundaries} cut boundar${movedBoundaries === 1 ? "y" : "ies"} to word onset −0.12s pre-roll (--no-word-snap to disable)`
+        : "word-onset snap: no cut boundary landed inside a word (nothing to move)",
+    );
+    keeps = snapped;
+  } else if (opts.wordSnap === false) {
+    log("snap", "word-onset snap skipped (--no-word-snap)");
+  }
+
+  const segments = toEditSegments(keeps, fps);
+  const trimmedFrames = sourceDurationFrames - (segments[segments.length - 1]?.editEndFrame ?? 0);
+  log(
+    "silence",
+    `${segments.length} kept segment(s); trimmed ~${(trimmedFrames / fps).toFixed(2)}s of dead air`,
+  );
 
   // ── 4. build the plan ───────────────────────────────────────────────────────
   const plan = buildEditPlan({
