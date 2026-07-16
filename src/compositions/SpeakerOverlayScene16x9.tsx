@@ -16,14 +16,14 @@
  *     1. Base video (full-bleed `OffthreadVideo`) or a "BASE VIDEO" placeholder.
  *     2. [overlay slot] — registry overlay molecules.
  *     3. FloatingCaption.
- *     4. Optional handle chip.
+ *     4. Optional handle chip (persistent, or windowed via `handleWindows` — owner §9.3).
  *
  *   LAYOUT MODE (a `layoutTrack` is present — Tella-style scene switching):
  *     1. LayoutTrack (gradient backdrop + screen layer + cam layer).
  *     2. behind-speaker overlays/caption (composited UNDER the matte).
  *     3. SpeakerForegroundMatte (speaker alpha on top — depth compositing).
  *     4. front overlays/caption.
- *     5. Optional handle chip.
+ *     5. Optional handle chip (persistent, or windowed via `handleWindows` — owner §9.3).
  *
  * ASSET REFERENCING
  * -----------------
@@ -35,7 +35,15 @@
  * so the comp renders with no props (placeholder backdrop + empty caption).
  */
 import React from "react";
-import { AbsoluteFill, OffthreadVideo, Sequence, staticFile, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  OffthreadVideo,
+  Sequence,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { z } from "zod";
 import { BRAND, FONT_STACKS } from "../brand";
 import { FloatingCaption, floatingCaptionSchema } from "../components/FloatingCaption";
@@ -80,6 +88,17 @@ export const speakerOverlayScene16x9Schema = z.object({
   caption: floatingCaptionSchema.default(() => floatingCaptionSchema.parse({})),
   /** Brand handle chip rendered bottom-right. Empty string hides it. */
   handle: z.string().default("@armandointeligencia"),
+  /** Intermittent handle-chip windows (owner decision, DOGFOOD-PLAYBOOK §9.3:
+   *  the chip pops in/out at moments instead of sitting persistent). ABSENT →
+   *  persistent chip, byte-identical legacy behavior (back-compat). PRESENT →
+   *  the chip mounts once per window inside a <Sequence>, with a ~10-frame fade
+   *  in/out. Frames are scene-local output frames. Default auto-windows
+   *  (~3 s every ~45 s + final 4 s) are the PLANNER's responsibility — this
+   *  scene deliberately hardcodes no cadence.
+   *  `.optional()` — NEW field (Remotion defaultProps z.input & z.infer Zod-v4 gotcha). */
+  handleWindows: z
+    .array(z.object({ fromFrame: z.number(), toFrame: z.number() }))
+    .optional(),
   /** Composition length in frames. Default 150 = 5.0s @ 30fps. */
   durationFrames: z.number().default(150),
   /** Over-speaker overlay molecules (OV1–OV12). Each names a registry overlay +
@@ -180,6 +199,63 @@ const HandleChip: React.FC<{ handle: string }> = ({ handle }) =>
     </div>
   ) : null;
 
+type HandleWindow = { fromFrame: number; toFrame: number };
+
+/** Fades the chip in/out over ~10 frames of the Sequence-local clock (clamped;
+ *  the fade shrinks to half the window when the window is under 20 frames). */
+const HandleChipFade: React.FC<{ handle: string; durationInFrames: number }> = ({
+  handle,
+  durationInFrames,
+}) => {
+  const frame = useCurrentFrame();
+  const fade = Math.min(10, Math.max(1, Math.floor(durationInFrames / 2)));
+  const fadeIn = interpolate(frame, [0, fade], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const fadeOut = interpolate(
+    frame,
+    [durationInFrames - fade, durationInFrames],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  return (
+    <div style={{ opacity: Math.min(fadeIn, fadeOut) }}>
+      <HandleChip handle={handle} />
+    </div>
+  );
+};
+
+/** Handle-chip layer — owner decision §9.3 (intermittent handle).
+ *  `handleWindows` ABSENT → persistent chip (legacy behavior, back-compat).
+ *  PRESENT → one Sequence-mounted, fade-wrapped chip per window (an explicitly
+ *  empty array means no appearances at all). */
+const HandleChipLayer: React.FC<{
+  handle: string;
+  handleWindows?: HandleWindow[];
+}> = ({ handle, handleWindows }) => {
+  if (handleWindows === undefined) {
+    return <HandleChip handle={handle} />;
+  }
+  return (
+    <>
+      {handleWindows.map((w, i) => {
+        const dur = Math.max(1, w.toFrame - w.fromFrame);
+        return (
+          <Sequence
+            key={`handle-${i}`}
+            from={w.fromFrame}
+            durationInFrames={dur}
+            layout="none"
+          >
+            <HandleChipFade handle={handle} durationInFrames={dur} />
+          </Sequence>
+        );
+      })}
+    </>
+  );
+};
+
 /** The dark-slate placeholder backdrop shown in LEGACY mode without a `videoSrc`. */
 const BaseVideoPlaceholder: React.FC = () => (
   <AbsoluteFill
@@ -215,6 +291,7 @@ export const SpeakerOverlayScene16x9: React.FC<
   caption,
   overlays = [],
   handle = "@armandointeligencia",
+  handleWindows,
   camSrc,
   screenSrc,
   layoutTrack,
@@ -257,7 +334,7 @@ export const SpeakerOverlayScene16x9: React.FC<
         {/* Overlay slot (registry molecules) → caption → handle chip. */}
         <OverlayLayer overlays={overlays} keyPrefix="ov" />
         <FloatingCaption {...caption} />
-        <HandleChip handle={handle} />
+        <HandleChipLayer handle={handle} handleWindows={handleWindows} />
       </AbsoluteFill>
     );
   }
@@ -289,7 +366,7 @@ export const SpeakerOverlayScene16x9: React.FC<
       {captionBehindSpeaker ? null : <FloatingCaption {...caption} />}
 
       {/* 5. Handle chip. */}
-      <HandleChip handle={handle} />
+      <HandleChipLayer handle={handle} handleWindows={handleWindows} />
     </AbsoluteFill>
   );
 };
