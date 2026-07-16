@@ -132,3 +132,24 @@ The talking-head→edited-video dogfood loop is now a standing process:
 Round-1 results, ordered §7 build queue). Round 1 fixed 2 bugs (V24 overlay timing `9ec50d2`;
 whisper es-prompt hallucination) and logged the gap queue (overlay density first).
 Resume with: "run dogfood round 2 per the playbook".
+
+---
+## Lint gate live (2026-07-15) — 72 errors / 31 warnings; mechanical cleanup pending
+GPT-5.6 P0.5 "make the gates real" (config-only pass; no src/** edits):
+- `npm run lint` now EXECUTES (was exit 2, "cannot find eslint.config.*"). eslint pinned
+  `^9.39.0` (installed 9.39.5); new `eslint.config.mjs` uses `@remotion/eslint-config-flat`
+  4.0.443 (`import {config} from '@remotion/eslint-config-flat'`). NOTE: the old
+  `@remotion/eslint-config` devDep was legacy-only (ESLint <= 8, no flat export) — swapped
+  for the `-flat` sibling package. Dead `npm run render` script removed (src/pipeline/render.ts
+  never existed); `lint` script is now `eslint src` (v9 dropped `--ext`).
+- Current findings on src/: **72 errors / 31 warnings** (103 problems, 7 auto-fixable).
+  Top rules: `@typescript-eslint/no-unused-vars` 53 err · `@remotion/non-pure-animation`
+  29 warn · `@remotion/warn-native-media-tag` 6 err · `@remotion/from-0` 5 err · misc
+  (prefer-const, no-useless-escape, no-control-regex, no-case-declarations,
+  no-empty-object-type) 8 err · react-hooks/exhaustive-deps 2 warn.
+  Mechanical cleanup of these findings is PENDING (deliberately not done in this pass).
+- `uv run pytest -q` also EXECUTES again (was exit 126 — stale Documents/ shebangs;
+  repaired via `uv sync --reinstall`). Currently exit 5 (no tests collected) — Python tests
+  are being added by a parallel session.
+- Post-change verification: `npx tsc --noEmit` exit 0; `npx vitest run` 4 files / 46 tests green
+  (baseline was 40 — a parallel session added tests mid-pass).
