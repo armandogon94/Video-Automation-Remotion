@@ -113,22 +113,36 @@ ffmpeg -y -i output/autoedit/dogfood-<clip>-edit.mp4 -vf "select='eq(n\,<mid>)'"
 ```
 View them. Grade with §4. If anything is suspicious, dense-extract that 2 s window at mod-3.
 
-## 4. Grading rubric (score each render 0–2 per row; 14+ / 18 = shippable)
+## 4. Grading — HARD GATES first, weighted score second (replaced 2026-07-15 per GPT56-FINDINGS Challenge 4)
 
-| # | Check | What PASS looks like (the creator grammar) |
+> The original equal-weight 18-point rubric is RETIRED: it let a video ship at 14/18 with
+> unsynchronized captions and clipped speech, and it counted "no opportunity" (n/a) as 0.
+> Round-1 scores in ROUNDS.md §Round-1 stay as recorded history under the OLD rubric.
+
+### 4.1 Hard gates (any failure = NOT SHIPPABLE, no score computed)
+
+| gate | what must be true | evidence |
 |---|---|---|
-| 1 | Overlay TIMING | Graphic enters within ±5 frames of its trigger word (verify: full-res at plan fromFrame+5 shows it mid-pop) |
-| 2 | Overlay DENSITY | ≥1 graphic per 8–15 s of speech (austin's rate). 25 s with 0 overlays = automatic 0 |
-| 3 | Overlay RELEVANCE | Type matches the moment: stat→callout, enumeration→bullet build, brand/tool→its logo (NOT the default brain emoji), quote/prompt→card |
-| 4 | Caption LEGIBILITY | Readable over the brightest frame of the clip (Berman wall). Boxed/stroked styles pass; bare white fails (FABLE V2) |
-| 5 | Caption SYNC | Karaoke highlight on the word being spoken (spot-check 3 random frames against audio position) |
-| 6 | SAFE AREAS | Nothing clipped at frame edges; nothing under/over the handle chip; nothing on the face (FABLE V8) |
-| 7 | CUT QUALITY | Silence-trim cuts don't clip word tails audibly (LISTEN to 10 s — frames can't hear; FABLE 4.4 pads landing) |
-| 8 | DEAD AIR | No stretch > 15 s with zero non-caption visuals (ties to overlay density) |
-| 9 | BRAND | Handle chip present, correct corner, no double-branding |
+| G1 transcript/take integrity | no prompt hallucination; plausible word count (≈2.5–3 w/s); low-confidence proper nouns reviewed | plan inspection (§3.3) + cli suspect-warning absent |
+| G2 cut/audio integrity | no clipped speech at joins; no missing stream; A/V duration agree (selfEval ≤0.1 s) | selfEvalRender report + HUMAN LISTEN checkbox |
+| G3 caption integrity | correct text, synchronized, legible over brightest frame, safe-area, no overlaps | strip + full-res spot checks |
+| G4 render integrity | selected source visible (no placeholder); no invalid window / hard lifecycle clip; frame-0 non-caption hook present (owner §9.9) | selfEval frame-0 gate + overlay window frames |
 
-Record scores in `docs/research/autoedit-dogfood/ROUNDS.md` (append-only, one table per round,
-cite the strip/still paths you actually viewed).
+### 4.2 Weighted quality score (only after all gates pass; n/a renormalizes the denominator — NEVER counts as 0)
+
+| dimension | weight |
+|---|---:|
+| semantic/take choice + graphic relevance | 25 |
+| cut naturalness + pacing | 20 |
+| caption readability + rhythm | 20 |
+| motion timing/choreography | 15 |
+| hook + payoff | 10 |
+| brand execution | 5 |
+| density/variety | 5 |
+
+Report as `score/applicable-total` with raw sub-scores + evidence links. Keep gate results
+and sub-scores separate so a total can never hide a gate failure.
+
 
 ## 5. Creator-grammar targets (what "similar to austin" means, concretely)
 
