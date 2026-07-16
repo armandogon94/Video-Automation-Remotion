@@ -45,7 +45,7 @@ import type {
   EditSegment,
   SegmentGrade,
 } from "./editPlan.js";
-import { GRADE_FILTERS } from "./editPlan.js";
+import { GRADE_FILTERS, sourceForSegment } from "./editPlan.js";
 import { selfEvalRender } from "./selfEvalRender.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1388,4 +1388,68 @@ export async function renderMultiSourcePlan(
     beatTimings,
     elapsedSeconds,
   };
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// EditPlan v2 → multi-source bridge (renderer convergence, GPT-5.6 §5.5)
+// ═════════════════════════════════════════════════════════════════════════════
+//
+// GPT-5.6 §5.5: "Both single- and multi-source rendering must consume the same
+// plan and timing helper; delete the separate semantic meaning of `ReelBeat[]`
+// after migration." This section BEGINS that convergence: a source-aware v2
+// EditPlan becomes the single authoring surface, and `ReelBeat[]` becomes a
+// derived, internal wire shape produced by `beatsFromSourceAwarePlan` — never
+// hand-authored for plan-driven renders.
+
+/**
+ * PURE: map a source-aware v2 plan's segments to the multi-source `ReelBeat[]`
+ * shape (`renderMultiSourcePlan`'s input). Each segment becomes one beat:
+ * its resolved source's `path` + its SOURCE-time range + its optional grade,
+ * labeled with the segment id for logging/QA traceability.
+ *
+ * Resolution goes through `sourceForSegment` (the one v1/v2 lookup authority).
+ * Throws actionable errors instead of emitting unreliable beats:
+ *  - plan has no `sources` (a v1 plan — render it via `renderEditedVideo`, or
+ *    run `migratePlanToSourceAware` first);
+ *  - plan has no segments (nothing to assemble);
+ *  - a segment's `sourceId` is absent or dangling (Sol 0716 §3.4 — the schema
+ *    rejects these at parse time, but this function must defend against
+ *    hand-built plans too, mirroring `sanitizeSceneOverlays`).
+ */
+export function beatsFromSourceAwarePlan(plan: EditPlan): ReelBeat[] {
+  if (plan.sources === undefined || plan.sources.length === 0) {
+    throw new Error(
+      "beatsFromSourceAwarePlan: plan has no `sources` (a v1 single-source " +
+        "plan) — run migratePlanToSourceAware(plan) first, or render it " +
+        "through renderEditedVideo (the single-source path).",
+    );
+  }
+  if (plan.segments.length === 0) {
+    throw new Error(
+      "beatsFromSourceAwarePlan: plan has no segments — nothing to assemble " +
+        "into a reel. Add at least one segment to the plan.",
+    );
+  }
+  const knownIds = plan.sources.map((s) => s.id).join(", ");
+  return plan.segments.map((seg) => {
+    const src = sourceForSegment(plan, seg);
+    if (src === undefined) {
+      throw new Error(
+        `beatsFromSourceAwarePlan: segment "${seg.id}" ` +
+          (seg.sourceId === undefined
+            ? "has NO sourceId"
+            : `references unknown sourceId "${seg.sourceId}"`) +
+          ` (known source ids: ${knownIds}) — a dangling reference the ` +
+          `assembly could never cut from (Sol 0716 §3.4). Run ` +
+          `migratePlanToSourceAware(plan) or fix the segment's sourceId.`,
+      );
+    }
+    return {
+      sourceFile: src.path,
+      startSec: seg.source.startSeconds,
+      endSec: seg.source.endSeconds,
+      label: seg.id,
+      ...(seg.grade !== undefined ? { grade: seg.grade } : {}),
+    };
+  });
 }

@@ -14,6 +14,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import {
+  beatsFromSourceAwarePlan,
   buildTrimConcatFilter,
   buildMultiSourceConcatFilter,
   buildCombinedTranscript,
@@ -619,6 +620,107 @@ describe("hdrColorFixFilter — Task 2.10 apostrophe quoting", () => {
 
   it("returns empty string for an SDR source", () => {
     expect(hdrColorFixFilter(false, "/luts/hlg.cube")).toBe("");
+  });
+});
+
+describe("beatsFromSourceAwarePlan — EditPlan v2 → ReelBeat[] bridge (GPT-5.6 §5.5)", () => {
+  /** A parsed two-source v2 plan: seg-0 from src-0 (graded), seg-1 from src-1. */
+  const makeV2Plan = (): EditPlan =>
+    editPlanSchema.parse({
+      sourceVideo: "/takes/a.mov",
+      sources: [
+        { id: "src-0", path: "/takes/a.mov" },
+        { id: "src-1", path: "/takes/b.mov" },
+      ],
+      aspect: "9:16",
+      fps: 30,
+      sourceDurationFrames: 900,
+      editDurationFrames: 150,
+      segments: [
+        {
+          id: "seg-0",
+          source: { startSeconds: 1, endSeconds: 3, startFrame: 30, endFrame: 90 },
+          editStartFrame: 0,
+          editEndFrame: 60,
+          mode: "speaker",
+          grade: "warm-cinematic",
+          sourceId: "src-0",
+          kind: "take",
+        },
+        {
+          id: "seg-1",
+          source: { startSeconds: 10, endSeconds: 13, startFrame: 300, endFrame: 390 },
+          editStartFrame: 60,
+          editEndFrame: 150,
+          mode: "speaker",
+          sourceId: "src-1",
+          kind: "take",
+        },
+      ],
+    });
+
+  it("maps each segment to a beat: resolved source path, SOURCE-time range, seg id label, grade carried", () => {
+    const beats = beatsFromSourceAwarePlan(makeV2Plan());
+    expect(beats).toEqual([
+      {
+        sourceFile: "/takes/a.mov",
+        startSec: 1,
+        endSec: 3,
+        label: "seg-0",
+        grade: "warm-cinematic",
+      },
+      { sourceFile: "/takes/b.mov", startSec: 10, endSec: 13, label: "seg-1" },
+    ]);
+    // The beats feed computeBeatTimings directly (the one timing authority).
+    const timings = computeBeatTimings(beats, 30);
+    expect(timings.map((t) => t.editEndFrame)).toEqual([60, 150]);
+  });
+
+  it("throws actionably on a v1 plan (no sources) — points at migrate/renderEditedVideo", () => {
+    const v1 = editPlanSchema.parse({
+      sourceVideo: "/single.mov",
+      aspect: "9:16",
+      sourceDurationFrames: 300,
+      editDurationFrames: 300,
+      segments: [
+        {
+          id: "seg-0",
+          source: { startSeconds: 0, endSeconds: 10, startFrame: 0, endFrame: 300 },
+          editStartFrame: 0,
+          editEndFrame: 300,
+          mode: "speaker",
+        },
+      ],
+    });
+    expect(() => beatsFromSourceAwarePlan(v1)).toThrow(/no `sources`/);
+    expect(() => beatsFromSourceAwarePlan(v1)).toThrow(/migratePlanToSourceAware/);
+    expect(() => beatsFromSourceAwarePlan(v1)).toThrow(/renderEditedVideo/);
+  });
+
+  it("throws actionably on an empty-segments plan", () => {
+    const plan = makeV2Plan();
+    plan.segments = [];
+    expect(() => beatsFromSourceAwarePlan(plan)).toThrow(/no segments/);
+  });
+
+  it("throws on a DANGLING sourceId, naming the segment, the bad id, and the known ids (Sol 0716 §3.4)", () => {
+    // editPlanSchema.superRefine rejects this at parse time, but the function
+    // is pure and must defend against hand-built plans too (mutate post-parse).
+    const plan = makeV2Plan();
+    plan.segments[1].sourceId = "src-404";
+    expect(() => beatsFromSourceAwarePlan(plan)).toThrow(
+      /segment "seg-1" references unknown sourceId "src-404"/,
+    );
+    expect(() => beatsFromSourceAwarePlan(plan)).toThrow(/src-0, src-1/);
+  });
+
+  it("throws on a segment MISSING its sourceId in a sourced plan (half-migrated)", () => {
+    const plan = makeV2Plan();
+    delete plan.segments[0].sourceId;
+    expect(() => beatsFromSourceAwarePlan(plan)).toThrow(
+      /segment "seg-0" has NO sourceId/,
+    );
+    expect(() => beatsFromSourceAwarePlan(plan)).toThrow(/migratePlanToSourceAware/);
   });
 });
 
