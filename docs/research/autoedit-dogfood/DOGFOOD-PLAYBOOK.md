@@ -121,12 +121,20 @@ View them. Grade with §4. If anything is suspicious, dense-extract that 2 s win
 
 ### 4.1 Hard gates (any failure = NOT SHIPPABLE, no score computed)
 
+> **Three-state rule (added 2026-07-16, Sol follow-up §3.3):** every gate is recorded as
+> **PASS | FAIL | PENDING**. "Not yet listened to / not yet reviewed" is **PENDING**, never
+> PASS — and a PENDING hard gate suppresses the weighted score exactly like a FAIL. A PASS
+> requires an artifact path AND a named reviewer for every human item (an unchecked selfEval
+> checkbox is durable evidence of PENDING, not of PASS). Round 2 recorded four PASS verdicts
+> with unchecked LISTEN boxes and container-vs-audio duration evidence; all four were
+> reclassified FAIL/PENDING in the ROUNDS.md addendum — do not repeat that pattern.
+
 | gate | what must be true | evidence |
 |---|---|---|
-| G1 transcript/take integrity | no prompt hallucination; plausible word count (≈2.5–3 w/s); low-confidence proper nouns reviewed | plan inspection (§3.3) + cli suspect-warning absent |
-| G2 cut/audio integrity | no clipped speech at joins; no missing stream; A/V duration agree (selfEval ≤0.1 s) | selfEvalRender report + HUMAN LISTEN checkbox |
-| G3 caption integrity | correct text, synchronized, legible over brightest frame, safe-area, no overlaps | strip + full-res spot checks |
-| G4 render integrity | selected source visible (no placeholder); no invalid window / hard lifecycle clip; frame-0 non-caption hook present (owner §9.9) | selfEval frame-0 gate + overlay window frames |
+| G1 transcript/take integrity | no prompt hallucination; plausible word count (≈2.5–3 w/s); low-confidence proper nouns reviewed; NOTE: the cli suspect-warning now also covers `--transcript` inputs + languageProbability, but it is a heuristic — a missing warning is supporting evidence, not a PASS by itself (coverage/corrections gate still queued) | plan inspection (§3.3) + cli suspect-warning absent + reviewer |
+| G2 cut/audio integrity | no clipped speech at joins; no missing stream; VIDEO-stream vs AUDIO-stream duration agree (selfEval ≤0.1 s; container duration is informational only) | selfEvalRender report + HUMAN LISTEN checkbox (unchecked = PENDING) |
+| G3 caption integrity | correct text INCLUDING at every silence-trim join (Round-2 lesson: audio can carry a word the caption plan dropped), synchronized, legible over brightest frame, safe-area, no overlaps with baked-in source text | strip + full-res spot checks + join-snippet listen/transcribe |
+| G4 render integrity | selected source visible (no placeholder); no invalid window / hard lifecycle clip (check the EXACT boundary frame pair at every overlay exit); frame-0 non-caption hook present (owner §9.9) — the selfEval frame-0 σ is a BLANK-FRAME diagnostic only, the hook PASS names the planned hook + a human decision | selfEval frame-0 diagnostic + overlay boundary frames + reviewer |
 
 ### 4.2 Weighted quality score (only after all gates pass; n/a renormalizes the denominator — NEVER counts as 0)
 

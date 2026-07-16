@@ -59,3 +59,33 @@ KNOWN queue, unchanged priorities: semantic planner (P1.10 — density/hook dime
 starved by design until then), V.8 safe-areas (KEY edge-hug), V.1 scrims for optional
 styles, LISTEN pass (human). Next per FINDINGS §6: P1.6 source-aware EditPlan v2 →
 multi-take vertical slice.
+
+## Round 2 — TRIAGE ADDENDUM 2026-07-16 (Fable; Sol follow-up review §4) — verdicts RECLASSIFIED
+
+Sol's 2026-07-16 audit (docs/peer-review/GPT56-FINDINGS-2026-07-16.md §4) overturned all
+four Round-2 verdicts. Triage re-verified the claims independently (per playbook §11) and
+CONFIRMS the reclassification. The table above stays as recorded history (append-only);
+the authoritative verdicts are now:
+
+| render | audited verdict | confirmed gate failures |
+|---|---|---|
+| r2-berman-end1 | **FAIL/PENDING** | G3 FAIL — rendered audio at the seg-0→seg-1 join carries "it is. **They** will help you" (re-verified 2026-07-16 by transcribing the rendered file's join snippet with medium) while the caption plan jumps `is.` → `will`; G4 FAIL — frame 0 is a speaker-only shot, no planned hook; G2 PENDING — LISTEN unchecked |
+| berman-end2-r2 | **FAIL/PENDING** | G3 FAIL — same class: plan joins `work.` → `own`, audio carries "They" (Sol's targeted transcription); G4 FAIL — speaker-only frame 0; G2 PENDING |
+| r2-austin-mid | **FAIL/PENDING** | G4 FAIL — KEY `YellowGlowWordCallout` full-strength at f205, gone at f206 (component had NO exit fade — code confirmed); G2 PENDING + its A/V evidence was container-vs-audio (false zero; video stream is 22.000s vs audio 22.0587s) |
+| r2-austin-th-clip | **FAIL/PENDING** | G4 FAIL — "99" callout hard-cuts at f423→424 (the "clean exit (frames verified)" note above was WRONG — the strip sampling missed the boundary pair); G3 FAIL — baked source lower-third collides with the karaoke caption band; G2 PENDING |
+
+**All four weighted scores above are VOID** under the playbook's own rule (§4.1: any hard-
+gate failure → no score computed). They stay in the table as history only.
+
+Corrections landed the same day (see SOL-0716-TRIAGE.md for the full wave): interior concat
+joins are now per-beat frame-quantized (the caption-drift mechanism), YellowGlowWordCallout
+gained a real exit ease-out, the overlay window is the sole scheduling authority on both
+render paths, selfEval now compares video-stream vs audio-stream duration and computes a
+REAL per-pixel frame-0 stddev (blank-frame diagnostic only — never hook evidence). The
+"They"-class caption omission at joins (word starts inside the trimmed gap, audio survives
+the cut pad) is CONFIRMED-QUEUED: it needs the word-onset snap/padding work (playbook §7 /
+FABLE Task 2.1 + multi-take report's ~0.1 s pre-voice context), not a caption-side patch.
+
+**Round 3 must re-run all four fixtures under the corrected gates (G1–G4 as
+PASS | FAIL | PENDING, human LISTEN + hook decisions recorded as artifacts) before any
+weighted score is computed.**
