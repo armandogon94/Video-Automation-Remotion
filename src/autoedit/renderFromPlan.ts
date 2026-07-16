@@ -490,11 +490,13 @@ function mapPosition(
 }
 
 /**
- * Strip scheduling keys from a loose molecule prop bag (GPT-5.6 Finding 2.5.2).
- * `fromFrame`/`toFrame` are authoritative at the overlay's TOP level (schema-
- * validated, and they drive the scene's per-overlay <Sequence>); a loose
- * `enterFrame` inside `props` would double-offset a molecule the Sequence has
- * already rebased to local frame 0. Content props pass through untouched.
+ * Strip scheduling keys from a loose molecule prop bag (GPT-5.6 Finding 2.5.2;
+ * Sol 2026-07-16 §2.5). `fromFrame`/`toFrame` are authoritative at the
+ * overlay's TOP level (schema-validated, and they drive the scene's
+ * per-overlay <Sequence>); a loose `enterFrame` inside `props` would
+ * double-offset a molecule the Sequence has already rebased to local frame 0;
+ * a loose `exitFrame` would compete with the derived window-length exit (the
+ * dual-authority defect Sol overturned). Content props pass through untouched.
  */
 function sanitizeOverlayProps(
   props: Record<string, unknown>,
@@ -503,7 +505,113 @@ function sanitizeOverlayProps(
   delete clean.fromFrame;
   delete clean.toFrame;
   delete clean.enterFrame;
+  delete clean.exitFrame;
   return clean;
+}
+
+/** Loose overlay input accepted by the ONE scheduling adapter below — covers
+ *  both the plan's `overlayTrack` entries and the multi-source driver overlays
+ *  (which may omit `id`/`anchor` and, for always-on demos, the window). */
+export interface SceneOverlayInput {
+  id?: string;
+  type: string;
+  props: Record<string, unknown>;
+  anchor?: string;
+  behindSpeaker?: boolean;
+  fromFrame?: number;
+  toFrame?: number;
+}
+
+/** Scene-ready overlay produced by `sanitizeSceneOverlays`. */
+export interface SceneOverlayOutput {
+  type: string;
+  props: Record<string, unknown>;
+  behindSpeaker?: boolean;
+  fromFrame?: number;
+  toFrame?: number;
+}
+
+/**
+ * THE single overlay-scheduling authority (Sol 2026-07-16 §2.5). Every render
+ * path — single-source (`buildSceneProps`) AND multi-source
+ * (`renderMultiSourcePlan`) — must pass overlays through here; the multi-source
+ * renderer previously forwarded raw props straight to the scene, bypassing all
+ * sanitizing (Sol §2.5 OVERTURNED).
+ *
+ * Rules:
+ *  - WINDOWED overlay (both `fromFrame` and `toFrame` present): the top-level
+ *    window is the SOLE scheduling authority. Invalid windows (non-finite,
+ *    negative, `toFrame <= fromFrame`) drop the overlay loudly (Finding 2.5.3
+ *    — the scenes would otherwise clamp to a 1-frame flash). Scheduling keys
+ *    inside `props` (fromFrame/toFrame/enterFrame/exitFrame) are stripped, and
+ *    the LOCAL `exitFrame` = window length is injected UNCONDITIONALLY so the
+ *    molecule's outro completes exactly at the <Sequence> unmount. A
+ *    caller-supplied `props.exitFrame` is dropped with a warning — Sol showed
+ *    it let a child disappear early or outlive its window.
+ *  - WINDOWLESS overlay (neither present): an always-on demo overlay, mounted
+ *    without a <Sequence>; molecule-local scheduling props are the only clock
+ *    it has, so its props pass through untouched.
+ *  - PARTIAL window (exactly one of the two): planner bug — dropped loudly.
+ */
+export function sanitizeSceneOverlays(
+  overlays: SceneOverlayInput[],
+): SceneOverlayOutput[] {
+  return overlays.flatMap((o) => {
+    const oid = o.id ?? "(no id)";
+    const windowless = o.fromFrame === undefined && o.toFrame === undefined;
+    if (windowless) {
+      return [
+        {
+          type: o.type,
+          props: { ...o.props, ...(o.anchor !== undefined ? { anchor: o.anchor } : {}) },
+          ...(o.behindSpeaker !== undefined ? { behindSpeaker: o.behindSpeaker } : {}),
+        },
+      ];
+    }
+    if (
+      o.fromFrame === undefined ||
+      o.toFrame === undefined ||
+      !Number.isFinite(o.fromFrame) ||
+      !Number.isFinite(o.toFrame) ||
+      o.fromFrame < 0 ||
+      o.toFrame <= o.fromFrame
+    ) {
+      console.warn(
+        `[sanitizeSceneOverlays] dropping overlay id=${oid} type=${o.type}: ` +
+          `invalid window fromFrame=${o.fromFrame} toFrame=${o.toFrame} ` +
+          `(need finite, non-negative frames with toFrame > fromFrame)`,
+      );
+      return [];
+    }
+    if (o.props.exitFrame !== undefined) {
+      console.warn(
+        `[sanitizeSceneOverlays] overlay id=${oid} type=${o.type}: dropping ` +
+          `props.exitFrame=${String(o.props.exitFrame)} — the top-level window ` +
+          `[${o.fromFrame},${o.toFrame}) is the sole scheduling authority ` +
+          `(derived local exitFrame=${o.toFrame - o.fromFrame})`,
+      );
+    }
+    const cleanProps = sanitizeOverlayProps(o.props);
+    return [
+      {
+        type: o.type,
+        props: {
+          ...cleanProps,
+          // Lifecycle contract (GPT-5.6 §1.3 / Finding 2.5.1; Sol §2.5): the
+          // scene's <Sequence> hard-clips at toFrame, but a molecule's INTERNAL
+          // enter+hold+exit clock knows nothing about that window. The window
+          // length is injected as the LOCAL exitFrame (the Sequence rebases the
+          // molecule to frame 0) so molecules complete their outro exactly at
+          // unmount; molecules without the prop ignore it (Zod strips unknowns).
+          exitFrame: o.toFrame - o.fromFrame,
+          ...(o.anchor !== undefined ? { anchor: o.anchor } : {}),
+        },
+        fromFrame: o.fromFrame,
+        toFrame: o.toFrame,
+        ...(o.behindSpeaker !== undefined ? { behindSpeaker: o.behindSpeaker } : {}),
+      },
+    ];
+  });
 }
 
 /**
@@ -533,56 +641,13 @@ export function buildSceneProps(
     register: mapRegister(ct.register),
   };
 
-  // Forward the plan's EDIT-time window + anchor to the scene. fromFrame/toFrame
-  // drive the scene's per-overlay <Sequence> (without them every overlay
-  // self-animated from scene frame 0 — the "99 at t=0" bug); anchor rides in
-  // props so molecules that accept it place themselves per the plan. The
-  // schema-validated top-level anchor WINS over any loose props.anchor, and
-  // scheduling keys inside props are stripped (GPT-5.6 Finding 2.5.2).
-  // Window sanity (Finding 2.5.3): the scenes silently clamp toFrame <= fromFrame
-  // to a 1-frame overlay via Math.max(1, ...) — an invalid window is a planner
-  // bug, so drop the overlay loudly here instead of rendering a 1-frame flash.
-  const overlays = plan.overlayTrack.flatMap((o) => {
-    if (
-      !Number.isFinite(o.fromFrame) ||
-      !Number.isFinite(o.toFrame) ||
-      o.fromFrame < 0 ||
-      o.toFrame <= o.fromFrame
-    ) {
-      console.warn(
-        `[buildSceneProps] dropping overlay id=${o.id} type=${o.type}: ` +
-          `invalid window fromFrame=${o.fromFrame} toFrame=${o.toFrame} ` +
-          `(need finite, non-negative frames with toFrame > fromFrame)`,
-      );
-      return [];
-    }
-    const cleanProps = sanitizeOverlayProps(o.props);
-    // Lifecycle assist (GPT-5.6 §1.3 / Finding 2.5.1, the cheap 80%): the scene's
-    // <Sequence> hard-clips at toFrame, but a molecule's INTERNAL enter+hold+exit
-    // clock knows nothing about that window — the real Berman dogfood render had
-    // IconPopOverSpeaker full-size at frame 192 and GONE at frame 193 (a hard
-    // cut, not an exit animation). Inject the window length as a LOCAL exitFrame
-    // (the Sequence rebases the molecule to frame 0), so molecules that support
-    // exitFrame (IconPopOverSpeaker, YellowGlowWordCallout, PullQuoteCard,
-    // DimSurroundingsSpotlight, …) complete their outro exactly at unmount;
-    // molecules without the prop ignore it (their Zod schemas strip unknown
-    // keys). An explicit planner-provided props.exitFrame wins.
-    const exitAssist =
-      cleanProps.exitFrame === undefined
-        ? { exitFrame: o.toFrame - o.fromFrame }
-        : {};
-    return [
-      {
-        type: o.type,
-        props: { ...cleanProps, ...exitAssist, anchor: o.anchor },
-        fromFrame: o.fromFrame,
-        toFrame: o.toFrame,
-        ...(o.behindSpeaker !== undefined
-          ? { behindSpeaker: o.behindSpeaker }
-          : {}),
-      },
-    ];
-  });
+  // Forward the plan's EDIT-time window + anchor to the scene through the ONE
+  // scheduling adapter (Sol 2026-07-16 §2.5): fromFrame/toFrame drive the
+  // scene's per-overlay <Sequence> (without them every overlay self-animated
+  // from scene frame 0 — the "99 at t=0" bug); the schema-validated top-level
+  // anchor WINS over any loose props.anchor; scheduling keys inside props are
+  // stripped and the derived local exitFrame is injected unconditionally.
+  const overlays = sanitizeSceneOverlays(plan.overlayTrack);
 
   const props: Record<string, unknown> = {
     videoSrc: stagedClipStaticRef,
@@ -888,16 +953,12 @@ export interface RenderMultiSourceOptions {
   /** Brand handle chip; "" hides it. Defaults to the scene default. */
   handle?: string;
   /** Optional over-speaker overlays ({type, props, behindSpeaker?}) timed to
-   *  EDIT-time frames (the assembled timeline). Passed straight to the scene.
-   *  `fromFrame`/`toFrame` mount the overlay inside a scene <Sequence> so its
-   *  enter animation starts at its beat (omit both for always-on demo overlays). */
-  overlays?: {
-    type: string;
-    props: Record<string, unknown>;
-    behindSpeaker?: boolean;
-    fromFrame?: number;
-    toFrame?: number;
-  }[];
+   *  EDIT-time frames (the assembled timeline). Routed through
+   *  `sanitizeSceneOverlays` — the SAME scheduling authority as the
+   *  single-source path (Sol 2026-07-16 §2.5). `fromFrame`/`toFrame` mount the
+   *  overlay inside a scene <Sequence> so its enter animation starts at its
+   *  beat (omit both for always-on demo overlays). */
+  overlays?: SceneOverlayInput[];
   /** Progress callback (0..1) for the Remotion render. */
   onProgress?: (progress: number) => void;
   /** Logger; defaults to console.log with a [reel] tag. */
@@ -1246,7 +1307,10 @@ export async function renderMultiSourcePlan(
   const inputProps: Record<string, unknown> = {
     videoSrc: stagedClipStaticRef,
     caption,
-    overlays: opts.overlays ?? [],
+    // Same scheduling authority as the single-source path (Sol 2026-07-16
+    // §2.5: this path previously bypassed the sanitizer entirely, so raw
+    // props.exitFrame / scheduling keys reached the scene unchecked).
+    overlays: sanitizeSceneOverlays(opts.overlays ?? []),
     durationFrames: durationInFrames,
   };
   if (opts.handle !== undefined) inputProps.handle = opts.handle;

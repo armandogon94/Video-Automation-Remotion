@@ -20,6 +20,7 @@ import {
   buildSceneProps,
   computeBeatTimings,
   hdrColorFixFilter,
+  sanitizeSceneOverlays,
   type ReelBeat,
   type ResolvedBeat,
 } from "./renderFromPlan.js";
@@ -508,12 +509,59 @@ describe("buildSceneProps — V24 regression + GPT-5.6 Findings 2.1 / 2.5", () =
     expect(overlays[0].props.icon).toBe("🧠");
   });
 
-  it("does NOT override an explicit props.exitFrame from the planner", () => {
-    const plan = makePlan({
-      overlayTrack: [ov({ props: { exitFrame: 25 } })], // window 30→90
-    });
-    const overlays = build(plan).overlays as { props: Record<string, unknown> }[];
-    expect(overlays[0].props.exitFrame).toBe(25);
+  it("the top-level window is the SOLE authority: a planner props.exitFrame is dropped (with a warning) and the derived window length wins (Sol §2.5)", () => {
+    // Sol overturned the old "planner props.exitFrame wins" rule: a custom
+    // exitFrame let the child disappear early (dead window air) or outlive the
+    // window (hard cut at the Sequence unmount). The derived local exit is now
+    // unconditional.
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      const plan = makePlan({
+        overlayTrack: [ov({ props: { exitFrame: 25 } })], // window 30→90
+      });
+      const overlays = build(plan).overlays as { props: Record<string, unknown> }[];
+      expect(overlays[0].props.exitFrame).toBe(60); // 90 - 30, NOT 25
+      expect(warn).toHaveBeenCalledTimes(1);
+      expect(String(warn.mock.calls[0][0])).toContain("sole scheduling authority");
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it("multi-source path shares the SAME adapter: sanitizeSceneOverlays sanitizes windowed overlays, passes always-on demos through, drops partial windows (Sol §2.5)", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      const out = sanitizeSceneOverlays([
+        // Windowed: scheduling keys stripped from props, exitFrame derived.
+        {
+          type: "IconPopOverSpeaker",
+          props: { icon: "🔥", enterFrame: 12, exitFrame: 4 },
+          fromFrame: 10,
+          toFrame: 40,
+          behindSpeaker: true,
+        },
+        // Windowless always-on demo: props untouched (its only clock is local).
+        { type: "SentimentKeyword", props: { enterFrame: 5, text: "hola" } },
+        // Partial window: planner bug — dropped loudly.
+        { id: "ov-partial", type: "IconPopOverSpeaker", props: {}, fromFrame: 10 },
+      ]);
+      expect(out).toHaveLength(2);
+      expect(out[0]).toMatchObject({
+        type: "IconPopOverSpeaker",
+        fromFrame: 10,
+        toFrame: 40,
+        behindSpeaker: true,
+      });
+      expect(out[0].props).toMatchObject({ icon: "🔥", exitFrame: 30 }); // 40 - 10
+      expect(out[0].props).not.toHaveProperty("enterFrame");
+      expect(out[1].props).toEqual({ enterFrame: 5, text: "hola" });
+      expect(out[1]).not.toHaveProperty("fromFrame");
+      const warned = warn.mock.calls.map((c) => String(c[0])).join("\n");
+      expect(warned).toContain("ov-partial");
+      expect(warned).toContain("sole scheduling authority");
+    } finally {
+      warn.mockRestore();
+    }
   });
 
   it("drops overlays with invalid windows (zero-length, reversed, negative, non-finite) and warns (Finding 2.5.3)", () => {

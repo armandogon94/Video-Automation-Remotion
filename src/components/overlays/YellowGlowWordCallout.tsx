@@ -17,6 +17,14 @@
  * rgba(255,224,0,0.8)) in over the same window; hold ~24 frames; cut out
  * (no fade)."
  *
+ * DELIBERATE DEVIATION from the source pattern (Sol 2026-07-16 §2.5 / §4):
+ * Hormozi's OV1 hard-cuts out, but the house lifecycle contract
+ * (DOGFOOD-PLAYBOOK §5 "everything eases in AND out; nothing pops or
+ * vanishes" + hard gate G4 "no hard lifecycle clip") requires a real exit.
+ * The callout now fades + slightly scales DOWN over its final EXIT_FADE
+ * frames, completing exactly at `exitFrame` — the dogfood renders showed KEY
+ * full-strength at frame 205 and gone at 206, which failed G4.
+ *
  * Differs from a cutaway: lives in a corner over live footage; never owns the
  * frame, never on a flat bg. It is BIGGER and color-isolated vs. the white
  * karaoke caption track, so the eye reads it as a graphic, not a subtitle.
@@ -148,7 +156,8 @@ export const YellowGlowWordCallout: React.FC<
   const local = frame - enterFrame;
 
   const POP_IN = 8; // spring settle window
-  const derivedExit = enterFrame + POP_IN + holdFrames; // OV1 cuts out (no fade)
+  const EXIT_FADE = 6; // ease-out window (house lifecycle contract — Sol §2.5)
+  const derivedExit = enterFrame + POP_IN + holdFrames + EXIT_FADE;
   const effectiveExit = exitFrame ?? derivedExit;
 
   if (frame < enterFrame || frame >= effectiveExit) return null;
@@ -161,12 +170,26 @@ export const YellowGlowWordCallout: React.FC<
     config: { damping: 9, stiffness: 200, mass: 0.7 },
     durationInFrames: POP_IN,
   });
-  const scale = 0.6 + 0.4 * pop;
-  // Glow + opacity fade in fast over the first few frames of the pop.
-  const opacity = interpolate(local, [0, 4], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // Exit ease-out (Sol 2026-07-16 §2.5: this molecule hard-cut at exitFrame —
+  // KEY full-strength at frame 205, gone at 206 in the r2-austin-mid render).
+  // Fade + slight scale-down over the final EXIT_FADE frames, finishing exactly
+  // at effectiveExit; clamped so very short windows still ease out.
+  const exitStart = Math.max(enterFrame, effectiveExit - EXIT_FADE);
+  const exitProgress =
+    effectiveExit > exitStart
+      ? interpolate(frame, [exitStart, effectiveExit], [1, 0], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        })
+      : 1;
+  const scale = (0.6 + 0.4 * pop) * (0.92 + 0.08 * exitProgress);
+  // Glow + opacity fade in fast over the first few frames of the pop, and back
+  // out over the exit window.
+  const opacity =
+    interpolate(local, [0, 4], [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }) * exitProgress;
 
   // Two-stop bloom: tight inner halo + softer wide halo. Plus a thin black
   // outline (4 directional shadows) so it survives a bright/busy bg.
