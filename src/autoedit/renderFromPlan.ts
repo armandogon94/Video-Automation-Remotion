@@ -820,7 +820,19 @@ async function runSelfEval(
 // result is rendered through the same `SpeakerOverlayScene` foundation as the
 // single-source path.
 
-/** One beat of a multi-source reel: a clean range cut from its OWN source file. */
+/**
+ * One beat of a multi-source reel: a clean range cut from its OWN source file.
+ *
+ * DEPRECATION PATH (GPT-5.6 §5.5 renderer convergence): do NOT hand-construct
+ * `ReelBeat[]` in new code. Author a source-aware v2 `EditPlan` (`sources` +
+ * per-segment `sourceId` — see `editPlan.ts` / `migratePlanToSourceAware`) and
+ * either call `renderPlanAuto(opts)` (dispatches automatically) or derive the
+ * beats via `beatsFromSourceAwarePlan(plan)`. The plan is the single validated
+ * authoring surface (referential integrity, captions, overlays, provenance);
+ * hand-built beats bypass all of it. `ReelBeat` remains as the INTERNAL wire
+ * shape between the plan and the multi-input ffmpeg assembly, and existing
+ * demo drivers (`run*.ts`) still construct it directly until they migrate.
+ */
 export interface ReelBeat {
   /** Absolute path to this beat's source video. */
   sourceFile: string;
