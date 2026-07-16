@@ -359,8 +359,8 @@ describe("R4 brand emission (GPT-5.6 finding 2.6)", () => {
   it('"Claude"/"Anthropic" emit the TEXT CHIP (never another company\'s mark); "Armando" emits the house logo', () => {
     // Semantic rule (owner-viewer expectation): a brand beat shows the NAMED
     // brand's mark or no branded mark at all. No local Claude/Anthropic logos
-    // exist, so those fall through to the SentimentKeyword chip; only the
-    // house brand maps to a BrandLogoPopOverSpeaker with a real local asset.
+    // exist, so those fall through to the BrandNameChip (Sol 0716 §2.6); only
+    // the house brand maps to a BrandLogoPopOverSpeaker with a real local asset.
     // Spaced > cooldown (45 frames = 1.5s) apart so all beats emit.
     const words = [
       mkAt("Probamos", 0),
@@ -372,7 +372,7 @@ describe("R4 brand emission (GPT-5.6 finding 2.6)", () => {
       mkAt("Armando", 8.5),
     ];
     const overlays = suggestOverlays(words);
-    const chips = overlays.filter((o) => (o.type as string) === "SentimentKeyword");
+    const chips = overlays.filter((o) => (o.type as string) === "BrandNameChip");
     expect(chips.map((c) => String(c.props.text))).toEqual(
       expect.arrayContaining(["Claude", "Anthropic"]),
     );
@@ -392,10 +392,10 @@ describe("R4 brand emission (GPT-5.6 finding 2.6)", () => {
     );
   });
 
-  it("a known brand with NO local asset emits a SentimentKeyword text chip carrying the word", () => {
+  it("a known brand with NO local asset emits a BrandNameChip text chip carrying the word", () => {
     const words = [mkAt("usa", 0), mkAt("Skool", 1), mkAt("o", 4), mkAt("OpenAI", 5)];
     const overlays = suggestOverlays(words);
-    const chips = overlays.filter((o) => (o.type as string) === "SentimentKeyword");
+    const chips = overlays.filter((o) => (o.type as string) === "BrandNameChip");
     expect(chips.map((c) => c.props.text)).toEqual(["Skool", "OpenAI"]);
     // Never the brain-emoji fallback, never a fabricated logo file.
     expect(overlays.map((o) => o.type as string)).not.toContain("IconPopOverSpeaker");
@@ -440,7 +440,7 @@ describe("R4 brand emission (GPT-5.6 finding 2.6)", () => {
       expect(validateBeatProps("NotARegisteredMolecule", {})).toBe(false);
       // Type errors on recognized keys also fail (not just unknown keys).
       expect(
-        validateBeatProps("SentimentKeyword", { text: 42 }),
+        validateBeatProps("BrandNameChip", { text: 42 }),
       ).toBe(false);
     } finally {
       warn.mockRestore();

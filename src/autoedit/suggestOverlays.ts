@@ -19,7 +19,9 @@
  *   R4  named tool / brand                     → BrandLogoPopOverSpeaker (OV11)
  *       (GPT-5.6 finding 2.6)                    when a LOCAL logo asset exists
  *                                               (BRAND_ASSETS); otherwise a
- *                                               SentimentKeyword text chip.
+ *                                               BrandNameChip text chip
+ *                                               (dual-aspect, navy/gold —
+ *                                               Sol 0716 §2.6).
  *                                               NEVER IconPopOverSpeaker with
  *                                               made-up {label,isBrandMark}
  *                                               props — Zod stripped those and
@@ -57,7 +59,7 @@ import { yellowGlowWordCalloutSchema } from "../components/overlays/YellowGlowWo
 import { buildingBulletListOverSpeakerSchema } from "../components/overlays/BuildingBulletListOverSpeaker";
 import { iconPopOverSpeakerSchema } from "../components/overlays/IconPopOverSpeaker";
 import { brandLogoPopOverSpeakerSchema } from "../components/overlays/BrandLogoPopOverSpeaker";
-import { sentimentKeywordSchema } from "../components/overlays/SentimentKeyword";
+import { brandNameChipSchema } from "../components/overlays/BrandNameChip";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Strategy seam (the LLM extension point)
@@ -150,14 +152,14 @@ export type BrandAsset =
  *  - SEMANTIC RULE (owner-viewer expectation): a brand beat shows the NAMED
  *    brand's mark or nothing branded at all. claude/anthropic are deliberately
  *    ABSENT here — mapping them to Armando's house logo would show the wrong
- *    company's mark — so they fall through to the `SentimentKeyword` text chip.
+ *    company's mark — so they fall through to the `BrandNameChip` text chip.
  *  - `kind:"logo"` src MUST point at a file that actually exists under
  *    `public/` (staticFile-relative). The only local logo assets today are our
  *    OWN house marks under `public/brand/logos/`, used only for the `armando`
  *    token. To add a third-party brand: drop its REAL logo PNG under
  *    `public/brand/logos/` and add an entry (the existence test enforces it).
  *  - DO NOT invent logo paths for third-party brands (openai, gemini, skool…).
- *    A brand token with NO entry here falls back to a `SentimentKeyword` text
+ *    A brand token with NO entry here falls back to a `BrandNameChip` text
  *    chip carrying the spoken word — never an IconPopOverSpeaker with props
  *    its schema lacks (that is exactly the Zod-strip → default-🧠 defect).
  *  - A regression test asserts every `kind:"logo"` src exists on disk.
@@ -181,7 +183,7 @@ export const SUGGESTER_PROP_SCHEMAS = {
   BuildingBulletListOverSpeaker: buildingBulletListOverSpeakerSchema,
   IconPopOverSpeaker: iconPopOverSpeakerSchema,
   BrandLogoPopOverSpeaker: brandLogoPopOverSpeakerSchema,
-  SentimentKeyword: sentimentKeywordSchema,
+  BrandNameChip: brandNameChipSchema,
 } as const;
 
 /** Overlay type names the suggester is allowed to emit. */
@@ -285,7 +287,7 @@ export function isBrandBeat(raw: string): boolean {
 interface Beat {
   /**
    * NOTE: `SuggesterEmittableType`, not editPlan's `OverlayType` — the suggester
-   * may emit `BrandLogoPopOverSpeaker` / `SentimentKeyword` (both registered in
+   * may emit `BrandLogoPopOverSpeaker` / `BrandNameChip` (both registered in
    * src/components/overlays/registry.ts and mountable by the scenes) which
    * editPlan.ts's `overlayTypeSchema` enum does not list yet. Extending that
    * enum is a one-line change owned by the editPlan/render wave task; until it
@@ -430,7 +432,8 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
       // R4 (GPT-5.6 finding 2.6): pick the molecule by what we can actually
       // render. Local logo asset → BrandLogoPopOverSpeaker (OV11). Emoji icon
       // mapping → IconPopOverSpeaker with a VALID `icon` prop. No local asset
-      // → SentimentKeyword text chip carrying the spoken brand word. Props are
+      // → BrandNameChip (dual-aspect navy/gold glass pill — Sol 0716 §2.6)
+      // carrying the spoken brand word. Props are
       // drawn ONLY from the target molecule's own schema (anchor is injected
       // top-level by the renderer; timing is owned by fromFrame/toFrame — no
       // loose enterFrame that could double-offset a Sequence-rebased molecule).
@@ -458,11 +461,11 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
         };
       } else {
         beat = {
-          type: "SentimentKeyword",
+          type: "BrandNameChip",
           anchor: "top-right",
           fromFrame: w.startFrame,
           toFrame: w.endFrame + o.calloutHoldFrames,
-          props: { text: brandWord, tone: "topic" },
+          props: { text: brandWord },
           confidence: 0.55,
           reason: `R4 brand/tool beat (text chip, no local asset): "${brandWord}"`,
         };

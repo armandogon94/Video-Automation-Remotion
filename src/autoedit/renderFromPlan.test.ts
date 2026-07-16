@@ -15,6 +15,8 @@ import os from "os";
 import path from "path";
 import {
   beatsFromSourceAwarePlan,
+  planRenderPath,
+  wordsPerBeatFromCaptionTrack,
   buildTrimConcatFilter,
   buildMultiSourceConcatFilter,
   buildCombinedTranscript,
@@ -721,6 +723,137 @@ describe("beatsFromSourceAwarePlan — EditPlan v2 → ReelBeat[] bridge (GPT-5.
       /segment "seg-0" has NO sourceId/,
     );
     expect(() => beatsFromSourceAwarePlan(plan)).toThrow(/migratePlanToSourceAware/);
+  });
+});
+
+describe("renderPlanAuto dispatch — planRenderPath + wordsPerBeatFromCaptionTrack (GPT-5.6 §5.5)", () => {
+  const word = (text: string, s: number, e: number) => ({
+    text,
+    startSeconds: s,
+    endSeconds: e,
+    startFrame: Math.round(s * 30),
+    endFrame: Math.round(e * 30),
+  });
+
+  /** Two-source v2 plan with an edit-time caption track spanning both segments. */
+  const makeV2Plan = (overrides: Record<string, unknown> = {}): EditPlan =>
+    editPlanSchema.parse({
+      sourceVideo: "/takes/a.mov",
+      sources: [
+        { id: "src-0", path: "/takes/a.mov" },
+        { id: "src-1", path: "/takes/b.mov" },
+      ],
+      aspect: "9:16",
+      fps: 30,
+      sourceDurationFrames: 900,
+      editDurationFrames: 150,
+      segments: [
+        {
+          id: "seg-0",
+          source: { startSeconds: 1, endSeconds: 3, startFrame: 30, endFrame: 90 },
+          editStartFrame: 0,
+          editEndFrame: 60,
+          mode: "speaker",
+          sourceId: "src-0",
+          kind: "take",
+        },
+        {
+          id: "seg-1",
+          source: { startSeconds: 10, endSeconds: 13, startFrame: 300, endFrame: 390 },
+          editStartFrame: 60,
+          editEndFrame: 150,
+          mode: "speaker",
+          sourceId: "src-1",
+          kind: "take",
+        },
+      ],
+      captionTrack: {
+        wordTimings: [word("hola", 0.5, 0.9), word("mundo", 2.5, 2.9)],
+      },
+      ...overrides,
+    });
+
+  it("planRenderPath: fully source-aware MULTI-source plan → 'multi-source'", () => {
+    expect(planRenderPath(makeV2Plan())).toBe("multi-source");
+  });
+
+  it("planRenderPath: v1 plan (no sources) → 'single-source'", () => {
+    const v1 = editPlanSchema.parse({
+      sourceVideo: "/single.mov",
+      aspect: "9:16",
+      sourceDurationFrames: 300,
+      editDurationFrames: 300,
+    });
+    expect(planRenderPath(v1)).toBe("single-source");
+  });
+
+  it("planRenderPath: source-aware SINGLE-source plan → 'single-source' (existing trim+concat path)", () => {
+    const plan = makeV2Plan({
+      sources: [{ id: "src-0", path: "/takes/a.mov" }],
+      segments: [
+        {
+          id: "seg-0",
+          source: { startSeconds: 1, endSeconds: 3, startFrame: 30, endFrame: 90 },
+          editStartFrame: 0,
+          editEndFrame: 60,
+          mode: "speaker",
+          sourceId: "src-0",
+        },
+      ],
+    });
+    expect(planRenderPath(plan)).toBe("single-source");
+  });
+
+  it("planRenderPath: HALF-migrated multi-source plan (a segment without sourceId) → 'single-source', never guessing takes", () => {
+    const plan = makeV2Plan();
+    delete plan.segments[1].sourceId; // isSourceAwarePlan → false
+    expect(planRenderPath(plan)).toBe("single-source");
+  });
+
+  it("wordsPerBeatFromCaptionTrack: splits EDIT-time words per segment and shifts them back to SOURCE time", () => {
+    const perBeat = wordsPerBeatFromCaptionTrack(makeV2Plan());
+    expect(perBeat).toHaveLength(2);
+    // "hola" (edit 0.5s) belongs to seg-0 (edit 0→60) → source 1.5s in a.mov.
+    expect(perBeat[0].map((w) => w.text)).toEqual(["hola"]);
+    expect(perBeat[0][0].startSeconds).toBeCloseTo(1.5, 10);
+    expect(perBeat[0][0].endSeconds).toBeCloseTo(1.9, 10);
+    expect(perBeat[0][0].startFrame).toBe(45);
+    // "mundo" (edit 2.5s, frame 75) belongs to seg-1 (edit 60→150) → source
+    // 10.5s in b.mov (shift = 10 - 60/30 = +8).
+    expect(perBeat[1].map((w) => w.text)).toEqual(["mundo"]);
+    expect(perBeat[1][0].startSeconds).toBeCloseTo(10.5, 10);
+    expect(perBeat[1][0].startFrame).toBe(315);
+  });
+
+  it("round-trips: buildCombinedTranscript over the derived beats + words reproduces the plan's EDIT-time frames", () => {
+    const plan = makeV2Plan();
+    const beats = beatsFromSourceAwarePlan(plan);
+    const perBeat = wordsPerBeatFromCaptionTrack(plan);
+    const { words, totalFrames } = buildCombinedTranscript(beats, perBeat, plan.fps);
+    expect(words.map((w) => w.text)).toEqual(["hola", "mundo"]);
+    expect(words[0].startFrame).toBe(15); // back at edit frame 15
+    expect(words[1].startFrame).toBe(75); // back at edit frame 75
+    expect(totalFrames).toBe(150); // = plan.editDurationFrames
+  });
+
+  it("clamps a boundary word into its segment's source range so rounding can't drop it downstream", () => {
+    // startSeconds 1.995 → startFrame round(59.85) = 60 → seg-1 by frame, but
+    // the shifted start (9.995s) would fall a hair BEFORE seg-1's source start
+    // (10s) and buildCombinedTranscript would silently drop it. Clamped to 10.
+    const plan = makeV2Plan({
+      captionTrack: { wordTimings: [word("borde", 1.995, 2.2)] },
+    });
+    const perBeat = wordsPerBeatFromCaptionTrack(plan);
+    expect(perBeat[0]).toEqual([]);
+    expect(perBeat[1].map((w) => w.text)).toEqual(["borde"]);
+    expect(perBeat[1][0].startSeconds).toBeCloseTo(10, 10);
+    expect(perBeat[1][0].endSeconds).toBeCloseTo(10.2, 10);
+    const { words } = buildCombinedTranscript(
+      beatsFromSourceAwarePlan(plan),
+      perBeat,
+      plan.fps,
+    );
+    expect(words.map((w) => w.text)).toEqual(["borde"]); // survived the round-trip
   });
 });
 

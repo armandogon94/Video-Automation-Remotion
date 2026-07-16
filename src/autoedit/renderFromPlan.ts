@@ -45,7 +45,7 @@ import type {
   EditSegment,
   SegmentGrade,
 } from "./editPlan.js";
-import { GRADE_FILTERS, sourceForSegment } from "./editPlan.js";
+import { GRADE_FILTERS, isSourceAwarePlan, sourceForSegment } from "./editPlan.js";
 import { selfEvalRender } from "./selfEvalRender.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1451,5 +1451,100 @@ export function beatsFromSourceAwarePlan(plan: EditPlan): ReelBeat[] {
       label: seg.id,
       ...(seg.grade !== undefined ? { grade: seg.grade } : {}),
     };
+  });
+}
+
+/**
+ * PURE dispatch decision for `renderPlanAuto` (kept separate from the IO-heavy
+ * renderers so the decision itself is unit-testable, mock-free):
+ *  - "multi-source"  — a fully source-aware plan cutting from MORE THAN ONE
+ *    file → the multi-input assembly path (`renderMultiSourcePlan`).
+ *  - "single-source" — everything else: v1 plans, half-migrated plans
+ *    (`isSourceAwarePlan` false), and source-aware plans with exactly one
+ *    source (the single-input trim+concat path handles those unchanged —
+ *    `sourceVideo` mirrors `sources[0].path` by schema invariant).
+ */
+export type PlanRenderPath = "single-source" | "multi-source";
+
+export function planRenderPath(plan: EditPlan): PlanRenderPath {
+  return isSourceAwarePlan(plan) && (plan.sources?.length ?? 0) > 1
+    ? "multi-source"
+    : "single-source";
+}
+
+/**
+ * PURE: split the plan's EDIT-time caption words back into per-beat SOURCE-time
+ * word lists — the `wordsPerBeat` shape `renderMultiSourcePlan` expects (it is
+ * aligned 1:1 with the beats from `beatsFromSourceAwarePlan`, i.e. with
+ * `plan.segments`). A word belongs to the segment whose edit range contains its
+ * `startFrame`; its times are shifted from edit time back to that segment's
+ * SOURCE time (`buildCombinedTranscript` then re-bases them onto the canonical
+ * `BeatTiming[]` timeline — the ONE timing authority, GPT-5.6 Finding 2.2).
+ * Starts are clamped into the segment's source range so a half-frame rounding
+ * hair at a boundary can't silently drop a caption word.
+ */
+export function wordsPerBeatFromCaptionTrack(plan: EditPlan): EditPlanWord[][] {
+  const fps = plan.fps;
+  const words = plan.captionTrack.wordTimings;
+  return plan.segments.map((seg) => {
+    // edit-time → source-time shift for THIS segment.
+    const shift = seg.source.startSeconds - seg.editStartFrame / fps;
+    return words
+      .filter(
+        (w) => w.startFrame >= seg.editStartFrame && w.startFrame < seg.editEndFrame,
+      )
+      .map((w) => {
+        // Clamp the start into [sourceStart, sourceEnd): rounding between a
+        // word's seconds and frames can put the shifted start a hair outside
+        // the range, and buildCombinedTranscript drops out-of-range starts.
+        const startSeconds = Math.min(
+          Math.max(w.startSeconds + shift, seg.source.startSeconds),
+          Math.max(seg.source.startSeconds, seg.source.endSeconds - 1e-6),
+        );
+        const endSeconds = Math.max(startSeconds, w.endSeconds + shift);
+        return {
+          ...w,
+          startSeconds,
+          endSeconds,
+          startFrame: Math.round(startSeconds * fps),
+          endFrame: Math.round(endSeconds * fps),
+        };
+      });
+  });
+}
+
+/**
+ * THE plan-driven render entry point (renderer convergence, GPT-5.6 §5.5):
+ * dispatch a validated EditPlan to the correct renderer, per `planRenderPath`.
+ * Pure wiring — no behavior change to either path:
+ *  - single-source → `renderEditedVideo(opts)` verbatim (output `<slug>-edit.mp4`);
+ *  - multi-source  → `renderMultiSourcePlan` with beats derived by
+ *    `beatsFromSourceAwarePlan`, captions from `plan.captionTrack` (via
+ *    `wordsPerBeatFromCaptionTrack`), overlays from `plan.overlayTrack`
+ *    (sanitized inside the renderer — the one scheduling authority, Sol §2.5),
+ *    and the plan's aspect/fps (output `<slug>.mp4`).
+ */
+export async function renderPlanAuto(
+  opts: RenderFromPlanOptions,
+): Promise<RenderFromPlanResult> {
+  const { plan } = opts;
+  if (planRenderPath(plan) === "single-source") {
+    return renderEditedVideo(opts);
+  }
+  return renderMultiSourcePlan({
+    beats: beatsFromSourceAwarePlan(plan),
+    wordsPerBeat: wordsPerBeatFromCaptionTrack(plan),
+    aspect: plan.aspect,
+    fps: plan.fps,
+    projectRoot: opts.projectRoot,
+    slug: opts.slug,
+    captionStyle: opts.captionStyle,
+    captionPosition: plan.captionTrack.position,
+    captionMode: plan.captionTrack.mode,
+    handle: opts.handle,
+    overlays: plan.overlayTrack,
+    onProgress: opts.onProgress,
+    log: opts.log,
+    selfEval: opts.selfEval,
   });
 }

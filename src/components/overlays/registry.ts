@@ -44,6 +44,8 @@ import { GradientHeadlineCard } from "./GradientHeadlineCard";
 // Layout-punch content stack (austin.marchese grammar — kicker + title +
 // progressive numbered liquid-glass cards beside a side-panel speaker).
 import { SidePanelCards } from "./SidePanelCards";
+// Dual-aspect brand text chip (Sol 0716 §2.6 — the R4 no-local-asset slot).
+import { BrandNameChip } from "./BrandNameChip";
 
 type LooseOverlay = React.FC<Record<string, unknown>>;
 
@@ -77,6 +79,7 @@ export const OVERLAY_REGISTRY = {
   StatRowTriple,
   GradientHeadlineCard,
   SidePanelCards,
+  BrandNameChip,
 } as unknown as Record<string, LooseOverlay>;
 
 export type OverlayType = keyof typeof OVERLAY_REGISTRY;
