@@ -55,7 +55,7 @@ export function shiftWordsToEditTimeline(
     // (silenceTrim.toEditSegments), so shifting pre-rounded frames would re-import
     // the drift we just removed. Derive frames from the shifted seconds instead.
     const shiftSeconds = seg.editStartFrame / fps - seg.source.startSeconds;
-    let newStartSeconds = w.startSeconds + shiftSeconds;
+    const newStartSeconds = w.startSeconds + shiftSeconds;
     let newEndSeconds = w.endSeconds + shiftSeconds;
 
     // Clamp the word END at the segment's edit boundary (FABLE §4.14 / Task 2.9):
