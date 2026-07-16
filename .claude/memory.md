@@ -673,3 +673,11 @@ possible". Mechanics + triggers + triage rules codified in DOGFOOD-PLAYBOOK.md �
 Dispatch pattern: codex:codex-rescue subagent, task text prefixed `--model gpt-5.6`,
 single-write findings file docs/peer-review/GPT56-FINDINGS-<date>.md. First follow-up
 review (range c4a37d6..1ad7bc1) dispatched this night.
+
+## 2026-07-16 — GOTCHA: never broad-pkill codex processes
+`pkill -f "codex.*app-server"` killed the ChatGPT/Codex DESKTOP APP's embedded server
+(SIGTERM crash on Armando's screen), not just the stale CLI server it targeted. Rule: find
+the specific stale PID (`pgrep -fl`, check start time vs upgrade time) and kill only it.
+Also: the shared ~/.codex/config.toml is written by BOTH the desktop app (may use newer
+enum values like "ultra") and read by the CLI (rejects unknown variants) — version-skew
+between them breaks `codex login`; current safe value: model_reasoning_effort="xhigh".
