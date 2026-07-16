@@ -166,3 +166,4 @@ schema). Tests 40→97 TS + 13 py. NEXT, in order (FINDINGS §6):
    A/B/C gate + assembly, dogfooded on Armando's own IMG_36xx Spanish footage.
 3. HUMAN: LISTEN pass on Round-2 berman cuts (output/autoedit/r2-*.selfeval/).
 4. P2 batch: V.8 safe-areas, V.1 scrims, FeedbackLoopCycle geometry (FINDINGS 2.7).
+5. DONE 2026-07-16: multi-take experiment #1 (P1.7 groundwork) — proposal vs published Cowork reel scored 1.000 order / 0.933 take-choice; decision rules + burst-transcription requirement in docs/research/autoedit-dogfood/MULTITAKE-EXPERIMENT-2026-07-16.md (job folder: output/multitake/claude-cowork/).
