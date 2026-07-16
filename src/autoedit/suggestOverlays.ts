@@ -16,8 +16,14 @@
  *       "1) 2) 3)", "primero… segundo…")        (OV3, the headline pattern)
  *   R3  emphasis keyword (CAPS / "huge",       → YellowGlowWordCallout (OV1)
  *       "never", "the key", "secret"…)           kept as a glow callout
- *   R4  named tool / brand                     → IconPopOverSpeaker (OV10/OV11,
- *                                               isBrandMark) → BrandLogoPop
+ *   R4  named tool / brand                     → BrandLogoPopOverSpeaker (OV11)
+ *       (GPT-5.6 finding 2.6)                    when a LOCAL logo asset exists
+ *                                               (BRAND_ASSETS); otherwise a
+ *                                               SentimentKeyword text chip.
+ *                                               NEVER IconPopOverSpeaker with
+ *                                               made-up {label,isBrandMark}
+ *                                               props — Zod stripped those and
+ *                                               rendered the default 🧠 brain.
  *
  * ┌─────────────────────────────────────────────────────────────────────────┐
  * │ LLM EXTENSION POINT (deferred — ADR-003 §5).                              │
@@ -30,7 +36,13 @@
  * │ renderer are unchanged. See the `SuggestStrategy` seam below.             │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
- * No Remotion / ffmpeg / network imports — pure logic, fully unit-testable.
+ * No ffmpeg / network imports — pure logic, fully unit-testable. It DOES import
+ * the zod prop schemas of the overlay molecules it emits (planner→component
+ * coupling BY DESIGN, GPT-5.6 finding 2.6): the planner must never emit props
+ * the target molecule's schema lacks, and the only source of truth for that
+ * contract is the molecule's own exported schema. The schema imports pull in
+ * remotion/react at module scope (schema evaluation only — nothing renders),
+ * which is safe in Node/vitest.
  */
 import {
   type EditPlanWord,
@@ -38,6 +50,14 @@ import {
   type OverlayType,
   type OverlayAnchor,
 } from "./editPlan.js";
+// Molecule prop schemas — the render-side contract each emitted beat must
+// satisfy. Imported directly from the components (planner→component coupling
+// by design; see header note).
+import { yellowGlowWordCalloutSchema } from "../components/overlays/YellowGlowWordCallout";
+import { buildingBulletListOverSpeakerSchema } from "../components/overlays/BuildingBulletListOverSpeaker";
+import { iconPopOverSpeakerSchema } from "../components/overlays/IconPopOverSpeaker";
+import { brandLogoPopOverSpeakerSchema } from "../components/overlays/BrandLogoPopOverSpeaker";
+import { sentimentKeywordSchema } from "../components/overlays/SentimentKeyword";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Strategy seam (the LLM extension point)
@@ -110,7 +130,109 @@ const BRAND_WORDS = new Set([
   "claude", "anthropic", "openai", "gpt", "chatgpt", "gemini", "google",
   "skool", "youtube", "tiktok", "instagram", "remotion", "whisper", "ffmpeg",
   "notion", "figma", "github", "stripe", "shopify",
+  "armando", // own channel brand (@armandointeligencia) — has local logo assets
 ]);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Brand assets (GPT-5.6 finding 2.6)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** How a recognized brand token renders: a local logo image (routed through
+ *  Remotion `staticFile`, so the path is /public-relative) or an emoji icon. */
+export type BrandAsset =
+  | { kind: "logo"; src: string }
+  | { kind: "icon"; icon: string };
+
+/**
+ * Normalized brand token → local render asset. EXPLICIT + tiny on purpose.
+ *
+ * Rules (GPT-5.6 finding 2.6 remediation):
+ *  - `kind:"logo"` src MUST point at a file that actually exists under
+ *    `public/` (staticFile-relative). The only local logo assets today are our
+ *    OWN house marks under `public/brand/logos/` — claude/anthropic are this
+ *    channel's core subject matter and are mapped to house marks per the
+ *    wave-2 owner decision until real third-party logo PNGs are dropped in.
+ *  - DO NOT invent logo paths for third-party brands (openai, gemini, skool…).
+ *    A brand token with NO entry here falls back to a `SentimentKeyword` text
+ *    chip carrying the spoken word — never an IconPopOverSpeaker with props
+ *    its schema lacks (that is exactly the Zod-strip → default-🧠 defect).
+ *  - A regression test asserts every `kind:"logo"` src exists on disk.
+ */
+export // SEMANTIC RULE (owner-viewer expectation): a brand beat shows the NAMED brand's
+// mark or nothing branded at all. claude/anthropic are deliberately ABSENT here —
+// mapping them to Armando's house logo would show the wrong company's mark; they
+// fall through to the SentimentKeyword text chip. To upgrade: drop real logo PNGs
+// under public/brand/logos/ and add entries (the existence test enforces validity).
+const BRAND_ASSETS: Record<string, BrandAsset> = {
+  armando: { kind: "logo", src: "brand/logos/logo-completo.png" },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Planner-side prop validation (GPT-5.6 finding 2.6)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Molecule prop schema for every overlay type this suggester can emit — the
+ * actual zod schemas exported by the components (planner→component coupling by
+ * design). If a rule wants to emit a new molecule type, it MUST be added here
+ * so its props are validated at emission time. Exported for tests.
+ */
+export const SUGGESTER_PROP_SCHEMAS = {
+  YellowGlowWordCallout: yellowGlowWordCalloutSchema,
+  BuildingBulletListOverSpeaker: buildingBulletListOverSpeakerSchema,
+  IconPopOverSpeaker: iconPopOverSpeakerSchema,
+  BrandLogoPopOverSpeaker: brandLogoPopOverSpeakerSchema,
+  SentimentKeyword: sentimentKeywordSchema,
+} as const;
+
+/** Overlay type names the suggester is allowed to emit. */
+export type SuggesterEmittableType = keyof typeof SUGGESTER_PROP_SCHEMAS;
+
+/** Widened view of the schema map for lookup by arbitrary type name. */
+type AnySuggesterSchema =
+  (typeof SUGGESTER_PROP_SCHEMAS)[SuggesterEmittableType];
+
+/**
+ * Validate a beat's props against the TARGET molecule's own schema before the
+ * beat ships. Two checks, both load-bearing (GPT-5.6 finding 2.6):
+ *
+ *  1. UNKNOWN-KEY check — plain `safeParse` on a zod object SILENTLY STRIPS
+ *     unrecognized keys, which is precisely how `{label,isBrandMark}` became a
+ *     default 🧠 brain. Any prop key the schema's shape lacks fails validation.
+ *  2. `safeParse` — type/enum errors on the recognized keys.
+ *
+ * On failure: `console.warn` with the reason and return false — the caller
+ * SKIPS the beat. Never ship semantically-stripped props again.
+ */
+export function validateBeatProps(
+  type: string,
+  props: Record<string, unknown>,
+): boolean {
+  const schema = (
+    SUGGESTER_PROP_SCHEMAS as Record<string, AnySuggesterSchema | undefined>
+  )[type];
+  if (!schema) {
+    console.warn(
+      `[suggestOverlays] skipping beat: "${type}" is not a suggester-emittable molecule (no schema in SUGGESTER_PROP_SCHEMAS)`,
+    );
+    return false;
+  }
+  const unknownKeys = Object.keys(props).filter((k) => !(k in schema.shape));
+  if (unknownKeys.length > 0) {
+    console.warn(
+      `[suggestOverlays] skipping ${type} beat: props not in the molecule schema (zod would silently strip them): ${unknownKeys.join(", ")}`,
+    );
+    return false;
+  }
+  const parsed = schema.safeParse(props);
+  if (!parsed.success) {
+    console.warn(
+      `[suggestOverlays] skipping ${type} beat: props failed the molecule schema: ${parsed.error.message}`,
+    );
+    return false;
+  }
+  return true;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Text classification helpers (pure)
@@ -162,7 +284,16 @@ export function isBrandBeat(raw: string): boolean {
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Beat {
-  type: OverlayType;
+  /**
+   * NOTE: `SuggesterEmittableType`, not editPlan's `OverlayType` — the suggester
+   * may emit `BrandLogoPopOverSpeaker` / `SentimentKeyword` (both registered in
+   * src/components/overlays/registry.ts and mountable by the scenes) which
+   * editPlan.ts's `overlayTypeSchema` enum does not list yet. Extending that
+   * enum is a one-line change owned by the editPlan/render wave task; until it
+   * lands, `buildEditPlan`'s `editPlanSchema.parse` rejects brand beats LOUDLY
+   * instead of silently rendering the wrong mark (preferred per finding 2.6).
+   */
+  type: SuggesterEmittableType;
   anchor: OverlayAnchor;
   fromFrame: number;
   toFrame: number;
@@ -297,15 +428,46 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
         reason: `R1 number/stat beat: "${w.text.trim()}"`,
       };
     } else if (isBrandBeat(w.text)) {
-      beat = {
-        type: "IconPopOverSpeaker",
-        anchor: "top-right",
-        fromFrame: w.startFrame,
-        toFrame: w.endFrame + o.calloutHoldFrames,
-        props: { label: w.text.trim(), isBrandMark: true },
-        confidence: 0.55,
-        reason: `R4 brand/tool beat: "${w.text.trim()}"`,
-      };
+      // R4 (GPT-5.6 finding 2.6): pick the molecule by what we can actually
+      // render. Local logo asset → BrandLogoPopOverSpeaker (OV11). Emoji icon
+      // mapping → IconPopOverSpeaker with a VALID `icon` prop. No local asset
+      // → SentimentKeyword text chip carrying the spoken brand word. Props are
+      // drawn ONLY from the target molecule's own schema (anchor is injected
+      // top-level by the renderer; timing is owned by fromFrame/toFrame — no
+      // loose enterFrame that could double-offset a Sequence-rebased molecule).
+      const asset = BRAND_ASSETS[normalize(w.text)];
+      const brandWord = w.text.trim();
+      if (asset?.kind === "logo") {
+        beat = {
+          type: "BrandLogoPopOverSpeaker",
+          anchor: "top-right",
+          fromFrame: w.startFrame,
+          toFrame: w.endFrame + o.calloutHoldFrames,
+          props: { logoSrc: asset.src },
+          confidence: 0.55,
+          reason: `R4 brand/tool beat (local logo): "${brandWord}"`,
+        };
+      } else if (asset?.kind === "icon") {
+        beat = {
+          type: "IconPopOverSpeaker",
+          anchor: "top-right",
+          fromFrame: w.startFrame,
+          toFrame: w.endFrame + o.calloutHoldFrames,
+          props: { icon: asset.icon },
+          confidence: 0.55,
+          reason: `R4 brand/tool beat (icon mark): "${brandWord}"`,
+        };
+      } else {
+        beat = {
+          type: "SentimentKeyword",
+          anchor: "top-right",
+          fromFrame: w.startFrame,
+          toFrame: w.endFrame + o.calloutHoldFrames,
+          props: { text: brandWord, tone: "topic" },
+          confidence: 0.55,
+          reason: `R4 brand/tool beat (text chip, no local asset): "${brandWord}"`,
+        };
+      }
     } else if (isEmphasisBeat(w.text)) {
       beat = {
         type: "YellowGlowWordCallout",
@@ -330,7 +492,10 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
 
   return ordered.map<OverlayInstance>((b, i) => ({
     id: `ov-${i}`,
-    type: b.type,
+    // Cast documented on `Beat.type`: emittable names not yet in editPlan's
+    // overlayTypeSchema enum (registry-registered; enum extension owned by the
+    // editPlan/render wave task).
+    type: b.type as OverlayType,
     anchor: b.anchor,
     fromFrame: b.fromFrame,
     toFrame: b.toFrame,
@@ -343,6 +508,13 @@ export const ruleBasedStrategy: SuggestStrategy = (words, opts) => {
 /**
  * Public entry. Defaults to the rule-based strategy; pass a different
  * `strategy` (e.g. the future LLM strategy) to swap the implementation.
+ *
+ * EVERY emitted beat — whatever the strategy — is validated here against its
+ * target molecule's own prop schema (`validateBeatProps`, GPT-5.6 finding 2.6).
+ * The bag validated is `{anchor, ...props}`, mirroring exactly what
+ * `renderFromPlan.buildSceneProps` mounts (`props: {anchor: o.anchor,
+ * ...o.props}`), so a beat that passes here parses identically at render time.
+ * Invalid beats are warned about and DROPPED, then ids are re-numbered dense.
  */
 export function suggestOverlays(
   words: EditPlanWord[],
@@ -350,5 +522,7 @@ export function suggestOverlays(
   strategy: SuggestStrategy = ruleBasedStrategy,
 ): OverlayInstance[] {
   if (words.length === 0) return [];
-  return strategy(words, opts);
+  return strategy(words, opts)
+    .filter((o) => validateBeatProps(o.type, { anchor: o.anchor, ...o.props }))
+    .map((o, i) => ({ ...o, id: `ov-${i}` }));
 }

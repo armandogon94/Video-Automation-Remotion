@@ -3,7 +3,9 @@
  * Covers the load-bearing logic: silencedetect parsing, keep-segment inversion,
  * edit-timeline mapping, word re-projection, and the rule-based overlay rules.
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import {
   parseSilenceDetect,
   keepSegmentsFromSilences,
@@ -16,8 +18,15 @@ import {
   isEmphasisBeat,
   isOrdinalBeat,
   isBrandBeat,
+  BRAND_ASSETS,
+  SUGGESTER_PROP_SCHEMAS,
+  validateBeatProps,
 } from "./suggestOverlays.js";
 import { editPlanSchema, type EditPlanWord } from "./editPlan.js";
+
+/** Resolve a staticFile-relative asset path to its absolute public/ location. */
+const publicPath = (rel: string): string =>
+  fileURLToPath(new URL(`../../public/${rel}`, import.meta.url));
 
 // A representative real silencedetect stderr fragment.
 const SAMPLE_STDERR = `
@@ -315,6 +324,149 @@ describe("suggestOverlays (rule-based)", () => {
       (o) => o.type === "YellowGlowWordCallout" && o.fromFrame < enums[0].fromFrame,
     );
     expect(stat).toBeTruthy();
+  });
+});
+
+describe("R4 brand emission (GPT-5.6 finding 2.6)", () => {
+  const fps = 30;
+  const mkAt = (text: string, sec: number): EditPlanWord => ({
+    text,
+    startSeconds: sec,
+    endSeconds: sec + 0.4,
+    startFrame: Math.round(sec * fps),
+    endFrame: Math.round(sec * fps) + 12,
+  });
+
+  it("every BRAND_ASSETS logo src points at a file that exists under public/", () => {
+    for (const [token, asset] of Object.entries(BRAND_ASSETS)) {
+      if (asset.kind === "logo") {
+        expect(
+          existsSync(publicPath(asset.src)),
+          `BRAND_ASSETS["${token}"] src "${asset.src}" missing under public/`,
+        ).toBe(true);
+      }
+    }
+  });
+
+  it('"Claude"/"Anthropic" emit the TEXT CHIP (never another company\'s mark); "Armando" emits the house logo', () => {
+    // Semantic rule (owner-viewer expectation): a brand beat shows the NAMED
+    // brand's mark or no branded mark at all. No local Claude/Anthropic logos
+    // exist, so those fall through to the SentimentKeyword chip; only the
+    // house brand maps to a BrandLogoPopOverSpeaker with a real local asset.
+    // Spaced > cooldown (45 frames = 1.5s) apart so all beats emit.
+    const words = [
+      mkAt("Probamos", 0),
+      mkAt("Claude", 1),
+      mkAt("hoy", 1.6),
+      mkAt("con", 4),
+      mkAt("Anthropic", 5),
+      mkAt("por", 7.5),
+      mkAt("Armando", 8.5),
+    ];
+    const overlays = suggestOverlays(words);
+    const chips = overlays.filter((o) => (o.type as string) === "SentimentKeyword");
+    expect(chips.map((c) => String(c.props.text))).toEqual(
+      expect.arrayContaining(["Claude", "Anthropic"]),
+    );
+    const logos = overlays.filter(
+      (o) => (o.type as string) === "BrandLogoPopOverSpeaker",
+    );
+    expect(logos.length).toBe(1);
+    const src = logos[0].props.logoSrc;
+    expect(typeof src).toBe("string");
+    expect(
+      existsSync(publicPath(src as string)),
+      `emitted logoSrc "${String(src)}" missing under public/`,
+    ).toBe(true);
+    // The defective shape must never come back.
+    expect(overlays.map((o) => o.type as string)).not.toContain(
+      "IconPopOverSpeaker",
+    );
+  });
+
+  it("a known brand with NO local asset emits a SentimentKeyword text chip carrying the word", () => {
+    const words = [mkAt("usa", 0), mkAt("Skool", 1), mkAt("o", 4), mkAt("OpenAI", 5)];
+    const overlays = suggestOverlays(words);
+    const chips = overlays.filter((o) => (o.type as string) === "SentimentKeyword");
+    expect(chips.map((c) => c.props.text)).toEqual(["Skool", "OpenAI"]);
+    // Never the brain-emoji fallback, never a fabricated logo file.
+    expect(overlays.map((o) => o.type as string)).not.toContain("IconPopOverSpeaker");
+    expect(overlays.map((o) => o.type as string)).not.toContain("BrandLogoPopOverSpeaker");
+  });
+
+  it("the legacy {label,isBrandMark} prop shape is gone and is rejected by planner validation", () => {
+    const words = [mkAt("Claude", 1), mkAt("y", 4), mkAt("Skool", 5)];
+    const overlays = suggestOverlays(words);
+    expect(overlays.length).toBeGreaterThan(0);
+    for (const o of overlays) {
+      expect(o.props).not.toHaveProperty("label");
+      expect(o.props).not.toHaveProperty("isBrandMark");
+    }
+    // Planner-side validation must reject the old shape outright (zod would
+    // silently strip it and render the default 🧠 brain — finding 2.6).
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      expect(
+        validateBeatProps("IconPopOverSpeaker", {
+          label: "Anthropic",
+          isBrandMark: true,
+        }),
+      ).toBe(false);
+      expect(warn).toHaveBeenCalled();
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it("validateBeatProps accepts schema-true props and rejects unknown molecule types", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      expect(
+        validateBeatProps("IconPopOverSpeaker", { icon: "🧠", anchor: "top-right" }),
+      ).toBe(true);
+      expect(
+        validateBeatProps("BrandLogoPopOverSpeaker", {
+          logoSrc: "brand/logos/logo-lentes.png",
+        }),
+      ).toBe(true);
+      expect(validateBeatProps("NotARegisteredMolecule", {})).toBe(false);
+      // Type errors on recognized keys also fail (not just unknown keys).
+      expect(
+        validateBeatProps("SentimentKeyword", { text: 42 }),
+      ).toBe(false);
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it("every emitted beat's merged {anchor, ...props} passes its own molecule schema", () => {
+    // A sample plan exercising all four rules: enumeration (R2), stat (R1),
+    // brand with local asset + brand without (R4), emphasis keyword (R3).
+    const words = [
+      mkAt("First", 0),
+      mkAt("plan", 0.5),
+      mkAt("second", 2),
+      mkAt("build", 2.5),
+      mkAt("$100", 20),
+      mkAt("Claude", 25),
+      mkAt("Skool", 30),
+      mkAt("secret", 35),
+    ];
+    const overlays = suggestOverlays(words);
+    const types = new Set(overlays.map((o) => o.type as string));
+    expect(types.size).toBeGreaterThanOrEqual(3); // meaningful coverage
+    for (const o of overlays) {
+      const schema =
+        SUGGESTER_PROP_SCHEMAS[o.type as keyof typeof SUGGESTER_PROP_SCHEMAS];
+      expect(schema, `suggester emitted unmapped type "${o.type}"`).toBeTruthy();
+      // Validate the EXACT bag renderFromPlan mounts: {anchor, ...props}.
+      const mounted = { anchor: o.anchor, ...o.props };
+      expect(
+        schema.safeParse(mounted).success,
+        `${o.type} props failed its own schema: ${JSON.stringify(mounted)}`,
+      ).toBe(true);
+      expect(validateBeatProps(o.type, mounted)).toBe(true);
+    }
   });
 });
 

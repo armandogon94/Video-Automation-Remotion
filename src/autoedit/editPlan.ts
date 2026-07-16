@@ -188,6 +188,10 @@ export const overlayTypeSchema = z.enum([
   "FloatingTweetCardOverSpeaker",
   "ColumnarNumberWithDividers",
   "IconPopOverSpeaker",
+  // R4 brand-beat rewrite (GPT56 §2.6): logo pop for local brand assets, text
+  // chip for brands without one. Both registered in OVERLAY_REGISTRY.
+  "BrandLogoPopOverSpeaker",
+  "SentimentKeyword",
 ]);
 export type OverlayType = z.infer<typeof overlayTypeSchema>;
 
