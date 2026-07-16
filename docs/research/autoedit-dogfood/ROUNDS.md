@@ -89,3 +89,24 @@ FABLE Task 2.1 + multi-take report's ~0.1 s pre-voice context), not a caption-si
 **Round 3 must re-run all four fixtures under the corrected gates (G1–G4 as
 PASS | FAIL | PENDING, human LISTEN + hook decisions recorded as artifacts) before any
 weighted score is computed.**
+
+## Round 3 — 2026-07-16 (Fable) — re-run of all 4 frozen fixtures at HEAD 076506c (exit fades + per-beat quantization + word-onset snapping live)
+
+Method: same matrix as Round 2 (berman-end1×hormozi-pop×punchy, berman-end2×hormozi-pop-default×editorial,
+austin-mid×type-terminal×technical, austin-th-clip×editorial-cyan×editorial), slugs `r3-<clip>`, plans under
+`output/dogfood/r3/`. **`--whisper-model small` used for SPEED this round (deadline-boxed session; owner default
+is medium)** — G1 word counts match Round 2's medium counts on 3 of 4 fixtures. All four re-rendered fresh at
+11:41–11:48 EDT (an earlier 01:00–01:07 overnight-loop render pass predated the final word-snap commit and is
+superseded; its plans were overwritten in place). Gates are 3-state (PASS | FAIL | PENDING) per the 2026-07-16
+addendum; LISTEN stays PENDING (no human audio pass this session). selfEval ran per render
+(`output/autoedit/r3-<clip>-edit.mp4.selfeval/`).
+
+Known tooling bug found this round: selfEval's A/V stream-agreement check prints "video stream missing or
+unreadable ⚠️" on every render, but manual ffprobe shows both streams fine (video 22.000s / audio 22.059s on
+austin-th-clip — the same benign ~0.059s padding delta as Round 2). Treated as a selfEval probe-parsing bug
+(false negative), not a render failure; needs a fix before it can serve as G2 evidence.
+
+### Hard gates (3-state)
+| render | G1 transcript | G2 cut/audio | G3 captions | G4 render | verdict |
+|---|---|---|---|---|---|
+| r3-austin-th-clip (editorial-cyan/editorial) | PASS — 88w small, coverage gate passed | PENDING — 0 cuts; LISTEN unchecked; selfEval A/V check bugged (manual probe OK) | FAIL — baked source lower-third still collides with caption band (source frozen; no de-collision landed since R2 addendum) | PASS — "99" callout window f384–422, **exit fade REAL**: full at f412–415, progressive fade f416–419, gone by f420 (strip: output/dogfood/r3/evidence/austin-th-clip-99-exit-f412-423.png); frame-0 hook decision left to human (PENDING) | FAIL/PENDING (G3) |
