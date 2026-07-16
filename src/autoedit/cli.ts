@@ -73,6 +73,31 @@ async function probeDurationSeconds(input: string): Promise<number> {
  * words in the EditPlan word shape. Reuses src/transcribe/transcribe.py exactly
  * as the main pipeline does.
  */
+/** Words + whole-file confidence extracted from a whisper JSON payload. */
+interface TranscriptData {
+  words: EditPlanWord[];
+  /** faster-whisper's language-detection confidence (0..1); null when the
+   *  payload lacks it (Sol 0716 §2.1: this was read and DISCARDED before). */
+  languageProbability: number | null;
+}
+
+/** Parse a whisper JSON payload (live wrapper stdout OR a precomputed
+ *  --transcript file — SAME shape, SAME validation; Sol 0716 §2.1 overturned
+ *  the --transcript path skipping all quality checks). */
+function parseTranscriptPayload(data: unknown): TranscriptData {
+  const obj = data as { words?: unknown[]; languageProbability?: unknown };
+  const words = (obj.words ?? [])
+    // Validate each word against the shared shape (drops anything malformed).
+    // `probability` is part of the shape (optional) so whisper confidence is
+    // RETAINED, not stripped (GPT56-FINDINGS §2.4).
+    .map((w) => editPlanWordSchema.safeParse(w))
+    .filter((r): r is { success: true; data: EditPlanWord } => r.success)
+    .map((r) => r.data);
+  const languageProbability =
+    typeof obj.languageProbability === "number" ? obj.languageProbability : null;
+  return { words, languageProbability };
+}
+
 async function transcribe(
   video: string,
   projectRoot: string,
@@ -81,7 +106,7 @@ async function transcribe(
   fps: number,
   hotwords?: string,
   glossaryFile?: string,
-): Promise<EditPlanWord[]> {
+): Promise<TranscriptData> {
   const uv = getUvPath();
   const args = [
     "run", "python", path.join(projectRoot, "src/transcribe/transcribe.py"),
@@ -95,33 +120,55 @@ async function transcribe(
   if (hotwords) args.push("--hotwords", hotwords);
   if (glossaryFile) args.push("--glossary-file", path.resolve(glossaryFile));
   const res = await execa(uv, args, { cwd: projectRoot });
-  const data: unknown = JSON.parse(res.stdout);
-  const words = (data as { words?: unknown[] }).words ?? [];
-  // Validate each word against the shared shape (drops anything malformed).
-  // `probability` is part of the shape (optional) so whisper confidence is
-  // RETAINED, not stripped (GPT56-FINDINGS §2.4).
-  return words
-    .map((w) => editPlanWordSchema.safeParse(w))
-    .filter((r): r is { success: true; data: EditPlanWord } => r.success)
-    .map((r) => r.data);
+  return parseTranscriptPayload(JSON.parse(res.stdout));
 }
 
+/** Below this language-detection confidence the whole transcript is suspect
+ *  (wrong-language decode produces fluent nonsense at decent word probs). */
+const LANGUAGE_PROBABILITY_SUSPECT_THRESHOLD = 0.6;
+
 /**
- * Post-transcription hallucination heuristic (GPT56-FINDINGS §2.4): the old
- * default prompt replaced 30 s of real Spanish speech with 6 prompt words at
- * p≈0.004–0.018. Warn on stderr when the transcript looks like that failure
- * mode — mostly low-confidence words, or far too few words for the duration.
+ * Post-transcription hallucination heuristic (GPT56-FINDINGS §2.4; Sol 0716
+ * §2.1): the old default prompt replaced 30 s of real Spanish speech with 6
+ * prompt words at p≈0.004–0.018. Warn on stderr — naming WHICH signal fired —
+ * when the transcript looks like a failure mode: mostly low-confidence words,
+ * far too few words for the duration, or low language-detection confidence.
+ * Runs on BOTH the live-whisper and the precomputed --transcript paths (the
+ * bypass was Sol §2.1's overturn). Still a WARNING, not a blocker: the
+ * 2026-07-16 multi-take experiment showed every real raw take trips the
+ * words/second check, so a hard gate here needs the coverage/corrections
+ * artifact first (queued — SOL-0716-TRIAGE.md).
  */
-function warnIfTranscriptSuspect(words: EditPlanWord[], durationSeconds: number): void {
+function warnIfTranscriptSuspect(
+  words: EditPlanWord[],
+  durationSeconds: number,
+  languageProbability: number | null,
+): void {
+  const reasons: string[] = [];
   const withProb = words.filter((w) => typeof w.probability === "number");
   const lowProbShare =
     withProb.length === 0
       ? 0
       : withProb.filter((w) => (w.probability as number) < 0.15).length / withProb.length;
-  const tooFewWords = words.length < 1.5 * durationSeconds;
-  if (lowProbShare > 0.3 || tooFewWords) {
+  if (lowProbShare > 0.3) {
+    reasons.push(`${Math.round(lowProbShare * 100)}% of words below p=0.15`);
+  }
+  if (words.length < 1.5 * durationSeconds) {
+    reasons.push(
+      `${words.length} words for ${durationSeconds.toFixed(1)}s (< 1.5 w/s — expect ≈2.5–3)`,
+    );
+  }
+  if (
+    languageProbability !== null &&
+    languageProbability < LANGUAGE_PROBABILITY_SUSPECT_THRESHOLD
+  ) {
+    reasons.push(
+      `languageProbability ${languageProbability.toFixed(3)} < ${LANGUAGE_PROBABILITY_SUSPECT_THRESHOLD}`,
+    );
+  }
+  if (reasons.length > 0) {
     console.error(
-      "⚠ transcript quality suspect (possible hallucination) — review before editing",
+      `⚠ transcript quality suspect (possible hallucination): ${reasons.join("; ")} — review before editing`,
     );
   }
 }
@@ -215,21 +262,36 @@ async function main(): Promise<void> {
   if (register === "none") {
     log("whisper", "skipped (register=none → no captions, ADR-002 §3.3)");
   } else if (opts.transcript) {
-    const tj: unknown = JSON.parse(fs.readFileSync(path.resolve(opts.transcript), "utf-8"));
-    const raw = (tj as { words?: unknown[] }).words ?? [];
-    sourceWords = raw
-      .map((w) => editPlanWordSchema.safeParse(w))
-      .filter((r): r is { success: true; data: EditPlanWord } => r.success)
-      .map((r) => r.data);
-    log("whisper", `loaded ${sourceWords.length} word timings from --transcript`);
+    // Precomputed transcript: SAME payload parsing and SAME quality warning as
+    // the live path (Sol 0716 §2.1: this branch previously bypassed
+    // warnIfTranscriptSuspect entirely and discarded languageProbability).
+    const parsed = parseTranscriptPayload(
+      JSON.parse(fs.readFileSync(path.resolve(opts.transcript), "utf-8")),
+    );
+    sourceWords = parsed.words;
+    log(
+      "whisper",
+      `loaded ${sourceWords.length} word timings from --transcript` +
+        (parsed.languageProbability !== null
+          ? ` (languageProbability=${parsed.languageProbability.toFixed(3)})`
+          : ""),
+    );
+    warnIfTranscriptSuspect(sourceWords, durationSeconds, parsed.languageProbability);
   } else {
     log("whisper", `transcribing with '${opts.whisperModel}' model (first run downloads the model)...`);
-    sourceWords = await transcribe(
+    const parsed = await transcribe(
       video, projectRoot, opts.whisperModel, opts.language, fps,
       opts.hotwords, opts.glossaryFile,
     );
-    log("whisper", `transcribed ${sourceWords.length} words`);
-    warnIfTranscriptSuspect(sourceWords, durationSeconds);
+    sourceWords = parsed.words;
+    log(
+      "whisper",
+      `transcribed ${sourceWords.length} words` +
+        (parsed.languageProbability !== null
+          ? ` (languageProbability=${parsed.languageProbability.toFixed(3)})`
+          : ""),
+    );
+    warnIfTranscriptSuspect(sourceWords, durationSeconds, parsed.languageProbability);
   }
 
   // ── 4. build the plan ───────────────────────────────────────────────────────
