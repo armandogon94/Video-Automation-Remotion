@@ -71,6 +71,9 @@ export function shiftWordsToEditTimeline(
       endSeconds: newEndSeconds,
       startFrame: Math.round(newStartSeconds * fps),
       endFrame: Math.min(seg.editEndFrame, Math.round(newEndSeconds * fps)),
+      // Carry ASR word confidence through re-projection (GPT56-FINDINGS §2.4 —
+      // downstream correction gates need it; field is .optional() on the schema).
+      ...(w.probability !== undefined ? { probability: w.probability } : {}),
     });
   }
 

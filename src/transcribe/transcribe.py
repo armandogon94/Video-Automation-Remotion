@@ -18,6 +18,55 @@ def format_timestamp_srt(seconds: float) -> str:
     return f"{hours:02d}:{minutes:02d}:{secs:02d},{millis:03d}"
 
 
+def parse_glossary_text(text: str) -> list[str]:
+    """Parse a newline/comma-separated glossary into a clean term list."""
+    terms: list[str] = []
+    for chunk in text.replace(",", "\n").splitlines():
+        term = chunk.strip()
+        if term:
+            terms.append(term)
+    return terms
+
+
+def resolve_prompt_and_hotwords(
+    language: str,
+    initial_prompt: str | None,
+    hotwords: str | None,
+    glossary_terms: list[str] | None,
+) -> tuple[str | None, str | None]:
+    """Resolve the (initial_prompt, hotwords) pair passed to whisper.
+
+    There is deliberately NO default initial_prompt for ANY language
+    (`language` is accepted so the no-default policy is testable per-language
+    and so a future language-aware bias has an explicit seam):
+
+    - 2026-07-06: the old generic prompt "Transcripción en español con
+      puntuación correcta." was found to be hallucinated verbatim as the
+      transcript of ENGLISH clips, so it was limited to `es*` languages.
+    - 2026-07-15 (GPT-5.6 peer review, docs/peer-review/GPT56-FINDINGS.md
+      §2.4): the SAME prompt was then REPRODUCED replacing real SPANISH
+      speech with itself — a 30 s montage of real es raw takes transcribed
+      as exactly those 6 prompt words (p≈0.004–0.018), while the identical
+      run with no prompt returned 27 real words. The prompt is actively
+      unsafe as a default; vocabulary bias belongs in `hotwords` /
+      `--glossary-file` instead, and even those are hints, not truth.
+
+    Precedence for hotwords: an explicit `hotwords` string wins; otherwise
+    glossary terms are joined with ", "; otherwise None.
+    """
+    resolved_prompt = initial_prompt or None
+
+    if hotwords:
+        resolved_hotwords: str | None = hotwords
+    elif glossary_terms:
+        joined = ", ".join(t for t in (term.strip() for term in glossary_terms) if t)
+        resolved_hotwords = joined or None
+    else:
+        resolved_hotwords = None
+
+    return resolved_prompt, resolved_hotwords
+
+
 def transcribe(
     input_path: str,
     model_size: str = "small",
@@ -25,8 +74,12 @@ def transcribe(
     fps: int = 30,
     output_srt: str | None = None,
     initial_prompt: str | None = None,
+    hotwords: str | None = None,
+    glossary_terms: list[str] | None = None,
 ) -> dict:
     """Transcribe audio with word-level timestamps."""
+    import inspect
+
     from faster_whisper import WhisperModel
 
     print(f"Loading model '{model_size}'...", file=sys.stderr)
@@ -37,16 +90,29 @@ def transcribe(
     )
 
     print(f"Transcribing '{input_path}'...", file=sys.stderr)
-    # Only bias with the Spanish punctuation prompt for Spanish audio. Forcing it
-    # for other languages makes whisper HALLUCINATE the prompt itself as the
-    # transcript (observed 2026-07-06: an English clip transcribed as
-    # "Transcripción en español con puntuación correcta." — 6 words for 23s).
-    default_prompt = (
-        "Transcripción en español con puntuación correcta."
-        if language.startswith("es")
-        else None
+    # No default initial_prompt — see resolve_prompt_and_hotwords() for why
+    # (the old Spanish default was reproduced as a hallucinated transcript on
+    # real Spanish audio; GPT56-FINDINGS §2.4).
+    prompt, resolved_hotwords = resolve_prompt_and_hotwords(
+        language=language,
+        initial_prompt=initial_prompt,
+        hotwords=hotwords,
+        glossary_terms=glossary_terms,
     )
-    prompt = initial_prompt or default_prompt
+
+    transcribe_kwargs: dict = {}
+    if resolved_hotwords is not None:
+        # faster-whisper >= 1.0.2 supports `hotwords`; only pass it when the
+        # installed version's signature actually accepts it.
+        if "hotwords" in inspect.signature(WhisperModel.transcribe).parameters:
+            transcribe_kwargs["hotwords"] = resolved_hotwords
+        else:
+            print(
+                "Installed faster-whisper does not support 'hotwords'; "
+                "ignoring the requested hotwords/glossary bias.",
+                file=sys.stderr,
+            )
+
     segments, info = model.transcribe(
         input_path,
         language=language,
@@ -60,6 +126,7 @@ def transcribe(
         # (owner decision 2026-07-06). Cost: slightly less cross-segment context;
         # worth it for loop-free transcripts at every model size.
         condition_on_previous_text=False,
+        **transcribe_kwargs,
     )
 
     # Convert generator to list
@@ -127,10 +194,44 @@ def main():
     parser.add_argument(
         "--initial-prompt",
         default=None,
-        help="Bias whisper toward specific vocabulary (brand names, jargon, etc.)",
+        help=(
+            "Optional whisper initial_prompt passthrough. NO default — the old "
+            "generic Spanish prompt was hallucinated as the transcript on real "
+            "Spanish audio (GPT56-FINDINGS §2.4). Prefer --hotwords/--glossary-file."
+        ),
+    )
+    parser.add_argument(
+        "--hotwords",
+        default=None,
+        help=(
+            "Vocabulary bias (brand names, jargon) via faster-whisper hotwords. "
+            "Wins over --glossary-file when both are given."
+        ),
+    )
+    parser.add_argument(
+        "--glossary-file",
+        default=None,
+        help=(
+            "Path to a newline/comma-separated term list joined into the "
+            "hotwords string (used when --hotwords is not given)."
+        ),
     )
 
     args = parser.parse_args()
+
+    glossary_terms: list[str] | None = None
+    if args.glossary_file:
+        glossary_path = Path(args.glossary_file)
+        if not glossary_path.is_file():
+            print(
+                f"Glossary file not found: {glossary_path} — "
+                "pass an existing newline/comma-separated term list.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        glossary_terms = parse_glossary_text(
+            glossary_path.read_text(encoding="utf-8")
+        )
 
     result = transcribe(
         input_path=args.input,
@@ -139,6 +240,8 @@ def main():
         fps=args.fps,
         output_srt=args.output_srt,
         initial_prompt=args.initial_prompt,
+        hotwords=args.hotwords,
+        glossary_terms=glossary_terms,
     )
 
     json.dump(result, sys.stdout, ensure_ascii=False)

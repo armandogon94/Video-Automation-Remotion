@@ -79,26 +79,51 @@ async function transcribe(
   model: string,
   language: string,
   fps: number,
+  hotwords?: string,
+  glossaryFile?: string,
 ): Promise<EditPlanWord[]> {
   const uv = getUvPath();
-  const res = await execa(
-    uv,
-    [
-      "run", "python", path.join(projectRoot, "src/transcribe/transcribe.py"),
-      "--input", video,
-      "--model", model,
-      "--language", language,
-      "--fps", String(fps),
-    ],
-    { cwd: projectRoot },
-  );
+  const args = [
+    "run", "python", path.join(projectRoot, "src/transcribe/transcribe.py"),
+    "--input", video,
+    "--model", model,
+    "--language", language,
+    "--fps", String(fps),
+  ];
+  // Vocabulary bias via faster-whisper hotwords (GPT56-FINDINGS §2.4): explicit
+  // --hotwords wins over --glossary-file (transcribe.py enforces the same).
+  if (hotwords) args.push("--hotwords", hotwords);
+  if (glossaryFile) args.push("--glossary-file", path.resolve(glossaryFile));
+  const res = await execa(uv, args, { cwd: projectRoot });
   const data: unknown = JSON.parse(res.stdout);
   const words = (data as { words?: unknown[] }).words ?? [];
   // Validate each word against the shared shape (drops anything malformed).
+  // `probability` is part of the shape (optional) so whisper confidence is
+  // RETAINED, not stripped (GPT56-FINDINGS §2.4).
   return words
     .map((w) => editPlanWordSchema.safeParse(w))
     .filter((r): r is { success: true; data: EditPlanWord } => r.success)
     .map((r) => r.data);
+}
+
+/**
+ * Post-transcription hallucination heuristic (GPT56-FINDINGS §2.4): the old
+ * default prompt replaced 30 s of real Spanish speech with 6 prompt words at
+ * p≈0.004–0.018. Warn on stderr when the transcript looks like that failure
+ * mode — mostly low-confidence words, or far too few words for the duration.
+ */
+function warnIfTranscriptSuspect(words: EditPlanWord[], durationSeconds: number): void {
+  const withProb = words.filter((w) => typeof w.probability === "number");
+  const lowProbShare =
+    withProb.length === 0
+      ? 0
+      : withProb.filter((w) => (w.probability as number) < 0.15).length / withProb.length;
+  const tooFewWords = words.length < 1.5 * durationSeconds;
+  if (lowProbShare > 0.3 || tooFewWords) {
+    console.error(
+      "⚠ transcript quality suspect (possible hallucination) — review before editing",
+    );
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -117,11 +142,13 @@ program
   .option("--position <pos>", "Caption position: bottom-center|center|top|custom", "bottom-center")
   .option("--whisper-model <size>", "Whisper model: tiny|base|small|medium|large-v3 (owner default medium — better Spanish brand names; large-v3 only with loop-watch)", "medium")
   .option("--language <code>", "Audio language for whisper", "es")
+  .option("--hotwords <terms>", "Vocabulary bias for whisper (brand names, jargon); wins over --glossary-file")
+  .option("--glossary-file <path>", "Newline/comma-separated term list joined into whisper hotwords")
   .option("--silence-db <db>", "silencedetect noise floor (dB, negative)", "-30")
   .option("--min-silence <sec>", "Minimum silence to trim (seconds)", "0.5")
   .option("--no-trim", "Skip silence-trim (keep the whole clip as one segment)")
   .option("--render", "Render the EditPlan to a finished MP4 (ffmpeg-trim + SpeakerOverlayScene)")
-  .option("--caption-style <style>", "FloatingCaption preset: editorial-cyan|hormozi-pop|classic|… (with --render)", "editorial-cyan")
+  .option("--caption-style <style>", "FloatingCaption preset: hormozi-pop (owner default, DOGFOOD-PLAYBOOK §9.1)|editorial-cyan|classic|… (with --render)", "hormozi-pop")
   .option("--handle <handle>", "Brand handle chip ('' hides it) (with --render)")
   .option("--slug <slug>", "Output slug for staged clip + final MP4 (with --render); defaults to the source filename")
   .option("--no-self-eval", "Skip the post-render self-eval QA pass (duration check + cut contact sheet)")
@@ -197,8 +224,12 @@ async function main(): Promise<void> {
     log("whisper", `loaded ${sourceWords.length} word timings from --transcript`);
   } else {
     log("whisper", `transcribing with '${opts.whisperModel}' model (first run downloads the model)...`);
-    sourceWords = await transcribe(video, projectRoot, opts.whisperModel, opts.language, fps);
+    sourceWords = await transcribe(
+      video, projectRoot, opts.whisperModel, opts.language, fps,
+      opts.hotwords, opts.glossaryFile,
+    );
     log("whisper", `transcribed ${sourceWords.length} words`);
+    warnIfTranscriptSuspect(sourceWords, durationSeconds);
   }
 
   // ── 4. build the plan ───────────────────────────────────────────────────────
@@ -222,7 +253,7 @@ async function main(): Promise<void> {
   if (opts.render) {
     const captionStyle: CaptionStyle = CAPTION_STYLES.includes(opts.captionStyle)
       ? (opts.captionStyle as CaptionStyle)
-      : "editorial-cyan";
+      : "hormozi-pop"; // owner default (DOGFOOD-PLAYBOOK §9.1)
     const slug =
       typeof opts.slug === "string" && opts.slug.length > 0
         ? opts.slug

@@ -52,6 +52,13 @@ export const editPlanWordSchema = z.object({
   endSeconds: z.number(),
   startFrame: z.number(),
   endFrame: z.number(),
+  /**
+   * Whisper per-word confidence 0..1 (emitted by transcribe.py; GPT56-FINDINGS
+   * §2.4 — retained so hallucinated words like p≈0.004 prompts stay auditable).
+   * `.optional()` (NOT `.default()`) on purpose: a `.default()`-only field
+   * breaks Remotion `<Composition defaultProps>` typing (the Zod-v4 gotcha).
+   */
+  probability: z.number().optional(),
 });
 export type EditPlanWord = z.infer<typeof editPlanWordSchema>;
 
