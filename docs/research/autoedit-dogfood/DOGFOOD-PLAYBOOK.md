@@ -304,4 +304,9 @@ update the queue; the findings file gets committed as-is (it is the review recor
 Reviews are append-only history: never edit an old findings file.
 
 Findings ledger so far: GPT56-FINDINGS.md (2026-07-09, c4a37d6) → executed 2026-07-15;
-GPT56-FINDINGS-2026-07-16.md (requested this date, range c4a37d6..1ad7bc1) → pending.
+GPT56-FINDINGS-2026-07-16.md (requested this date, range c4a37d6..1ad7bc1) →
+**BLOCKED: codex CLI not authenticated.** Armando runs `codex login` once in a terminal,
+then any session re-dispatches with: codex:codex-rescue task prefixed `--model gpt-5.6`,
+review range c4a37d6..1ad7bc1, previous findings GPT56-FINDINGS.md, single write
+GPT56-FINDINGS-2026-07-16.md (the full task text is reproducible from §11 + the 07-09
+briefing; triage rules unchanged).
