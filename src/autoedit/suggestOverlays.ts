@@ -146,24 +146,23 @@ export type BrandAsset =
 /**
  * Normalized brand token → local render asset. EXPLICIT + tiny on purpose.
  *
- * Rules (GPT-5.6 finding 2.6 remediation):
+ * Rules (GPT-5.6 finding 2.6 remediation; stale-comment cleanup Sol 0716 §2.6):
+ *  - SEMANTIC RULE (owner-viewer expectation): a brand beat shows the NAMED
+ *    brand's mark or nothing branded at all. claude/anthropic are deliberately
+ *    ABSENT here — mapping them to Armando's house logo would show the wrong
+ *    company's mark — so they fall through to the `SentimentKeyword` text chip.
  *  - `kind:"logo"` src MUST point at a file that actually exists under
  *    `public/` (staticFile-relative). The only local logo assets today are our
- *    OWN house marks under `public/brand/logos/` — claude/anthropic are this
- *    channel's core subject matter and are mapped to house marks per the
- *    wave-2 owner decision until real third-party logo PNGs are dropped in.
+ *    OWN house marks under `public/brand/logos/`, used only for the `armando`
+ *    token. To add a third-party brand: drop its REAL logo PNG under
+ *    `public/brand/logos/` and add an entry (the existence test enforces it).
  *  - DO NOT invent logo paths for third-party brands (openai, gemini, skool…).
  *    A brand token with NO entry here falls back to a `SentimentKeyword` text
  *    chip carrying the spoken word — never an IconPopOverSpeaker with props
  *    its schema lacks (that is exactly the Zod-strip → default-🧠 defect).
  *  - A regression test asserts every `kind:"logo"` src exists on disk.
  */
-export // SEMANTIC RULE (owner-viewer expectation): a brand beat shows the NAMED brand's
-// mark or nothing branded at all. claude/anthropic are deliberately ABSENT here —
-// mapping them to Armando's house logo would show the wrong company's mark; they
-// fall through to the SentimentKeyword text chip. To upgrade: drop real logo PNGs
-// under public/brand/logos/ and add entries (the existence test enforces validity).
-const BRAND_ASSETS: Record<string, BrandAsset> = {
+export const BRAND_ASSETS: Record<string, BrandAsset> = {
   armando: { kind: "logo", src: "brand/logos/logo-completo.png" },
 };
 
