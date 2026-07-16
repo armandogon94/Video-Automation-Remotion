@@ -1,10 +1,9 @@
 import { describe, it, expect } from "vitest";
 import {
   buildReport,
+  computeLumaStats,
   cutBoundariesFromPlan,
   evaluateFrameZeroStats,
-  lumaStddevEstimate,
-  parseSignalStats,
   type ReportInput,
 } from "./selfEvalRender";
 
@@ -60,40 +59,31 @@ describe("evaluateFrameZeroStats (owner §9.9 near-flat threshold)", () => {
   });
 });
 
-describe("lumaStddevEstimate", () => {
-  it("is 0 for a flat frame (10th == 90th percentile)", () => {
-    expect(lumaStddevEstimate({ ylow: 16, yhigh: 16 })).toBe(0);
+describe("computeLumaStats — REAL per-pixel stddev (Sol 0716 §3.2)", () => {
+  it("is 0 for a perfectly flat frame", () => {
+    const s = computeLumaStats(new Uint8Array(1000).fill(61));
+    expect(s).not.toBeNull();
+    expect(s!.stddev).toBe(0);
+    expect(s!.mean).toBe(61);
+    expect(s!.pixels).toBe(1000);
   });
 
-  it("estimates sigma from the 10-90 percentile spread (spread/2.56)", () => {
-    expect(lumaStddevEstimate({ ylow: 40, yhigh: 168 })).toBeCloseTo(50);
-  });
-});
-
-describe("parseSignalStats", () => {
-  const sample = [
-    "frame:0    pts:0       pts_time:0",
-    "lavfi.signalstats.YMIN=16",
-    "lavfi.signalstats.YLOW=17",
-    "lavfi.signalstats.YAVG=18.35",
-    "lavfi.signalstats.YHIGH=20",
-    "lavfi.signalstats.YMAX=235",
-    "lavfi.signalstats.UMIN=118",
-  ].join("\n");
-
-  it("parses the luma keys out of metadata=print output", () => {
-    expect(parseSignalStats(sample)).toEqual({
-      ymin: 16,
-      ylow: 17,
-      yavg: 18.35,
-      yhigh: 20,
-      ymax: 235,
-    });
+  it("Sol's counterexample: a sparse two-level frame (92.6% navy + 7.4% gold bar) has a LARGE real σ — the old percentile estimate reported 0", () => {
+    // Sol §3.2: YLOW=YHIGH=61 for this population → (YHIGH−YLOW)/2.56 = 0, so a
+    // valid sparse hook design was flagged as empty. The true per-pixel σ of a
+    // two-level {61 @ 92.6%, 200 @ 7.4%} population is √(p(1−p))·Δ ≈ 36.4.
+    const n = 10_000;
+    const gray = new Uint8Array(n).fill(61);
+    gray.fill(200, 0, Math.round(n * 0.074));
+    const s = computeLumaStats(gray)!;
+    const p = 0.074;
+    expect(s.stddev).toBeCloseTo(Math.sqrt(p * (1 - p)) * (200 - 61), 1);
+    expect(s.stddev).toBeGreaterThan(30); // decisively NOT near-flat
+    expect(evaluateFrameZeroStats(s.stddev)).toBe(false);
   });
 
-  it("returns null when a required key is missing", () => {
-    expect(parseSignalStats("lavfi.signalstats.YMIN=16")).toBeNull();
-    expect(parseSignalStats("")).toBeNull();
+  it("returns null for an empty buffer (probe failure)", () => {
+    expect(computeLumaStats(new Uint8Array(0))).toBeNull();
   });
 });
 
@@ -105,6 +95,7 @@ describe("buildReport", () => {
     actualSeconds: 5.01,
     durationDeltaSeconds: 0.01,
     durationOk: true,
+    videoSeconds: 5.01,
     audioSeconds: 5.0,
     avDurationDeltaSeconds: 0.01,
     avDurationOk: true,
@@ -113,7 +104,7 @@ describe("buildReport", () => {
     cutsDropped: 0,
     contactSheetPath: null,
     frameZeroPath: "/out/selfeval-frame0.png",
-    frameZeroStats: { yavg: 100, ymin: 16, ymax: 235, ylow: 40, yhigh: 168 },
+    frameZeroStats: { mean: 100, stddev: 50, pixels: 2_073_600 },
     frameZeroLumaStddev: 50,
     frameZeroSuspectEmpty: false,
     ...over,
@@ -144,9 +135,10 @@ describe("buildReport", () => {
     expect(clean).not.toContain("⚠ frame 0 is near-flat");
   });
 
-  it("reports A/V agreement and flags a >0.1s mismatch", () => {
+  it("reports STREAM-vs-STREAM A/V agreement and flags a >0.1s mismatch", () => {
     const ok = buildReport(baseInput());
-    expect(ok).toContain("**A/V duration agreement:**");
+    expect(ok).toContain("**A/V stream agreement:** video 5.010s, audio 5.000s");
+    expect(ok).toContain("container 5.010s — informational only");
     expect(ok).not.toContain("MISMATCH ⚠️ (Δ >");
     const bad = buildReport(
       baseInput({ audioSeconds: 4.7, avDurationDeltaSeconds: 0.31, avDurationOk: false }),
@@ -154,10 +146,39 @@ describe("buildReport", () => {
     expect(bad).toContain("MISMATCH ⚠️ (Δ > 0.1s)");
   });
 
+  it("Sol's false-zero case is dead: 1s video + 2s audio (container 2s) MISMATCHES on stream durations", () => {
+    // The old gate compared container (=max(streams)=2.0) to audio (2.0) →
+    // Δ 0 "OK" while the video stream was half missing (Sol 0716 §3.2).
+    const report = buildReport(
+      baseInput({
+        actualSeconds: 2.0,
+        videoSeconds: 1.0,
+        audioSeconds: 2.0,
+        avDurationDeltaSeconds: 1.0,
+        avDurationOk: false,
+      }),
+    );
+    expect(report).toContain("**A/V stream agreement:** video 1.000s, audio 2.000s");
+    expect(report).toContain("MISMATCH ⚠️ (Δ > 0.1s)");
+  });
+
   it("flags a missing/unreadable audio stream", () => {
     const report = buildReport(
       baseInput({ audioSeconds: null, avDurationDeltaSeconds: null, avDurationOk: false }),
     );
     expect(report).toContain("audio stream missing or unreadable ⚠️");
+  });
+
+  it("flags a missing/unreadable VIDEO stream", () => {
+    const report = buildReport(
+      baseInput({ videoSeconds: null, avDurationDeltaSeconds: null, avDurationOk: false }),
+    );
+    expect(report).toContain("video stream missing or unreadable ⚠️");
+  });
+
+  it("states that unchecked human boxes are PENDING, never PASS (Sol 0716 §3.3)", () => {
+    const report = buildReport(baseInput());
+    expect(report).toContain("PENDING, not");
+    expect(report).toContain("blank-frame heuristic ONLY");
   });
 });
