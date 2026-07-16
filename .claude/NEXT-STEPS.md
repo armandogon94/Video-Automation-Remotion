@@ -153,3 +153,16 @@ GPT-5.6 P0.5 "make the gates real" (config-only pass; no src/** edits):
   are being added by a parallel session.
 - Post-change verification: `npx tsc --noEmit` exit 0; `npx vitest run` 4 files / 46 tests green
   (baseline was 40 — a parallel session added tests mid-pass).
+
+---
+## ▶ RESUME POINTER (2026-07-15 night, Fable autonomous session)
+GPT-5.6 FINDINGS fully triaged; its P0 queue EXECUTED (11 commits tonight: whisper
+trust, layout camSrc, BeatTiming 773==773, brand chips + planner validation, owner
+defaults, live lint/pytest gates, hard-gates rubric, Round 2 all-PASS, EditPlan v2
+schema). Tests 40→97 TS + 13 py. NEXT, in order (FINDINGS §6):
+1. P1.6b — converge single/multi-source render orchestration onto the v2 plan
+   (delete ReelBeat semantics after migration). Fresh session, it's a refactor.
+2. P1.7-9 — take clustering (sequence-aware alignment, NOT jaccard) + REVIEW.html
+   A/B/C gate + assembly, dogfooded on Armando's own IMG_36xx Spanish footage.
+3. HUMAN: LISTEN pass on Round-2 berman cuts (output/autoedit/r2-*.selfeval/).
+4. P2 batch: V.8 safe-areas, V.1 scrims, FeedbackLoopCycle geometry (FINDINGS 2.7).
