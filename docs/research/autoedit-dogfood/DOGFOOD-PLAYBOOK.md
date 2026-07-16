@@ -277,3 +277,31 @@ Armando asked whether 24-frame strips were enough. Straight answer recorded here
 3. Grade replicas vs source at the SAME sampling rate, side-by-side.
 Priority list for this protocol: austin's punch-in/out tweens, GlowPulse bloom curve,
 ArcLightWipe sweep, card enter springs, our SidePanelCards vs his card builds.
+
+## 11. STANDING PRACTICE — GPT-5.6 (Sol) peer reviews via Codex CLI (owner directive 2026-07-16)
+
+Armando: *"keep having GPT-5.6 Sol do peer reviews whenever needed or whenever possible
+(using codex CLI)."* Operationalized:
+
+**When to trigger (any of):**
+- after every multi-commit engineering wave (>3 commits landed in one session);
+- BEFORE building on a major design (EditPlan v2 orchestration convergence, the take
+  clusterer, the semantic planner contract) — review the design, then build;
+- when a dogfood round produces a surprising PASS/FAIL, or before declaring a milestone
+  "done"; after any fix where the implementer deviated from Sol's own sketch.
+
+**How (from Claude Code):** dispatch the `codex:codex-rescue` subagent with a task that
+starts with `--model gpt-5.6` and contains: repo path, the commit range under review,
+a pointer to the PREVIOUS findings file, the specific verify/attack list, and the single
+allowed write `docs/peer-review/GPT56-FINDINGS-<YYYY-MM-DD>.md` (never modify anything
+else, never commit). Sol's evidence discipline is the contract: [CONFIRMED]/[OVERTURNED]/
+[HYPOTHESIS] with file:line or artifacts. From a terminal, the equivalent is the codex
+CLI directly with the same prompt.
+
+**After it lands:** triage before the next wave — every [OVERTURNED] gets re-verified by
+the implementer side (Sol has been right, but is not automatically right); confirmed items
+update the queue; the findings file gets committed as-is (it is the review record).
+Reviews are append-only history: never edit an old findings file.
+
+Findings ledger so far: GPT56-FINDINGS.md (2026-07-09, c4a37d6) → executed 2026-07-15;
+GPT56-FINDINGS-2026-07-16.md (requested this date, range c4a37d6..1ad7bc1) → pending.

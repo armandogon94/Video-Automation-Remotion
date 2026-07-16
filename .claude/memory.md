@@ -666,3 +666,10 @@ to per-band staggered Y (labelY = CENTER_Y - radius + inset).
   Full findings ledger: FABLE.md (root, V1–V24 + phased fix plan for Opus).
 - **Gotcha reaffirmed:** overlay molecules self-animate from local frame 0 — any NEW scene
   consuming `overlayTrack` MUST wrap them in `<Sequence from={fromFrame}>`.
+
+## 2026-07-16 — standing practice: Sol (GPT-5.6) peer reviews via Codex CLI
+Owner directive: run GPT-5.6 peer reviews via the codex CLI "whenever needed or whenever
+possible". Mechanics + triggers + triage rules codified in DOGFOOD-PLAYBOOK.md §11.
+Dispatch pattern: codex:codex-rescue subagent, task text prefixed `--model gpt-5.6`,
+single-write findings file docs/peer-review/GPT56-FINDINGS-<date>.md. First follow-up
+review (range c4a37d6..1ad7bc1) dispatched this night.
