@@ -30,6 +30,11 @@ import {
   layoutRefSchema,
   layoutSegmentSchema,
 } from "../autoedit/editPlan";
+import {
+  handleWindowsSchema,
+  normalizeHandleWindows,
+  type HandleWindow,
+} from "./scenes/handleWindows";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Schema (legacy fields .default()ed; NEW layout fields .optional()ed — see the
@@ -65,14 +70,13 @@ export const speakerOverlayScene9x16Schema = z.object({
   /** Intermittent handle-chip windows (owner decision, DOGFOOD-PLAYBOOK §9.3:
    *  the chip pops in/out at moments instead of sitting persistent). ABSENT →
    *  persistent chip, byte-identical legacy behavior (back-compat). PRESENT →
-   *  the chip mounts once per window inside a <Sequence>, with a ~10-frame fade
-   *  in/out. Frames are scene-local output frames. Default auto-windows
-   *  (~3 s every ~45 s + final 4 s) are the PLANNER's responsibility — this
-   *  scene deliberately hardcodes no cadence.
+   *  windows are validated/merged by the SHARED `normalizeHandleWindows`
+   *  (Sol 0716 §3.1), then the chip mounts once per window inside a
+   *  <Sequence>, with a ~10-frame fade in/out. Frames are scene-local output
+   *  frames. Default auto-windows (~3 s every ~45 s + final 4 s) are the
+   *  PLANNER's responsibility — this scene deliberately hardcodes no cadence.
    *  `.optional()` — NEW field (Remotion defaultProps z.input & z.infer Zod-v4 gotcha). */
-  handleWindows: z
-    .array(z.object({ fromFrame: z.number(), toFrame: z.number() }))
-    .optional(),
+  handleWindows: handleWindowsSchema,
   /** Composition length in frames. Default 150 = 5.0s @ 30fps. */
   durationFrames: z.number().default(150),
   /** Over-speaker overlay molecules (OV1–OV12); optional `behindSpeaker` routes
@@ -172,8 +176,6 @@ const HandleChip: React.FC<{ handle: string }> = ({ handle }) =>
     </div>
   ) : null;
 
-type HandleWindow = { fromFrame: number; toFrame: number };
-
 /** Fades the chip in/out over ~10 frames of the Sequence-local clock (clamped;
  *  the fade shrinks to half the window when the window is under 20 frames). */
 const HandleChipFade: React.FC<{ handle: string; durationInFrames: number }> = ({
@@ -201,8 +203,10 @@ const HandleChipFade: React.FC<{ handle: string; durationInFrames: number }> = (
 
 /** Handle-chip layer — owner decision §9.3 (intermittent handle).
  *  `handleWindows` ABSENT → persistent chip (legacy behavior, back-compat).
- *  PRESENT → one Sequence-mounted, fade-wrapped chip per window (an explicitly
- *  empty array means no appearances at all). */
+ *  PRESENT → windows are normalized by the SHARED `normalizeHandleWindows`
+ *  (invalid dropped loudly, overlaps merged, sub-minimum flashes dropped —
+ *  Sol 0716 §3.1), then one Sequence-mounted, fade-wrapped chip per window
+ *  (an explicitly empty array means no appearances at all). */
 const HandleChipLayer: React.FC<{
   handle: string;
   handleWindows?: HandleWindow[];
@@ -212,8 +216,8 @@ const HandleChipLayer: React.FC<{
   }
   return (
     <>
-      {handleWindows.map((w, i) => {
-        const dur = Math.max(1, w.toFrame - w.fromFrame);
+      {normalizeHandleWindows(handleWindows).map((w, i) => {
+        const dur = w.toFrame - w.fromFrame; // ≥ MIN_HANDLE_WINDOW_FRAMES
         return (
           <Sequence
             key={`handle-${i}`}
