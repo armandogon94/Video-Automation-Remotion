@@ -167,6 +167,7 @@ schema). Tests 40→97 TS + 13 py. NEXT, in order (FINDINGS §6):
 3. HUMAN: LISTEN pass on Round-2 berman cuts (output/autoedit/r2-*.selfeval/).
 4. P2 batch: V.8 safe-areas, V.1 scrims, FeedbackLoopCycle geometry (FINDINGS 2.7).
 5. DONE 2026-07-16: multi-take experiment #1 (P1.7 groundwork) — proposal vs published Cowork reel scored 1.000 order / 0.933 take-choice; decision rules + burst-transcription requirement in docs/research/autoedit-dogfood/MULTITAKE-EXPERIMENT-2026-07-16.md (job folder: output/multitake/claude-cowork/).
+6. Multi-take experiment #2 (ventana-pdf): proposal FROZEN BLIND — score it vs the published reel (gallery-dl reels-metadata method, caption keywords contexto/PDF, envelope ncc) per the PENDING section of docs/research/autoedit-dogfood/MULTITAKE-EXPERIMENT-2026-07-16-VENTANA.md (job folder: output/multitake/ventana-pdf/).
 
 ---
 ## ▶ RESUME POINTER (2026-07-16 12:00 PM — overnight loop ended at budget boundary)
